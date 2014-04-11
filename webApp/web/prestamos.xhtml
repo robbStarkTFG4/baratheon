@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="forma">     
+            <p:growl id="notify" showDetail="true" sticky="false"/>
+            <h:panelGrid id="grid" columns="4">
+                <p:outputLabel style="margin-right: 20px" value="Matricula :" />
+                <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Inserta matricula" style="height: 20px; width: 150px;">
+                    <f:validateRegex pattern="[0-9]+" />
+                    <f:validateLength minimum="3" maximum="20" >
+                    </f:validateLength> 
+                    <f:ajax render="mensajenom" event="keyup"/>
+                </p:inputText>
+                <p:message id="mensajenom"  for="mat" />                     
+                <p:commandButton value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" 
+                                 update="presName,carrera,mail,tel,notify"/>                   
+
+            </h:panelGrid>
+            <h:panelGrid columns="4" cellspacing="5" cellpadding="5px">
+
+                <p:outputLabel value="nombre: " for="presName"/> <p:inputText value="#{pres.nombre}" id="presName" size="30" disabled="true"/>
+                <p:outputLabel value="carrera: " for="carrera"/> <p:inputText value="#{pres.carrera}" id="carrera" size="10" disabled="true"/>
+
+                <p:outputLabel value="correo: " for="mail"/> <p:inputText value="#{pres.correo}" id="mail" size="10" disabled="true"/>
+                <p:outputLabel value="telefono: " for="tel"/> <p:inputText value="#{pres.telefono}" id="tel" size="10" disabled="true"/>
+
+            </h:panelGrid>
+
+
+            <p:panel style="margin-top: 5px;"  >  
+                <h:outputText />  
+            </p:panel>              
+            <p:dataTable>               
+            </p:dataTable>
+
+        </h:form>
+    </h:body>
+</html>
+
