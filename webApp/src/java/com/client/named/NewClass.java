@@ -6,10 +6,16 @@
 
 package com.client.named;
 
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 /**
  *
  * @author NORE
  */
-public class NewClass {
+@Named("nm")      
+@SessionScoped
+public class NewClass implements Serializable{
     
 }
