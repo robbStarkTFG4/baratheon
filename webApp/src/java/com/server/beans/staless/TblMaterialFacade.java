@@ -7,9 +7,11 @@
 package com.server.beans.staless;
 
 import com.server.entity.beans.TblMaterial;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -27,6 +29,25 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     public TblMaterialFacade() {
         super(TblMaterial.class);
+    }
+
+    public List<TblMaterial> autoQueryName(String patron) {
+        
+        TypedQuery<TblMaterial> query = em.createQuery("SELECT NEW com.server.entity.beans.TblMaterial(c.noParte,c.nombre) FROM TblMaterial c WHERE c.nombre LIKE :patron", TblMaterial.class);
+        query.setParameter("patron", patron.toLowerCase() + "%");
+       
+        List<TblMaterial> res = query.getResultList();
+        
+        return res;
+    }
+
+    public List<TblMaterial> autoQueryPartNumber(String patron) {
+         TypedQuery<TblMaterial> query = em.createQuery("SELECT NEW com.server.entity.beans.TblMaterial(c.noParte,c.nombre) FROM TblMaterial c WHERE c.noParte LIKE :patron", TblMaterial.class);
+        query.setParameter("patron", patron.toLowerCase() + "%");
+
+        List<TblMaterial> res = query.getResultList();
+
+        return res;
     }
     
 }
