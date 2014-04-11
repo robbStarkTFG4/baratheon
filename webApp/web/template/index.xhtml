@@ -58,27 +58,6 @@
 
         <div id="content" class="center_content">
             <ui:insert name="content">
-                <h:form id="forma">     
-                    <h:panelGrid id="grid" columns="4">
-                        <p:outputLabel style="margin-right: 20px" value="Matricula :" />
-                        <p:inputText id="mat"  required="true"  requiredMessage="Inserta matricula" style="height: 20px; width: 150px;">
-                            <f:validateRegex pattern="[0-9]+" />
-                            <f:validateLength minimum="3" maximum="20" >
-                            </f:validateLength> 
-                            <f:ajax render="mensajenom" event="keyup"/>
-                        </p:inputText>
-                        <p:message id="mensajenom"  for="mat" />                     
-                        <p:commandButton value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;"/>                   
-
-                    </h:panelGrid>
-
-                    <p:panel style="margin-top: 5px;"  >  
-                        <h:outputText />  
-                    </p:panel>              
-                    <p:dataTable>               
-                    </p:dataTable>
-
-                </h:form>
             </ui:insert>
         </div>
 
