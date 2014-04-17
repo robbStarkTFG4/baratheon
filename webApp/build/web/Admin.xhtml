@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </h:head>
+    <h:body>
+        <ui:composition template="/index.xhtml" >
+            <ui:define name="content">
+        <h:form id="admin">
+   
+            <p:megaMenu style="width: auto">  
+         <p:submenu label="Usuarios"   >  
+            <p:column>  
+                <p:submenu label="Acciones"  >  
+                    <p:menuitem value="Agregar"  url="AgregarUs.xhtml?faces-redirect=true"  icon="ui-icon-circle-plus"/>  
+                    <p:menuitem value="Modificar" url="ModificarUs.xhtml?faces-redirect=true" icon="ui-icon-pencil"/> 
+                    <p:menuitem value="Eliminar" url="EliminarUs.xhtml?faces-redirect=true" icon="ui-icon-circle-close"/> 
+                </p:submenu>  
+                
+                
+            </p:column>  
+  
+        </p:submenu> 
+                 <p:submenu label="Prestarios"   >  
+            <p:column>  
+                <p:submenu label="Acciones"  >  
+                    <p:menuitem value="Agregar"  url="AgregarPrestario.xhtml?faces-redirect=true"  icon="ui-icon-circle-plus"/>  
+                    <p:menuitem value="Modificar" url="ModificarPrest.xhtml?faces-redirect=true" icon="ui-icon-pencil"/> 
+                    <p:menuitem value="Eliminar" url="EliminarPrest.xhtml?faces-redirect=true" icon="ui-icon-circle-close"/> 
+                </p:submenu>  
+                
+                
+            </p:column>  
+  
+        </p:submenu>  
+                 
+         <p:submenu label="Reportes"   >  
+            <p:column>  
+                <p:submenu label="Acciones"  >  
+                    <p:menuitem value="Alumnos morosos"  url="Reporte.xhtml?faces-redirect=true"   icon="ui-icon-document"/>  
+                    <p:menuitem value="Lista de materiales" url="ReporteMat.xhtml?faces-redirect=true"  icon="ui-icon-document"/> 
+                    <p:menuitem value="Lista usuarios SS" url="ReporteUSS.xhtml?faces-redirect=true"   icon="ui-icon-document"/> 
+                </p:submenu>  
+                
+                
+            </p:column>  
+  
+        </p:submenu>  
+  
+        <p:menuitem value="Quit" url="index.xhtml?faces-redirect=true" icon="ui-icon-close" />  
+    </p:megaMenu> 
+     <div id="contenidoAdmin" class="center_content">
+         
+         
+             <ui:insert name="contentenidoAdmin">
+                        
+                    </ui:insert>
+        </div>        
+            
+            
+            
+  
+        </h:form>
+                
+                
+                
+                
+    </ui:define>
+    </ui:composition> 
+    </h:body>
+</html>
+
