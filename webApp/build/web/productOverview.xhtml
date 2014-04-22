@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>resultados busquedas</title>
+    </h:head>
+    <h:body>
+        <h:form id="form">
+            <h:panelGrid columns="4" cellspacing="7px" cellpadding="5px" style="margin-bottom: 10px">
+                <p:outputLabel value="familia " for="familia"/>
+                <p:selectOneMenu id="familia" style="width: 125px" />
+                <p:outputLabel value="subfamilia " for="subFam"/>
+                <p:selectOneMenu id="subFam" style="width: 125px" />
+            </h:panelGrid>
+
+
+            <p:dataGrid  id="grid" var="car" value="#{gd.partes}" columns="3"  
+                         rows="6" paginator="true"   widgetVar="hola" 
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                         rowsPerPageTemplate="9,12,15">  
+
+                <p:column>  
+                    <p:growl id="grow1" life="1000" />
+                    <p:panel header="#{car.noParte}" style="text-align:center">  
+                        <h:panelGrid  id="gridp" columns="1" style="width:100%; ">  
+
+                            <p:commandLink action="#{gd.openPopUp}" ajax="true">
+                                <p:graphicImage value="/resources/imagenes/#{car.imagen}"  />  
+                                <f:setPropertyActionListener value="#{car}" target="#{gd.current}" />
+                            </p:commandLink>
+
+                            <h:outputText value="#{car.nombre}" />  
+                            <p:spinner id="spin" value="#{ka.quantity}"  valueChangeListener="#{ka.spinnerListener}"  min="0" validator="vl"
+                                       >
+
+                            </p:spinner>  
+                            <p:commandLink action="#{ka.addToCart}"  process="spin,@this" update="grow1"  >  
+                                <h:outputText styleClass="ui-icon ui-icon-check" style="margin:0 auto;" />   
+                                <f:setPropertyActionListener value="#{car}" target="#{ka.current}" />
+
+                            </p:commandLink> 
+                        </h:panelGrid>  
+
+                    </p:panel>  
+                </p:column>
+            </p:dataGrid>  
+        </h:form>
+    </h:body>
+</html>
+
