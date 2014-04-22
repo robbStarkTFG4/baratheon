@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+         <ui:composition template="/Admin.xhtml" >
+            <ui:define name="contentenidoAdmin">
+        <h:form id="modificarPrest">
+            <center>  
+
+          <p:panel id="panel" style="width:500px;  " >  
+            <f:facet name="header" >  
+                Modificar Prestario
+             </f:facet>
+              <div align="left">
+              <h:panelGrid columns="3">
+              
+              
+              <p:outputLabel value="Ingrese usuario:  " />
+              <p:autoComplete id="usuariop" dropdown="true" forceSelection="true"  autocomplete="true"   
+                              completeMethod="#{prest.complete}"  required="true" requiredMessage="inserte usuario">  
+           
+                   <f:ajax render="msjus" event="keyup"/>
+              </p:autoComplete>
+              <p:commandButton id="botonmodif" value="Buscar" actionListener="#{prest.searchUModificar()}"  update="panel" />
+          
+           <h:outputLabel/>
+   
+            <p:message id="msjus"  for="usuariop" />
+            <h:outputLabel/>
+              <p:outputLabel value="Nombre :"  />  
+              <p:inputText id="nom"  required="true"  requiredMessage="inserta nombre" validatorMessage="Solo Letras(2-20)" disabled="#{prest.hregistros}" >
+                   <f:validateLength minimum="3" maximum="20" />
+                   <f:validateRegex pattern="[a-zA-Z]+" />
+                   <f:ajax render="mensajenom" event="keyup"/>
+                </p:inputText>
+                   
+                <p:message id="mensajenom"  for="nom" />
+                <p:outputLabel value="Apellido paterno :"  />  
+                 <p:inputText id="ap" required="true"  requiredMessage="inserta apellido" validatorMessage="Solo Letras(2-20)" disabled="#{prest.hregistros}" >
+                   <f:validateRegex pattern="[a-zA-Z]+" />
+                   <f:validateLength minimum="1" maximum="20"/>  
+                   <f:ajax render="mensajeap" event="keyup"/>
+                 </p:inputText>
+                   <p:message id="mensajeap"  for="ap" />
+                  
+                 <p:outputLabel value="Apellido Materno :"  />  
+                 <p:inputText id="am"  required="true"  requiredMessage="inserta apellido" validatorMessage="Solo Letras(2-20)" disabled="#{prest.hregistros}">
+                   <f:validateLength minimum="1" maximum="20"/>
+                    <f:validateRegex pattern="[a-zA-Z]+" />
+                   <f:ajax render="mensajeam" event="keyup"/>
+                  </p:inputText> 
+                 <p:message id="mensajeam"  for="am" />
+                 
+                 <p:outputLabel value="Carrera :"  />  
+                 <p:inputText id="carrera"  required="true"  requiredMessage="inserta contrasena" validatorMessage="Maximo 20 caracteres" disabled="#{prest.hregistros}">
+                   <f:validateLength minimum="1" maximum="20"/>
+                    <f:validateRegex pattern="[a-zA-Z]+" />
+                   <f:ajax render="mensajecar" event="keyup"/>
+                  </p:inputText>   
+                 <p:message id="mensajecar"  for="carrera" />
+                 
+                 <p:outputLabel value="Correo :"  />  
+                 <p:inputText id="correo"  required="true"  requiredMessage="inserta correo" validatorMessage="Formato erroneo(?@.?)" disabled="#{prest.hregistros}">
+                   <f:validateLength minimum="1" maximum="35"/>
+                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                   <f:ajax render="mensajecorreo" event="keyup"/>
+                  </p:inputText> 
+                 <p:message id="mensajecorreo"  for="correo" />
+                 
+                 <p:outputLabel value="Telefono :"  />  
+                 <p:inputMask id="tel"  required="true"  requiredMessage="inserta telefono" mask="9999999999" disabled="#{prest.hregistros}">
+                  
+                  </p:inputMask>
+                 <h:outputLabel/>
+                 
+                 <p:outputLabel value="Usuario :"  />  
+                 <p:inputText id="us"  required="true"  requiredMessage="inserta usuario" validatorMessage="Maximo 20 caracteres" disabled="true">
+                   <f:validateLength minimum="1" maximum="20"/>
+                   <f:ajax render="mensajeus" event="keyup"/>
+                  </p:inputText> 
+                 <p:message id="mensajeus"  for="us" />
+                 
+                 <p:outputLabel value="Tipo prestario :"  />  
+                  <p:selectOneMenu value="Tipo" id="tipo" disabled="#{prest.hregistros}">  
+            <f:selectItem itemLabel="Alumno" itemValue="1" />  
+            <f:selectItem itemLabel="Maestro" itemValue="2" />  
+                  </p:selectOneMenu>  
+                 <h:outputLabel/>
+          <h:outputLabel/>
+          <p:commandButton value="Modificar" disabled="#{prest.hregistros}"  actionListener="#{prest.modificarprestario()}" update="panel"/>
+            <p:growl id="growl" showDetail="true" life="3000"/>    
+              
+              </h:panelGrid> 
+              </div>
+          </p:panel> 
+            </center>
+        </h:form>
+            </ui:define>
+         </ui:composition>
+    </h:body>
+</html>
+
