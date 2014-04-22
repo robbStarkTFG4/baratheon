@@ -6,10 +6,8 @@
 package com.client.named;
 
 import com.server.beans.staless.TblPrestariosFacade;
-import com.server.entity.beans.TblMaterial;
 import com.server.entity.beans.TblPrestarios;
 import java.io.Serializable;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -23,7 +21,7 @@ import javax.inject.Named;
 @Named("pres")
 @SessionScoped
 public class Prestamos implements Serializable { //clase para manejar los prestamos
-                                   // clase para ver historial de prestamos y deudas actuales
+
     @EJB
     TblPrestariosFacade usr;
 
@@ -33,7 +31,6 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     private String telefono;
     private String matricula;
     private TblPrestarios us;
-
 
     public Prestamos() {
 

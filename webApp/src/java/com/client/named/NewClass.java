@@ -11,10 +11,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIInput;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
@@ -47,8 +43,9 @@ public class NewClass implements Serializable {
         this.caja = caja;
     }
 
-    public List<TblMaterial> autoComplete(String patron) { // metodo del buscador 
-        if (patron.matches("^[a-zA-Z0]*$")) {
+    
+     public List<TblMaterial> autoComplete(String patron) {
+       if (patron.matches("^[a-zA-Z0]*$")) {
             results = mtl.autoQueryName(patron);
         } else {
             results = mtl.autoQueryPartNumber(patron);
@@ -57,14 +54,4 @@ public class NewClass implements Serializable {
         // System.out.println(patron);
         return results;
     }
-    //dfsfdsdsadas
-    public String processQuery() {
-        
-       // FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "logIn.xhtml");
-      
-        //com.setValue(new TblMaterial);
-        return "/productOverview.xhtml";
-    }
-    
-    
 }

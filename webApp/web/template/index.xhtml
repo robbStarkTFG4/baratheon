@@ -18,7 +18,7 @@
 
         <div id="top">
             <ui:insert name="top">
-                <h:form id="form">
+                <h:form>
 
                     <p:outputLabel />                                          
                     <p:menubar style="margin-top: 178px;  " >         
@@ -36,9 +36,8 @@
                             <p:commandButton   id="iconOnly"  
                                                icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " />    
 
-                            <p:autoComplete   value="#{nm.caja}" id="sr" completeMethod="#{nm.autoComplete}"  style="margin-right:10px; height: 25px; width: 50px; "
-                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
-                                              forceSelection="true"
+                            <p:autoComplete   value="#{nm.caja}" id="sr" completeMethod="#{nm.autoComplete}"  style="margin-right:10px; height: 25px; width: 300px; "
+                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl"
                                               >
                                 <p:column>  
                                     #{p.nombre} - #{p.noParte}  
@@ -47,7 +46,7 @@
                             </p:autoComplete>  
 
 
-                            <p:commandButton   icon="ui-icon-search" style="width:150px;  height: 30px; " action="#{nm.processQuery}" />  
+                            <p:commandButton type="button" value="Buscar" icon="ui-icon-search" style="width:150px;  height: 30px; "/>  
                         </f:facet>  
 
                     </p:menubar>                                                           
