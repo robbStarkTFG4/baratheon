@@ -34,15 +34,103 @@
             </h:panelGrid>
 
 
-                     
+
+
 
             <p:tabView id="tabView" style="margin-top: 10px;">  
 
                 <p:tab id="tab1" title="adeudos"> 
-                    
-                    <p:dataTable id="debts">
-                        
-                        
+
+                    <p:dataTable id="debts" value="#{pres.res}"  var="pr" emptyMessage="no existen adeudos">
+
+                        <p:column style="width:2%">  
+                            <p:rowToggler  />  
+                        </p:column>  
+
+
+                        <p:column style="width: 8%">
+                            <f:facet name="header">
+                                #prestamo
+                            </f:facet>
+                            <h:outputText value="#{pr.idPrestamo}"/>
+                        </p:column>
+
+                        <p:column style="width: 25%">
+                            <f:facet name="header">
+                                fecha prestamo
+                            </f:facet>
+                            <h:outputText value="#{pr.fechaprestamo}"/>
+                        </p:column>
+
+                        <p:column style="width: 25%">
+                            <f:facet name="header">
+                                hora prestamo
+                            </f:facet>
+                            <h:outputText value="#{pr.horaprestamo}"/>
+                        </p:column>
+
+                        <p:column style="width: 25%">
+                            <f:facet name="header">
+                                asesor
+                            </f:facet>
+                            <h:outputText value="#{pr.idUsuarios}"/>
+                        </p:column>
+
+
+
+                        <p:column style="width: 15%">
+                            <f:facet name="header">
+                                status prestamo
+                            </f:facet>
+                            <h:outputText value="#{pr.statusprestamo}"/>
+                        </p:column>
+
+                        <p:rowExpansion>  
+
+                            <p:dataTable id="debts" value="#{pr.tblDetalleprestamoList}"  var="dt" style="margin: 10px" styleClass="ui-widget-content grid">
+
+                                <p:column style="width: 20%">
+                                    <f:facet name="header">
+                                        #parte
+                                    </f:facet>
+                                    <h:outputText value="#{dt.noParte}"/>
+                                </p:column>
+
+                                <p:column style="width: 20%">
+                                    <f:facet name="header">
+                                        nombre
+                                    </f:facet>
+                                    <h:outputText value="#{dt.nombre}"/>
+                                </p:column>
+
+                                <p:column style="width: 7%">
+                                    <f:facet name="header">
+                                        cantidad
+                                    </f:facet>
+                                    <h:outputText value="#{dt.cantidad}"/>
+                                </p:column>
+
+                                <p:column style="width: 15%">
+                                    <f:facet name="header">
+                                        fecha retorno
+                                    </f:facet>
+                                    <h:outputText value="#{dt.fecharetorno}"/>
+                                </p:column>
+
+                                <p:column style="width: 15%">
+                                    <f:facet name="header">
+                                        hora 
+                                    </f:facet>
+                                    <h:outputText value="#{dt.horaretorno}"/>
+                                </p:column>
+
+                                  <p:column style="width: 23%">
+                                      <p:commandButton value="procesar entrega"/>
+                                </p:column>
+                            </p:dataTable>
+
+                        </p:rowExpansion>  
+
                     </p:dataTable>
 
                 </p:tab>  
@@ -57,6 +145,9 @@
                 </p:tab>  
 
             </p:tabView>  
+
+
+            <p:commandButton value="hit me" action="#{pres.action()}"/>
 
 
         </h:form>
