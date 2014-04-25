@@ -181,14 +181,14 @@ compU.setValue(borrar);
  public String login(){
  
 
-        UIInput compUsuario = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("user:usuario");
-        UIInput compClave = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("user:clave");
+        UIInput compUsuario = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:usuario");
+        UIInput compClave = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:clave");
         usuario = us.logIn(compUsuario.getValue().toString(), compClave.getValue().toString());
 
         UIOutput out = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("status:indicador");
 
-        String tipo=usuario.getIdTipousuarios().getIdTipousuarios().toString();
-        
+      String tipo=usuario.getIdTipousuarios().getIdTipousuarios().toString();
+        System.out.println(tipo);
        if (usuario != null) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(usuario.getContraseña(),"usuario autentificado ?++");
           
@@ -306,6 +306,7 @@ UIInput compNombre = (UIInput) FacesContext.getCurrentInstance().getViewRoot().f
    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "correo ya utilizado"));
   
   System.out.println("Usuario o correo usados");
+  
  }
 else{
      Hregistros=true;

@@ -25,7 +25,7 @@
  <center>
         <div id="content" class="center_content">
             <ui:insert name="content">
-                <h:form id="forma">
+                <h:form id="login">
           <center>
                    <h:panelGrid id="grid" columns="2">
                        <br/>
@@ -39,13 +39,14 @@
 
 
                        <p:outputLabel value="Usuario:" style="color: #ffffff;  margin-top: 500px;"/>  
-                       <p:inputText style="height: 30px; width: 250px;"/>
+                       <p:inputText id="usuario" style="height: 30px; width: 250px;"/>
                        <p:outputLabel value="Contraseña:" style="color: #ffffff"/>  
-                       <p:inputText style="height: 30px; width: 250px; margin-top:7px;"/>
+                       <p:password id="clave" style="height: 30px; width: 250px; margin-top:7px;"/>
                                             
                 </h:panelGrid>
-              <p:commandButton id="boton1" value="Ingresar" style="height: 50px; width: 150px; margin-top:10px;"/>
-            </center> 
+              <p:commandButton id="boton1" value="Ingresar" action="#{user.login()}"  style="height: 50px; width: 150px; margin-top:10px;"/>
+           
+          </center> 
         </h:form>
             </ui:insert>
         </div>

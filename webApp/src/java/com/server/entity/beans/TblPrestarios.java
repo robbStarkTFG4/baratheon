@@ -92,17 +92,6 @@ public class TblPrestarios implements Serializable {
         this.usuario = usuario;
     }
 
-    public TblPrestarios(Integer idPrestario, String nombre, String apaterno, String amaterno, String tel, String email, String usuario, String carrera) {
-        this.idPrestario = idPrestario;
-        this.nombre = nombre;
-        this.apaterno = apaterno;
-        this.amaterno = amaterno;
-        this.tel = tel;
-        this.email = email;
-        this.usuario = usuario;
-        this.carrera = carrera;
-    }
-
     public Integer getIdPrestario() {
         return idPrestario;
     }
