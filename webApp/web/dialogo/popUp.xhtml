@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"  
+      xmlns:h="http://java.sun.com/jsf/html"  
+      xmlns:f="http://java.sun.com/jsf/core"  
+      xmlns:ui="http://java.sun.com/jsf/facelets"  
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>#{pr.current.noParte}</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="2" cellspacing="5px" cellpadding="5px">
+                <h:panelGrid columns="2" cellpadding="5px">
+
+                    <p:outputLabel value="#Parte: " for="numParte" />
+                    <p:inputText id="numParte" value="#{pr.current.noParte}" size="20" disabled="true"/>
+
+                    <p:outputLabel value="Nombre: " for="nombre" />
+                    <p:inputText id="nombre" value="#{pr.current.nombre}" size="20" disabled="true"/>
+
+                    <p:outputLabel value="Descripcion: " for="des" />
+                    <p:inputTextarea id="des" value="#{pr.current.descripcion}" maxlength="200" autoResize="false" disabled="true"/>
+
+                    <p:outputLabel value="Stock " for="ctg" />
+                    <p:inputText id="ctg" value="#{pr.current.stock}" size="20" disabled="true"/>
+
+                </h:panelGrid>
+
+                <h:panelGrid columns="1" cellpadding="5px">
+                    <h:graphicImage value="/resources/imagenes/#{pr.current.imagen}" rendered="#{pr.current.imagen ne null}"  />
+                </h:panelGrid>
+
+
+            </h:panelGrid>
+
+        </h:form>
+    </h:body>
+</html>
+

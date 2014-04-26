@@ -7,6 +7,7 @@ package com.server.beans.staless;
 
 import com.server.entity.beans.TblMaterial;
 import java.util.List;
+import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

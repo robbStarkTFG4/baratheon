@@ -15,7 +15,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.context.RequestContext;
 
 /**
@@ -30,6 +32,11 @@ public class NewClass implements Serializable {
     private List<TblMaterial> results;
     @EJB
     TblMaterialFacade mtl;
+
+    @Inject
+    DataGridSearch data;
+
+    private boolean karControl = true;
 
     public NewClass() {
 
@@ -48,6 +55,7 @@ public class NewClass implements Serializable {
     }
 
     public List<TblMaterial> autoComplete(String patron) { // metodo del buscador 
+        System.out.println("sigo funcionando autoComplete METODO");
         if (patron.matches("^[a-zA-Z0]*$")) {
             results = mtl.autoQueryName(patron);
         } else {
@@ -57,14 +65,38 @@ public class NewClass implements Serializable {
         // System.out.println(patron);
         return results;
     }
+
     //dfsfdsdsadas
     public String processQuery() {
-        
+        System.out.println("sigo funcionando BUSCADOR commandButton");
+
        // FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "logIn.xhtml");
-      
         //com.setValue(new TblMaterial);
-        return "/productOverview.xhtml";
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
+        // returns something like "/myapplication/home.faces"
+        String fullURI = servletRequest.getRequestURI();
+
+        System.out.println("estoy en: " + fullURI);
+
+        if (!fullURI.equals("/webApp/faces/grid.xhtml")) {
+            System.out.println("entre en el redirect");
+            return "/grid.xhtml?faces-redirect=true";
+        } else {
+            System.out.println("estoy en el ajax");
+            data.performQuery();
+            RequestContext.getCurrentInstance().update("form:grid");
+            return null;
+        }
+
     }
-    
-    
+
+    public boolean isKarControl() {
+        return karControl;
+    }
+
+    public void setKarControl(boolean karControl) {
+        this.karControl = karControl;
+    }
+
 }
