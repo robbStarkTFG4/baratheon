@@ -6,27 +6,33 @@
 package com.client.named;
 
 import com.server.beans.staless.TblMaterialFacade;
+import com.server.beans.stateful.NewSessionBean;
 import com.server.entity.beans.TblMaterial;
+import com.util.MtlDTO;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
-<<<<<<< HEAD
+
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-=======
->>>>>>> 471ac71a155ada97611164a2333bc6502923c094
+
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-<<<<<<< HEAD
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.primefaces.context.RequestContext;
-=======
->>>>>>> 471ac71a155ada97611164a2333bc6502923c094
+
+
 
 /**
  *
@@ -42,7 +48,7 @@ public class DataGridSearch implements Serializable {
     @EJB
     TblMaterialFacade mtl;
 
-<<<<<<< HEAD
+
     @EJB
     NewSessionBean kart;//*
 
@@ -60,13 +66,14 @@ public class DataGridSearch implements Serializable {
     
      @Resource
      private javax.transaction.UserTransaction utx;*/
-=======
-    @Inject
-    NewClass nm;
 
-    private boolean control = false;
+  
 
->>>>>>> 471ac71a155ada97611164a2333bc6502923c094
+   
+    private int quantity;
+    private int cantidad;
+
+
     @PostConstruct
     private void init() {
         performQuery();
@@ -96,7 +103,7 @@ public class DataGridSearch implements Serializable {
         this.current = current;
     }
 
-<<<<<<< HEAD
+
     public int getQuantity() {
         return quantity;
     }
@@ -195,6 +202,5 @@ public class DataGridSearch implements Serializable {
         this.remove = remove;
     }
 
-=======
->>>>>>> 471ac71a155ada97611164a2333bc6502923c094
+
 }
