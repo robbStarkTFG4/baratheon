@@ -15,10 +15,15 @@
     </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            7
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>faces/logIn.xhtml</welcome-file>
     </welcome-file-list>
+    <error-page> 
+        <error-code> 404 </error-code>
+        <location> /error_page.xhtml</location>
+    
+    </error-page>
 </web-app>
