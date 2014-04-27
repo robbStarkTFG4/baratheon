@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
    
     <h:head>
-        <f:event type="preRenderView" listener="#{user.verificar(e)}" />
+    
         <title>resultados busquedas</title>
     </h:head>
     <h:body>
@@ -35,13 +35,13 @@
                             </p:commandLink>
 
                             <h:outputText value="#{car.nombre}" />  
-                            <p:spinner id="spin" value="#{ka.quantity}"  valueChangeListener="#{ka.spinnerListener}"  min="0" validator="vl"
+                            <p:spinner id="spin" value="#{gd.quantity}"  valueChangeListener="#{gd.spinnerListener}"  min="0" validator="vl"
                                        >
 
                             </p:spinner>  
-                            <p:commandLink action="#{ka.addToCart}"  process="spin,@this" update="grow1"  >  
+                            <p:commandLink action="#{gd.addToCart}"  process="spin,@this" update="grow1"  >  
                                 <h:outputText styleClass="ui-icon ui-icon-check" style="margin:0 auto;" />   
-                                <f:setPropertyActionListener value="#{car}" target="#{ka.current}" />
+                                <f:setPropertyActionListener value="#{car}" target="#{gd.current}" />
 
                             </p:commandLink> 
                         </h:panelGrid>  
