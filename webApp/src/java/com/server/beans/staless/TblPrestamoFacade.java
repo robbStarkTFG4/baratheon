@@ -3,13 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.server.beans.staless;
 
+import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblPrestamo;
+import com.util.DetailDTO;
+import com.util.PresDTO;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Iterator;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TransactionRequiredException;
 
 /**
  *
@@ -17,6 +29,10 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
+
+    @EJB
+    TblDetalleprestamoFacade dtl;
+
     @PersistenceContext(unitName = "webAppPU")
     private EntityManager em;
 
@@ -28,5 +44,135 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
     public TblPrestamoFacade() {
         super(TblPrestamo.class);
     }
+
+    /*  private Integer idPrestamo;***
+     private String fechaprestamo;****
+     private String fecharetorno; ****
+     private String horaprestamo;****
+     private String idUsuarios;****
+     private int statusprestamo;****
+     private List<DetailDTO> tblDetalleprestamoList;*/
+    public List<PresDTO> getLoansByDebts(int idPrestario) {
+        Query query = em.createQuery("SELECT c.idPrestamo,  c.fechaprestamo, c.fecharetorno, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo , c.idUsuarios.idUsuarios, c.idPrestario.idPrestario FROM TblPrestamo c "
+                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo != 3");
+        query.setParameter("id", idPrestario);
+
+        List<PresDTO> list = new ArrayList<>();
+
+        List obj = query.getResultList();
+
+        if (obj != null) {
+            for (Iterator it = obj.iterator(); it.hasNext();) {
+                Object[] object = (Object[]) it.next();
+                PresDTO temp = new PresDTO();
+                temp.setIdPrestamo((Integer) object[0]);
+                temp.setFechaprestamo((String) object[1]);
+                temp.setFecharetorno((String) object[2]);
+                temp.setHoraprestamo((String) object[3]);
+                temp.setIdUsuarios((String) object[4]);
+                temp.setStatusprestamo((int) object[5]);
+                temp.setTblDetalleprestamoList(dtl.getDtls((int) object[0]));
+                temp.setIntUsuarioId((int) object[6]);
+                temp.setIdPrestario((int) object[7]);
+                temp.setDetailsSize(temp.getTblDetalleprestamoList().size());
+                list.add(temp);
+            }
+            return list;
+        }
+
+        return null;
+    }
+
     
+    public List<PresDTO> getLoansByFreeds(int idPrestario) {
+        Query query = em.createQuery("SELECT c.idPrestamo,  c.fechaprestamo, c.fecharetorno, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo , c.idUsuarios.idUsuarios, c.idPrestario.idPrestario FROM TblPrestamo c "
+                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 3");
+        query.setParameter("id", idPrestario);
+
+        List<PresDTO> list = new ArrayList<>();
+
+        List obj = query.getResultList();
+
+        if (obj != null) {
+            for (Iterator it = obj.iterator(); it.hasNext();) {
+                Object[] object = (Object[]) it.next();
+                PresDTO temp = new PresDTO();
+                temp.setIdPrestamo((Integer) object[0]);
+                temp.setFechaprestamo((String) object[1]);
+                temp.setFecharetorno((String) object[2]);
+                temp.setHoraprestamo((String) object[3]);
+                temp.setIdUsuarios((String) object[4]);
+                temp.setStatusprestamo((int) object[5]);
+                temp.setTblDetalleprestamoList(dtl.getDtls((int) object[0]));
+                temp.setIntUsuarioId((int) object[6]);
+                temp.setIdPrestario((int) object[7]);
+                temp.setDetailsSize(temp.getTblDetalleprestamoList().size());
+                list.add(temp);
+            }
+            return list;
+        }
+
+        return null;
+    }
+    public boolean updatePres(PresDTO pres,List<PresDTO> list) {
+       TblPrestamo pr=pres.convertDTO();
+       try{
+       int count=0;
+       int size=pr.getTblDetalleprestamoList().size();
+        for (TblDetalleprestamo dl : pr.getTblDetalleprestamoList()) {
+            if(!dl.getFecharetorno().isEmpty()){
+                count++;
+            }
+        }
+        
+        if(count!=0){
+        if(count==size){
+            pres.setStatusprestamo(3);
+            pr.setStatusprestamo(3);
+            pr.setFecharetorno(((String [])currentDate())[0]);
+            list=this.getLoansByDebts(pres.getIdPrestario()); // mejorar esta linea.
+                    
+        }else{
+            pres.setStatusprestamo(2);
+             pr.setStatusprestamo(2);
+        }
+        }else{
+            pres.setStatusprestamo(1);
+             pr.setStatusprestamo(1);
+        }
+       }catch(NullPointerException e){
+           
+       }
+        try {
+            em.merge(pr);
+            return true;
+        } catch (IllegalArgumentException | TransactionRequiredException e) {
+            return false;
+        }
+
+    }
+    
+      public String[] currentDate() {
+        String[] datos = new String[2];
+
+        String DATE_FORMAT_NOW = "yyyy/MM/dd";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        String stringDate = sdf.format(date);
+        datos[0] = stringDate;
+        Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
+        calendar.setTime(date);   // assigns calendar to given date 
+        calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
+        //calendar.get(Calendar.HOUR);        // gets hour in 12h format
+        calendar.get(Calendar.MONTH);
+
+        SimpleDateFormat hora = new SimpleDateFormat("HH:mm");
+        String currentTime = hora.format(date.getTime());
+        datos[1] = currentTime;
+        System.out.println("HORA: " + currentTime);
+        System.out.println("hora: " + System.currentTimeMillis());
+        System.out.println("Current Date: " + stringDate);
+        //Date date2 = sdf.parse(stringDate);
+        return datos;
+    }
 }

@@ -5,7 +5,12 @@
  */
 package com.util;
 
+import com.server.entity.beans.TblDetalleprestamo;
+import com.server.entity.beans.TblPrestamo;
+import com.server.entity.beans.TblPrestarios;
+import com.server.entity.beans.TblUsuarios;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,15 +20,52 @@ import java.util.List;
 public class PresDTO implements Serializable {
 
     //SELECT c.idPrestamo, c.fechaprestamo, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo
-    private Integer idPrestamo;
-    private String fechaprestamo;
-    private String fecharetorno;
-    private String horaprestamo;
+    private Integer idPrestamo;//*
+    private String fechaprestamo;//*
+    private String fecharetorno;//*
+    private String horaprestamo;//*
     private String idUsuarios;
-    private int statusprestamo;
+    private int statusprestamo;//*
     private List<DetailDTO> tblDetalleprestamoList;
+    private int detailsSize ;
+    private int detailsFreed ;
+    private int intUsuarioId ;//*
+    private int idPrestario  ;
 
     public PresDTO() {
+    }
+
+    public TblPrestamo convertDTO() {
+        TblPrestamo tbl = new TblPrestamo();
+
+        tbl.setIdPrestamo(this.getIdPrestamo());
+        tbl.setFechaprestamo(this.getFechaprestamo());
+        tbl.setFecharetorno(this.getFecharetorno());
+        tbl.setHoraprestamo(this.getHoraprestamo());
+
+        tbl.setIdUsuarios(new TblUsuarios(this.getIntUsuarioId()));
+
+        List<TblDetalleprestamo> list = new ArrayList<>();
+     //  int status=0;
+        for (DetailDTO detailDTO : this.getTblDetalleprestamoList()) {
+            System.out.println("posible nulo: " + detailDTO.getNombre());
+         //   status=verifyStatus(detailDTO);
+            list.add(detailDTO.convertDTO());
+        }
+       /* this.detailsFreed=0;
+        for (DetailDTO dtls : this.getTblDetalleprestamoList()) {
+            if(!dtls.getHoraretorno().isEmpty()){
+                status=2;
+                this.detailsFreed++;
+            }
+        }*/
+        
+     //   if(this.detailsFreed==this.detailsSize)status=3;
+     //   this.setStatusprestamo(status);
+       // tbl.setStatusprestamo(status);
+        tbl.setTblDetalleprestamoList(list);
+        tbl.setIdPrestario(new TblPrestarios(this.getIdPrestario()));
+        return tbl;
     }
 
     public Integer getIdPrestamo() {
@@ -80,6 +122,56 @@ public class PresDTO implements Serializable {
 
     public void setIdUsuarios(String idUsuarios) {
         this.idUsuarios = idUsuarios;
+    }
+
+    public int getDetailsSize() {
+        return detailsSize;
+    }
+
+    public void setDetailsSize(int detailsSize) {
+        this.detailsSize = detailsSize;
+    }
+
+    public int getDetailsFreed() {
+        return detailsFreed;
+    }
+
+    public void setDetailsFreed(int detailsFreed) {
+        this.detailsFreed = detailsFreed;
+    }
+
+    public int getIntUsuarioId() {
+        return intUsuarioId;
+    }
+
+    public void setIntUsuarioId(int intUsuarioId) {
+        this.intUsuarioId = intUsuarioId;
+    }
+
+    public int getIdPrestario() {
+        return idPrestario;
+    }
+
+    public void setIdPrestario(int idPrestario) {
+        this.idPrestario = idPrestario;
+    }
+
+    private int verifyStatus(DetailDTO detailDTO) {
+      if(detailDTO.getHoraretorno()!=null){
+        if (!detailDTO.getHoraretorno().isEmpty()) {
+            this.detailsFreed++;
+            if (this.detailsFreed == this.detailsSize) {
+                System.out.println("**************valor detailsFreed " + this.detailsFreed + " tamaño: " + this.detailsSize);
+                return 3;
+            }
+            return 2;
+
+        }else{
+            if(this.detailsFreed!=0)this.detailsFreed--;
+        }
+        return 1;
+      }
+      return 1;
     }
 
 }

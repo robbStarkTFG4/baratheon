@@ -5,7 +5,6 @@
  */
 package com.server.beans.stateful;
 
-
 import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblMaterial;
 import com.util.MtlDTO;
@@ -89,17 +88,22 @@ public class NewSessionBean {
     }
 
     public void removeItem(MtlDTO mt) {
-        TblMaterial temp=null;
-        
+        TblMaterial temp = null;
+
         for (TblMaterial tblMaterial : mtl) {
             if (tblMaterial.getNoParte().equals(mt.getNoParte())) {
-                temp=tblMaterial;
+                temp = tblMaterial;
             }
         }
-        if(temp!=null){
-        mtl.remove(temp);
-        data.remove(mt);
+        if (temp != null) {
+            mtl.remove(temp);
+            data.remove(mt);
         }
+    }
+
+    public void clearList() {
+       mtl.clear();
+       data.clear();
     }
 
     public boolean persistLoan() {//crear el objeto de prestamo y los objetos de detalles y persistirlos  ,  navegar a la pag de instanciar prestario.

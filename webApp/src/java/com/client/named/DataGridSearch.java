@@ -202,5 +202,9 @@ public class DataGridSearch implements Serializable {
         this.remove = remove;
     }
 
+    public void clearList(){
+        kart.clearList();
+         RequestContext.getCurrentInstance().update("form1:table");
+    }
 
 }

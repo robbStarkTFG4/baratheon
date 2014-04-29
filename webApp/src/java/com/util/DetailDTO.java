@@ -6,6 +6,9 @@
 
 package com.util;
 
+import com.server.entity.beans.TblDetalleprestamo;
+import com.server.entity.beans.TblMaterial;
+import com.server.entity.beans.TblPrestamo;
 import java.io.Serializable;
 
 /**
@@ -27,10 +30,25 @@ public class DetailDTO implements Serializable{
    
     private String nombre;
     
+    private int idMaterial=0;
+    
+    private int idPres=0;
+    
     public DetailDTO(){
         
     }
 
+    public TblDetalleprestamo convertDTO(){
+        TblDetalleprestamo dtl=new TblDetalleprestamo();
+        dtl.setIdDetalleprestamo(this.getIdDetalleprestamo());
+        dtl.setCantidad(this.getCantidad());
+        dtl.setFecharetorno(this.getFecharetorno());
+        dtl.setHoraretorno(this.getHoraretorno());
+        dtl.setIdMaterial(new  TblMaterial(this.getIdMaterial()));
+        dtl.setIdPrestamo(new TblPrestamo(this.getIdPres()));
+        
+        return dtl;
+    }
     public Integer getIdDetalleprestamo() {
         return idDetalleprestamo;
     }
@@ -77,6 +95,22 @@ public class DetailDTO implements Serializable{
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public int getIdMaterial() {
+        return idMaterial;
+    }
+
+    public void setIdMaterial(int idMaterial) {
+        this.idMaterial = idMaterial;
+    }
+
+    public int getIdPres() {
+        return idPres;
+    }
+
+    public void setIdPres(int idPres) {
+        this.idPres = idPres;
     }
     
 }

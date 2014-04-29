@@ -72,23 +72,25 @@ public class NewClass implements Serializable {
 
        // FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "logIn.xhtml");
         //com.setValue(new TblMaterial);
-        FacesContext ctx = FacesContext.getCurrentInstance();
-        HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
-        // returns something like "/myapplication/home.faces"
-        String fullURI = servletRequest.getRequestURI();
+        if (caja != null) {
+            FacesContext ctx = FacesContext.getCurrentInstance();
+            HttpServletRequest servletRequest = (HttpServletRequest) ctx.getExternalContext().getRequest();
+            // returns something like "/myapplication/home.faces"
+            String fullURI = servletRequest.getRequestURI();
 
-        System.out.println("estoy en: " + fullURI);
+            System.out.println("estoy en: " + fullURI);
 
-        if (!fullURI.equals("/webApp/faces/grid.xhtml")) {
-            System.out.println("entre en el redirect");
-            return "/grid.xhtml?faces-redirect=true";
-        } else {
-            System.out.println("estoy en el ajax");
-            data.performQuery();
-            RequestContext.getCurrentInstance().update("form:grid");
-            return null;
+            if (!fullURI.equals("/webApp/faces/grid.xhtml")) {
+                System.out.println("entre en el redirect");
+                return "/grid.xhtml?faces-redirect=true";
+            } else {
+                System.out.println("estoy en el ajax");
+                data.performQuery();
+                RequestContext.getCurrentInstance().update("form:grid");
+                return null;
+            }
         }
-
+        return null;
     }
 
     public boolean isKarControl() {

@@ -4,10 +4,15 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-  
+
     <h:head>
-        
+
         <title>historial prestamos</title>
+        <style type="text/css">
+            .txtColor{
+                color: green; 
+            }
+        </style>
     </h:head>
     <h:body>
         <h:form id="forma">     
@@ -35,27 +40,220 @@
 
             </h:panelGrid>
 
-
-                     
-
-            <p:tabView id="tabView" style="margin-top: 10px;">  
-
+            <p:tabView id="tabView" style="margin-top: 10px;" >  
+                 
+                  <p:ajax event="tabChange" listener="#{pres.onTabChange}" />
+                
                 <p:tab id="tab1" title="adeudos"> 
-                    
-                    <p:dataTable id="debts">
-                        
-                        
+
+                    <p:dataTable id="debts" value="#{pres.listLoans}" var="pl">
+
+                        <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
+                        <p:column style="width:2%">  
+                            <p:rowToggler  />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                #prestamo  
+                            </f:facet>  
+                            <h:outputText value="#{pl.idPrestamo}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                fecha prestamo  
+                            </f:facet>  
+                            <h:outputText value="#{pl.fechaprestamo}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                hora prestamo  
+                            </f:facet>  
+                            <h:outputText value="#{pl.horaprestamo}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                usuario  
+                            </f:facet>  
+                            <p:commandLink value="#{pl.idUsuarios}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                estatus prestamo
+                            </f:facet>  
+                            <h:outputText id="estatus" value="#{pl.statusprestamo}" />  
+                        </p:column>  
+
+                        <p:rowExpansion>  
+                            <p:growl id="noti" showDetail="true" sticky="false"/>
+                            <p:dataTable id="dtls"   value="#{pl.tblDetalleprestamoList}" var="dl" >
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header" >  
+                                        #parte
+                                    </f:facet>  
+
+                                    <p:commandLink value="#parte" action="#{pres.listenPartNumber()}"/>
+
+
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        nombre
+                                    </f:facet>  
+                                    <h:outputText value="#{dl.nombre}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        cantidad
+                                    </f:facet>  
+                                    <h:outputText value="#{dl.cantidad}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        fecha retorno
+                                    </f:facet>  
+                                    <h:outputText id="fr" value="#{dl.fecharetorno}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        hora retorno
+                                    </f:facet>  
+                                    <h:outputText id="hr"  value="#{dl.horaretorno}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+
+
+                                    <p:commandButton value="entregar" action="#{pres.checkDtl}" update="fr,hr" >
+                                        <f:setPropertyActionListener value="#{dl}" target="#{pres.currentDtl}"/>
+                                    </p:commandButton>  
+                                </p:column>  
+                            </p:dataTable>
+
+                            <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
+                                <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
+                                    <f:setPropertyActionListener value="#{pl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
+                                </p:commandButton>
+                                <p:commandButton value="Guardar" action="#{pres.savePres}" update="noti">
+                                    <f:setPropertyActionListener value="#{pl}" target="#{pres.currentPres}"/>
+                                </p:commandButton>
+                            </h:panelGrid>
+
+                        </p:rowExpansion>  
                     </p:dataTable>
 
                 </p:tab>  
 
                 <p:tab id="tab2" title="liberados">  
-                    <h:panelGrid columns="2" cellpadding="10">  
 
-                        <h:outputText id="tab2Text" value="Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather, parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream.  
-                                      In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy,  
-                                      killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows."/>  
-                    </h:panelGrid>  
+
+
+                    <p:dataTable id="freed" value="#{pres.freeds}" var="pf">
+
+                        <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
+                        <p:column style="width:2%">  
+                            <p:rowToggler  />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                #prestamo  
+                            </f:facet>  
+                            <h:outputText value="#{pf.idPrestamo}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                fecha prestamo  
+                            </f:facet>  
+                            <h:outputText value="#{pf.fechaprestamo}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                hora prestamo  
+                            </f:facet>  
+                            <h:outputText value="#{pf.horaprestamo}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                usuario  
+                            </f:facet>  
+                            <p:commandLink value="#{pf.idUsuarios}" />  
+                        </p:column>  
+
+                        <p:column style="width:49%">  
+                            <f:facet name="header">  
+                                fecha retorno
+                            </f:facet>  
+                            <h:outputText id="estatus" value="#{pf.fecharetorno}" />  
+                        </p:column>  
+
+                        <p:rowExpansion>  
+                           
+                            <p:dataTable id="dtls"   value="#{pf.tblDetalleprestamoList}" var="ld" >
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header" >  
+                                        #parte
+                                    </f:facet>  
+
+                                    <p:commandLink value="#parte" action="#{pres.listenPartNumber()}"/>
+
+
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        nombre
+                                    </f:facet>  
+                                    <h:outputText value="#{ld.nombre}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        cantidad
+                                    </f:facet>  
+                                    <h:outputText value="#{ld.cantidad}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        fecha retorno
+                                    </f:facet>  
+                                    <h:outputText id="fr" value="#{ld.fecharetorno}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+                                    <f:facet name="header">  
+                                        hora retorno
+                                    </f:facet>  
+                                    <h:outputText id="hr"  value="#{ld.horaretorno}" />  
+                                </p:column>  
+
+                                <p:column style="width:49%">  
+
+
+
+                                </p:column>  
+                            </p:dataTable>
+
+                        </p:rowExpansion>  
+                    </p:dataTable>
+
+
+
+
                 </p:tab>  
 
             </p:tabView>  
