@@ -7,7 +7,9 @@
 package com.client.named;
 
 
+import com.server.beans.staless.TblMaterialFacade;
 import com.server.beans.staless.TblUsuariosFacade;
+import com.server.entity.beans.TblMaterial;
 import com.server.entity.beans.TblTipousuarios;
 import com.server.entity.beans.TblUsuarios;
 import java.io.IOException;
@@ -35,10 +37,11 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 public class BeanUsuarios implements Serializable{
     
- @EJB TblUsuariosFacade us;
+ @EJB TblUsuariosFacade us;TblMaterialFacade mat;
   TblUsuarios usuario,usmodif = null;
   TblTipousuarios tu=null;
  List<TblUsuarios> listauss;
+ List<TblMaterial> listamat;
  String borrar;
  String status;
  String user;
@@ -52,8 +55,20 @@ public class BeanUsuarios implements Serializable{
  String tel;
 String password;
 
+    public List<TblMaterial> getListamat() {
+        this.listamat=mat.findAll();
+        return listamat;
+    }
+
     public List<TblUsuarios> getListauss() {
         this.listauss=us.listausuariosSS();
+         for (int i = 0; i < listauss.size(); i++) {  
+          
+      if(listauss.get(i).getIdTipousuarios().getIdTipousuarios().equals("admin")){
+       listauss.remove(i);
+      }
+     
+      }
         return listauss;
     }
 
@@ -194,7 +209,7 @@ compU.setValue(borrar);
           
            System.out.println(tipo);
 
-        return "index.xhtml?faces-redirect=true";
+        return "/template/index.xhtml?faces-redirect=true";
        } else {
           
            status = "error Usuario o contraseña no validos";

@@ -7,87 +7,94 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
    
     <h:head>
-        <f:event type="preRenderView" listener="#{user.verificar(e)}" />
+        
         <title>Facelet Title</title>
+        
     </h:head>
+   
     <h:body>
-         <ui:composition template="/Admin.xhtml" >
-            <ui:define name="contentenidoAdmin">
-        <h:form>
-            
+     <ui:composition template="/Admin.xhtml"  >
+            <ui:define name="contentenidoAdmin" >       
+        <h:form id="repouss">
+          
             <center>
-                <h2>Lista de prestarios morosos</h2>
+                <h2>Lista de Usuarios de servicio social</h2>
             </center>
             <p:dataTable id="tbl" var="car" value="#{user.listauss}" paginator="true" rows="10">  
-    <p:column>  
+    <p:column >  
         <f:facet name="header">  
             <h:outputText value="Usuario" />  
         </f:facet>  
         <h:outputText value="#{car.usuario}" />  
     </p:column>  
   
-    <p:column>  
+    <p:column >  
         <f:facet name="header">  
             <h:outputText value="Nombre" />  
         </f:facet>  
         <h:outputText value="#{car.nombre}"/>  
     </p:column>  
   
-    <p:column>  
+    <p:column >  
         <f:facet name="header">  
             <h:outputText value="Apellido paterno" />  
         </f:facet>  
         <h:outputText value="#{car.apellidop}" />  
     </p:column>  
   
-    <p:column>  
+    <p:column >  
         <f:facet name="header">  
             <h:outputText value="Apellido materno" />  
         </f:facet>  
         <h:outputText value="#{car.apellidom}" />  
     </p:column>  
-                 <p:column>  
+                 <p:column exportable="true">  
         <f:facet name="header">  
             <h:outputText value="Correo" />  
         </f:facet>  
                      <h:outputText value="#{car.email}" />  
     </p:column> 
-                 <p:column>  
+   <p:column>  
         <f:facet name="header">  
             <h:outputText value="Telefono" />  
         </f:facet>  
                      <h:outputText value="#{car.tel}" />  
     </p:column>  
+                <p:column >  
+        <f:facet name="header">  
+            <h:outputText value="Tipo" />  
+        </f:facet>  
+                     <h:outputText value="#{car.idTipousuarios.idTipousuarios}" />  
+    </p:column>  
 </p:dataTable>  
       
 <h:panelGrid columns="1">  
-    <p:panel header="Exportar reporte">  
-       <h:commandLink>  
-            <p:graphicImage value="./imagenes/excel.png" />  
-            <p:dataExporter type="xls" target="tbl" fileName="PrestariosD" />  
-        </h:commandLink>  
+    
+    <p:panel header="Exportar reporte"> 
+       
+        <h:commandButton image="/imagenes/excel.png">       
+            <p:dataExporter type="xls" target="tbl" fileName="USS" />  
+        </h:commandButton>  
   
-        <h:commandLink>  
-          <p:graphicImage value="/imagenes/pdf.png" /> 
-            <p:dataExporter type="pdf" target="tbl" fileName="PrestariosD"/>  
-        </h:commandLink>  
+        <h:commandButton image="/imagenes/pdf.png">   
+          <p:dataExporter type="pdf" target="tbl" fileName="USS"/>  
+        </h:commandButton>  
           
-        <h:commandLink>  
-            <p:graphicImage value="/imagenes/csv.png" />  
-            <p:dataExporter type="csv" target="tbl" fileName="PrestariosD"/>  
-        </h:commandLink>  
+        <h:commandButton image="/imagenes/csv.png">   
+            <p:dataExporter type="csv" target="tbl" fileName="USS"/>  
+        </h:commandButton>  
           
-        <h:commandLink>  
-            <p:graphicImage value="/imagenes/xml.jpg" />  
-            <p:dataExporter type="xml" target="tbl" fileName="PrestariosD"/>  
-        </h:commandLink>
+        <h:commandButton image="/imagenes/xml.jpg">  
+            <p:dataExporter type="xml" target="tbl" fileName="USS"/>  
+        </h:commandButton>
     </p:panel>  
-      
-   
+
 </h:panelGrid>  
+      
         </h:form>
-            </ui:define>
-         </ui:composition>
+    </ui:define>
+         </ui:composition>        
     </h:body>
+         
 </html>
 

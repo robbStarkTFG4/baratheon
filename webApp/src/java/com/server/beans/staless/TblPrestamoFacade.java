@@ -7,6 +7,7 @@ package com.server.beans.staless;
 
 import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblPrestamo;
+import com.server.entity.beans.TblPrestarios;
 import com.util.DetailDTO;
 import com.util.PresDTO;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -175,4 +177,39 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         //Date date2 = sdf.parse(stringDate);
         return datos;
     }
+       public List morosos(){
+      
+   List<TblPrestarios> list = null ;
+  
+   String nombre;
+   TblPrestamo objp=null;
+   int id;
+       try {
+          
+         Query search1 = em.createQuery("SELECT t.idPrestario FROM TblPrestamo t WHERE t.statusprestamo = :status OR t.statusprestamo = :status1");
+         search1.setParameter("status", 1);
+         search1.setParameter("status1", 2);
+         list =search1.getResultList();
+          //Iterator li=list.iterator();
+          HashSet hs = new HashSet();
+         // while(li.hasNext()){
+          hs.addAll(list);
+          list.clear();
+          list.addAll(hs);
+     
+        for (int i = 0; i < list.size(); i++) {
+             
+      /// System.out.println(list.get(i));
+      }
+        //  }
+          
+// results = query.getResultList();
+        } catch (Exception e) {
+            System.out.println("ERROR IN Question FACADE:" + e.getMessage());
+        }
+    
+      return list;
+  
+  
+  }  
 }

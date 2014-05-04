@@ -7,6 +7,7 @@
 package com.client.named;
 
 
+import com.server.beans.staless.TblPrestamoFacade;
 import com.server.beans.staless.TblPrestariosFacade;
 import com.server.entity.beans.TblPrestarios;
 import java.io.Serializable;
@@ -23,8 +24,9 @@ import javax.inject.Named;
 @Named("prest")
 @SessionScoped
 public class BeanPrestarios implements Serializable {
- @EJB TblPrestariosFacade pres;
+ @EJB TblPrestariosFacade pres;TblPrestamoFacade ptmo;
  List<TblPrestarios> list;
+ List<TblPrestarios> listmoroso;
  TblPrestarios prestmodi;
  String status;
  String nombre;
@@ -36,6 +38,11 @@ public class BeanPrestarios implements Serializable {
  String us;
  String borrar;
  boolean Hregistros=true;
+
+    public List<TblPrestarios> getListmoroso() {
+      this.listmoroso=ptmo.morosos();
+        return listmoroso;
+    }
  
    public void validarListener() {
        

@@ -18,7 +18,7 @@
             <center>
                 <h2>Lista de prestarios morosos</h2>
             </center>
-            <p:dataTable id="tbl" var="car" value="#{prestamo.list}" paginator="true" rows="10">  
+            <p:dataTable id="tbl" var="car" value="#{prest.listmoroso}" paginator="true" rows="10">  
     <p:column>  
         <f:facet name="header">  
             <h:outputText value="Usuario" />  
@@ -61,28 +61,24 @@
 </p:dataTable>  
       
 <h:panelGrid columns="1">  
-    <p:panel header="Exportar reporte">  
-       <h:commandLink>  
-            <p:graphicImage value="./imagenes/excel.png" />  
-            <p:dataExporter type="xls" target="tbl" fileName="PrestariosD" />  
-        </h:commandLink>  
+    <p:panel header="Exportar reporte"> 
+       
+        <h:commandButton image="/imagenes/excel.png">       
+            <p:dataExporter type="xls" target="tbl" fileName="PrestariosMoroso" />  
+        </h:commandButton>  
   
-        <h:commandLink>  
-          <p:graphicImage value="/imagenes/pdf.png" /> 
-            <p:dataExporter type="pdf" target="tbl" fileName="PrestariosD"/>  
-        </h:commandLink>  
+        <h:commandButton image="/imagenes/pdf.png">   
+          <p:dataExporter type="pdf" target="tbl" fileName="PrestariosMoroso"/>  
+        </h:commandButton>  
           
-        <h:commandLink>  
-            <p:graphicImage value="/imagenes/csv.png" />  
-            <p:dataExporter type="csv" target="tbl" fileName="PrestariosD"/>  
-        </h:commandLink>  
+        <h:commandButton image="/imagenes/csv.png">   
+            <p:dataExporter type="csv" target="tbl" fileName="PrestariosMoroso"/>  
+        </h:commandButton>  
           
-        <h:commandLink>  
-            <p:graphicImage value="/imagenes/xml.jpg" />  
-            <p:dataExporter type="xml" target="tbl" fileName="PrestariosD"/>  
-        </h:commandLink>
+        <h:commandButton image="/imagenes/xml.jpg">  
+            <p:dataExporter type="xml" target="tbl" fileName="PrestariosMoroso"/>  
+        </h:commandButton>
     </p:panel>  
-      
    
 </h:panelGrid>  
         </h:form>

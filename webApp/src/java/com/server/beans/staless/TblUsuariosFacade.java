@@ -144,17 +144,26 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
 }    
   public List listausuariosSS (){
      List< TblUsuarios> lista=null;
-      String usuario="[entity.TblTipousuarios[ idTipousuarios=uss ]]";
+     
    try{
               
-           Query search= em.createQuery("SELECT u FROM TblUsuarios u WHERE u.idTipousuarios=:usuario" );
-            search.setParameter("usuario", usuario);
-        
-            lista=search.getResultList();
+          Query search= em.createQuery("SELECT u FROM TblUsuarios u" );
+          lista=search.getResultList();
           System.out.println("usuarios del servicio social");
-          System.out.println(lista);
-
+          System.out.println(lista.size());
          
+          
+      for (int i = 0; i < lista.size(); i++) {  
+          
+      if(lista.get(i).getIdTipousuarios().getIdTipousuarios().equals("admin")){
+       lista.remove(i);
+      }
+      /*if(lista.get(lista.size()-1).getIdTipousuarios().getIdTipousuarios().equals("admin")){
+      lista.remove(lista.size()-1);
+       }*/
+      }
+
+      System.out.println(lista);
         } catch (Exception e) {
             System.out.println("ERROR IN Question FACADE:" + e.getMessage());
             
