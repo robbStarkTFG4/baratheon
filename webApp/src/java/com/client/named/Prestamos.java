@@ -166,12 +166,17 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         System.out.println("INFO DEL DETALLE");
 
         String[] date = currentDate();
-        if (currentDtl.getFecharetorno().isEmpty()) {
+        if (currentDtl.getFecharetorno() != null) {
+            if (currentDtl.getFecharetorno().isEmpty()) {
+                currentDtl.setFecharetorno(date[0]);
+                currentDtl.setHoraretorno(date[1]);
+            } else {
+                currentDtl.setFecharetorno("");
+                currentDtl.setHoraretorno("");
+            }
+        } else {
             currentDtl.setFecharetorno(date[0]);
             currentDtl.setHoraretorno(date[1]);
-        } else {
-            currentDtl.setFecharetorno("");
-            currentDtl.setHoraretorno("");
         }
         System.out.println("nombre de la pieza: " + currentDtl.getNombre());
         System.out.println("fecha retorno: " + currentDtl.getFecharetorno() + "  hora retorno: " + currentDtl.getHoraretorno());
@@ -235,8 +240,8 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     }
 
     public void savePres() {
-      
-        if (pr.updatePres(currentPres,listLoans)) {
+
+        if (pr.updatePres(currentPres, listLoans)) {
 
             FacesContext context = FacesContext.getCurrentInstance();
 

@@ -24,7 +24,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author NORE
  */
-@Named("nm")
+@Named("nc")
 @SessionScoped                   // usar este bean solo para cosas propias del template " como buscador , navegacion, etc.".
 public class NewClass implements Serializable {
 

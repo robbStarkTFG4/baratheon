@@ -30,6 +30,7 @@ import javax.inject.Named;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.primefaces.component.growl.Growl;
 import org.primefaces.context.RequestContext;
 
 
@@ -41,13 +42,15 @@ import org.primefaces.context.RequestContext;
 @Named("gd")        // grid de busquedas y carrito
 @SessionScoped
 public class DataGridSearch implements Serializable {
+ 
+
+    Growl msg = new Growl();
 
     private List<TblMaterial> partes;
     private TblMaterial current;
 
     @EJB
     TblMaterialFacade mtl;
-
 
     @EJB
     NewSessionBean kart;//*
@@ -66,13 +69,8 @@ public class DataGridSearch implements Serializable {
     
      @Resource
      private javax.transaction.UserTransaction utx;*/
-
-  
-
-   
     private int quantity;
     private int cantidad;
-
 
     @PostConstruct
     private void init() {
@@ -102,7 +100,6 @@ public class DataGridSearch implements Serializable {
     public void setCurrent(TblMaterial current) {
         this.current = current;
     }
-
 
     public int getQuantity() {
         return quantity;
@@ -202,9 +199,26 @@ public class DataGridSearch implements Serializable {
         this.remove = remove;
     }
 
-    public void clearList(){
+    public void clearList() {
         kart.clearList();
-         RequestContext.getCurrentInstance().update("form1:table");
+        RequestContext.getCurrentInstance().update("form1:table");
+    }
+
+    public void persistPres() {
+
+        if (kart.persistLoan()) {
+            RequestContext.getCurrentInstance().closeDialog(null);
+            FacesContext context = FacesContext.getCurrentInstance();
+
+            context.addMessage(null, new FacesMessage("exito", "prestamo guardado"));
+
+            RequestContext.getCurrentInstance().update("formass:not");
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "error", "hubo algun problema"));
+            RequestContext.getCurrentInstance().update("formass:not");
+        }
     }
 
 }

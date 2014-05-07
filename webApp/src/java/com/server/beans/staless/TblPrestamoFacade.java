@@ -8,6 +8,8 @@ package com.server.beans.staless;
 import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblPrestamo;
 import com.server.entity.beans.TblPrestarios;
+import com.server.entity.beans.TblTipoprestarios;
+import com.server.entity.beans.TblUsuarios;
 import com.util.DetailDTO;
 import com.util.PresDTO;
 import java.text.SimpleDateFormat;
@@ -34,6 +36,9 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     @EJB
     TblDetalleprestamoFacade dtl;
+    
+    @EJB
+    TblMaterialFacade ml;
 
     @PersistenceContext(unitName = "webAppPU")
     private EntityManager em;
@@ -85,7 +90,6 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         return null;
     }
 
-    
     public List<PresDTO> getLoansByFreeds(int idPrestario) {
         Query query = em.createQuery("SELECT c.idPrestamo,  c.fechaprestamo, c.fecharetorno, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo , c.idUsuarios.idUsuarios, c.idPrestario.idPrestario FROM TblPrestamo c "
                 + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 3");
@@ -116,35 +120,39 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
         return null;
     }
-    public boolean updatePres(PresDTO pres,List<PresDTO> list) {
-       TblPrestamo pr=pres.convertDTO();
-       try{
-       int count=0;
-       int size=pr.getTblDetalleprestamoList().size();
-        for (TblDetalleprestamo dl : pr.getTblDetalleprestamoList()) {
-            if(!dl.getFecharetorno().isEmpty()){
-                count++;
+
+    public boolean updatePres(PresDTO pres, List<PresDTO> list) {
+        TblPrestamo pr = pres.convertDTO();
+        try {
+            int count = 0;
+            int size = pr.getTblDetalleprestamoList().size();
+            for (TblDetalleprestamo dl : pr.getTblDetalleprestamoList()) {
+                if (!dl.getFecharetorno().isEmpty()) {
+                    count++;
+                }
             }
+
+            if (count != 0) {
+                if (count == size) {
+                    pres.setStatusprestamo(3);
+                    pr.setStatusprestamo(3);
+                    pr.setFecharetorno(((String[]) currentDate())[0]);
+                    list = this.getLoansByDebts(pres.getIdPrestario()); // mejorar esta linea.
+
+                } else {
+                    pres.setStatusprestamo(2);
+                    pr.setStatusprestamo(2);
+                }
+            } else {
+                pres.setStatusprestamo(1);
+                pr.setStatusprestamo(1);
+            }
+        } catch (NullPointerException e) {
+
         }
         
-        if(count!=0){
-        if(count==size){
-            pres.setStatusprestamo(3);
-            pr.setStatusprestamo(3);
-            pr.setFecharetorno(((String [])currentDate())[0]);
-            list=this.getLoansByDebts(pres.getIdPrestario()); // mejorar esta linea.
-                    
-        }else{
-            pres.setStatusprestamo(2);
-             pr.setStatusprestamo(2);
-        }
-        }else{
-            pres.setStatusprestamo(1);
-             pr.setStatusprestamo(1);
-        }
-       }catch(NullPointerException e){
-           
-       }
+        ml.setStock(pres.getTblDetalleprestamoList()); //mejorar
+        
         try {
             em.merge(pr);
             return true;
@@ -153,8 +161,8 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         }
 
     }
-    
-      public String[] currentDate() {
+
+    public String[] currentDate() {
         String[] datos = new String[2];
 
         String DATE_FORMAT_NOW = "yyyy/MM/dd";
@@ -177,39 +185,60 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         //Date date2 = sdf.parse(stringDate);
         return datos;
     }
-       public List morosos(){
-      
-   List<TblPrestarios> list = null ;
-  
-   String nombre;
-   TblPrestamo objp=null;
-   int id;
-       try {
-          
-         Query search1 = em.createQuery("SELECT t.idPrestario FROM TblPrestamo t WHERE t.statusprestamo = :status OR t.statusprestamo = :status1");
-         search1.setParameter("status", 1);
-         search1.setParameter("status1", 2);
-         list =search1.getResultList();
-          //Iterator li=list.iterator();
-          HashSet hs = new HashSet();
-         // while(li.hasNext()){
-          hs.addAll(list);
-          list.clear();
-          list.addAll(hs);
-     
-        for (int i = 0; i < list.size(); i++) {
-             
-      /// System.out.println(list.get(i));
-      }
+
+    public TblPrestamo createPres() {
+        TblPrestamo pr = new TblPrestamo();
+        pr.setFechaprestamo(((String[]) currentDate())[0]);
+        pr.setHoraprestamo(((String[]) currentDate())[1]);
+        pr.setIdPrestario(new TblPrestarios(1));
+        pr.setIdUsuarios(new TblUsuarios(1));// cambiar
+        pr.setStatusprestamo(1);// cambiaar
+        em.persist(pr);
+        em.flush();
+        return pr;
+    }
+
+    public boolean updatePres(TblPrestamo pr) {
+        try {
+            em.merge(pr);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+      public List morosos() {
+
+        List<TblPrestarios> list = null;
+
+        String nombre;
+        TblPrestamo objp = null;
+        int id;
+        try {
+
+            Query search1 = em.createQuery("SELECT t.idPrestario FROM TblPrestamo t WHERE t.statusprestamo = :status OR t.statusprestamo = :status1");
+            search1.setParameter("status", 1);
+            search1.setParameter("status1", 2);
+            list = search1.getResultList();
+            //Iterator li=list.iterator();
+            HashSet hs = new HashSet();
+            // while(li.hasNext()){
+            hs.addAll(list);
+            list.clear();
+            list.addAll(hs);
+
+            for (int i = 0; i < list.size(); i++) {
+
+                /// System.out.println(list.get(i));
+            }
         //  }
-          
+
 // results = query.getResultList();
         } catch (Exception e) {
             System.out.println("ERROR IN Question FACADE:" + e.getMessage());
         }
-    
-      return list;
-  
-  
-  }  
+
+        return list;
+
+    }
 }

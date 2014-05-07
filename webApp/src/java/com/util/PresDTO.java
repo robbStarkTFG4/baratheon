@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class PresDTO implements Serializable {
 
+
     //SELECT c.idPrestamo, c.fechaprestamo, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo
     private Integer idPrestamo;//*
     private String fechaprestamo;//*
@@ -156,7 +157,7 @@ public class PresDTO implements Serializable {
         this.idPrestario = idPrestario;
     }
 
-    private int verifyStatus(DetailDTO detailDTO) {
+   /* private int verifyStatus(DetailDTO detailDTO) {
       if(detailDTO.getHoraretorno()!=null){
         if (!detailDTO.getHoraretorno().isEmpty()) {
             this.detailsFreed++;
@@ -172,6 +173,6 @@ public class PresDTO implements Serializable {
         return 1;
       }
       return 1;
-    }
+    }*/
 
 }

@@ -13,19 +13,21 @@ import java.io.Serializable;
  */
 public class MtlDTO implements Serializable {
 
+    private int idMaterial;
     private String noParte;
     private String nombre;
     private int cantidad;
     private int Stock;
-    
+
     public MtlDTO() {
     }
 
-    public MtlDTO(String noParte, String nombre, int cantidad,int Stock) {
+    public MtlDTO(int idMaterial, String noParte, String nombre, int cantidad, int Stock) {
+        this.idMaterial = idMaterial;
         this.noParte = noParte;
         this.nombre = nombre;
         this.cantidad = cantidad;
-        this.Stock=Stock;
+        this.Stock = Stock;
     }
 
     public String getNoParte() {
@@ -60,4 +62,11 @@ public class MtlDTO implements Serializable {
         this.Stock = Stock;
     }
 
+    public int getIdMaterial() {
+        return idMaterial;
+    }
+
+    public void setIdMaterial(int idMaterial) {
+        this.idMaterial = idMaterial;
+    }
 }
