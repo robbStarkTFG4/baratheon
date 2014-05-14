@@ -91,6 +91,11 @@ public class TblUsuarios implements Serializable {
     public TblUsuarios() {
     }
 
+    public TblUsuarios(Integer idUsuarios, String usuario, TblTipousuarios idTipousuarios) {
+        this.idUsuarios = idUsuarios;
+        this.usuario = usuario;
+        this.idTipousuarios = idTipousuarios;
+    }
     public TblUsuarios(Integer idUsuarios) {
         this.idUsuarios = idUsuarios;
     }

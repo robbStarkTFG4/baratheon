@@ -44,8 +44,8 @@
                        <p:password id="clave" style="height: 30px; width: 250px; margin-top:7px;"/>
                                             
                 </h:panelGrid>
-              <p:commandButton id="boton1" value="Ingresar" action="#{user.login()}"  style="height: 50px; width: 150px; margin-top:10px;"/>
-           
+              <p:commandButton id="boton1" value="Ingresar" action="#{user.login()}"  style="height: 50px; width: 150px; margin-top:10px;" update="login"/>
+              <p:growl id="growl" showDetail="true" life="4000"/>   
           </center> 
         </h:form>
             </ui:insert>
