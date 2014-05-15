@@ -4,18 +4,28 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-   
+
     <h:head>
-    
+
         <title>resultados busquedas</title>
     </h:head>
     <h:body>
         <h:form id="form">
-            <h:panelGrid columns="4" cellspacing="7px" cellpadding="5px" style="margin-bottom: 10px">
+            <h:panelGrid columns="5" cellspacing="7px" cellpadding="5px" style="margin-bottom: 10px">
                 <p:outputLabel value="familia " for="familia"/>
-                <p:selectOneMenu id="familia" style="width: 125px" />
+                <p:selectOneMenu value="#{gd.selectedType}" id="familia" style="width: 150px" converter="type" valueChangeListener="#{gd.typesListener}" >
+                    <f:ajax  execute="@this"  render=" @this  subFam  "/>
+                    <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                    <f:selectItems value="#{gd.typesList}" var="player" itemLabel="#{player.nombre}" itemValue="#{player}"/>  
+                </p:selectOneMenu>
                 <p:outputLabel value="subfamilia " for="subFam"/>
-                <p:selectOneMenu id="subFam" style="width: 125px" />
+                <p:selectOneMenu value="#{gd.selectedFam}" id="subFam" style="width: 150px"  valueChangeListener="#{gd.subFamsListener}" converter="sub"  >
+                    <f:ajax  execute="@this" />
+                    <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                    <f:selectItems value="#{gd.famsList}" var="player2" itemLabel="#{player2.nombre}" itemValue="#{playe2}"/>  
+                </p:selectOneMenu>
+                
+                <p:commandButton value="filtrar"  action="#{gd.filter}"/>
             </h:panelGrid>
 
 

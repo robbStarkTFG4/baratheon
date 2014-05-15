@@ -24,7 +24,7 @@ import org.primefaces.context.RequestContext;
  *
  * @author NORE
  */
-@Named("nc")
+@Named("nm")
 @SessionScoped                   // usar este bean solo para cosas propias del template " como buscador , navegacion, etc.".
 public class NewClass implements Serializable {
 
@@ -36,7 +36,12 @@ public class NewClass implements Serializable {
     @Inject
     DataGridSearch data;
 
+    @Inject
+    Catalog cg;
+
     private boolean karControl = true;
+
+    private int typeOfSearch = 0;
 
     public NewClass() {
 
@@ -70,7 +75,7 @@ public class NewClass implements Serializable {
     public String processQuery() {
         System.out.println("sigo funcionando BUSCADOR commandButton");
 
-       // FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "logIn.xhtml");
+        // FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "logIn.xhtml");
         //com.setValue(new TblMaterial);
         if (caja != null) {
             FacesContext ctx = FacesContext.getCurrentInstance();
@@ -80,12 +85,22 @@ public class NewClass implements Serializable {
 
             System.out.println("estoy en: " + fullURI);
 
-            if (!fullURI.equals("/webApp/faces/grid.xhtml")) {
+            if (!fullURI.equals("/backUpWebAPP/faces/grid.xhtml")) {
+                data.setTypesList(cg.getTipos());
+                data.setSelectedFam(null);
+                data.setSelectedType(null);
                 System.out.println("entre en el redirect");
+                typeOfSearch = 1;
                 return "/grid.xhtml?faces-redirect=true";
             } else {
+                data.setSelectedFam(null);
+                data.setSelectedType(null);
                 System.out.println("estoy en el ajax");
-                data.performQuery();
+                typeOfSearch = 1;
+                data.performQuery(typeOfSearch);
+
+                RequestContext.getCurrentInstance().update("form:familia");
+                RequestContext.getCurrentInstance().update("form:subFam");
                 RequestContext.getCurrentInstance().update("form:grid");
                 return null;
             }
@@ -99,6 +114,14 @@ public class NewClass implements Serializable {
 
     public void setKarControl(boolean karControl) {
         this.karControl = karControl;
+    }
+
+    public int getTypeOfSearch() {
+        return typeOfSearch;
+    }
+
+    public void setTypeOfSearch(int typeOfSearch) {
+        this.typeOfSearch = typeOfSearch;
     }
 
 }

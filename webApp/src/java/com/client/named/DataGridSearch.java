@@ -9,6 +9,8 @@ import com.server.beans.staless.TblMaterialFacade;
 import com.server.beans.stateful.NewSessionBean;
 import com.server.entity.beans.TblMaterial;
 import com.util.MtlDTO;
+import com.util.SubFamDTO;
+import com.util.TipoDTO;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -33,8 +34,6 @@ import javax.persistence.PersistenceContext;
 import org.primefaces.component.growl.Growl;
 import org.primefaces.context.RequestContext;
 
-
-
 /**
  *
  * @author NORE
@@ -42,9 +41,6 @@ import org.primefaces.context.RequestContext;
 @Named("gd")        // grid de busquedas y carrito
 @SessionScoped
 public class DataGridSearch implements Serializable {
- 
-
-    Growl msg = new Growl();
 
     private List<TblMaterial> partes;
     private TblMaterial current;
@@ -61,8 +57,17 @@ public class DataGridSearch implements Serializable {
 
     private MtlDTO remove;//*
 
+    private TipoDTO selectedType;
+
+    private SubFamDTO selectedFam;
+
+    private List<TipoDTO> tipos;
+
     @Inject
     NewClass nm;
+
+    @Inject
+    Catalog catalog;
 
     /*  @PersistenceContext(unitName = "webAppPU")
      private EntityManager em;
@@ -72,9 +77,11 @@ public class DataGridSearch implements Serializable {
     private int quantity;
     private int cantidad;
 
+    private List<SubFamDTO> subs;
+
     @PostConstruct
     private void init() {
-        performQuery();
+        performQuery(nm.getTypeOfSearch());
     }
 
     public DataGridSearch() {
@@ -180,15 +187,15 @@ public class DataGridSearch implements Serializable {
      throw new RuntimeException(e);
      }
      }*/
-    public void performQuery() {
-        TblMaterial tbl = nm.getCaja();
-        if (tbl.getNombre().equals("Buscar: ")) {
-            System.out.println("busqueda de patron custom");
-            partes = mtl.find(tbl.getNoParte(), false);
-        } else {
-            System.out.println("busqueda normal");
-            partes = mtl.find(tbl.getNoParte());
+    public void performQuery(int search) {
+        switch (search) {
+            case 1:
+                searchBoxQuery();
+                break;
+            case 2:
+                break;
         }
+
     }
 
     public MtlDTO getRemove() {
@@ -221,4 +228,88 @@ public class DataGridSearch implements Serializable {
         }
     }
 
+    public void typesListener(ValueChangeEvent e) {
+        if (e != null) {
+            System.out.println(e.getNewValue().toString());
+            this.selectedType = (TipoDTO) e.getNewValue();
+            System.out.println(this.selectedType);
+            subs = catalog.getDynamicSubs().get(this.selectedType.toString());
+            this.selectedFam = null;
+            for (SubFamDTO sub : subs) {
+                System.out.println(sub.getNombre());
+            }
+
+            RequestContext.getCurrentInstance().update("form:subFam");
+        }
+    }
+
+    public void subFamsListener(ValueChangeEvent e) {
+        if (e != null) {
+            this.selectedFam=((SubFamDTO) e.getNewValue());
+            System.out.println("escogiste: "+this.selectedFam.getNombre());
+        }
+    }
+
+    public void filter() {
+        System.out.println("SOY EL FILTRO");
+        if (this.selectedFam != null) {
+            partes=mtl.catalogFindBySubFam(this.selectedFam.getId());
+            for (TblMaterial tblMaterial : partes) {
+                System.out.println(tblMaterial.getNombre());
+            }
+            RequestContext.getCurrentInstance().update("form:grid");
+            return;
+        }
+
+        if (this.selectedType != null) {
+            partes=mtl.catalogFindByType(this.selectedType.getId());
+            RequestContext.getCurrentInstance().update("form:grid");
+        }
+    }
+
+    public TipoDTO getSelectedType() {
+        return selectedType;
+    }
+
+    public void setSelectedType(TipoDTO selectedType) {
+        this.selectedType = selectedType;
+    }
+
+    public SubFamDTO getSelectedFam() {
+        return selectedFam;
+    }
+
+    public void setSelectedFam(SubFamDTO selectedFam) {
+        this.selectedFam = selectedFam;
+    }
+
+    public List<TipoDTO> getTypesList() {
+        return tipos;
+    }
+
+    public void setTypesList(List<TipoDTO> types) {
+        this.tipos = types;
+    }
+
+    public List<SubFamDTO> getFamsList() {
+        return subs;
+    }
+
+    public void setFamsList(List<SubFamDTO> list) {
+        subs = list;
+    }
+
+    private void searchBoxQuery() {
+        if (nm != null) {
+            TblMaterial tbl = nm.getCaja();
+            if (tbl.getNombre().equals("Buscar: ")) {
+                System.out.println("busqueda de patron custom");
+                partes = mtl.find(tbl.getNoParte(), false);
+            } else {
+                System.out.println("busqueda normal");
+                partes = mtl.find(tbl.getNoParte());
+            }
+        }
+        ;
+    }
 }
