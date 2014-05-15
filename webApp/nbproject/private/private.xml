@@ -2,20 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/src/java/com/client/named/Prestamos.java</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/build/generated-sources/ap-source-output/com/server/entity/beans/TblUsuarios_.java</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/web/AgregarPrestario.xhtml</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/src/java/com/client/named/beanlogin.java</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/src/java/com/client/named/BeanPrestarios.java</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/web/template/index.xhtml</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/web/logIn.xhtml</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/src/java/com/server/entity/beans/TblUsuarios.java</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/src/java/com/client/named/NewClass.java</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/src/java/com/client/named/BeanUsuarios.java</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/web/error_page.xhtml</file>
-            <file>file:/C:/Users/Angel/Documents/GitHub/baratheon/webApp/src/java/com/client/named/Kart.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -91,6 +91,7 @@ public class NewClass implements Serializable {
                 data.setSelectedType(null);
                 System.out.println("entre en el redirect");
                 typeOfSearch = 1;
+                data.performQuery(typeOfSearch);
                 return "/grid.xhtml?faces-redirect=true";
             } else {
                 data.setSelectedFam(null);
