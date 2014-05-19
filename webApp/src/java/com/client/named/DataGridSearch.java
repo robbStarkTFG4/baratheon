@@ -81,6 +81,7 @@ public class DataGridSearch implements Serializable {
 
     @PostConstruct
     private void init() {
+        System.out.println("EL VALOR DEL NAMED: " + nm.getTypeOfSearch());
         performQuery(nm.getTypeOfSearch());
     }
 
@@ -94,6 +95,13 @@ public class DataGridSearch implements Serializable {
 
     public void openPopUp() {
 
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 350);
+
+        RequestContext.getCurrentInstance().openDialog("/dialogo/popUp", options, null);
     }
 
     public void setPartes(List<TblMaterial> partes) {
@@ -190,6 +198,7 @@ public class DataGridSearch implements Serializable {
     public void performQuery(int search) {
         switch (search) {
             case 1:
+                System.out.println("ENTRE CASO UNO DE BUSQUEDA");
                 searchBoxQuery();
                 break;
             case 2:
@@ -245,25 +254,43 @@ public class DataGridSearch implements Serializable {
 
     public void subFamsListener(ValueChangeEvent e) {
         if (e != null) {
-            this.selectedFam=((SubFamDTO) e.getNewValue());
-            System.out.println("escogiste: "+this.selectedFam.getNombre());
+            this.selectedFam = ((SubFamDTO) e.getNewValue());
+            System.out.println("escogiste: " + this.selectedFam.getNombre());
         }
     }
 
     public void filter() {
         System.out.println("SOY EL FILTRO");
-        if (this.selectedFam != null) {
-            partes=mtl.catalogFindBySubFam(this.selectedFam.getId());
-            for (TblMaterial tblMaterial : partes) {
-                System.out.println(tblMaterial.getNombre());
+        if (nm.getCaja() == null) {
+            if (this.selectedFam != null) {
+                partes = mtl.catalogFindBySubFam(this.selectedFam.getId());
+                for (TblMaterial tblMaterial : partes) {
+                    System.out.println(tblMaterial.getNombre());
+                }
+                RequestContext.getCurrentInstance().update("form:grid");
+                return;
             }
-            RequestContext.getCurrentInstance().update("form:grid");
-            return;
-        }
 
-        if (this.selectedType != null) {
-            partes=mtl.catalogFindByType(this.selectedType.getId());
-            RequestContext.getCurrentInstance().update("form:grid");
+            if (this.selectedType != null) {
+                partes = mtl.catalogFindByType(this.selectedType.getId());
+                RequestContext.getCurrentInstance().update("form:grid");
+            }
+        } else {
+            if (nm.getCaja().getNombre().equals("Buscar: ")) {
+                if (this.selectedFam != null) {
+                    partes = mtl.catalogFindBySubFam(this.selectedFam.getId(), nm.getCaja().getNoParte());
+                    System.out.println("LA CAJA ES NULA");
+                    RequestContext.getCurrentInstance().update("form:grid");
+                    return;
+                }
+
+                if (this.selectedType != null) {
+                    System.out.println("LA CAJA ES NULA");
+                    partes = mtl.catalogFindByType(this.selectedType.getId(), nm.getCaja().getNoParte());
+                    RequestContext.getCurrentInstance().update("form:grid");
+                }
+            }
+
         }
     }
 
@@ -302,6 +329,7 @@ public class DataGridSearch implements Serializable {
     private void searchBoxQuery() {
         if (nm != null) {
             TblMaterial tbl = nm.getCaja();
+
             if (tbl.getNombre().equals("Buscar: ")) {
                 System.out.println("busqueda de patron custom");
                 partes = mtl.find(tbl.getNoParte(), false);
@@ -312,4 +340,5 @@ public class DataGridSearch implements Serializable {
         }
         ;
     }
+
 }

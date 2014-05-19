@@ -89,11 +89,12 @@ public class NewClass implements Serializable {
                 data.setTypesList(cg.getTipos());
                 data.setSelectedFam(null);
                 data.setSelectedType(null);
-                System.out.println("entre en el redirect");
+                System.out.println("entre en el redirect PRIMER PUNTO PARA QUERY");
                 typeOfSearch = 1;
                 data.performQuery(typeOfSearch);
                 return "/grid.xhtml?faces-redirect=true";
             } else {
+                data.setTypesList(cg.getTipos());
                 data.setSelectedFam(null);
                 data.setSelectedType(null);
                 System.out.println("estoy en el ajax");

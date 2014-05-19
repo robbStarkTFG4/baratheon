@@ -61,19 +61,21 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         return res;
     }
 
-    public List<TblMaterial> find(String search) {// lista normal por numero de parte
+    public List<TblMaterial> find(String search) {// lista normal por numero de parte //ESTOS NO
         //c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen
         Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
-                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam FROM TblMaterial c WHERE c.noParte = :part");
+                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam,  c.idArea.descripcion, c.idTipomaterial.descripcion, "
+                + "c.subFamiliasidsubFam.nombre  FROM TblMaterial c WHERE c.noParte = :part");
         res.setParameter("part", search);
 
         List<TblMaterial> data = mtlResults(res);
         return data;
     }
 
-    public List<TblMaterial> find(String patronName, boolean obj) {// lista por patron nombre
+    public List<TblMaterial> find(String patronName, boolean obj) {// lista por patron nombre // ESTOS NO
         Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
-                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam FROM TblMaterial c WHERE c.nombre LIKE  :part");
+                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, "
+                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part");
         res.setParameter("part", patronName.toLowerCase() + "%");
 
         List<TblMaterial> data = mtlResults(res);
@@ -117,7 +119,8 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     public List<TblMaterial> catalogFindByArea(int id) {
         Query query = em.createQuery("SELECT  c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
-                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam FROM TblMaterial c WHERE c.idArea.idArea = :id");
+                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam, c.idArea.descripcion, c.idTipomaterial.descripcion, "
+                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.idArea.idArea = :id");
         query.setParameter("id", id);
 
         List<TblMaterial> data = mtlResults(query);
@@ -128,7 +131,8 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     public List<TblMaterial> catalogFindByType(int id) {
         Query query = em.createQuery("SELECT  c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
-                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam FROM TblMaterial c WHERE c.idTipomaterial.idTipomaterial = :id");
+                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam, c.idArea.descripcion, c.idTipomaterial.descripcion, "
+                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.idTipomaterial.idTipomaterial = :id");
         query.setParameter("id", id);
         List<TblMaterial> data = mtlResults(query);
         return data;
@@ -136,7 +140,8 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     public List<TblMaterial> catalogFindBySubFam(int id) {
         Query query = em.createQuery("SELECT  c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea,"
-                + " c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam FROM TblMaterial c WHERE c.subFamiliasidsubFam.idsubFam = :id");
+                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam, c.idArea.descripcion, c.idTipomaterial.descripcion,"
+                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.subFamiliasidsubFam.idsubFam = :id");
         query.setParameter("id", id);
         List<TblMaterial> data = mtlResults(query);
         return data;
@@ -155,12 +160,69 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
             temp.setStock((Integer) (object[4]));
             temp.setCosto((Long) (object[5]));
             temp.setImagen((String) (object[6]));
-            temp.setIdArea(new TblArea((Integer) (object[7])));
-            temp.setIdTipomaterial(new TblTipomaterial((Integer) (object[8])));
-            temp.setSubFamiliasidsubFam(new Subfamilias((Integer) (object[9])));
 
+            TblArea area = new TblArea((Integer) (object[7]));
+            area.setDescripcion((String) object[10]);
+            temp.setIdArea(area);
+
+            TblTipomaterial tipo = new TblTipomaterial((Integer) (object[8]));
+            tipo.setDescripcion((String) object[11]);
+            temp.setIdTipomaterial(tipo);
+
+            Subfamilias sub = new Subfamilias((Integer) (object[9]));
+            sub.setNombre((String) object[12]);
+            temp.setSubFamiliasidsubFam(sub);
             data.add(temp);
         }
         return data;
+    }
+
+    public TblMaterial getBasicInfo(String noParte) {
+        Query query = em.createQuery("SELECT  c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam, c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre  FROM TblMaterial c WHERE c.noParte = :noParte");
+        query.setParameter("noParte", noParte);
+
+        Object[] object = (Object[]) query.getSingleResult();
+        TblMaterial temp = new TblMaterial();
+        temp.setIdtblMaterial((Integer) object[0]);
+        temp.setNoParte((String) (object[1]));
+        temp.setNombre((String) (object[2]));
+        temp.setDescripcion((String) (object[3]));
+        temp.setStock((Integer) (object[4]));
+        temp.setCosto((Long) (object[5]));
+        temp.setImagen((String) (object[6]));
+
+        TblArea area = new TblArea((Integer) (object[7]));
+        area.setDescripcion((String) object[10]);
+        temp.setIdArea(area);
+
+        TblTipomaterial tipo = new TblTipomaterial((Integer) (object[8]));
+        tipo.setDescripcion((String) object[11]);
+        temp.setIdTipomaterial(tipo);
+
+        Subfamilias sub = new Subfamilias((Integer) (object[9]));
+        sub.setNombre((String) object[12]);
+        temp.setSubFamiliasidsubFam(sub);
+
+        return temp;
+    }
+
+    public List<TblMaterial> catalogFindBySubFam(int id, String patronName) {
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.subFamiliasidsubFam.idsubFam = :id");
+        res.setParameter("part", patronName.toLowerCase() + "%");
+        res.setParameter("id", id);
+        List<TblMaterial> data = mtlResults(res);
+
+        return data;
+
+    }
+
+    public List<TblMaterial> catalogFindByType(int id, String patronName) {
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.idTipomaterial.idTipomaterial = :id");
+        res.setParameter("part", patronName.toLowerCase() + "%");
+        res.setParameter("id", id);
+        List<TblMaterial> data = mtlResults(res);
+
+        return data;
+
     }
 }

@@ -23,14 +23,17 @@
                     <f:validateRegex pattern="[0-9]+" />
                     <f:validateLength minimum="3" maximum="20" >
                     </f:validateLength> 
-                    <f:ajax render="mensajenom" event="keyup"/>
+                   
                 </p:inputText>
-                <p:message id="mensajenom"  for="mat" />                     
-                <p:commandButton value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" 
-                                 update="presName,carrera,mail,tel,notify"/>                   
-
+                         
+                <p:commandButton id="find" value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" 
+                                 update="presName,carrera,mail,tel,notify,log"/>   
+                
+                <p:commandLink id="log" value="cerrar sesion" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this" disabled="#{pres.us eq null}" />
+                
             </h:panelGrid>
-            <h:panelGrid columns="4" cellspacing="5" cellpadding="5px">
+          
+            <h:panelGrid id="pan2" columns="4" cellspacing="5" cellpadding="5px">
 
                 <p:outputLabel value="nombre: " for="presName"/> <p:inputText value="#{pres.nombre}" id="presName" size="30" disabled="true"/>
                 <p:outputLabel value="carrera: " for="carrera"/> <p:inputText value="#{pres.carrera}" id="carrera" size="10" disabled="true"/>
@@ -41,12 +44,14 @@
             </h:panelGrid>
 
             <p:tabView id="tabView" style="margin-top: 10px;" >  
-                 
-                  <p:ajax event="tabChange" listener="#{pres.onTabChange}" />
-                
+
+                <p:ajax event="tabChange" listener="#{pres.onTabChange}" />
+
                 <p:tab id="tab1" title="adeudos"> 
 
-                    <p:dataTable id="debts" value="#{pres.listLoans}" var="pl">
+                    <p:dataTable id="debts" value="#{pres.listLoans}" var="pl" rows="6" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
 
                         <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
                         <p:column style="width:2%">  
@@ -78,7 +83,9 @@
                             <f:facet name="header">  
                                 usuario  
                             </f:facet>  
-                            <p:commandLink value="#{pl.idUsuarios}" />  
+                            <p:commandLink value="#{pl.idUsuarios}" action="#{pres.showUser}" >
+                                <f:setPropertyActionListener value="#{pl.idUsuarios}" target="#{pres.idUsuario}"/>
+                            </p:commandLink>  
                         </p:column>  
 
                         <p:column style="width:49%">  
@@ -97,7 +104,9 @@
                                         #parte
                                     </f:facet>  
 
-                                    <p:commandLink value="#parte" action="#{pres.listenPartNumber()}"/>
+                                    <p:commandLink value="#parte" action="#{pres.listenPartNumber()}">
+                                        <f:setPropertyActionListener value="#{dl}" target="#{pres.showInfo}"/>
+                                    </p:commandLink>
 
 
                                 </p:column>  
@@ -157,7 +166,9 @@
 
 
 
-                    <p:dataTable id="freed" value="#{pres.freeds}" var="pf">
+                    <p:dataTable id="freed" value="#{pres.freeds}" var="pf"  paginator="true" rows="6"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
 
                         <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
                         <p:column style="width:2%">  
@@ -189,7 +200,9 @@
                             <f:facet name="header">  
                                 usuario  
                             </f:facet>  
-                            <p:commandLink value="#{pf.idUsuarios}" />  
+                            <p:commandLink value="#{pf.idUsuarios}" action="#{pres.showUser()}" >
+                                <f:setPropertyActionListener value="#{pf.idUsuarios}" target="#{pres.idUsuario}"/>
+                            </p:commandLink>   
                         </p:column>  
 
                         <p:column style="width:49%">  
@@ -200,7 +213,7 @@
                         </p:column>  
 
                         <p:rowExpansion>  
-                           
+
                             <p:dataTable id="dtls"   value="#{pf.tblDetalleprestamoList}" var="ld" >
 
                                 <p:column style="width:49%">  
@@ -208,7 +221,9 @@
                                         #parte
                                     </f:facet>  
 
-                                    <p:commandLink value="#parte" action="#{pres.listenPartNumber()}"/>
+                                    <p:commandLink value="#parte" action="#{pres.listenPartNumber()}">
+                                        <f:setPropertyActionListener value="#{ld}" target="#{pres.showInfo}"/>
+                                    </p:commandLink>
 
 
                                 </p:column>  

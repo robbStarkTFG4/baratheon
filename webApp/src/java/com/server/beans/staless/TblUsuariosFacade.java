@@ -38,8 +38,8 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
         TblUsuarios user = null;
 
         try {
-            TypedQuery<TblUsuarios> search =em.createQuery("SELECT NEW com.server.entity.beans.TblUsuarios(u.idUsuarios,u.usuario,u.idTipousuarios) FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave",TblUsuarios.class);
-           //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
+            TypedQuery<TblUsuarios> search = em.createQuery("SELECT NEW com.server.entity.beans.TblUsuarios(u.idUsuarios,u.usuario,u.idTipousuarios) FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave", TblUsuarios.class);
+            //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
             search.setParameter("usuario", usuario);
             search.setParameter("clave", clave);
             user = (TblUsuarios) search.getSingleResult();
@@ -216,4 +216,19 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
         return existe;
     }
 
+    public TblUsuarios findBasicInfo(String user) {
+        Query query = em.createQuery("SELECT c.nombre, c.apellidop, c.apellidom, c.email, c.tel,  c.usuario FROM TblUsuarios c WHERE c.usuario = :usuario  ");
+        query.setParameter("usuario", user);
+
+        TblUsuarios res = new TblUsuarios();
+
+        Object[] object = (Object[]) query.getSingleResult();
+        res.setNombre((String) object[0]);
+        res.setApellidop((String) object[1]);
+        res.setApellidom((String) object[2]);
+        res.setEmail((String) object[3]);
+        res.setTel((String) object[4]);
+        res.setUsuario((String) object[5]);
+        return res;
+    }
 }

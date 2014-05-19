@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"  
       xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>#{pr.current.noParte}</title>
+        <title>#{gd.current.noParte}</title>
     </h:head>
     <h:body>
         <h:form>
@@ -14,21 +14,29 @@
                 <h:panelGrid columns="2" cellpadding="5px">
 
                     <p:outputLabel value="#Parte: " for="numParte" />
-                    <p:inputText id="numParte" value="#{pr.current.noParte}" size="20" disabled="true"/>
+                    <p:inputText id="numParte" value="#{gd.current.noParte}" size="20" disabled="true"/>
 
                     <p:outputLabel value="Nombre: " for="nombre" />
-                    <p:inputText id="nombre" value="#{pr.current.nombre}" size="20" disabled="true"/>
+                    <p:inputText id="nombre" value="#{gd.current.nombre}" size="20" disabled="true"/>
 
-                    <p:outputLabel value="Descripcion: " for="des" />
-                    <p:inputTextarea id="des" value="#{pr.current.descripcion}" maxlength="200" autoResize="false" disabled="true"/>
+                    <p:outputLabel value="Descripcion: "  for="des" />
+                    <p:inputTextarea id="des" value="#{gd.current.descripcion}" maxlength="200" autoResize="false" disabled="true"/>
 
                     <p:outputLabel value="Stock " for="ctg" />
-                    <p:inputText id="ctg" value="#{pr.current.stock}" size="20" disabled="true"/>
+                    <p:inputText id="ctg" value="#{gd.current.stock}" size="20" disabled="true"/>
 
+                     <p:outputLabel value="Area " for="ar" />
+                    <p:inputText id="ar" value="#{gd.current.idArea.descripcion}" size="20" disabled="true"/>
+
+                    <p:outputLabel value="Tipo " for="tipp" />
+                    <p:inputText id="tipp" value="#{gd.current.idTipomaterial.descripcion}" size="20" disabled="true"/>
+
+                    <p:outputLabel value="Familia " for="fa" />
+                    <p:inputText id="fa" value="#{gd.current.subFamiliasidsubFam.nombre}" size="20" disabled="true"/>
                 </h:panelGrid>
 
                 <h:panelGrid columns="1" cellpadding="5px">
-                    <h:graphicImage value="/resources/imagenes/#{pr.current.imagen}" rendered="#{pr.current.imagen ne null}"  />
+                    <h:graphicImage value="/resources/imagenes/#{gd.current.imagen}" rendered="#{gd.current.imagen ne null}"  />
                 </h:panelGrid>
 
 

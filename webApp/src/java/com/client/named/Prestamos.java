@@ -5,25 +5,30 @@
  */
 package com.client.named;
 
+import com.server.beans.staless.TblMaterialFacade;
 import com.server.beans.staless.TblPrestamoFacade;
 import com.server.beans.staless.TblPrestariosFacade;
+import com.server.beans.staless.TblUsuariosFacade;
 import com.server.entity.beans.TblMaterial;
 import com.server.entity.beans.TblPrestarios;
+import com.server.entity.beans.TblUsuarios;
 import com.util.DetailDTO;
+import com.util.PresDTO;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import com.util.PresDTO;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.TabChangeEvent;
 import org.primefaces.event.ToggleEvent;
@@ -35,13 +40,19 @@ import org.primefaces.event.ToggleEvent;
 @Named("pres")
 @SessionScoped
 public class Prestamos implements Serializable { //clase para manejar los prestamos
-    // clase para ver historial de prestamos y deudas actuales
+    // clase para ver historial de prestamos y deudas actualesdsfsd
 
     @EJB
     TblPrestariosFacade usr;
 
     @EJB
     TblPrestamoFacade pr;
+
+    @EJB
+    TblUsuariosFacade usrFacade;
+
+    @EJB
+    TblMaterialFacade mtl;
 
     private String nombre;
     private String correo;
@@ -56,9 +67,17 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     private DetailDTO currentDtl;
 
+    private DetailDTO showInfo;
+
     private List<DetailDTO> dtls;
 
     private PresDTO currentPres;
+
+    private String idUsuario;
+
+    private TblUsuarios usuario;
+
+    private TblMaterial currentView;
 
     public Prestamos() {
 
@@ -116,6 +135,10 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         return listLoans;
     }
 
+    public void setListLoans(List<PresDTO> listLoans) {
+        this.listLoans = listLoans;
+    }
+
     public DetailDTO getCurrentDtl() {
         return currentDtl;
     }
@@ -151,6 +174,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
                 }
 
                 RequestContext.getCurrentInstance().update("forma:tabView:debts");
+                RequestContext.getCurrentInstance().update("forma:grid:log");
             }
 
             freeds = pr.getLoansByFreeds(us.getIdPrestario());
@@ -159,6 +183,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage("error", "no se encontro ningun prestario "));
+            RequestContext.getCurrentInstance().update("forma:notify");
         }
     }
 
@@ -167,7 +192,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
         String[] date = currentDate();
         if (currentDtl.getFecharetorno() != null) {
-            if (currentDtl.getFecharetorno().isEmpty()) {
+            if (currentDtl.getFecharetorno().equals("")) {
                 currentDtl.setFecharetorno(date[0]);
                 currentDtl.setHoraretorno(date[1]);
             } else {
@@ -184,12 +209,25 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         return null;
     }
 
-    public void onRowToggle(ToggleEvent event) {
+    public void onRowToggle(ToggleEvent event) {//fdsfsd
         System.out.println(event.getComponent().getClientId());
     }
 
     public void listenPartNumber() {
-        System.out.println("it workss!!!!!!!!!!");
+        System.out.println(this.showInfo.getNoParte()); // DETALLE
+        if (currentView != null) {
+            if (currentView.getNoParte().equals(this.showInfo.getNoParte())) {
+                openPartBasicInfo();
+                return;
+            }
+
+        }
+        currentView = null;
+
+        currentView = mtl.getBasicInfo(this.showInfo.getNoParte());
+        if (currentView != null) {
+            openPartBasicInfo();
+        }
     }
 
     public String[] currentDate() {
@@ -272,5 +310,98 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         if (event.getTab().getTitle().equals("adeudos")) {
             RequestContext.getCurrentInstance().update("forma:tabView:debts");
         }
+    }
+
+    public void showUser() { // action para mostrar dialogo con informacion del usuario
+        System.out.println("el id del usuario es: " + this.idUsuario);
+
+        if (usuario != null) {
+            if (usuario.getUsuario().equals(this.idUsuario)) {
+                openDialog();
+                return;
+            }
+        }
+        usuario = null;
+
+        usuario = usrFacade.findBasicInfo(this.idUsuario);
+        if (usuario != null) {
+            openDialog();
+        }
+    }
+
+    public String getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(String idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public TblUsuarios getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(TblUsuarios usuario) {
+        this.usuario = usuario;
+    }
+
+    private void openDialog() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 300);
+
+        RequestContext.getCurrentInstance().openDialog("/dialogo/UserBasicInfo", options, null);
+    }
+
+    public void setShowInfo(DetailDTO showInfo) {
+        this.showInfo = showInfo;
+    }
+
+    public DetailDTO getShowInfo() {
+        return showInfo;
+    }
+
+    public TblMaterial getCurrentView() {
+        return currentView;
+    }
+
+    public void setCurrentView(TblMaterial currentView) {
+        this.currentView = currentView;
+    }
+
+    private void openPartBasicInfo() {
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 300);
+
+        RequestContext.getCurrentInstance().openDialog("/dialogo/PartBasicInfo", options, null);
+    }
+
+    public void logOut() {
+        /* private String nombre;
+         private String correo;
+         private String carrera;
+         private String telefono;
+         private String matricula;
+         private TblPrestarios us;
+
+         private List<PresDTO> listLoans;
+
+         private List<PresDTO> freeds;*/
+
+        this.nombre = null;
+        this.correo = null;
+        this.carrera = null;
+        this.telefono = null;
+        this.matricula = null;
+        this.us = null;
+        this.listLoans = null;
+        this.freeds = null;
+        RequestContext.getCurrentInstance().update("forma:tabView:freed");
+        RequestContext.getCurrentInstance().update("forma:tabView:debts");
     }
 }
