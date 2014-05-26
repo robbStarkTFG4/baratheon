@@ -12,7 +12,7 @@
          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
     <h:body>
-        <ui:composition template="/template/index.xhtml" >
+        <ui:composition template="/index.xhtml" >
             <ui:define name="content">
         <h:form id="admin">
    
@@ -21,7 +21,7 @@
             <p:column>  
                 <p:submenu label="Acciones"  >  
                     <p:menuitem value="Agregar"  url="AgregarUs.xhtml?faces-redirect=true"  icon="ui-icon-circle-plus"/>  
-                    <p:menuitem value="Modificar" url="ModificarUs.xhtml?faces-redirect=true" icon="ui-icon-pencil"/> 
+                    <p:menuitem value="Modificar" url="#{user.valorModifInicial()}" icon="ui-icon-pencil"/> 
                     <p:menuitem value="Eliminar" url="EliminarUs.xhtml?faces-redirect=true" icon="ui-icon-circle-close"/> 
                 </p:submenu>  
                 
@@ -33,7 +33,7 @@
             <p:column>  
                 <p:submenu label="Acciones"  >  
                     <p:menuitem value="Agregar"  url="AgregarPrestario.xhtml?faces-redirect=true"  icon="ui-icon-circle-plus"/>  
-                    <p:menuitem value="Modificar" url="ModificarPrest.xhtml?faces-redirect=true" icon="ui-icon-pencil"/> 
+                    <p:menuitem value="Modificar" url="#{prest.valorModifInicial()}" icon="ui-icon-pencil"/> 
                     <p:menuitem value="Eliminar" url="EliminarPrest.xhtml?faces-redirect=true" icon="ui-icon-circle-close"/> 
                 </p:submenu>  
                 
@@ -55,7 +55,7 @@
   
         </p:submenu>  
   
-        <p:menuitem value="Quit" url="/template/index.xhtml?faces-redirect=true" icon="ui-icon-close" />  
+        <p:menuitem value="Quit" url="/index.xhtml?faces-redirect=true" icon="ui-icon-close" />  
     </p:megaMenu> 
      <div id="contenidoAdmin" class="center_content">
          

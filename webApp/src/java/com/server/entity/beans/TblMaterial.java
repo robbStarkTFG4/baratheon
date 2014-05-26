@@ -83,6 +83,13 @@ public class TblMaterial implements Serializable {
         this.idtblMaterial = idtblMaterial;
     }
 
+    public TblMaterial(String noParte, String nombre, String descripcion, Integer stock) {
+        this.noParte = noParte;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.stock = stock;
+    }
+
     public TblMaterial(Integer id,String noParte, String nombre) {
         this.idtblMaterial=id;
         this.noParte = noParte;

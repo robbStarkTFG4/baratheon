@@ -10,7 +10,9 @@ package com.client.named;
 import com.server.beans.staless.TblPrestamoFacade;
 import com.server.beans.staless.TblPrestariosFacade;
 import com.server.entity.beans.TblPrestarios;
+import com.util.PrestarioDTO;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -26,7 +28,7 @@ import javax.inject.Named;
 public class BeanPrestarios implements Serializable {
  @EJB TblPrestariosFacade pres;TblPrestamoFacade ptmo;
  List<TblPrestarios> list;
- List<TblPrestarios> listmoroso;
+ List<PrestarioDTO> listmoroso;
  TblPrestarios prestmodi;
  String status;
  String nombre;
@@ -39,8 +41,9 @@ public class BeanPrestarios implements Serializable {
  String borrar;
  boolean Hregistros=true;
 
-    public List<TblPrestarios> getListmoroso() {
-      this.listmoroso=ptmo.morosos();
+    public List<PrestarioDTO> getListmoroso() {
+      this.listmoroso=pres.Morosos();
+      
         return listmoroso;
     }
  
@@ -193,6 +196,7 @@ UIOutput ccarrera= (UIOutput) FacesContext.getCurrentInstance().getViewRoot().fi
 UIOutput ccorreo = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:correo");
 UIOutput ctel = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:tel");
 UIOutput cus = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:us");
+UIOutput cuBu = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:usuariop");
  cnombre.setValue(borrar);
  camaterno.setValue(borrar);
  capaterno.setValue(borrar);
@@ -200,6 +204,7 @@ UIOutput cus = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findCo
  ccorreo.setValue(borrar);
  ctel.setValue(borrar);
  cus.setValue(borrar);
+ cuBu.setValue(borrar);
 
   FacesContext context = FacesContext.getCurrentInstance();
    context.addMessage(null, new FacesMessage("Successful", "Prestario " +compUsuario.getValue().toString()+ " Modificado con exito"));  
@@ -208,7 +213,15 @@ UIOutput cus = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findCo
  
  
 }
+   public String valorModifInicial(){
+        
+     Hregistros = true;
     
+    return "ModificarPrest.xhtml?faces-redirect=true";
+
+
+
+} 
  
  
  

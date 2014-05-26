@@ -225,4 +225,22 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         return data;
 
     }
+    public List<TblMaterial> listafull(){
+    List <TblMaterial> lista=null;
+  
+       
+     try {
+
+           TypedQuery<TblMaterial> search = em.createQuery("SELECT NEW com.server.entity.beans.TblMaterial(u.noParte, u.nombre, u.descripcion, u.stock) FROM TblMaterial u", TblMaterial.class);    
+        
+      lista=search.getResultList();
+System.out.println(lista);
+        } catch (Exception e) {
+            System.out.println("ERROR IN Question FACADE:" + e.getMessage());
+
+        }
+return lista;
+       
+    
+    }
 }

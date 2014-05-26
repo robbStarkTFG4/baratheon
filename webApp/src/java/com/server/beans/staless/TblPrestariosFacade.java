@@ -7,6 +7,10 @@ package com.server.beans.staless;
 
 import com.server.entity.beans.TblPrestarios;
 import com.server.entity.beans.TblTipoprestarios;
+import com.util.PrestarioDTO;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -62,12 +66,12 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
     public boolean agregar(String nombre, String apaterno, String amaterno, int tipo, String tel, String email, String usuario, String carrera) {
 
         boolean existe = true;
-        TblPrestarios id = null;
-        Query search = em.createQuery("SELECT t FROM TblPrestarios t WHERE t.usuario = :usuario OR t.email = :correo");
+       int id ;
+        Query search = em.createQuery("SELECT t.idPrestario FROM TblPrestarios t WHERE t.usuario = :usuario OR t.email = :correo");
         search.setParameter("usuario", usuario);
         search.setParameter("correo", email);
         try {
-            id = (TblPrestarios) search.getSingleResult();
+            id = (int) search.getSingleResult();
 
         } catch (Exception e) {
             TblPrestarios pres = new TblPrestarios();
@@ -167,13 +171,13 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
     public boolean modificar(int id, String nombre, String apaterno, String amaterno, int tipo, String tel, String email, String usuario, String carrera) {
 
         boolean existe = true;
-        TblPrestarios bp = null;
-        Query search = em.createQuery("SELECT t FROM TblPrestarios t WHERE t.email = :correo");
+        String bp ;
+        Query search = em.createQuery("SELECT t.usuario FROM TblPrestarios t WHERE t.email = :correo");
 
         search.setParameter("correo", email);
         try {
-            bp = (TblPrestarios) search.getSingleResult();
-            if (usuario.equals(bp.getUsuario())) {
+            bp = (String) search.getSingleResult();
+            if (usuario.equals(bp)) {
                 TblPrestarios pres = em.find(TblPrestarios.class, id);
                 pres.setNombre(nombre);
                 pres.setApaterno(apaterno);
@@ -213,4 +217,57 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         return existe;
 
     }
+     public List<PrestarioDTO> Morosos(){
+       List<PrestarioDTO> list = new ArrayList<>();
+      
+       try {
+    //  t.idPrestario.nombre, t.idPrestario.apaterno, t.idPrestario.amaterno, t.idPrestario.email, t.idPrestario.tel, t.idPrestario.usuario, t.idPrestario.carrera 
+            Query search1 = em.createQuery("SELECT  t.idPrestario FROM TblPrestamo t WHERE t.statusprestamo = :status OR t.statusprestamo = :status1");
+            search1.setParameter("status", 1);
+            search1.setParameter("status1", 2);
+            List <TblPrestarios> obj = search1.getResultList();
+               
+
+       
+            
+if (obj != null) {
+     HashSet hs = new HashSet();
+           hs.addAll(obj);
+          obj.clear();
+          obj.addAll(hs);
+System.out.println(obj);
+            for (int i = 0; i < obj.size(); i++) {
+                
+                PrestarioDTO temp = new PrestarioDTO();
+                temp.setNombre((String) obj.get(i).getNombre());
+                temp.setApaterno((String) obj.get(i).getApaterno());
+                temp.setAmaterno((String) obj.get(i).getAmaterno());
+                temp.setEmail((String) obj.get(i).getEmail());
+                temp.setTel((String) obj.get(i).getTel());
+                temp.setUsuario((String) obj.get(i).getUsuario());
+                temp.setCarrera((String) obj.get(i).getCarrera());
+              
+                list.add(temp);
+        
+            } 
+ 
+
+
+}
+    
+
+//Iterator li=list.iterator();
+
+
+        } catch (Exception e) {
+            System.out.println("ERROR IN Question FACADE:" + e.getMessage());
+        }
+     
+     
+     return list;
+ 
+ 
+ 
+ 
+ }
 }

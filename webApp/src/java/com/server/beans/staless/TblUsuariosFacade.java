@@ -7,6 +7,9 @@ package com.server.beans.staless;
 
 import com.server.entity.beans.TblTipousuarios;
 import com.server.entity.beans.TblUsuarios;
+import com.util.UsuarioDTO;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -53,12 +56,12 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
 
     public boolean agregar(String nombre, String clave, String apellidop, String apellidom, String tipous, String email, String tel, String usuario) {
         boolean existe = true;
-        TblUsuarios id = null;
-        Query search = em.createQuery("SELECT t FROM TblUsuarios t WHERE t.usuario = :usuario OR t.email = :correo");
+        int id ;
+        Query search = em.createQuery("SELECT t.idUsuarios FROM TblUsuarios t WHERE t.usuario = :usuario OR t.email = :correo");
         search.setParameter("usuario", usuario);
         search.setParameter("correo", email);
         try {
-            id = (TblUsuarios) search.getSingleResult();
+            id = (int) search.getSingleResult();
 
         } catch (Exception e) {
             TblUsuarios us = new TblUsuarios();
@@ -136,25 +139,42 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
 
     }
 
-    public List listausuariosSS() {
-        List< TblUsuarios> lista = null;
+    public List<UsuarioDTO> listausuariosSS() {
+       List< UsuarioDTO> lista = new ArrayList<>();
 
         try {
 
-            Query search = em.createQuery("SELECT u FROM TblUsuarios u");
-            lista = search.getResultList();
-            System.out.println("usuarios del servicio social");
-            System.out.println(lista.size());
+            Query search = em.createQuery("SELECT u.nombre, u.apellidop, u.apellidom, u.email, u.tel, u.usuario FROM TblUsuarios u WHERE u.idTipousuarios.idTipousuarios = :tipo");
+            search.setParameter("tipo", "uss");
+            List obj = search.getResultList();
+           
+if (obj != null) {
+            for (Iterator it = obj.iterator(); it.hasNext();) {
+                Object[] object = (Object[]) it.next();
+                UsuarioDTO temp = new UsuarioDTO();
+                temp.setNombre((String) object[0]);
+                temp.setApellidop((String) object[1]);
+                temp.setApellidom((String) object[2]);
+                temp.setEmail((String) object[3]);
+                temp.setTel((String) object[4]);
+                temp.setUsuario((String) object[5]);
+              
+                lista.add(temp);
+            }    }
+        
+            
+            
+            
+            
+          //  for (int i = 0; i < lista.size(); i++) {
 
-            for (int i = 0; i < lista.size(); i++) {
-
-                if (lista.get(i).getIdTipousuarios().getIdTipousuarios().equals("admin")) {
-                    lista.remove(i);
-                }
+           //     if (lista.get(i).getIdTipousuarios().getIdTipousuarios().equals("admin")) {
+                 //   lista.remove(i);
+           //     }
                 /*if(lista.get(lista.size()-1).getIdTipousuarios().getIdTipousuarios().equals("admin")){
                  lista.remove(lista.size()-1);
                  }*/
-            }
+       //     }
 
             System.out.println(lista);
         } catch (Exception e) {
@@ -163,19 +183,18 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
         }
 
         return lista;
-
     }
 
     public boolean modificar(int id, String nombre, String clave, String apellidop, String apellidom, String tipous, String email, String tel, String usuario) {
         boolean existe = true;
 
-        TblUsuarios busc;
-        Query search = em.createQuery("SELECT t FROM TblUsuarios t WHERE t.email = :correo");
+        String busc;
+        Query search = em.createQuery("SELECT t.usuario FROM TblUsuarios t WHERE t.email = :correo");
 
         search.setParameter("correo", email);
         try {
-            busc = (TblUsuarios) search.getSingleResult();
-            if (usuario.equals(busc.getUsuario())) {
+            busc =  (String) search.getSingleResult();
+            if (usuario.equals(busc)) {
                 TblUsuarios us = em.find(TblUsuarios.class, id);
                 TblTipousuarios tu = new TblTipousuarios();
                 us.setNombre(nombre);

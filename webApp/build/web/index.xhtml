@@ -21,6 +21,8 @@
             <ui:insert name="top">
                 <h:form id="formass">
                     <p:growl id="messages"  showDetail="true" life="2000" />
+                    
+                    <h:commandButton image="/imagenes/banner.jpg" style="height: 190px;width: 1300px"/> 
                     <p:commandLink id="link" value="Logout" action="#{user.logout()}"/>
                     
 
@@ -30,7 +32,7 @@
 
                     </p:idleMonitor>
                     <p:outputLabel />                                          
-                    <p:menubar style="margin-top: 178px;  " >         
+                    <p:menubar style="margin-top: 0px;  " >         
                         <p:submenu label="Lista" icon="ui-icon-document" style="  height: 30px; ">  
                             <p:menuitem value="Open" url="#" style=" color: #D20005;" />  
                             <p:separator/>  
@@ -40,8 +42,8 @@
 
                         <f:facet name="options">  
                             <p:commandButton id="com1" value="Catalogo" style="width:150px; border:none; height: 30px; margin-right: 10px;  "/>
-                            <p:commandButton id="com2" value="Prestamos" style="width:150px; border:none; height: 30px; margin-right: 10px;  " />
-                            <p:commandButton id="com3" value="Administrador" disabled="#{user.habilita}"  action="#{user.redirectA()}" style="margin-right: 450px; width:150px; border:none; height: 30px;  "/>
+                            <p:commandButton id="com2" value="Prestamos" action="/prestamos.xhtml?faces-redirect=true" style="width:150px; border:none; height: 30px; margin-right: 10px;  " />
+                            <p:commandButton id="com3" value="Administrador" disabled="#{user.habilita}"  action="/Admin.xhtml?faces-redirect=true" style="margin-right: 150px; width:150px; border:none; height: 30px;  "/>
                             <p:commandButton   id="iconOnly"  action="#{gd.openKart}" rendered="#{gd ne null}" disabled="#{nm.karControl}"
                                                icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " />    
 
