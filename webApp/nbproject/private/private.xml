@@ -3,26 +3,27 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/beans/staless/TblPrestariosFacade.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/BeanMat.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/entity/beans/TblMaterial.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/beans/staless/TblTipoprestariosFacade.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/Reporte.xhtml</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/util/UsuarioDTO.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/ModificarUs.xhtml</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/beans/staless/TblTipomaterialFacade.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/prestamos.xhtml</file>
             <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/beans/staless/TblPrestamoFacade.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/logIn.xhtml</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/Admin.xhtml</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/beans/staless/TblMaterialFacade.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/util/PrestarioDTO.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/Prestamos.java</file>
             <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/BeanUsuarios.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/ModificarPrest.xhtml</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/entity/beans/TblPrestarios.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/logIn.xhtml</file>
             <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/beans/staless/TblUsuariosFacade.java</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/ReporteMat.xhtml</file>
-            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/BeanPrestarios.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/beans/staless/TblMaterialFacade.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/server/entity/beans/TblMaterial.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/Admin.xhtml</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/AgregarUs.xhtml</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/AgregarPrestario.xhtml</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/index.xhtml</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/resources/css/Laycss.css</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/productOverview.xhtml</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/web/Catalogo.xhtml</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/DataGridSearch.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/BeanMat.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/Catalog.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/Kart.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/NewClass.java</file>
+            <file>file:/C:/Users/cristian/Documents/GitHub/baratheon/webApp/src/java/com/client/named/beanlogin.java</file>
         </group>
     </open-files>
 </project-private>

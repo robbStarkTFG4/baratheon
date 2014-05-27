@@ -41,11 +41,11 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     public List<TblMaterial> autoQueryName(String patron) {
 
-        TypedQuery<TblMaterial> query = em.createQuery("SELECT NEW com.server.entity.beans.TblMaterial(c.idtblMaterial, c.noParte,c.nombre) FROM TblMaterial c WHERE c.nombre LIKE :patron", TblMaterial.class);
+        TypedQuery<TblMaterial> query = em.createQuery("SELECT NEW com.server.entity.beans.TblMaterial( c.noParte,c.nombre) FROM TblMaterial c WHERE c.nombre LIKE :patron", TblMaterial.class);
         query.setParameter("patron", patron.toLowerCase() + "%");
 
         List<TblMaterial> res = query.getResultList();
-        res.add(new TblMaterial(0, patron, "Buscar: "));
+        res.add(new TblMaterial( patron, "Buscar: "));
 
         return res;
 

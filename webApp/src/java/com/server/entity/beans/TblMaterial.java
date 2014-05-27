@@ -90,8 +90,8 @@ public class TblMaterial implements Serializable {
         this.stock = stock;
     }
 
-    public TblMaterial(Integer id,String noParte, String nombre) {
-        this.idtblMaterial=id;
+    public TblMaterial(String noParte, String nombre) {
+        
         this.noParte = noParte;
         this.nombre = nombre;
     }

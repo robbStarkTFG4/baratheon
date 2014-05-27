@@ -5,6 +5,8 @@
  */
 package com.server.beans.staless;
 
+import com.client.named.BeanUsuarios;
+import com.client.named.Prestamos;
 import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblPrestamo;
 import com.server.entity.beans.TblPrestarios;
@@ -22,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -39,7 +42,10 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
     
     @EJB
     TblMaterialFacade ml;
-
+    @Inject
+    Prestamos pres;
+    @Inject
+    BeanUsuarios user;
     @PersistenceContext(unitName = "webAppPU")
     private EntityManager em;
 
@@ -190,8 +196,8 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         TblPrestamo pr = new TblPrestamo();
         pr.setFechaprestamo(((String[]) currentDate())[0]);
         pr.setHoraprestamo(((String[]) currentDate())[1]);
-        pr.setIdPrestario(new TblPrestarios(1));
-        pr.setIdUsuarios(new TblUsuarios(1));// cambiar
+        pr.setIdPrestario(pres.getUs());
+        pr.setIdUsuarios(user.getUsuario());// cambiar
         pr.setStatusprestamo(1);// cambiaar
         em.persist(pr);
         em.flush();

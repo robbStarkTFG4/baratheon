@@ -51,6 +51,12 @@ public class BeanUsuarios implements Serializable {
     String user;
     String tipous;
     boolean habilita, Hregistros = true;
+
+    public TblUsuarios getUsuario() {
+        return usuario;
+    }
+
+    
     boolean habilitaModif;
     String nombre;
     String apaterno;

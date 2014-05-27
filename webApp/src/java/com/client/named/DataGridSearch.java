@@ -97,8 +97,8 @@ public class DataGridSearch implements Serializable {
 
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
-        options.put("draggable", false);
-        options.put("resizable", false);
+        options.put("draggable", true);
+        options.put("resizable", true);
         options.put("contentHeight", 350);
 
         RequestContext.getCurrentInstance().openDialog("/dialogo/popUp", options, null);
@@ -164,8 +164,8 @@ public class DataGridSearch implements Serializable {
 
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
-        options.put("draggable", false);
-        options.put("resizable", false);
+        options.put("draggable", true);
+        options.put("resizable", true);
         options.put("contentHeight", 350);
 
         RequestContext.getCurrentInstance().openDialog("/dialogo/cart", options, null);
