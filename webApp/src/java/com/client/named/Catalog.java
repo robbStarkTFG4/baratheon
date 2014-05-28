@@ -118,7 +118,8 @@ public class Catalog implements Serializable {
     public void onNodeSelect(NodeSelectEvent event) throws IOException {
         System.out.println("si se invoca el metodo del node selected");
         Object obj = event.getTreeNode().getData();
-
+        
+        nm.setCaja(null);//recently added
         nm.setTypeOfSearch(2);
         if (obj instanceof SubFamDTO) {//1
 

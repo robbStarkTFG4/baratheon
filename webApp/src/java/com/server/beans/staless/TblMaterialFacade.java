@@ -45,7 +45,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         query.setParameter("patron", patron.toLowerCase() + "%");
 
         List<TblMaterial> res = query.getResultList();
-        res.add(new TblMaterial( patron, "Buscar: "));
+        res.add(new TblMaterial(patron, "Buscar: "));
 
         return res;
 
@@ -57,7 +57,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         query.setParameter("patron", patron.toLowerCase() + "%");
 
         List<TblMaterial> res = query.getResultList();
-
+        res.add(new TblMaterial(patron, "noParte"));
         return res;
     }
 
@@ -77,6 +77,17 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
                 + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, "
                 + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part");
         res.setParameter("part", patronName.toLowerCase() + "%");
+
+        List<TblMaterial> data = mtlResults(res);
+
+        return data;
+    }
+
+    public List<TblMaterial> find(String patronPartNumber, boolean obj, int x) {// llista patron # parte
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
+                + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, "
+                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte LIKE  :part");
+        res.setParameter("part", patronPartNumber.toLowerCase() + "%");
 
         List<TblMaterial> data = mtlResults(res);
 
@@ -216,6 +227,16 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     }
 
+    public List<TblMaterial> catalogFindBySubFam(int id, String patronPartNumber, int x) {
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte LIKE  :part AND c.subFamiliasidsubFam.idsubFam = :id");
+        res.setParameter("part", patronPartNumber.toLowerCase() + "%");
+        res.setParameter("id", id);
+        List<TblMaterial> data = mtlResults(res);
+
+        return data;
+
+    }
+
     public List<TblMaterial> catalogFindByType(int id, String patronName) {
         Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.idTipomaterial.idTipomaterial = :id");
         res.setParameter("part", patronName.toLowerCase() + "%");
@@ -225,22 +246,31 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         return data;
 
     }
-    public List<TblMaterial> listafull(){
-    List <TblMaterial> lista=null;
-  
-       
-     try {
 
-           TypedQuery<TblMaterial> search = em.createQuery("SELECT NEW com.server.entity.beans.TblMaterial(u.noParte, u.nombre, u.descripcion, u.stock) FROM TblMaterial u", TblMaterial.class);    
-        
-      lista=search.getResultList();
-System.out.println(lista);
+    public List<TblMaterial> catalogFindByType(int id, String patronPartNumber, int x) {
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte   LIKE  :part AND c.idTipomaterial.idTipomaterial = :id");
+        res.setParameter("part", patronPartNumber.toLowerCase() + "%");
+        res.setParameter("id", id);
+        List<TblMaterial> data = mtlResults(res);
+
+        return data;
+
+    }
+
+    public List<TblMaterial> listafull() {
+        List<TblMaterial> lista = null;
+
+        try {
+
+            TypedQuery<TblMaterial> search = em.createQuery("SELECT NEW com.server.entity.beans.TblMaterial(u.noParte, u.nombre, u.descripcion, u.stock) FROM TblMaterial u", TblMaterial.class);
+
+            lista = search.getResultList();
+            System.out.println(lista);
         } catch (Exception e) {
             System.out.println("ERROR IN Question FACADE:" + e.getMessage());
 
         }
-return lista;
-       
-    
+        return lista;
+
     }
 }

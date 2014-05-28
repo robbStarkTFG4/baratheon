@@ -277,18 +277,38 @@ public class DataGridSearch implements Serializable {
             }
         } else {
             if (nm.getCaja().getNombre().equals("Buscar: ")) {
-                if (this.selectedFam != null) {
+                if (this.selectedFam != null ) {
+                    System.out.println("entre al primer metodito");
                     partes = mtl.catalogFindBySubFam(this.selectedFam.getId(), nm.getCaja().getNoParte());
-                    System.out.println("LA CAJA ES NULA");
+
                     RequestContext.getCurrentInstance().update("form:grid");
                     return;
                 }
 
                 if (this.selectedType != null) {
-                    System.out.println("LA CAJA ES NULA");
+                    System.out.println("entro aqui HOLAAAAAAAAAAAA");
                     partes = mtl.catalogFindByType(this.selectedType.getId(), nm.getCaja().getNoParte());
                     RequestContext.getCurrentInstance().update("form:grid");
                 }
+            } else if (nm.getCaja().getNombre().equals("noParte")) {
+
+                if (this.selectedFam != null ) {
+                    System.out.println("entre al primer metodito");
+                    partes = mtl.catalogFindBySubFam(this.selectedFam.getId(), nm.getCaja().getNoParte(), 2);
+
+                    RequestContext.getCurrentInstance().update("form:grid");
+                    return;
+                }
+
+                if (this.selectedType != null) {
+                    System.out.println("entro aqui HOLAAAAAAAAAAAA");
+                    partes = mtl.catalogFindByType(this.selectedType.getId(), nm.getCaja().getNoParte(), 5);
+                    RequestContext.getCurrentInstance().update("form:grid");
+                }
+
+            } else {
+                partes = null;
+                RequestContext.getCurrentInstance().update("form:grid");
             }
 
         }
@@ -333,6 +353,8 @@ public class DataGridSearch implements Serializable {
             if (tbl.getNombre().equals("Buscar: ")) {
                 System.out.println("busqueda de patron custom");
                 partes = mtl.find(tbl.getNoParte(), false);
+            } else if (tbl.getNombre().equals("noParte")) {
+                partes = mtl.find(tbl.getNoParte(), false, 1);
             } else {
                 System.out.println("busqueda normal");
                 partes = mtl.find(tbl.getNoParte());
