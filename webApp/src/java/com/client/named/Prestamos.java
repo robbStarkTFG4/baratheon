@@ -147,6 +147,12 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         this.currentDtl = currentDtl;
     }
 
+    public void updateDebts() {
+        listLoans=null;
+        listLoans = pr.getLoansByDebts(us.getIdPrestario());
+        RequestContext.getCurrentInstance().update("forma:tabView:debts");
+    }
+
     public void findPres() {
         us = usr.getPres(matricula);
         if (us != null) {
@@ -280,9 +286,10 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     public void savePres() {
 
         if (pr.updatePres(currentPres, listLoans)) {
-
+            
+            updateDebts();
             FacesContext context = FacesContext.getCurrentInstance();
-
+   
             context.addMessage(null, new FacesMessage("exito", "cambios guardados "));
             RequestContext.getCurrentInstance().update("forma:tabView:debts");
             RequestContext.getCurrentInstance().update("forma:notify");

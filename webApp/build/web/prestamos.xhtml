@@ -31,9 +31,9 @@
                 </p:inputText>
                          
                 <p:commandButton id="find" value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" 
-                                 update="presName,carrera,mail,tel,notify,log"/>   
+                                 update="presName,carrera,mail,tel,notify,log,@this"  disabled="#{pres.us ne null}" />   
                 
-                <p:commandLink id="log" value="cerrar sesion" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this" disabled="#{pres.us eq null}" />
+                <p:commandLink id="log" value="cerrar sesion" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this,find" disabled="#{pres.us eq null}" />
                 
             </h:panelGrid>
           
@@ -44,7 +44,7 @@
 
                 <p:outputLabel value="correo: " for="mail"/> <p:inputText value="#{pres.correo}" id="mail" size="10" disabled="true"/>
                 <p:outputLabel value="telefono: " for="tel"/> <p:inputText value="#{pres.telefono}" id="tel" size="10" disabled="true"/>
-            <p:commandLink id="updt" value="ACTUALIZAR" action="#{pres.findPres}"  update="presName,carrera,mail,tel,notify,log" />
+           
             </h:panelGrid>
 
             <p:tabView id="tabView" style="margin-top: 10px;" >  

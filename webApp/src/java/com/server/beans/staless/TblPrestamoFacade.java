@@ -39,7 +39,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     @EJB
     TblDetalleprestamoFacade dtl;
-    
+
     @EJB
     TblMaterialFacade ml;
     @Inject
@@ -133,39 +133,42 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
             int count = 0;
             int size = pr.getTblDetalleprestamoList().size();
             for (TblDetalleprestamo dl : pr.getTblDetalleprestamoList()) {
-                if (!dl.getFecharetorno().isEmpty()) {
+                System.out.println("la fecha es: " + dl.getFecharetorno());
+                if (!(dl.getFecharetorno() == null || dl.getFecharetorno().trim().equals(""))) {
                     count++;
                 }
             }
 
-            if (count != 0) {
-                if (count == size) {
+            if (count > 0) {
+                if (count >= size) {
+                    System.out.println("VAMOS A PONERLO EN 3");
                     pres.setStatusprestamo(3);
                     pr.setStatusprestamo(3);
                     pr.setFecharetorno(((String[]) currentDate())[0]);
                     list = this.getLoansByDebts(pres.getIdPrestario()); // mejorar esta linea.
 
                 } else {
+                    System.out.println("VAMOS A PONERLO EN 2");
                     pres.setStatusprestamo(2);
                     pr.setStatusprestamo(2);
                 }
             } else {
+                System.out.println("VAMOS A PONERLO EN 1");
                 pres.setStatusprestamo(1);
                 pr.setStatusprestamo(1);
             }
         } catch (NullPointerException e) {
 
         }
-        
+
         ml.setStock(pres.getTblDetalleprestamoList()); //mejorar
-        
+        System.out.println("el estatus que se va a poner es: " + pr.getStatusprestamo());
         try {
             em.merge(pr);
             return true;
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             return false;
         }
-
     }
 
     public String[] currentDate() {
@@ -212,8 +215,8 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
             return false;
         }
     }
-    
-      public List morosos() {
+
+    public List morosos() {
 
         List<TblPrestarios> list = null;
 
@@ -237,7 +240,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
                 /// System.out.println(list.get(i));
             }
-        //  }
+            //  }
 
 // results = query.getResultList();
         } catch (Exception e) {

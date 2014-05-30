@@ -68,6 +68,9 @@ public class DataGridSearch implements Serializable {
 
     @Inject
     Catalog catalog;
+    
+    @Inject
+    Prestamos pres;
 
     /*  @PersistenceContext(unitName = "webAppPU")
      private EntityManager em;
@@ -229,6 +232,8 @@ public class DataGridSearch implements Serializable {
             context.addMessage(null, new FacesMessage("exito", "prestamo guardado"));
 
             RequestContext.getCurrentInstance().update("formass:not");
+            
+            pres.updateDebts();
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 

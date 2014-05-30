@@ -36,8 +36,6 @@ public class NewSessionBean {
     @EJB
     TblMaterialFacade material;
 
-    private final int idPrestario = 0;
-    private final int idUsuario = 0;
     private List<TblMaterial> mtl;
     private List<TblDetalleprestamo> dtl;
     private List<MtlDTO> data;
@@ -52,12 +50,7 @@ public class NewSessionBean {
         data = new ArrayList<>();
     }
 
-    public void init() {// Objeto usuario con cosas basicas principalmente id, igual con el prestario.
-    }
-
-    public boolean verify() { //verifica que exista un usuario instanciado "que no sea 0".
-        return false;
-    }
+ 
 
     public boolean add(TblMaterial tbl, int quantity) { /// al agregar revisar si hay stock REGRESAR BOOLEANO
 
@@ -115,6 +108,7 @@ public class NewSessionBean {
     }
 
     public void clearList() {
+        dtl.clear();
         mtl.clear();
         data.clear();
     }
