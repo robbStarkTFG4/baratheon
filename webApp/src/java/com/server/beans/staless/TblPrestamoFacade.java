@@ -127,7 +127,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         return null;
     }
 
-    public boolean updatePres(PresDTO pres, List<PresDTO> list) {
+    public boolean updatePres(PresDTO pres) {
         TblPrestamo pr = pres.convertDTO();
         try {
             int count = 0;
@@ -145,7 +145,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
                     pres.setStatusprestamo(3);
                     pr.setStatusprestamo(3);
                     pr.setFecharetorno(((String[]) currentDate())[0]);
-                    list = this.getLoansByDebts(pres.getIdPrestario()); // mejorar esta linea.
+             
 
                 } else {
                     System.out.println("VAMOS A PONERLO EN 2");

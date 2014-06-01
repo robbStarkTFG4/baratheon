@@ -273,4 +273,13 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         return lista;
 
     }
+
+    public boolean checkStock(String noParte, int quantity) {
+        Query query = em.createQuery("SELECT c.stock FROM TblMaterial c WHERE c.noParte = :parte");
+        query.setParameter("parte", noParte);
+
+        int stock = (int) query.getSingleResult();
+        System.out.println("el stock es: "+stock);
+        return stock >= quantity;
+    }
 }

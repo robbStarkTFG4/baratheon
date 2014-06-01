@@ -285,7 +285,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void savePres() {
 
-        if (pr.updatePres(currentPres, listLoans)) {
+        if (pr.updatePres(currentPres)) {
             
             updateDebts();
             FacesContext context = FacesContext.getCurrentInstance();

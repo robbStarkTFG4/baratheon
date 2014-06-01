@@ -12,9 +12,9 @@ import com.util.MtlDTO;
 import com.util.SubFamDTO;
 import com.util.TipoDTO;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,6 +26,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -33,6 +34,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.primefaces.component.growl.Growl;
 import org.primefaces.context.RequestContext;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -68,7 +71,7 @@ public class DataGridSearch implements Serializable {
 
     @Inject
     Catalog catalog;
-    
+
     @Inject
     Prestamos pres;
 
@@ -81,6 +84,9 @@ public class DataGridSearch implements Serializable {
     private int cantidad;
 
     private List<SubFamDTO> subs;
+
+    private boolean dis = false;
+    private boolean skip = true;
 
     @PostConstruct
     private void init() {
@@ -158,18 +164,20 @@ public class DataGridSearch implements Serializable {
     public void removeListener() {/// agregado    //*
         System.out.println("quitar a : " + remove.getNombre());
         kart.removeItem(remove);
+       
         RequestContext.getCurrentInstance().update("form1:table");
+         findErrors();
     }
 
     public void openKart() {// este es el carrito  //*
-
+        skip=true;
         list = kart.getList();
 
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
         options.put("draggable", true);
         options.put("resizable", true);
-        options.put("contentHeight", 350);
+        options.put("contentHeight", 470);
 
         RequestContext.getCurrentInstance().openDialog("/dialogo/cart", options, null);
     }
@@ -232,7 +240,7 @@ public class DataGridSearch implements Serializable {
             context.addMessage(null, new FacesMessage("exito", "prestamo guardado"));
 
             RequestContext.getCurrentInstance().update("formass:not");
-            
+
             pres.updateDebts();
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -282,7 +290,7 @@ public class DataGridSearch implements Serializable {
             }
         } else {
             if (nm.getCaja().getNombre().equals("Buscar: ")) {
-                if (this.selectedFam != null ) {
+                if (this.selectedFam != null) {
                     System.out.println("entre al primer metodito");
                     partes = mtl.catalogFindBySubFam(this.selectedFam.getId(), nm.getCaja().getNoParte());
 
@@ -297,7 +305,7 @@ public class DataGridSearch implements Serializable {
                 }
             } else if (nm.getCaja().getNombre().equals("noParte")) {
 
-                if (this.selectedFam != null ) {
+                if (this.selectedFam != null) {
                     System.out.println("entre al primer metodito");
                     partes = mtl.catalogFindBySubFam(this.selectedFam.getId(), nm.getCaja().getNoParte(), 2);
 
@@ -366,6 +374,64 @@ public class DataGridSearch implements Serializable {
             }
         }
         ;
+    }
+
+    public void onRowEdit(RowEditEvent event) {
+        findErrors();
+    }
+
+    private void findErrors() {
+        List<MtlDTO> parts = kart.getList();
+        String tp = null;
+        List<String> msgs = new ArrayList<>();
+        if (!parts.isEmpty()) {
+            for (MtlDTO mtlDTO : parts) {
+                if (!mtl.checkStock(mtlDTO.getNoParte(), mtlDTO.getCantidad())) {
+                    System.out.println("NO HAAAAAAAAAAAAAAYYYYYYY STOOOOOOOOOOOOOOCK");
+
+                    tp = mtlDTO.getNombre() + " " + "no hay suficiente stock";
+                    msgs.add(tp);
+                }
+            }
+        }
+        if (!msgs.isEmpty()) {
+            dis = true;
+            for (String string : msgs) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(string));
+            }
+            return;
+        }
+        dis = false;
+
+    }
+
+    public void onRowCancel(RowEditEvent event) {
+        // FacesMessage msg = new FacesMessage("Edit Cancelled", ((Car) event.getObject()).getId());
+        //FacesContext.getCurrentInstance().addMessage(null, msg);
+    }
+
+    public void change(ValueChangeEvent c) {
+        MtlDTO me = (MtlDTO) c.getComponent().getAttributes().get("detail");
+        if (!mtl.checkStock(me.getNoParte(), 233)) {
+            System.out.println("NO HAAAAAAAAAAAAAAYYYYYYY STOOOOOOOOOOOOOOCK");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("no hay stock"));
+        }
+    }
+
+    public boolean isDis() {
+        return dis;
+    }
+
+    public void checkMsg() {
+        if (skip) {
+            findErrors();
+            RequestContext.getCurrentInstance().update(":form1:msg");
+            skip = false;
+        }
+    }
+
+    public boolean isSkip() {
+        return skip;
     }
 
 }
