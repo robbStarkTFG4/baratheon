@@ -28,6 +28,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
+import javax.faces.event.PreRenderViewEvent;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
@@ -42,7 +43,7 @@ public class BeanUsuarios implements Serializable {
     @EJB
     TblUsuariosFacade us;
     TblMaterialFacade mat;
-    TblUsuarios usuario, usmodif = null;
+    TblUsuarios usuario = null, usmodif = null;
     TblTipousuarios tu = null;
     List<UsuarioDTO> listauss;
     List<TblMaterial> listamat;
@@ -56,7 +57,6 @@ public class BeanUsuarios implements Serializable {
         return usuario;
     }
 
-    
     boolean habilitaModif;
     String nombre;
     String apaterno;
@@ -192,29 +192,29 @@ public class BeanUsuarios implements Serializable {
     }
 
     public String login() {
-String tipo = null;
+        String tipo = null;
         UIInput compUsuario = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:usuario");
         UIInput compClave = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:clave");
         usuario = us.logIn(compUsuario.getValue().toString(), compClave.getValue().toString());
 
         UIOutput out = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("status:indicador");
- if (usuario != null) {
-        tipo = usuario.getIdTipousuarios().getIdTipousuarios().toString();
+        if (usuario != null) {
+            tipo = usuario.getIdTipousuarios().getIdTipousuarios().toString();
         }
         if (usuario != null) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(usuario.getUsuario(), "usuario autentificado ?++");
-            
+
             System.out.println(tipo);
 
             return "index.xhtml?faces-redirect=true";
-        } else  {
-              System.out.println("USUARIOS NO VALIDOS");
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Usuario o contraseña invalido"));
-          UIOutput compU = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:usuario");
-          UIOutput compC = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:clave");
-          
-          compU.setValue("");
-          compC.setValue("");
+        } else {
+            System.out.println("USUARIOS NO VALIDOS");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Usuario o contraseña invalido"));
+            UIOutput compU = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:usuario");
+            UIOutput compC = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:clave");
+
+            compU.setValue("");
+            compC.setValue("");
             return null;
 
         }
@@ -224,41 +224,40 @@ String tipo = null;
     //http://www.java-tutorial.ch/java-server-faces/logout-in-jsf-application
     public void logout() throws IOException {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-FacesContext obj= FacesContext.getCurrentInstance();
-ExternalContext xcon = obj.getExternalContext();
-String url2= xcon.encodeActionURL(obj.getApplication().getViewHandler().getActionURL(obj, "/faces/logIn.xhtml"));
- try {
-         usuario= null;
-           xcon.redirect(url2);
+        FacesContext obj = FacesContext.getCurrentInstance();
+        ExternalContext xcon = obj.getExternalContext();
+        String url2 = xcon.encodeActionURL(obj.getApplication().getViewHandler().getActionURL(obj, "/faces/logIn.xhtml"));
+        try {
+            usuario = null;
+            xcon.redirect(url2);
         } catch (IOException ioe) {
             throw new FacesException(ioe);
-        }     
+        }
 //return "/faces/logIn.xhtml?faces-redirect=true";
     }
 
     public void idleListener() {
-      //  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+        //  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
         //        "Sesion cerrada", "Has estado oculto durante los ultimos 5 segundos"));
 
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-       // return "faces/logIn.xhtml?faces-redirect=true";
+        // return "faces/logIn.xhtml?faces-redirect=true";
 
         FacesContext ctx = FacesContext.getCurrentInstance();
 
         ExternalContext extContext = ctx.getExternalContext();
         String url = extContext.encodeActionURL(ctx.getApplication().getViewHandler().getActionURL(ctx, "/logIn.xhtml"));
-       
-               
+
         try {
-         usuario= null;
+            usuario = null;
             extContext.redirect(url);
         } catch (IOException ioe) {
             throw new FacesException(ioe);
         }
 //"faces/uicomposition/logIn.xhtml?faces-redirect=true");
-         //return "/uicomposition/logIn.xhtml?faces-redirect=true";
-            //invalidate session
-        }
+        //return "/uicomposition/logIn.xhtml?faces-redirect=true";
+        //invalidate session
+    }
 
     public void ocultListener() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
@@ -269,12 +268,13 @@ String url2= xcon.encodeActionURL(obj.getApplication().getViewHandler().getActio
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
                 "Bienvenido de vuelta", "Fue un largo descanzo "));
     }
-    public void redirectA(){
-    FacesContext ob = FacesContext.getCurrentInstance();
-    ExternalContext extcon = ob.getExternalContext();
-    String url3= extcon.encodeActionURL(ob.getApplication().getViewHandler().getActionURL(ob, "/faces/Admin.xhtml"));
-    try {
-        
+
+    public void redirectA() {
+        FacesContext ob = FacesContext.getCurrentInstance();
+        ExternalContext extcon = ob.getExternalContext();
+        String url3 = extcon.encodeActionURL(ob.getApplication().getViewHandler().getActionURL(ob, "/faces/Admin.xhtml"));
+        try {
+
             extcon.redirect(url3);
         } catch (IOException ioe) {
             throw new FacesException(ioe);
@@ -391,7 +391,7 @@ String url2= xcon.encodeActionURL(obj.getApplication().getViewHandler().getActio
             UIOutput compCo = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:correo");
             UIOutput compT = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:tel");
             UIOutput compU = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:us");
-             UIOutput compBu = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:usuariof");
+            UIOutput compBu = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:usuariof");
             compN.setValue(borrar);
             compC.setValue(borrar);
             compAp.setValue(borrar);
@@ -399,7 +399,7 @@ String url2= xcon.encodeActionURL(obj.getApplication().getViewHandler().getActio
             compCo.setValue(borrar);
             compT.setValue(borrar);
             compU.setValue(borrar);
-            compBu.setValue(borrar); 
+            compBu.setValue(borrar);
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Successful", "Usuario " + compUsuario.getValue().toString() + " Modificado con exito"));
         }
@@ -407,13 +407,14 @@ String url2= xcon.encodeActionURL(obj.getApplication().getViewHandler().getActio
         System.out.println(compNombre.getValue().toString() + compClave.getValue().toString() + compApat.getValue().toString() + compAmat.getValue().toString() + compCorreo.getValue().toString() + compTel.getValue().toString() + compUsuario.getValue().toString() + compTipo.getValue().toString());
 
     }
-public String valorModifInicial(){
-        
-     Hregistros = true;
+
+    public String valorModifInicial() {
+
+        Hregistros = true;
+
+        return "ModificarUs.xhtml?faces-redirect=true";
+
+    }
+
     
-    return "ModificarUs.xhtml?faces-redirect=true";
-
-
-
-}
 }
