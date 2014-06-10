@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+
+
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Alta Materiales</title>
+
+    </h:head>
+    <h:body>
+        <ui:composition template="/Templates/template.xhtml">
+            <ui:define name="content">
+                <h:form id="forma">
+                    <p:growl id="grow" showDetail="true" sticky="false"/>
+                    <tt>
+                        <h:panelGrid id="grid" columns="3" cellspacing="5px" cellpadding="5px">
+                            <p:outputLabel value="Nombre :" />  
+                            <p:inputText id="nom" value="#{Menu.nombre}" required="true" disabled="#{Menu.control}"  requiredMessage="inserta nombre"  validatorMessage="inserta nombre > 3 caracteres">
+                                <f:validateLength minimum="3" maximum="20" >
+                                </f:validateLength> 
+                            </p:inputText>
+                            <p:message id="mensajenom"  for="nom" />
+
+
+
+                            <p:outputLabel value="#Parte :" />  
+                            <p:inputText id="noParte" value="#{Menu.noParte}" required="true" validator="check"  requiredMessage="inserta #Parte" >
+                                <f:ajax event="blur" execute="@this" render="mensajeParte"/>
+                            </p:inputText>
+
+                            <p:message id="mensajeParte"  for="noParte" />
+
+                            <p:outputLabel value="Cantidad :"  />  
+                            <p:inputText id="cant" required="true" value="#{Menu.cantidad}"  requiredMessage="inserta cantidad" validatorMessage=" solo numeros">
+                                <f:validateRegex pattern="[0-9]+" />
+                                <f:validateLength minimum="1" maximum="20"/>  
+
+                            </p:inputText>
+                            <p:message id="mensajecant" for="cant" />
+                            <p:outputLabel value="Costo :"  />  
+                            <p:inputText id="cost"  required="true" value="#{Menu.precio}" requiredMessage="inserta costo" validatorMessage="solo numeros">
+                                <f:validateLength minimum="1" maximum="20"/>
+                                <f:validateRegex pattern="[0-9]+" />
+
+                            </p:inputText>
+                            <p:message id="mensajecost" for="cost" />
+
+
+
+                            <p:outputLabel id="areacss" value="Area :"  />
+
+                            <p:selectOneMenu  id="combo1"  value="#{Menu.selectArea}" effect="fade" converter="pl" style="width: 205px" valueChangeListener="#{Menu.Listener}"
+                                              >  
+                                <f:ajax event="change" execute="@this"  render="@this  combo2 combo3 "/>
+                                <f:selectItem itemLabel="--.--" itemValue="" /> 
+                                <f:selectItems value="#{Menu.listArea}" var="player" itemLabel="#{player.descripcion}" itemValue="#{player}"/>  
+                            </p:selectOneMenu>  
+
+
+                            <h:message id="cb1" for="combo1" />
+
+
+
+                            <p:outputLabel value="Categoria :"  />
+
+                            <p:selectOneMenu  required="true" requiredMessage="escoge una opcion"  id="combo2" value="#{Menu.selectFam}" effect="fade" style="width: 205px" converter="lt" valueChangeListener="#{Menu.Listener2}"        
+                                              >  
+                                <f:ajax  execute="@this"  render=" @this  combo3  "/>
+                                <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                                <f:selectItems value="#{Menu.listFamilia}" var="player" itemLabel="#{player.descripcion}" itemValue="#{player}"/>  
+                            </p:selectOneMenu>  
+                            <p:message id="cb2" for="combo2" />
+
+
+
+                            <p:outputLabel value="SubCategoria :"  />
+                            <p:selectOneMenu  required="true" id="combo3"  value="#{Menu.selectSub}"  converter="sub" style="width: 205px" valueChangeListener="#{Menu.forward}" requiredMessage="escoge una opcion">  
+
+                                <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" />
+                                <f:selectItems value="#{Menu.listSubs}" var="pl" itemLabel="#{pl.nombre}" itemValue="#{pl}"/>
+                            </p:selectOneMenu> 
+                            <p:message id="cb3" for="combo3" />
+
+
+
+                            <p:outputLabel value="Descripcion :"  />
+                            <p:inputTextarea rows="5" cols="18" counter="counter" maxlength="60"    value="#{Menu.descripcion}"    
+                                             counterTemplate="{0} caracteres restantes" autoResize="true" style="width: 200px"/> 
+                            <p:outputLabel/>
+                            <p:outputLabel/>
+                            <h:outputText id="counter"  style="size: 4px"/> 
+
+                            <p:outputLabel/>
+                            <p:outputLabel/>
+
+                            <p:commandButton  value="Siguiente"  id="ajax" action="Imagen" 
+                                              styleClass="ui-priority-primary"  update="cb1,cb2,cb3,combo1,combo2,combo3,mensajecost,cost,mensajecant,cant,mensajenom,nom,noParte,mensajeParte" />
+
+
+
+
+                        </h:panelGrid>
+                    </tt>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
