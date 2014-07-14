@@ -155,13 +155,16 @@ public class MenuBean implements Serializable {
         RequestContext.getCurrentInstance().update("forma:cost");
         return "index";
     }
-
+public void imp(){
+    System.out.println("funciona en 4");
+}
     public void upload() {
         if (file != null) {
             //FacesMessage msg = new FacesMessage("Succesful", file.getFileName() + "is uploaded");
             //FacesContext.getCurrentInstance().addMessage(null, msg);
             try {
                 guardarImagen(file.getFileName(), file.getInputstream());
+                System.out.println(file.getFileName());
             } catch (IOException ex) {
                 //Logger.getLogger(Image.class.getName()).log(Level.SEVERE,null,ex));
             }

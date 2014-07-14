@@ -1,0 +1,115 @@
+.btsalir{
+  position: fixed !important;
+    margin-left: 39% !important;  
+    border: none!important;
+}
+.selt{
+    position: fixed !important;
+    margin-left: 0% !important;
+}
+.ban{   
+    width: 100%;
+    height: 175px;   
+}
+#content{
+    width: 50%;
+    
+}
+.ipnombre{
+    width: 220px!important;
+}
+.ipnoparte{
+     width: 220px!important;
+}
+.iparea{
+    resize:none; width: 220px;
+}
+.ipcantidad{
+    width: 220px!important;
+}
+.ipcosto{
+    width: 220px!important;
+}
+.ipunidad{
+    width: 220px!important;
+}
+.ipmarca{
+    width: 220px!important;
+}
+.ipserie{
+    width: 220px!important;
+}
+.ipestado{
+    width: 220px!important;
+}
+.ipubicacion{
+    width: 220px!important;
+}
+#top{
+    margin-left: -0.7%;
+    margin-right: -0.7%;
+    margin-top: -0.7%;
+}
+.t1{
+  font-size: 125%!important;
+}
+.t2{
+  font-size: 125%!important;
+}
+.t3{
+ font-size: 125%!important; 
+}
+.t4{
+ font-size: 125%!important; 
+}
+.ipresponsable{
+   width: 220px!important; 
+}
+.ipproveedor{
+  width: 220px!important;  
+}
+.ipfactura{
+  width: 220px!important;   
+}
+.iporden{
+  width: 220px!important;
+}
+.ipcodigo{
+ width: 220px!important;   
+}
+.ipfinanciamiento{
+ width: 220px!important;
+}
+.iptipcompra{
+  width: 220px!important;
+}
+.ipiduabc{
+ width: 220px!important;
+}
+.mascara{
+ width: 220px!important;
+}
+.ipimg{
+  width: 220px!important;
+}
+
+
+.ui-autocomplete-input{
+    width: 150% !important;
+    
+}
+
+.ui-toolbar{
+    padding: 0.5em !important;
+}
+
+.tool{
+    border-radius: 0px !important;
+    
+}
+
+.ban{
+    margin-bottom: 0% !important;
+}
+
+
