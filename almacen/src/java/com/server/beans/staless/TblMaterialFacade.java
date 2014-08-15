@@ -130,9 +130,9 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
             //   query.setParameter("id", detailDTO.getIdMaterial());
 
             // Object[] res = (Object[]) query.getSingleResult();
-            Query query = em.createNamedQuery("TblMaterial.findByIdtblMaterial");
+            TypedQuery<TblMaterial> query = em.createNamedQuery("TblMaterial.findByIdtblMaterial", TblMaterial.class);
             query.setParameter("idtblMaterial", detailDTO.getIdMaterial());
-            TblMaterial temp = (TblMaterial) query.getSingleResult();
+            TblMaterial temp = query.getSingleResult();
             //   temp.setIdtblMaterial((Integer) res[0]);
             int oldStock = temp.getStock();
             temp.setStock(oldStock + detailDTO.getRegresados());
@@ -162,6 +162,23 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
         return data;
 
+    }
+
+    public List<TblMaterial> catalogFindByArea(Integer id, String patronName) {
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.idTipomaterial.tblAreaIdArea.idArea = :id");
+        res.setParameter("part", patronName.toLowerCase() + "%");
+        res.setParameter("id", id);
+        List<TblMaterial> data = mtlResults(res);
+        return data;
+
+    }
+    
+    public List<TblMaterial> catalogFindByArea(Integer id, String patronNoParte, int x){
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte LIKE  :part AND c.idTipomaterial.tblAreaIdArea.idArea = :id");
+        res.setParameter("part", patronNoParte.toLowerCase() + "%");
+        res.setParameter("id", id);
+        List<TblMaterial> data = mtlResults(res);
+        return data;
     }
 
     public List<TblMaterial> catalogFindByType(int id) {    //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
@@ -289,7 +306,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         System.out.println("el stock es: " + stock);
         return stock >= quantity;
     }
-
+    
     public List<TblMaterial> listafull() {
         List<TblMaterial> lista = null;
 
@@ -306,4 +323,5 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         return lista;
 
     }
+
 }

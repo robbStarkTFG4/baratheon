@@ -8,6 +8,7 @@ package com.client.named;
 import com.server.beans.staless.TblMaterialFacade;
 import com.server.beans.stateful.NewSessionBean;
 import com.server.entity.beans.TblMaterial;
+import com.util.AreasDTO;
 import com.util.MtlDTO;
 import com.util.SubFamDTO;
 import com.util.TipoDTO;
@@ -64,6 +65,10 @@ public class DataGridSearch implements Serializable {
     private SubFamDTO selectedFam;
 
     private List<TipoDTO> tipos;
+
+    private List<AreasDTO> areas;
+
+    private AreasDTO selectedArea;
 
     @Inject
     NewClass nm;
@@ -246,31 +251,61 @@ public class DataGridSearch implements Serializable {
         }
     }
 
+    public void areasListener(ValueChangeEvent e) {
+        if (e != null) {
+
+            if (e.getNewValue() != null) {
+                System.out.println(e.getNewValue().toString());
+                this.selectedArea = (AreasDTO) e.getNewValue(); // comprobar que nosea nulo antes de seguir
+//                System.out.println(this.selectedType);
+//                tipos.clear();
+                tipos = catalog.getDynamicTypes().get(this.selectedArea.toString());
+                this.selectedFam = null;
+
+            } else {
+                tipos = null;
+                subs = null;
+                this.selectedFam = null;
+                this.selectedType = null;
+            }
+            RequestContext.getCurrentInstance().update("form:subFam");
+        }
+    }
+
     public void typesListener(ValueChangeEvent e) {
         if (e != null) {
-            System.out.println(e.getNewValue().toString());
-            this.selectedType = (TipoDTO) e.getNewValue();
-            System.out.println(this.selectedType);
-            subs = catalog.getDynamicSubs().get(this.selectedType.toString());
-            this.selectedFam = null;
-            for (SubFamDTO sub : subs) {
-                System.out.println(sub.getNombre());
-            }
 
+            if (e.getNewValue() != null) {
+                System.out.println(e.getNewValue().toString());
+                this.selectedType = (TipoDTO) e.getNewValue(); // comprobar que nosea nulo antes de seguir
+                System.out.println(this.selectedType);
+                subs = catalog.getDynamicSubs().get(this.selectedType.toString());
+                this.selectedFam = null;
+                for (SubFamDTO sub : subs) {
+                    System.out.println(sub.getNombre());
+                }
+            } else {
+                subs = null;
+                this.selectedFam = null;
+            }
             RequestContext.getCurrentInstance().update("form:subFam");
         }
     }
 
     public void subFamsListener(ValueChangeEvent e) {
         if (e != null) {
-            this.selectedFam = ((SubFamDTO) e.getNewValue());
-            System.out.println("escogiste: " + this.selectedFam.getNombre());
+            if (e.getNewValue() != null) {
+                this.selectedFam = ((SubFamDTO) e.getNewValue());
+                System.out.println("escogiste: " + this.selectedFam.getNombre());
+            } else {
+                this.selectedFam = null;
+            }
         }
     }
 
     public void filter() {
         System.out.println("SOY EL FILTRO");
-        if (nm.getCaja() == null) {
+        if (nm.getCaja() == null) {  // busqueda cuando se viene del catalogo
             if (this.selectedFam != null) {
                 partes = mtl.catalogFindBySubFam(this.selectedFam.getId());
                 for (TblMaterial tblMaterial : partes) {
@@ -283,9 +318,16 @@ public class DataGridSearch implements Serializable {
             if (this.selectedType != null) {
                 partes = mtl.catalogFindByType(this.selectedType.getId());
                 RequestContext.getCurrentInstance().update("form:grid");
+                return;
             }
+
+            if (this.selectedArea != null) {
+                partes = mtl.catalogFindByArea(this.selectedArea.getId());
+                RequestContext.getCurrentInstance().update("form:grid");
+            }
+
         } else {
-            if (nm.getCaja().getNombre().equals("Buscar: ")) {
+            if (nm.getCaja().getNombre().equals("Buscar: ")) {  // busqueda con patron nombre
                 if (this.selectedFam != null) {
                     System.out.println("entre al primer metodito");
                     partes = mtl.catalogFindBySubFam(this.selectedFam.getId(), nm.getCaja().getNoParte());
@@ -298,8 +340,15 @@ public class DataGridSearch implements Serializable {
                     System.out.println("entro aqui HOLAAAAAAAAAAAA");
                     partes = mtl.catalogFindByType(this.selectedType.getId(), nm.getCaja().getNoParte());
                     RequestContext.getCurrentInstance().update("form:grid");
+                    return;
                 }
-            } else if (nm.getCaja().getNombre().equals("noParte")) {
+
+                if (this.selectedArea != null) {
+                    partes = mtl.catalogFindByArea(this.selectedArea.getId(), nm.getCaja().getNoParte());
+                    RequestContext.getCurrentInstance().update("form:grid");
+                }
+
+            } else if (nm.getCaja().getNombre().equals("noParte")) { // busqueda patron #parte
 
                 if (this.selectedFam != null) {
                     System.out.println("entre al primer metodito");
@@ -312,6 +361,12 @@ public class DataGridSearch implements Serializable {
                 if (this.selectedType != null) {
                     System.out.println("entro aqui HOLAAAAAAAAAAAA");
                     partes = mtl.catalogFindByType(this.selectedType.getId(), nm.getCaja().getNoParte(), 5);
+                    RequestContext.getCurrentInstance().update("form:grid");
+                    return;
+                }
+
+                if (this.selectedArea != null) {
+                    partes = mtl.catalogFindByArea(this.selectedArea.getId(), nm.getCaja().getNoParte(), 5);
                     RequestContext.getCurrentInstance().update("form:grid");
                 }
 
@@ -369,6 +424,22 @@ public class DataGridSearch implements Serializable {
 
     public void setSkip(boolean skip) {
         this.skip = skip;
+    }
+
+    public List<AreasDTO> getAreas() {
+        return areas;
+    }
+
+    public void setAreas(List<AreasDTO> areas) {
+        this.areas = areas;
+    }
+
+    public AreasDTO getSelectedArea() {
+        return selectedArea;
+    }
+
+    public void setSelectedArea(AreasDTO selectedArea) {
+        this.selectedArea = selectedArea;
     }
 
     private void searchBoxQuery() {

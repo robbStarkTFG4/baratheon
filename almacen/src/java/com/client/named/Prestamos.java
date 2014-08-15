@@ -90,6 +90,8 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     private TblMaterial currentView;
 
     private List<DetailDTO> solicitudes;
+    
+    private int activo;
 
     public Prestamos() {
 
@@ -178,6 +180,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             this.correo = us.getEmail();
             this.nombre = us.getNombre();
             this.telefono = us.getTel();
+            this.activo= us.getActivo();
             System.out.println("me llamo: " + us.getEmail());
 
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
@@ -312,6 +315,14 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void setCurrentPres(PresDTO currentPres) {
         this.currentPres = currentPres;
+    }
+
+    public int getActivo() {
+        return activo;
+    }
+
+    public void setActivo(int activo) {
+        this.activo = activo;
     }
 
     public void savePres() throws ParseException {

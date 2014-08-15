@@ -42,6 +42,9 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     @EJB
     TblMaterialFacade ml;
+    
+    @EJB
+    TblPrestariosFacade deud;
 
     private final String inquerys = "c.idPrestamo,  c.fechaprestamo, c.fecharetorno, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo , c.idUsuarios.idUsuarios, c.idPrestario.idPrestario, c.fechaSolicitud, c.fechaVencimiento ";
 
@@ -66,7 +69,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
      private List<DetailDTO> tblDetalleprestamoList;*/
     public List<PresDTO> getLoansByDebts(int idPrestario) {
         Query query = em.createQuery("SELECT " + inquerys + " FROM TblPrestamo c "
-                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 1 OR c.statusprestamo = 2");
+                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 1 OR c.statusprestamo = 2 OR c.statusprestamo = 4");
         query.setParameter("id", idPrestario);
 
         return finTheInquerys(query);
@@ -101,6 +104,10 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
             if (count > 0) {
                 if (count >= size) {
+                    
+                    if(pr.getStatusprestamo()==4){
+                        deud.enable(pr.getIdPrestario().getIdPrestario());
+                    }
                     System.out.println("VAMOS A PONERLO EN 3");
                     pres.setStatusprestamo(3);
                     pr.setStatusprestamo(3);
@@ -275,8 +282,8 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         String currentTime = hora.format(dat.getTime());
         return currentTime;
     }
-
-    public List morosos() {
+    
+     public List morosos() {
 
         List<TblPrestarios> list = null;
 

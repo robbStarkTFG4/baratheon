@@ -16,6 +16,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -35,9 +36,11 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
     public TblPrestariosFacade() {
         super(TblPrestarios.class);
     }
-     //TblPrestarios(Integer idPrestario, String nombre, String apaterno, String amaterno, String tel, String email, String usuario, String carrera)
+
+    //TblPrestarios(Integer idPrestario, String nombre, String apaterno, String amaterno, String tel, String email, String usuario, String carrera)
+
     public TblPrestarios getPres(String matricula) {
-        Query query = em.createQuery("SELECT NEW com.server.entity.beans.TblPrestarios(c.idPrestario, c.nombre, c.apaterno, c.amaterno, c.tel , c.email, c.usuario, c.carrera) FROM TblPrestarios c WHERE c.usuario = :usuario");
+        Query query = em.createQuery("SELECT NEW com.server.entity.beans.TblPrestarios(c.idPrestario, c.nombre, c.apaterno, c.amaterno, c.tel , c.email, c.usuario, c.carrera, c.activo) FROM TblPrestarios c WHERE c.usuario = :usuario");
         query.setParameter("usuario", matricula);
         TblPrestarios res = null;
         try {
@@ -66,7 +69,7 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
     public boolean agregar(String nombre, String apaterno, String amaterno, int tipo, String tel, String email, String usuario, String carrera) {
 
         boolean existe = true;
-       int id ;
+        int id;
         Query search = em.createQuery("SELECT t.idPrestario FROM TblPrestarios t WHERE t.usuario = :usuario OR t.email = :correo");
         search.setParameter("usuario", usuario);
         search.setParameter("correo", email);
@@ -171,7 +174,7 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
     public boolean modificar(int id, String nombre, String apaterno, String amaterno, int tipo, String tel, String email, String usuario, String carrera) {
 
         boolean existe = true;
-        String bp ;
+        String bp;
         Query search = em.createQuery("SELECT t.usuario FROM TblPrestarios t WHERE t.email = :correo");
 
         search.setParameter("correo", email);
@@ -217,57 +220,57 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         return existe;
 
     }
-     public List<PrestarioDTO> Morosos(){
-       List<PrestarioDTO> list = new ArrayList<>();
-      
-       try {
-    //  t.idPrestario.nombre, t.idPrestario.apaterno, t.idPrestario.amaterno, t.idPrestario.email, t.idPrestario.tel, t.idPrestario.usuario, t.idPrestario.carrera 
+
+    public List<PrestarioDTO> Morosos() {
+        List<PrestarioDTO> list = new ArrayList<>();
+
+        try {
+            //  t.idPrestario.nombre, t.idPrestario.apaterno, t.idPrestario.amaterno, t.idPrestario.email, t.idPrestario.tel, t.idPrestario.usuario, t.idPrestario.carrera 
             Query search1 = em.createQuery("SELECT  t.idPrestario FROM TblPrestamo t WHERE t.statusprestamo = :status OR t.statusprestamo = :status1");
             search1.setParameter("status", 1);
             search1.setParameter("status1", 2);
-            List <TblPrestarios> obj = search1.getResultList();
-               
+            List<TblPrestarios> obj = search1.getResultList();
 
-       
-            
-if (obj != null) {
-     HashSet hs = new HashSet();
-           hs.addAll(obj);
-          obj.clear();
-          obj.addAll(hs);
-System.out.println(obj);
-            for (int i = 0; i < obj.size(); i++) {
-                
-                PrestarioDTO temp = new PrestarioDTO();
-                temp.setNombre((String) obj.get(i).getNombre());
-                temp.setApaterno((String) obj.get(i).getApaterno());
-                temp.setAmaterno((String) obj.get(i).getAmaterno());
-                temp.setEmail((String) obj.get(i).getEmail());
-                temp.setTel((String) obj.get(i).getTel());
-                temp.setUsuario((String) obj.get(i).getUsuario());
-                temp.setCarrera((String) obj.get(i).getCarrera());
-              
-                list.add(temp);
-        
-            } 
- 
+            if (obj != null) {
+                HashSet hs = new HashSet();
+                hs.addAll(obj);
+                obj.clear();
+                obj.addAll(hs);
+                System.out.println(obj);
+                for (int i = 0; i < obj.size(); i++) {
 
+                    PrestarioDTO temp = new PrestarioDTO();
+                    temp.setNombre((String) obj.get(i).getNombre());
+                    temp.setApaterno((String) obj.get(i).getApaterno());
+                    temp.setAmaterno((String) obj.get(i).getAmaterno());
+                    temp.setEmail((String) obj.get(i).getEmail());
+                    temp.setTel((String) obj.get(i).getTel());
+                    temp.setUsuario((String) obj.get(i).getUsuario());
+                    temp.setCarrera((String) obj.get(i).getCarrera());
 
-}
-    
+                    list.add(temp);
+
+                }
+
+            }
 
 //Iterator li=list.iterator();
-
-
         } catch (Exception e) {
             System.out.println("ERROR IN Question FACADE:" + e.getMessage());
         }
-     
-     
-     return list;
- 
- 
- 
- 
- }
+
+        return list;
+
+    }
+    
+     public void enable(Integer idPrestario) {
+        TypedQuery<TblPrestarios> query = em.createQuery("SELECT c FROM TblPrestarios c WHERE c.idPrestario = :id", TblPrestarios.class);
+        query.setParameter("id", idPrestario);
+        TblPrestarios temp = query.getSingleResult();
+
+        temp.setActivo(1);
+        em.merge(temp);
+    }
+    
+    
 }

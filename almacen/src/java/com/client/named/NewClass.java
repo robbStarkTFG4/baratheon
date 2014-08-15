@@ -62,8 +62,10 @@ public class NewClass implements Serializable {
     public List<TblMaterial> autoComplete(String patron) { // metodo del buscador 
         System.out.println("sigo funcionando autoComplete METODO");
         if (patron.matches("^[a-zA-Z0]*$")) {
+            System.out.println("busqueda por nombre");
             results = mtl.autoQueryName(patron);
         } else {
+            System.out.println("busqueda por numero de parte");
             results = mtl.autoQueryPartNumber(patron);
         }
 
@@ -85,22 +87,26 @@ public class NewClass implements Serializable {
 
             System.out.println("estoy en: " + fullURI);
 
+            data.setAreas(null);
+            data.setAreas(cg.getAreas());
+            //        data.setTypesList(cg.getTipos()); // voy  a ocupar quitarlo porque la lista se va a cargar dependiendo el area escogida
+            data.setFamsList(null);
+            data.setTypesList(null);
+            data.setSelectedArea(null);
+            data.setSelectedFam(null);
+            data.setSelectedType(null);
             if (!fullURI.equals("/backUpWebAPP/faces/grid.xhtml")) {
-                data.setTypesList(cg.getTipos());
-                data.setSelectedFam(null);
-                data.setSelectedType(null);
+
                 System.out.println("entre en el redirect PRIMER PUNTO PARA QUERY");
                 typeOfSearch = 1;
                 data.performQuery(typeOfSearch);
                 return "/grid.xhtml?faces-redirect=true";
             } else {
-                data.setTypesList(cg.getTipos());
-                data.setSelectedFam(null);
-                data.setSelectedType(null);
+
                 System.out.println("estoy en el ajax");
                 typeOfSearch = 1;
                 data.performQuery(typeOfSearch);
-
+                RequestContext.getCurrentInstance().update("form:area");
                 RequestContext.getCurrentInstance().update("form:familia");
                 RequestContext.getCurrentInstance().update("form:subFam");
                 RequestContext.getCurrentInstance().update("form:grid");

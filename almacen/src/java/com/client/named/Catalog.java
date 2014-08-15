@@ -55,6 +55,8 @@ public class Catalog implements Serializable {
     private List<TipoDTO> tipos;
     private Map<String, List<SubFamDTO>> dynamicSubs = new HashMap<>();
 
+    private Map<String, List<TipoDTO>> dynamicTypes = new HashMap<>();
+
     private @Inject
     NewClass nm;
 
@@ -73,6 +75,7 @@ public class Catalog implements Serializable {
         List<AreasDTO> areasLocal = areaFacade.getCategories();
         if (areasLocal != null) {
             areas.addAll(areasLocal);
+            dg.setAreas(areas);
             for (AreasDTO areasDTO : areasLocal) {
                 TreeNode node = new DefaultTreeNode(areasDTO, root);
                 System.out.println("- " + areasDTO.getNombre());
@@ -80,6 +83,7 @@ public class Catalog implements Serializable {
 
                 if (tiposLocal != null) {
                     tipos.addAll(tiposLocal);
+                    dynamicTypes.put(areasDTO.toString(), tiposLocal);
                     for (TipoDTO type : tiposLocal) {
                         TreeNode node1 = new DefaultTreeNode(type, node);
                         System.out.println("    - " + type.getNombre());
@@ -118,9 +122,9 @@ public class Catalog implements Serializable {
     public void onNodeSelect(NodeSelectEvent event) throws IOException {
         System.out.println("si se invoca el metodo del node selected");
         Object obj = event.getTreeNode().getData();
-        
-        nm.setCaja(null);//recently added
+        nm.setCaja(null);
         nm.setTypeOfSearch(2);
+
         if (obj instanceof SubFamDTO) {//1
 
             dg.setPartes(mtl.catalogFindBySubFam(((SubFamDTO) obj).getId()));
@@ -135,6 +139,8 @@ public class Catalog implements Serializable {
                             if (type.toString().equals(str)) {
                                 dg.setSelectedType(type);
                                 dg.setFamsList(this.dynamicSubs.get((type).toString()));
+
+                                dg.setSelectedArea(findArea((TipoDTO) type, null));
                             }
                         }
                     }
@@ -145,6 +151,23 @@ public class Catalog implements Serializable {
 
         } else if (obj instanceof TipoDTO) {//2
 
+            /*  for (Map.Entry<String, List<TipoDTO>> entry : dynamicTypes.entrySet()) {
+             String str = entry.getKey();
+             List<TipoDTO> list = entry.getValue();
+             for (TipoDTO sub : list) {
+             if (sub.equals(obj)) {
+             for (AreasDTO type : areas) {
+             if (type.toString().equals(str)) {
+             dg.setSelectedArea(type);
+                            
+             }
+             }
+             }
+             }
+
+             }*/
+            dg.setSelectedArea(findArea((TipoDTO) obj, null));
+
             dg.setTypesList(findArea((TipoDTO) obj, null).getTipo());
             dg.setSelectedType((TipoDTO) obj);
             dg.setFamsList(this.dynamicSubs.get((obj).toString()));
@@ -154,6 +177,10 @@ public class Catalog implements Serializable {
 
         } else if (obj instanceof AreasDTO) {//3
             System.out.println("si es instance de areas");
+
+            dg.setAreas(this.areas);
+            dg.setSelectedArea(((AreasDTO) obj));
+
             dg.setTypesList(((AreasDTO) obj).getTipo());
             dg.setSelectedType(null);
             dg.setFamsList(null);
@@ -189,6 +216,10 @@ public class Catalog implements Serializable {
 
     public void setDynamicSubs(Map<String, List<SubFamDTO>> dynamicSubs) {
         this.dynamicSubs = dynamicSubs;
+    }
+
+    public Map<String, List<TipoDTO>> getDynamicTypes() {
+        return dynamicTypes;
     }
 
     public AreasDTO findArea(TipoDTO tipo, SubFamDTO sub) {
