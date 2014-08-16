@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"          
+
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/Defcss.css"/>
+        <h:outputStylesheet name="./css/Laycss.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+
+        <div id="top">
+            <ui:insert name="top">
+                <h:form id="formass">
+                    <p:growl id="messages"  showDetail="true" life="2000" />
+                    
+                    <h:commandButton image="/imagenes/banner.jpg" style="height: 190px;width: 1300px"/> 
+                   
+                    <p:outputLabel />                                          
+                    <p:menubar style="margin-top: 0px;  " >         
+                        <p:submenu label="Lista" icon="ui-icon-document" style="  height: 30px; ">  
+                            <p:menuitem value="Open" url="#" style=" color: #D20005;" />  
+                            <p:separator/>  
+                            <p:menuitem value="Quit" url="#" style=" color: #D20005;" />  
+                        </p:submenu> 
+
+
+                        <f:facet name="options">  
+                            <p:commandButton id="com1" value="Catalogo"  action="/Catalogo.xhtml?faces-redirect=true" style="width:150px; border:none; height: 30px; margin-right: 10px;  "/>
+                            <p:commandButton id="com2" value="Prestamos" action="/prestariosUI.xhtml?faces-redirect=true" style="width:150px; border:none; height: 30px; margin-right: 10px;  " />
+                            <p:commandButton id="com3" value="Administrador"  rendered="false" action="/Admin.xhtml?faces-redirect=true" style="margin-right: 150px; width:150px; border:none; height: 30px;  "/>
+                            <p:commandButton id="iconOnly"  action="#{gd.openKart}" rendered="#{gd ne null}" disabled="#{nm.karControl}"
+                                               icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " />    
+
+                            <p:autoComplete   value="#{nm.caja}" id="sr" completeMethod="#{nm.autoComplete}"  style="margin-right:10px; height: 25px; width: 50px; "
+                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
+                                              forceSelection="true" maxResults="15" queryDelay="500"
+                                              >
+                                <p:column>  
+                                    #{p.nombre} - #{p.noParte}  
+                                </p:column>
+
+                            </p:autoComplete>  
+                            
+
+
+                            <p:commandButton   icon="ui-icon-search" style="width:150px;  height: 30px; " action="#{nm.processQuery}" />  
+                        </f:facet>  
+
+                    </p:menubar>  
+                    <p:commandLink id="link" value="Logout" action="#{user.logout()}" style="color: red"/>
+                </h:form>
+            </ui:insert>
+        </div>
+
+
+
+        <div id="content" class="center_content">
+            <ui:insert name="content">
+               
+               
+                
+            </ui:insert>
+        </div>
+
+
+        <div id="bottom">
+            <ui:insert name="bottom"></ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+        <f:event type="preRenderView" listener="#{gd.checkMsg}" />
+        <style type="text/css">
+            .cl {
+                margin: 0px;
+                padding: 0;
+                font-size: 12px;
+                color: #616161;
+            }
+
+
+        </style>
+    </h:head>
+    <h:body styleClass="cl">
+        <h:form id="form1">
+            <p:messages id="msg" />
+
+            <p:dataTable id="table" var="car" value="#{gd.list}" editable="true" paginator="true" rows="6"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">  
+                <p:ajax event="rowEdit" listener="#{gd.onRowEdit}" update=":form1:msg,:form1:persi" />
+                <p:ajax event="rowEditCancel" listener="#{gd.onRowCancel}" update=":form1:msg" />
+
+                <p:column headerText="#Parte"  style="width:25%">  
+                    <h:outputText value="#{car.noParte}" />  
+                </p:column>  
+
+                <p:column headerText="Nombre"  style="width:25%">  
+                    <h:outputText value="#{car.nombre}" />  
+                </p:column>  
+
+                <p:column headerText="Cantidad"  style="width:25%">  
+                    <p:cellEditor >  
+                        <f:facet name="output"><h:outputText value="#{car.cantidad}" /></f:facet>  
+                        <f:facet name="input">
+
+                            <p:inputText id="modelInput" value="#{car.cantidad}" style="width:96%"  label="cantidad" >
+
+                            </p:inputText>
+
+                        </f:facet>  
+                    </p:cellEditor>  
+                </p:column>  
+
+                <p:column style="width:32px">
+                    <p:rowEditor />
+                </p:column>
+                <p:column  style="width:25%">  
+                    <p:commandButton value="Quitar" process="@this" action="#{gd.removeListener}" style="width: 96%" update=":form1:msg,:form1:persi">
+                        <f:setPropertyActionListener value="#{car}" target="#{gd.remove}"/>
+                    </p:commandButton>
+                </p:column>  
+            </p:dataTable>  
+
+            <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px">
+                <p:commandButton value="limpiar" action="#{gd.clearList}"/>
+                <p:commandButton id="persi" value="guardar" action="#{gd.persistPres}" disabled="#{pres.us eq null or gd.dis}"/>
+            </h:panelGrid>
+
+
+        </h:form>
+    </h:body>
+</html>
+
