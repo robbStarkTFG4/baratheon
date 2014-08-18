@@ -22,7 +22,7 @@
                 <h:form id="formass">
                     <p:growl id="messages"  showDetail="true" life="2000" />
                     
-                    <h:commandButton image="/imagenes/banner.jpg" style="height: 190px;width: 1300px"/> 
+                    <h:commandButton action="/index.xhtml?faces-redirect=true" image="/imagenes/banner.jpg" style="height: 190px;width: 1300px"/> 
                    
                     <p:outputLabel />                                          
                     <p:menubar style="margin-top: 0px;  " >         
@@ -36,7 +36,7 @@
                         <f:facet name="options">  
                             <p:commandButton id="com1" value="Catalogo"  action="/CatalogUI.xhtml?faces-redirect=true" style="width:150px; border:none; height: 30px; margin-right: 10px;  "/>
                             <p:commandButton id="com2" value="Prestamos" action="/prestariosUI.xhtml?faces-redirect=true" style="width:150px; border:none; height: 30px; margin-right: 10px;  " />
-                            <p:commandButton id="com3" value="Administrador"  rendered="false" action="/Admin.xhtml?faces-redirect=true" style="margin-right: 150px; width:150px; border:none; height: 30px;  "/>
+                            <p:commandButton id="com3" value="Registrarse" action="/registerFormUI.xhtml?faces-redirect=true" style="margin-right: 150px; width:150px; border:none; height: 30px;  "/>
                             <p:commandButton id="iconOnly"  action="#{gd.openKart}" rendered="#{gd ne null}" disabled="#{nm.karControl}"
                                                icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " />    
 

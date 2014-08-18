@@ -60,7 +60,7 @@
 
             <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px">
                 <p:commandButton value="limpiar" action="#{gd.clearList}"/>
-                <p:commandButton id="persi" value="guardar" action="#{gd.persistPres}" disabled="#{pres.us eq null or gd.dis}"/>
+                <p:commandButton id="persi" value="guardar" action="#{gd.persistPres}" disabled="#{pres.us eq null or gd.dis or pres.activo eq 0}"/>
             </h:panelGrid>
 
 

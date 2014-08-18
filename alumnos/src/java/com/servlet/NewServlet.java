@@ -6,9 +6,11 @@
 package com.servlet;
 
 import com.server.beans.staless.TblMaterialFacade;
+import com.server.beans.staless.TblPrestariosFacade;
 import com.server.entity.beans.Subfamilias;
 import com.server.entity.beans.TblArea;
 import com.server.entity.beans.TblMaterial;
+import com.server.entity.beans.TblPrestarios;
 import com.server.entity.beans.TblTipomaterial;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class NewServlet extends HttpServlet {
 
     @EJB
-    TblMaterialFacade mtl;
+    TblPrestariosFacade pres;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,27 +42,25 @@ public class NewServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
 
-        fillDB();
-    }
+        String param = request.getParameter("akkcveren");
 
-    private void fillDB() throws NumberFormatException {
-        for (int i = 0; i < 5000; i++) {
-            TblMaterial ml = new TblMaterial();
-            String name = "vbc" + i;
-            ml.setNombre(name);
-            ml.setNoParte("vsxassgrbd" + i);
-            ml.setDescripcion("pieza #" + i);
-            ml.setCosto(Long.parseLong(String.valueOf(i++)));
-            ml.setIdArea(new TblArea(1));
-            ml.setIdTipomaterial(new TblTipomaterial(2));
-            ml.setSubFamiliasidsubFam(new Subfamilias(4));
-            ml.setImagen("selyR.jpg");
-            mtl.create(ml);
-           
+        PrintWriter out = response.getWriter();
+
+        String prestario = decode(param);
+        //  out.println("EL PARAMETRO DECODIFICADO ES : " + prestario);
+        TblPrestarios res = pres.getPresForActivation(prestario);
+
+       // out.println("el estado es: " + res.getActivo());
+
+        if (res.getActivo() == 0) {
+            res.setActivo(1);
+            pres.edit(res);
+            out.println("TU CUENTA HA SIDO ACTIVADA " + res.getNombre() + " " + res.getApaterno() + " " + res.getAmaterno());
+        } else {
+            out.println("link no valido");
         }
-        System.out.println("SE INSERTARON LOS DATOS");
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -101,5 +101,94 @@ public class NewServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    private String decode(String param) {
+        String decoded;
+
+        StringBuilder sb = new StringBuilder(20);
+        char[] array = param.toCharArray();
+//a=0, b=1,c=2,d=3,e=4,f=5,g=6,h=7, i=8,n=9
+        for (char c : array) {
+            System.out.println(c);
+            if (c == 'a') {
+                sb.append("0");
+            }
+
+            if (c == 'b') {
+                sb.append("1");
+            }
+
+            if (c == 'c') {
+                sb.append("2");
+            }
+
+            if (c == 'd') {
+                sb.append("3");
+            }
+            if (c == 'e') {
+                sb.append("4");
+            }
+            if (c == 'f') {
+                sb.append("5");
+            }
+            if (c == 'g') {
+                sb.append("6");
+            }
+            if (c == 'h') {
+                sb.append("7");
+            }
+            if (c == 'i') {
+                sb.append("8");
+            }
+            if (c == 'n') {
+                sb.append("9");
+            }
+        }
+        System.out.println("la string construida es : " + sb.toString());
+        return sb.toString();
+    }
+
+    private String encode(String param2) {
+        char[] array = param2.toCharArray();
+        StringBuilder sb = new StringBuilder(20);
+        //a=0, b=1,c=2,d=3,e=4,f=5,g=6,h=7, i=8,n=9
+        for (char c : array) {
+            if (c == '0') {
+                sb.append("a");
+            }
+
+            if (c == '1') {
+                sb.append("b");
+            }
+            if (c == '2') {
+                sb.append("c");
+            }
+            if (c == '3') {
+                sb.append("d");
+            }
+            if (c == '4') {
+                sb.append("e");
+            }
+            if (c == '5') {
+                sb.append("f");
+            }
+            if (c == '6') {
+                sb.append("g");
+            }
+            if (c == '7') {
+                sb.append("h");
+            }
+            if (c == '8') {
+                sb.append("i");
+            }
+            if (c == '9') {
+                sb.append("n");
+            }
+
+        }
+
+        System.out.println("ENCODED STRRING: " + sb.toString());
+        return sb.toString();
+    }
 
 }

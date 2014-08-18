@@ -37,8 +37,21 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         super(TblPrestarios.class);
     }
 
-    //TblPrestarios(Integer idPrestario, String nombre, String apaterno, String amaterno, String tel, String email, String usuario, String carrera)
+    public TblPrestarios getPresForActivation(String matricula) {
+        TypedQuery<TblPrestarios> query = em.createQuery("SELECT c FROM TblPrestarios c WHERE c.usuario = :usuario", TblPrestarios.class);
+        query.setParameter("usuario", matricula);
+        TblPrestarios res = null;
+        try {
+            res = (TblPrestarios) query.getSingleResult();
+            return res;
+        } catch (javax.persistence.NoResultException e) {
+            //   e.printStackTrace();
+            return null;
+        }
 
+    }
+
+    //TblPrestarios(Integer idPrestario, String nombre, String apaterno, String amaterno, String tel, String email, String usuario, String carrera)
     public TblPrestarios getPres(String matricula) {
         Query query = em.createQuery("SELECT NEW com.server.entity.beans.TblPrestarios(c.idPrestario, c.nombre, c.apaterno, c.amaterno, c.tel , c.email, c.usuario, c.carrera, c.activo) FROM TblPrestarios c WHERE c.usuario = :usuario");
         query.setParameter("usuario", matricula);
@@ -66,6 +79,16 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         return 0;
     }
 
+    public boolean registerPrestario(TblPrestarios prestario) {
+        try {
+            prestario.setActivo(0);
+            this.create(prestario);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public boolean agregar(String nombre, String apaterno, String amaterno, int tipo, String tel, String email, String usuario, String carrera) {
 
         boolean existe = true;
@@ -85,9 +108,11 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
             pres.setCarrera(carrera);
             pres.setEmail(email);
             pres.setUsuario(usuario);
+
             TblTipoprestarios tp = new TblTipoprestarios();
             tp.setIdTipoprestarios(tipo);
             pres.setIdTipoprestarios(tp);
+
             getEntityManager().persist(pres);
             existe = false;
             System.out.println("Usuario creado");
@@ -262,8 +287,8 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         return list;
 
     }
-    
-     public void enable(Integer idPrestario) {
+
+    public void enable(Integer idPrestario) {
         TypedQuery<TblPrestarios> query = em.createQuery("SELECT c FROM TblPrestarios c WHERE c.idPrestario = :id", TblPrestarios.class);
         query.setParameter("id", idPrestario);
         TblPrestarios temp = query.getSingleResult();
@@ -271,6 +296,22 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         temp.setActivo(1);
         em.merge(temp);
     }
-    
-    
+
+    public boolean isAvailable(Integer mat) {
+
+        TypedQuery<TblPrestarios> query = em.createQuery("SELECT c FROM TblPrestarios c WHERE c.usuario = :mat", TblPrestarios.class);
+        query.setParameter("mat", String.valueOf(mat));
+
+        try {
+            TblPrestarios res = query.getSingleResult();
+            if (res != null) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (Exception e) {
+            return true;
+        }
+
+    }
 }
