@@ -72,17 +72,6 @@
                             <h:outputText value="#{sl.fechaSolicitud}" />  
                         </p:column>  
 
-
-
-                        <p:column style="width:22%">  
-                            <f:facet name="header">  
-                                usuario  
-                            </f:facet>  
-                            <p:commandLink value="#{sl.idUsuarios}" action="#{pres.showUser}" >
-                                <f:setPropertyActionListener value="#{sl.idUsuarios}" target="#{pres.idUsuario}"/>
-                            </p:commandLink>  
-                        </p:column>  
-
                         <p:column style="width:22%">  
                             <f:facet name="header">  
                                 estatus prestamo
@@ -90,16 +79,7 @@
                             <h:outputText id="estatus" value="#{sl.statusprestamo}" />  
                         </p:column>  
 
-                        <p:column style="width:22%">  
-                            <f:facet name="header">  
-                                fecha vencimiento
-                            </f:facet>  
-                            <p:calendar id="datetime" value="#{sl.date10}" showOn="button" pattern="MM/dd/yyyy HH:mm:ss"  >
-                                <f:attribute name="prestamito" value="#{sl}"/>
-                                <p:ajax event="dateSelect" listener="#{pres.dateListener}" />
-                            </p:calendar>
 
-                        </p:column>  
 
                         <p:rowExpansion>  
                             <p:growl id="noti" showDetail="true" sticky="false"/>
@@ -143,36 +123,15 @@
                                     <f:facet name="header">  
                                         cantidad solicitada
                                     </f:facet>  
-                                    <p:cellEditor>  
-                                        <f:facet name="output"><h:outputText value="#{hl.cantidad}" /></f:facet>  
-                                        <f:facet name="input">
-                                            <p:inputText id="modelInput" value="#{hl.cantidad}" style="width:96%" validator="inspector" >
-                                                <f:attribute name="obj" value="#{hl}"/>
-                                            </p:inputText>
-                                        </f:facet>  
-                                    </p:cellEditor>  
+
+                                    <h:outputText  id="modelInput" value="#{hl.cantidad}" style="width:96%" />
+
+
                                 </p:column>  
-                                <p:column style="width:32px">
-                                    <p:rowEditor />
-                                </p:column>
-                                <p:column >
-                                    <p:selectBooleanCheckbox valueChangeListener="#{pres.checkBox}" >
-                                        <f:attribute name="obj" value="#{hl}"/>
-                                        <p:ajax/>
-                                    </p:selectBooleanCheckbox>
-                                </p:column> 
+
+
 
                             </p:dataTable>
-
-                            <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
-                                <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
-                                    <f:setPropertyActionListener value="#{sl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
-                                </p:commandButton>
-                                <p:commandButton value="Guardar" action="#{pres.saveSelected}" update="noti" disabled="#{pres.activo eq 2}">
-                                    <f:setPropertyActionListener value="#{sl}" target="#{pres.currentPres}"/>
-
-                                </p:commandButton>
-                            </h:panelGrid>
 
                         </p:rowExpansion>  
                     </p:dataTable>
@@ -264,19 +223,13 @@
                                     <f:facet name="header">  
                                         cantidad entregada
                                     </f:facet>  
-                                    <p:cellEditor>  
-                                        <f:facet name="output"><h:outputText value="#{dl.regresados}" /></f:facet>  
-                                        <f:facet name="input">
-                                            <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="cantidad" >
-                                                <f:attribute name="valor" value="#{dl.cantidad}"/>
 
-                                            </p:inputText>
-                                        </f:facet>  
-                                    </p:cellEditor>  
+                                    <h:outputText id="modelInput" value="#{dl.regresados}" style="width:96%"  />
+
+
+
                                 </p:column>  
-                                <p:column style="width:32px">
-                                    <p:rowEditor />
-                                </p:column>
+
                                 <p:column style="width:49%">  
                                     <f:facet name="header">  
                                         fecha retorno
@@ -294,14 +247,7 @@
 
                             </p:dataTable>
 
-                            <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
-                                <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
-                                    <f:setPropertyActionListener value="#{pl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
-                                </p:commandButton>
-                                <p:commandButton value="Guardar" action="#{pres.savePres}" update="noti">
-                                    <f:setPropertyActionListener value="#{pl}" target="#{pres.currentPres}"/>
-                                </p:commandButton>
-                            </h:panelGrid>
+
 
                         </p:rowExpansion>  
                     </p:dataTable>

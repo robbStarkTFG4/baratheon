@@ -50,10 +50,15 @@
 
                 <p:commandButton value="Enviar" style="margin-top: 20px; "     action="#{reg.transition}"
                                  update="matInput,nameInput,apaternoInput,amaternoInput,telInput,emailInput,tipoPrestario,carreraInput"
+                                 onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"
                                  />
 
             </h:panelGrid>
-
+            
+            <p:dialog  style="width: 100px;height: 100px;" widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+                <p:graphicImage name="/imagenes/ajax-loader.gif"  />
+            </p:dialog> 
+            
         </h:form>
     </h:body>
 </html>

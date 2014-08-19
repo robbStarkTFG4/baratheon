@@ -42,11 +42,13 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     @EJB
     TblMaterialFacade ml;
-    
+
     @EJB
     TblPrestariosFacade deud;
 
     private final String inquerys = "c.idPrestamo,  c.fechaprestamo, c.fecharetorno, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo , c.idUsuarios.idUsuarios, c.idPrestario.idPrestario, c.fechaSolicitud, c.fechaVencimiento ";
+
+    private final String inquerys2 = "c.idPrestamo,  c.fechaprestamo, c.statusprestamo , c.idPrestario.idPrestario, c.fechaSolicitud";
 
     @PersistenceContext(unitName = "alumnosPU")
     private EntityManager em;
@@ -104,8 +106,8 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
             if (count > 0) {
                 if (count >= size) {
-                    
-                    if(pr.getStatusprestamo()==4){
+
+                    if (pr.getStatusprestamo() == 4) {
                         deud.enable(pr.getIdPrestario().getIdPrestario());
                     }
                     System.out.println("VAMOS A PONERLO EN 3");
@@ -214,11 +216,11 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
     }
 
     public List<PresDTO> getInquerys(Integer idPrestario) {
-        Query query = em.createQuery("SELECT " + inquerys + " FROM TblPrestamo c "
+        Query query = em.createQuery("SELECT " + inquerys2 + " FROM TblPrestamo c "
                 + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 0");
         query.setParameter("id", idPrestario);
 
-        return finTheInquerys(query);
+        return finTheInquerys2(query);
     }
 
     private List<PresDTO> finTheInquerys(Query query) {
@@ -282,8 +284,8 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         String currentTime = hora.format(dat.getTime());
         return currentTime;
     }
-    
-     public List morosos() {
+
+    public List morosos() {
 
         List<TblPrestarios> list = null;
 
@@ -316,5 +318,52 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
         return list;
 
+    }
+
+    private List<PresDTO> finTheInquerys2(Query query) {
+        List<PresDTO> list = new ArrayList<>();
+
+        List obj = query.getResultList();
+
+        if (obj != null) {
+            //borrar fecha retorno
+            //hora prestamo
+            //0                      1            2
+            //"c.idPrestamo,  c.fechaprestamo, c.statusprestamo ,
+            //                               3                            4            
+            //           c.idPrestario.idPrestario, c.fechaSolicitud";           
+            for (Iterator it = obj.iterator(); it.hasNext();) {
+                Object[] object = (Object[]) it.next();
+                PresDTO temp = new PresDTO();
+                temp.setIdPrestamo((Integer) object[0]);
+
+                if (object[1] != null) {
+
+                    temp.setFechaprestamo(processDate((Date) object[1]));
+                    //  temp.setFechaprestamo((((Date) object[1])).toString());
+                }
+
+                temp.setStatusprestamo((int) object[2]);
+                temp.setTblDetalleprestamoList(dtl.getDtls((int) object[0]));
+
+                temp.setIdPrestario((int) object[3]);
+                temp.setDetailsSize(temp.getTblDetalleprestamoList().size());
+
+                if (object[4] != null) {
+
+                    Date dat = ((Date) object[4]);
+
+                    temp.setFechaSolicitud(processDate(dat));
+
+                    String currentTime = setHour(dat);
+                    temp.setHoraSolicitud(currentTime);
+                }
+
+                list.add(temp);
+            }
+            return list;
+        }
+
+        return null;
     }
 }
