@@ -53,7 +53,7 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
 
     //TblPrestarios(Integer idPrestario, String nombre, String apaterno, String amaterno, String tel, String email, String usuario, String carrera)
     public TblPrestarios getPres(String matricula) {
-        Query query = em.createQuery("SELECT NEW com.server.entity.beans.TblPrestarios(c.idPrestario, c.nombre, c.apaterno, c.amaterno, c.tel , c.email, c.usuario, c.carrera, c.activo) FROM TblPrestarios c WHERE c.usuario = :usuario");
+        Query query = em.createQuery("SELECT c FROM TblPrestarios c WHERE c.usuario = :usuario");
         query.setParameter("usuario", matricula);
         TblPrestarios res = null;
         try {

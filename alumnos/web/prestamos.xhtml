@@ -15,7 +15,7 @@
         </style>
     </h:head>
     <h:body>
-        <h:form id="forma">     
+        <h:form id="formazad">     
             <p:growl id="notify" showDetail="true" sticky="false"/>
             <p:messages id="notificaciones"/>
             <h:panelGrid id="grid" columns="4">
@@ -49,7 +49,7 @@
                 <p:ajax event="tabChange" listener="#{pres.onTabChange}" />
 
                 <p:tab id="sol" title="solicitudes">
-                    <p:dataTable id="soles" value="#{pres.listSol}" var="sl" rows="6" paginator="true"
+                    <p:dataTable id="soles" value="#{pres.listSol}" var="sl" rows="6" paginator="true" 
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15">
 

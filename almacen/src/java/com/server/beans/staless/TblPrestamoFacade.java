@@ -5,6 +5,7 @@
  */
 package com.server.beans.staless;
 
+import com.client.named.BeanUsuarios;
 import com.client.named.Prestamos;
 import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblPrestamo;
@@ -42,12 +43,16 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     @EJB
     TblMaterialFacade ml;
-    
+
     @EJB
     TblPrestariosFacade deud;
 
+    @Inject
+    BeanUsuarios beanUs;
+
     private final String inquerys = "c.idPrestamo,  c.fechaprestamo, c.fecharetorno, c.horaprestamo, c.idUsuarios.usuario, c.statusprestamo , c.idUsuarios.idUsuarios, c.idPrestario.idPrestario, c.fechaSolicitud, c.fechaVencimiento ";
 
+    // private final String inquerys2 = "c.idPrestamo, c.fecharetorno, c.statusprestamo , c.idPrestario.idPrestario, c.fechaSolicitud, c.fechaVencimiento ";
     @PersistenceContext(unitName = "almacenPU")
     private EntityManager em;
 
@@ -69,7 +74,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
      private List<DetailDTO> tblDetalleprestamoList;*/
     public List<PresDTO> getLoansByDebts(int idPrestario) {
         Query query = em.createQuery("SELECT " + inquerys + " FROM TblPrestamo c "
-                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 1 OR c.statusprestamo = 2 OR c.statusprestamo = 4");
+                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo != 3 AND c.statusprestamo !=0");
         query.setParameter("id", idPrestario);
 
         return finTheInquerys(query);
@@ -83,9 +88,9 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         return finTheInquerys(query);
     }
 
-    public boolean updatePres(PresDTO pres, List<PresDTO> list) throws ParseException {
+    public boolean updatePres(PresDTO pres, List<PresDTO> list, TblPrestarios prestario) throws ParseException {
         //  TblPrestamo pr = pres.convertDTO(99);
-        TypedQuery<TblPrestamo> query = em.createQuery("SELECT NEW com.server.entity.beans.TblPrestamo(c.fechaprestamo,c.fecharetorno, c.idPrestamo,c.statusprestamo, c.horaprestamo, c.fechaSolicitud, c.fechaVencimiento) FROM TblPrestamo c WHERE c.idPrestamo = :idPrestamo", TblPrestamo.class);
+        TypedQuery<TblPrestamo> query = em.createQuery("SELECT c FROM TblPrestamo c WHERE c.idPrestamo = :idPrestamo", TblPrestamo.class);
         query.setParameter("idPrestamo", pres.getIdPrestamo());
         TblPrestamo pr = query.getSingleResult();
         // pr.getTblDetalleprestamoList().size();
@@ -104,10 +109,12 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
             if (count > 0) {
                 if (count >= size) {
-                    
-                    if(pr.getStatusprestamo()==4){
-                        deud.enable(pr.getIdPrestario().getIdPrestario());
+
+                    if (pr.getStatusprestamo() == 4) {
+                        System.out.println("PARTE BUG");
+                        deud.enable(prestario.getIdPrestario());
                     }
+
                     System.out.println("VAMOS A PONERLO EN 3");
                     pres.setStatusprestamo(3);
                     pr.setStatusprestamo(3);
@@ -147,15 +154,27 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     }
 
-    public void updatInquery(PresDTO pres) throws ParseException {
+    public void updatInquery(PresDTO pres, TblUsuarios us) throws ParseException {
         TblPrestamo pr = pres.convertDTO(PresDTO.FECHA_APROBACION, null);
+        //pr.setIdUsuarios(us);
         ml.aplyChange(pr.getTblDetalleprestamoList());
-        pr.setHoraprestamo((String) currentDate()[1]);
-        //Query query = em.createQuery("SELECT c FROM TblPrestamo c WHERE c.idPrestamo = :ids");
-        //query.setParameter("ids", pr.getIdPrestamo());
-        //query.getSingleResult();
+        //  pr.setHoraprestamo((String) currentDate()[1]);
+
+        TblPrestamo res = getPresi(pr.getIdPrestamo());
+        res.setFechaprestamo(pr.getFechaprestamo());
+        res.setFechaVencimiento(pr.getFechaVencimiento());
+        res.setHoraprestamo((String) currentDate()[1]);
+        res.setIdUsuarios(us);
+        res.setStatusprestamo(1);
+
         pr.setStatusprestamo(1);
-        em.merge(pr);
+        this.edit(res);
+    }
+
+    private TblPrestamo getPresi(Integer id) {
+        TypedQuery<TblPrestamo> query = em.createQuery("SELECT c FROM TblPrestamo c WHERE c.idPrestamo = :ids", TblPrestamo.class);
+        query.setParameter("ids", id);
+        return query.getSingleResult();
     }
 
     public String processDate(Date date) {
@@ -196,7 +215,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         pr.setFechaSolicitud(dat);
         // pr.setHoraprestamo((String) currentDate()[1]);
         pr.setIdPrestario(pres);
-        pr.setIdUsuarios(new TblUsuarios(1));// cambiar////////////////////////////////////////dASDSADASDASDASDS AQUI ARASTRA EL USUARIO
+        pr.setIdUsuarios(beanUs.getUsuario());// cambiar////////////////////////////////////////dASDSADASDASDASDS AQUI ARASTRA EL USUARIO
         pr.setStatusprestamo(0);// cambiaar
         em.persist(pr);
         em.flush();
@@ -214,11 +233,11 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
     }
 
     public List<PresDTO> getInquerys(Integer idPrestario) {
-        Query query = em.createQuery("SELECT " + inquerys + " FROM TblPrestamo c "
-                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 0");
+        TypedQuery<TblPrestamo> query = em.createQuery("SELECT c FROM TblPrestamo c "
+                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 0", TblPrestamo.class);
         query.setParameter("id", idPrestario);
 
-        return finTheInquerys(query);
+        return finTheInquerys2(query);
     }
 
     private List<PresDTO> finTheInquerys(Query query) {
@@ -282,8 +301,8 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         String currentTime = hora.format(dat.getTime());
         return currentTime;
     }
-    
-     public List morosos() {
+
+    public List morosos() {
 
         List<TblPrestarios> list = null;
 
@@ -316,5 +335,52 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
         return list;
 
+    }
+
+    private List<PresDTO> finTheInquerys2(Query query) {
+        List<PresDTO> list = new ArrayList<>();
+
+        List<TblPrestamo> obj = query.getResultList();
+
+        if (obj.size() != 0) {
+            //borrar fecha retorno
+            //hora prestamo
+            //0                      1            2
+            //"c.idPrestamo,  c.fechaprestamo, c.statusprestamo ,
+            //                               3                            4            
+            //           c.idPrestario.idPrestario, c.fechaSolicitud";           
+            for (TblPrestamo tblPrestamo : obj) {
+
+                PresDTO temp = new PresDTO();
+                temp.setIdPrestamo(tblPrestamo.getIdPrestamo());
+
+                if (tblPrestamo.getFechaprestamo() != null) {
+
+                    temp.setFechaprestamo(processDate((Date) tblPrestamo.getFechaprestamo()));
+                    //  temp.setFechaprestamo((((Date) object[1])).toString());
+                }
+
+                temp.setStatusprestamo(tblPrestamo.getStatusprestamo());
+                temp.setTblDetalleprestamoList(dtl.getDtls(tblPrestamo.getIdPrestamo()));
+
+                temp.setIdPrestario(tblPrestamo.getIdPrestario().getIdPrestario());
+                temp.setDetailsSize(temp.getTblDetalleprestamoList().size());
+
+                if (tblPrestamo.getFechaSolicitud() != null) {
+
+                    Date dat = (tblPrestamo.getFechaSolicitud());
+
+                    temp.setFechaSolicitud(processDate(dat));
+
+                    String currentTime = setHour(dat);
+                    temp.setHoraSolicitud(currentTime);
+                }
+
+                list.add(temp);
+            }
+            return list;
+        }
+
+        return null;
     }
 }

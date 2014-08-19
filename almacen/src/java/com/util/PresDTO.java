@@ -51,10 +51,11 @@ public class PresDTO implements Serializable {
     public TblPrestamo convertDTO(int stage, TblPrestamo tbl) throws ParseException {
         if (tbl == null) {
             tbl = new TblPrestamo();
+            tbl.setIdPrestamo(this.getIdPrestamo());
+            tbl.setIdUsuarios(new TblUsuarios(this.getIntUsuarioId()));
         }
 
-        tbl.setIdPrestamo(this.getIdPrestamo());
-
+       //tbl.setIdPrestamo(this.getIdPrestamo());
         String DATE_FORMAT_NOW = "yyyy/MM/dd";
 
         switch (stage) {
@@ -84,8 +85,7 @@ public class PresDTO implements Serializable {
 
         }
 
-        tbl.setIdUsuarios(new TblUsuarios(this.getIntUsuarioId()));
-
+       // tbl.setIdUsuarios(new TblUsuarios(this.getIntUsuarioId()));
         List<TblDetalleprestamo> list = new ArrayList<>();
         //  int status=0;
         for (DetailDTO detailDTO : this.getTblDetalleprestamoList()) {
@@ -105,7 +105,7 @@ public class PresDTO implements Serializable {
         //   this.setStatusprestamo(status);
         // tbl.setStatusprestamo(status);
         tbl.setTblDetalleprestamoList(list);
-        tbl.setIdPrestario(new TblPrestarios(this.getIdPrestario()));
+        //  tbl.setIdPrestario(new TblPrestarios(this.getIdPrestario()));
         return tbl;
     }
 

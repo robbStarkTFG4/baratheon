@@ -31,6 +31,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.RowEditEvent;
@@ -62,6 +63,9 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     @EJB
     TblDetalleprestamoFacade dets;
 
+    @Inject
+    BeanUsuarios beanUs;
+
     private String nombre;
     private String correo;
     private String carrera;
@@ -90,7 +94,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     private TblMaterial currentView;
 
     private List<DetailDTO> solicitudes;
-    
+
     private int activo;
 
     public Prestamos() {
@@ -180,7 +184,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             this.correo = us.getEmail();
             this.nombre = us.getNombre();
             this.telefono = us.getTel();
-            this.activo= us.getActivo();
+            this.activo = us.getActivo();
             System.out.println("me llamo: " + us.getEmail());
 
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
@@ -327,13 +331,13 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void savePres() throws ParseException {
 
-        if (pr.updatePres(currentPres, listLoans)) {
+        if (pr.updatePres(currentPres, listLoans,this.getUs())) {
 
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage("exito", "cambios guardados "));
-            listLoans=null;
-            freeds=null;
+            listLoans = null;
+            freeds = null;
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
             freeds = pr.getLoansByFreeds(us.getIdPrestario());
             RequestContext.getCurrentInstance().update("forma:tabView:debts");
@@ -508,7 +512,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             currentPres.setTblDetalleprestamoList(null);
             currentPres.setTblDetalleprestamoList(activated);
 
-            pr.updatInquery(currentPres);
+            pr.updatInquery(currentPres, beanUs.getUsuario());
             dets.deleteDetails(nonActivated);
             ListSol.remove(currentPres);
             RequestContext.getCurrentInstance().update("forma:tabView:soles");

@@ -90,7 +90,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     private TblMaterial currentView;
 
     private List<DetailDTO> solicitudes;
-    
+
     private int activo;
 
     public Prestamos() {
@@ -180,7 +180,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             this.correo = us.getEmail();
             this.nombre = us.getNombre();
             this.telefono = us.getTel();
-            this.activo= us.getActivo();
+            this.activo = us.getActivo();
             System.out.println("me llamo: " + us.getEmail());
 
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
@@ -200,19 +200,19 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
                 }
 
-                RequestContext.getCurrentInstance().update("forma:tabView:debts");
-                RequestContext.getCurrentInstance().update("forma:grid:log");
+                RequestContext.getCurrentInstance().update("formazad:tabView:debts");
+                RequestContext.getCurrentInstance().update("formazad:grid:log");
             }
 
             freeds = pr.getLoansByFreeds(us.getIdPrestario());
             ListSol = pr.getInquerys(us.getIdPrestario());
-            RequestContext.getCurrentInstance().update("forma:tabView:soles");
+            RequestContext.getCurrentInstance().update("formazad:tabView:soles");
 
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage("error", "no se encontro ningun prestario "));
-            RequestContext.getCurrentInstance().update("forma:notify");
+            RequestContext.getCurrentInstance().update("formazad:notify");
         }
     }
 
@@ -332,18 +332,18 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage("exito", "cambios guardados "));
-            listLoans=null;
-            freeds=null;
+            listLoans = null;
+            freeds = null;
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
             freeds = pr.getLoansByFreeds(us.getIdPrestario());
-            RequestContext.getCurrentInstance().update("forma:tabView:debts");
-            RequestContext.getCurrentInstance().update("forma:notify");
+            RequestContext.getCurrentInstance().update("formazad:tabView:debts");
+            RequestContext.getCurrentInstance().update("formazad:notify");
 
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage("error", "hubo alguna falla "));
-            RequestContext.getCurrentInstance().update("forma:notify");
+            RequestContext.getCurrentInstance().update("formazad:notify");
         }
     }
 
@@ -357,15 +357,15 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getTitle().equals("liberados")) {
-            RequestContext.getCurrentInstance().update("forma:tabView:freed");
+            RequestContext.getCurrentInstance().update("formazad:tabView:freed");
         }
 
         if (event.getTab().getTitle().equals("adeudos")) {
-            RequestContext.getCurrentInstance().update("forma:tabView:debts");
+            RequestContext.getCurrentInstance().update("formazad:tabView:debts");
         }
 
         if (event.getTab().getTitle().equals("solicitudes")) {
-            RequestContext.getCurrentInstance().update("forma:tabView:soles");
+            RequestContext.getCurrentInstance().update("formazad:tabView:soles");
         }
     }
 
@@ -459,9 +459,9 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         this.listLoans = null;
         this.freeds = null;
         this.ListSol = null;
-        RequestContext.getCurrentInstance().update("forma:tabView:soles");
-        RequestContext.getCurrentInstance().update("forma:tabView:freed");
-        RequestContext.getCurrentInstance().update("forma:tabView:debts");
+        RequestContext.getCurrentInstance().update("formazad:tabView:soles");
+        RequestContext.getCurrentInstance().update("formazad:tabView:freed");
+        RequestContext.getCurrentInstance().update("formazad:tabView:debts");
     }
 
     public void onRowEdit(RowEditEvent event) {
@@ -511,17 +511,17 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             pr.updatInquery(currentPres);
             dets.deleteDetails(nonActivated);
             ListSol.remove(currentPres);
-            RequestContext.getCurrentInstance().update("forma:tabView:soles");
+            RequestContext.getCurrentInstance().update("formazad:tabView:soles");
             currentPres.setStatusprestamo(1);
             listLoans.clear();
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
-            RequestContext.getCurrentInstance().update("forma:tabView:debts");
+            RequestContext.getCurrentInstance().update("formazad:tabView:debts");
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "error", "proporciona los datos nesecesarios"));
 
-            RequestContext.getCurrentInstance().update("forma:notify");
+            RequestContext.getCurrentInstance().update("formazad:notify");
         }
     }
 
@@ -543,11 +543,12 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         ListSol = null;
         freeds = pr.getLoansByFreeds(us.getIdPrestario());
         ListSol = pr.getInquerys(us.getIdPrestario());
-        RequestContext.getCurrentInstance().update("forma:tabView:soles");
+        RequestContext.getCurrentInstance().update("formazad:tabView");
+        RequestContext.getCurrentInstance().update("formazad:tabView:soles");
 
         listLoans = null;
         listLoans = pr.getLoansByDebts(us.getIdPrestario());
-        RequestContext.getCurrentInstance().update("forma:tabView:debts");
+        RequestContext.getCurrentInstance().update("formazad:tabView:debts");
 
     }
 

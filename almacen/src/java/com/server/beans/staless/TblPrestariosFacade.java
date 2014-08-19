@@ -38,7 +38,6 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
     }
 
     //TblPrestarios(Integer idPrestario, String nombre, String apaterno, String amaterno, String tel, String email, String usuario, String carrera)
-
     public TblPrestarios getPres(String matricula) {
         Query query = em.createQuery("SELECT NEW com.server.entity.beans.TblPrestarios(c.idPrestario, c.nombre, c.apaterno, c.amaterno, c.tel , c.email, c.usuario, c.carrera, c.activo) FROM TblPrestarios c WHERE c.usuario = :usuario");
         query.setParameter("usuario", matricula);
@@ -262,15 +261,15 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         return list;
 
     }
-    
-     public void enable(Integer idPrestario) {
+
+    public void enable(Integer idPrestario) {
+        System.out.println("VOY HABILITAR AL PRESTARIO DE NUEVO");
         TypedQuery<TblPrestarios> query = em.createQuery("SELECT c FROM TblPrestarios c WHERE c.idPrestario = :id", TblPrestarios.class);
         query.setParameter("id", idPrestario);
         TblPrestarios temp = query.getSingleResult();
 
         temp.setActivo(1);
-        em.merge(temp);
+        this.edit(temp);
     }
-    
-    
+
 }

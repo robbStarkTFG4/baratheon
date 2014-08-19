@@ -69,15 +69,15 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
      private String idUsuarios;****
      private int statusprestamo;****
      private List<DetailDTO> tblDetalleprestamoList;*/
-    public List<PresDTO> getLoansByDebts(int idPrestario) {
+    public List<PresDTO> getLoansByDebts(Integer idPrestario) {
         Query query = em.createQuery("SELECT " + inquerys + " FROM TblPrestamo c "
-                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 1 OR c.statusprestamo = 2 OR c.statusprestamo = 4");
+                + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo != 3 AND c.statusprestamo !=0");
         query.setParameter("id", idPrestario);
 
         return finTheInquerys(query);
     }
 
-    public List<PresDTO> getLoansByFreeds(int idPrestario) {
+    public List<PresDTO> getLoansByFreeds(Integer idPrestario) {
         Query query = em.createQuery("SELECT " + inquerys + " FROM TblPrestamo c "
                 + "WHERE c.idPrestario.idPrestario = :id AND c.statusprestamo = 3");
         query.setParameter("id", idPrestario);
@@ -198,7 +198,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         pr.setFechaSolicitud(dat);
         // pr.setHoraprestamo((String) currentDate()[1]);
         pr.setIdPrestario(pres);
-        pr.setIdUsuarios(new TblUsuarios(1));// cambiar////////////////////////////////////////dASDSADASDASDASDS AQUI ARASTRA EL USUARIO
+        // pr.setIdUsuarios(new TblUsuarios(1));// cambiar////////////////////////////////////////dASDSADASDASDASDS AQUI ARASTRA EL USUARIO
         pr.setStatusprestamo(0);// cambiaar
         em.persist(pr);
         em.flush();
@@ -208,7 +208,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
     public boolean updatePres(TblPrestamo pr) {
         try {
             pr.setStatusprestamo(0);
-            em.merge(pr);
+            this.edit(pr);
             return true;
         } catch (Exception e) {
             return false;
