@@ -26,6 +26,9 @@ public class NewTimerSessionBean extends AbstractFacade<TblPrestamo> {
     @EJB
     TblPrestamoFacade presi;
 
+    @EJB
+    TblPrestariosFacade prestarioF;
+
     @PersistenceContext(unitName = "almacenPU")
     private EntityManager em;
 
@@ -64,7 +67,7 @@ public class NewTimerSessionBean extends AbstractFacade<TblPrestamo> {
                         System.out.println("el prestario esta: " + prestario.getActivo());
                         if (prestario.getActivo() != 2) {
                             prestario.setActivo(2);
-                            em.merge(prestario);
+                            prestarioF.edit(prestario);
 
                             System.out.println("DEUDOR DETECTADO");
                         }

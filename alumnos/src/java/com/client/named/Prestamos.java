@@ -181,7 +181,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             this.nombre = us.getNombre();
             this.telefono = us.getTel();
             this.activo = us.getActivo();
-            System.out.println("me llamo: " + us.getEmail());
+            System.out.println("EL PRESTARIO INT ACTIVO ES : " + us.getActivo());
 
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
 
