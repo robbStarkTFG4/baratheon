@@ -174,6 +174,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     }
 
     public void findPres() {
+        us=null;
         us = usr.getPres(matricula);
         if (us != null) {
             this.carrera = us.getCarrera();
@@ -438,7 +439,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         RequestContext.getCurrentInstance().openDialog("/dialogo/PartBasicInfo", options, null);
     }
 
-    public void logOut() {
+    public String logOut() {
         /* private String nombre;
          private String correo;
          private String carrera;
@@ -462,6 +463,8 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         RequestContext.getCurrentInstance().update("formazad:tabView:soles");
         RequestContext.getCurrentInstance().update("formazad:tabView:freed");
         RequestContext.getCurrentInstance().update("formazad:tabView:debts");
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "index.xhtml?faces-redirect=true";
     }
 
     public void onRowEdit(RowEditEvent event) {
