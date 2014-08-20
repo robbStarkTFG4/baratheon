@@ -174,7 +174,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     }
 
     public void findPres() {
-        us=null;
+        us = null;
         us = usr.getPres(matricula);
         if (us != null) {
             this.carrera = us.getCarrera();
