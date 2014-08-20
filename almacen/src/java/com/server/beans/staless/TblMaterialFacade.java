@@ -5,6 +5,7 @@
  */
 package com.server.beans.staless;
 
+import com.server.entity.beans.Almacen;
 import com.server.entity.beans.Subfamilias;
 import com.server.entity.beans.TblArea;
 import com.server.entity.beans.TblDetalleprestamo;
@@ -12,6 +13,7 @@ import com.server.entity.beans.TblMaterial;
 import com.server.entity.beans.TblTipomaterial;
 import com.util.DetailDTO;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateful;
@@ -323,5 +325,113 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         return lista;
 
     }
+public boolean agregar (String nombre, String noParte, String descripcion, String cantidad,String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
+String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen ){
+  
+ try{ 
+  TblMaterial mat =new TblMaterial();
+  TblArea ar=new TblArea();
+  TblTipomaterial tm= new TblTipomaterial();
+  Subfamilias sf=new Subfamilias();
+  Almacen al=new Almacen();
+  Date date1 = new Date();
+  mat.setNombre(nombre);
+  mat.setNoParte(noParte);
+  mat.setDescripcion(descripcion);
+  mat.setStock(Integer.parseInt(cantidad));
+  mat.setCosto(Long.valueOf(costo));
+  mat.setUnidadMedida(unidadmedida);
+  mat.setMarca(marca);
+  mat.setSerie(serie);
+  mat.setEstado(estado);
+  mat.setUbicacionActual(ubicacion);
+  mat.setResponsable(responsable);
+  mat.setProveedor(probedor);
+  mat.setNumeroFactura(noFactura);
+  mat.setOrdenCompra(ordenDcompra);
+  mat.setCodigoSip(zip);
+  mat.setFinanciamiento(financiamiento);
+  mat.setTipoCompra(tipodecompra);
+  mat.setIdUabc(idUABC);
+  mat.setFechaRecepcion(date1);
+  mat.setImagen(imagen);
+  ar.setIdArea(Integer.parseInt(area));
+  al.setIdalmacen(Integer.parseInt(almacen));
+  tm.setIdTipomaterial(Integer.parseInt(tipodematerial));
+  sf.setIdsubFam(Integer.parseInt(subfamilia));
+  
+  mat.setAlmacenIdalmacen(al);
+  mat.setIdTipomaterial(tm);
+  mat.setSubFamiliasidsubFam(sf);
+  mat.setIdArea(ar);
+  
+  em.persist(mat);
+     
+     
+   return true;
+ }
+ catch(Exception e){
+ return false;
+ }
+  
+  }
 
+public boolean agregar11 (String nombre, String noParte, String descripcion, String cantidad,String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
+String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen ){
+ TblMaterial mt2=null;
+ Query search1 =em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :nopart or t.idUabc = :iduabc or t.numeroFactura = :nofact or t.codigoSip = :sip or t.ordenCompra = :oco");
+ search1.setParameter("nopart", noParte);
+ search1.setParameter("iduabc", idUABC);
+  search1.setParameter("nofact", noFactura);
+ search1.setParameter("sip", zip);
+ search1.setParameter("oco", ordenDcompra); 
+
+ try{ 
+mt2=(TblMaterial) search1.getSingleResult();
+return false;
+ }
+ catch(Exception e){
+ TblMaterial mat =new TblMaterial();
+  TblArea ar=new TblArea();
+  TblTipomaterial tm= new TblTipomaterial();
+  Subfamilias sf=new Subfamilias();
+  Almacen al=new Almacen();
+  Date date1 = new Date();
+  mat.setNombre(nombre);
+  mat.setNoParte(noParte);
+  mat.setDescripcion(descripcion);
+  mat.setStock(Integer.parseInt(cantidad));
+  mat.setCosto(Long.parseLong(costo));
+  mat.setUnidadMedida(unidadmedida);
+  mat.setMarca(marca);
+  mat.setSerie(serie);
+  mat.setEstado(estado);
+  mat.setUbicacionActual(ubicacion);
+  mat.setResponsable(responsable);
+  mat.setProveedor(probedor);
+  mat.setNumeroFactura(noFactura);
+  mat.setOrdenCompra(ordenDcompra);
+  mat.setCodigoSip(zip);
+  mat.setFinanciamiento(financiamiento);
+  mat.setTipoCompra(tipodecompra);
+  mat.setIdUabc(idUABC);
+  mat.setFechaRecepcion(date1);
+  mat.setImagen(imagen);
+  ar.setIdArea(Integer.parseInt(area));
+  al.setIdalmacen(Integer.parseInt(almacen));
+  tm.setIdTipomaterial(Integer.parseInt(tipodematerial));
+  sf.setIdsubFam(Integer.parseInt(subfamilia));
+  
+  mat.setAlmacenIdalmacen(al);
+  mat.setIdTipomaterial(tm);
+  mat.setSubFamiliasidsubFam(sf);
+  mat.setIdArea(ar);
+  
+  em.persist(mat);
+     
+     
+   return true;
+ }
+  
+  }
 }

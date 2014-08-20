@@ -14,6 +14,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -53,5 +54,33 @@ public class SubfamiliasFacade extends AbstractFacade<Subfamilias> {
         }
         return res;
     }
+ public boolean agregar(String nombre, String descripcion){
+Subfamilias us2=null;
+ Query search1 =em.createQuery("SELECT t FROM Subfamilias t WHERE t.nombre = :nom");
+ search1.setParameter("nom", nombre);
 
+ try{
+ us2=  (Subfamilias) search1.getSingleResult();
+ return false;
+ }
+ catch(Exception e){
+  Subfamilias sf=new Subfamilias();
+sf.setNombre(nombre);
+sf.setDescripcion(descripcion);
+em.persist(sf);
+return true;
+ 
+ }
+
+} 
+   public List<Subfamilias> listAL() {
+
+        List<Subfamilias> list ;
+
+            TypedQuery<Subfamilias> search = em.createQuery("SELECT NEW com.server.beans.staless.Subfamilias(u.idsubFam,u.nombre) FROM Subfamilias u ", Subfamilias.class);
+            //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
+        list = search.getResultList();
+     return list;
+  
+    }
 }
