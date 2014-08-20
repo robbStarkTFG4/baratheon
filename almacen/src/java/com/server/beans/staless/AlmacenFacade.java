@@ -54,7 +54,7 @@ return true;
 
         List<Almacen> list ;
 
-            TypedQuery<Almacen> search = em.createQuery("SELECT NEW com.server.beans.staless.Almacen(u.idalmacen,u.descripcion) FROM Almacen u ", Almacen.class);
+            TypedQuery<Almacen> search = em.createQuery("SELECT NEW com.server.entity.beans.Almacen(u.idalmacen,u.descripcion) FROM Almacen u ", Almacen.class);
             //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
         list = search.getResultList();
      return list;

@@ -62,6 +62,8 @@ public class Almacen implements Serializable {
         this.descripcion = descripcion;
     }
 
+    
+
     public Integer getIdalmacen() {
         return idalmacen;
     }

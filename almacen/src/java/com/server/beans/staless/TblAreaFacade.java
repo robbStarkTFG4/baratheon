@@ -86,7 +86,7 @@ return true;
 
         List<TblArea> list ;
 
-            TypedQuery<TblArea> search = em.createQuery("SELECT NEW com.server.beans.staless.TblArea(u.idArea,u.descripcion) FROM TblArea u ", TblArea.class);
+            TypedQuery<TblArea> search = em.createQuery("SELECT NEW com.server.entity.beans.TblArea(u.idArea,u.descripcion) FROM TblArea u ", TblArea.class);
             //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
         list = search.getResultList();
      return list;

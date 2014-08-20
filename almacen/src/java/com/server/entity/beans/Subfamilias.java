@@ -68,6 +68,7 @@ public class Subfamilias implements Serializable {
         this.nombre = nombre;
     }
 
+   
     public Integer getIdsubFam() {
         return idsubFam;
     }

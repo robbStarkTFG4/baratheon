@@ -56,6 +56,12 @@ public class TblArea implements Serializable {
         this.idArea = idArea;
     }
 
+    public TblArea(Integer idArea, String descripcion) {
+        this.idArea = idArea;
+        this.descripcion = descripcion;
+    }
+    
+
     public Integer getIdArea() {
         return idArea;
     }

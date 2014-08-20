@@ -84,7 +84,7 @@ return true;
 
         List<TblTipomaterial> list ;
 
-            TypedQuery<TblTipomaterial> search = em.createQuery("SELECT NEW com.server.beans.staless.TblTipomaterial(u.idTipomaterial,u.descripcion) FROM TblTipomaterial u ", TblTipomaterial.class);
+            TypedQuery<TblTipomaterial> search = em.createQuery("SELECT NEW com.server.entity.beans.TblTipomaterial(u.idTipomaterial,u.descripcion) FROM TblTipomaterial u ", TblTipomaterial.class);
             //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
         list = search.getResultList();
      return list;

@@ -57,6 +57,11 @@ public class TblTipomaterial implements Serializable {
     public TblTipomaterial() {
     }
 
+    public TblTipomaterial(Integer idTipomaterial, String descripcion) {
+        this.idTipomaterial = idTipomaterial;
+        this.descripcion = descripcion;
+    }
+
     public TblTipomaterial(Integer idTipomaterial) {
         this.idTipomaterial = idTipomaterial;
     }

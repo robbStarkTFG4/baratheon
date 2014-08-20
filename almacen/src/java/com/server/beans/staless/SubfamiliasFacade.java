@@ -77,7 +77,7 @@ return true;
 
         List<Subfamilias> list ;
 
-            TypedQuery<Subfamilias> search = em.createQuery("SELECT NEW com.server.beans.staless.Subfamilias(u.idsubFam,u.nombre) FROM Subfamilias u ", Subfamilias.class);
+            TypedQuery<Subfamilias> search = em.createQuery("SELECT NEW com.server.entity.beans.Subfamilias(u.idsubFam,u.nombre) FROM Subfamilias u ", Subfamilias.class);
             //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
         list = search.getResultList();
      return list;
