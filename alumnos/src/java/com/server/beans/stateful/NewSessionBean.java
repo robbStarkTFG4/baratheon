@@ -39,8 +39,6 @@ public class NewSessionBean {
     @EJB
     TblMaterialFacade material;
 
-   
-
     private final int idPrestario = 0;
     private final int idUsuario = 0;
     private List<TblMaterial> mtl;
@@ -125,33 +123,36 @@ public class NewSessionBean {
     }
 
     public boolean persistLoan(TblPrestarios pro) {//cDASDASDASDASDAS AGREGAR EL USUARIO COMO PARAMETRO DEL METODO Y METERLO EN "1"
+        if (!mtl.isEmpty()) {
+            TblPrestamo pr = pres.createPres(pro); //1
+            Map<String, Integer> quantity = new HashMap<>();
+            for (MtlDTO ml : data) {
+                TblDetalleprestamo temp = new TblDetalleprestamo();
+                temp.setCantidad(ml.getCantidad());
 
-        TblPrestamo pr = pres.createPres(pro); //1
-        Map<String, Integer> quantity = new HashMap<>();
-        for (MtlDTO ml : data) {
-            TblDetalleprestamo temp = new TblDetalleprestamo();
-            temp.setCantidad(ml.getCantidad());
+                temp.setIdMaterial(new TblMaterial(ml.getIdMaterial()));
 
-            temp.setIdMaterial(new TblMaterial(ml.getIdMaterial()));
+                temp.setIdPrestamo(pr);
+                dtl.add(temp);
 
-            temp.setIdPrestamo(pr);
-            dtl.add(temp);
-
-            quantity.put(ml.getNoParte(), ml.getCantidad());
-        }
-        pr.setTblDetalleprestamoList(dtl);
-        if (pr.getStatusprestamo() != 0) {
-            for (TblMaterial tblMaterial : mtl) {
-                int newStock = tblMaterial.getStock() - quantity.get(tblMaterial.getNoParte());
-                tblMaterial.setStock(newStock);
-                material.mergeMtlFromPres(tblMaterial);
+                quantity.put(ml.getNoParte(), ml.getCantidad());
             }
-        }
+            pr.setTblDetalleprestamoList(dtl);
+            if (pr.getStatusprestamo() != 0) {
+                for (TblMaterial tblMaterial : mtl) {
+                    int newStock = tblMaterial.getStock() - quantity.get(tblMaterial.getNoParte());
+                    tblMaterial.setStock(newStock);
+                    material.mergeMtlFromPres(tblMaterial);
+                }
+            }
 
-        if (pres.updatePres(pr)) {
-            clearList();
-         
-            return true;
+            if (pres.updatePres(pr)) {
+                clearList();
+
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

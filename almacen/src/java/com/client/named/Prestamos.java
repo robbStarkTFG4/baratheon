@@ -463,6 +463,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         this.listLoans = null;
         this.freeds = null;
         this.ListSol = null;
+        this.activo=9;
         RequestContext.getCurrentInstance().update("forma:tabView:soles");
         RequestContext.getCurrentInstance().update("forma:tabView:freed");
         RequestContext.getCurrentInstance().update("forma:tabView:debts");

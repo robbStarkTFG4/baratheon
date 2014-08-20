@@ -226,7 +226,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
     public boolean updatePres(TblPrestamo pr) {
         try {
             pr.setStatusprestamo(0);
-            em.merge(pr);
+            this.edit(pr);
             return true;
         } catch (Exception e) {
             return false;
