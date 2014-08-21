@@ -10,7 +10,8 @@
          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
     <h:body>
-        
+        <ui:composition template="/index.xhtml" >
+            <ui:define name="content">
         <h:form id="formadatos">
                             <p:panel id="pan1"  >
                                 <div align="left">
@@ -22,12 +23,13 @@
                        
                                 </div>
                         </p:panel>
-                            <div >
-                                <p:tabView id="tbw1" activeIndex="#{mat.activeIndex}" >
-                                    
-                                <p:tab id="tab1" title="Datos Del Material"  titleStyleClass="t1" disabled="#{mat.disableTab1}">
-                                    <p:panel style="border: none">
-                                        <div align="left" style="margin-left: 11%">
+            <div align="center" >
+                <p:tabView id="tbw1" activeIndex="#{mat.activeIndex}" style="width: 52%" >
+                      
+                                <p:tab id="tab1" title="Datos Del Material"  titleStyleClass="t1" disabled="#{mat.disableTab1}" >
+                                  
+                                    <p:panel style="border: none"  >
+                                        <div align="left" style="margin-left: 23%">
                                     <h:panelGrid id="grid" columns="3" cellspacing="5">
 
                                         <p:outputLabel styleClass="labelnombre" value="Nombre: "  style="font-weight: bold;color: darkgreen"/>
@@ -94,10 +96,10 @@
                                         <h:message id="marc" for="marca"/>
 
                                         <p:outputLabel styleClass="labelserie" value="Serie: " style="font-weight: bold;color: darkgreen"/>
-                                        <p:inputText id="serie" style="font-weight: bold;" value="#{mat.serie}" validatorMessage="Serie invalida" styleClass="ipserie" >
-                                            <f:validateLength minimum="0" maximum="12"/>
-                                            <f:validateRegex pattern="[a-zA-Z0-9\-]+"/>
-                                            <f:ajax render="serial" event="keyup" />
+                                        <p:inputText id="serie" style="font-weight: bold;" value="#{mat.serie}" validatorMessage="Serie invalida" required="false" styleClass="ipserie"  >
+                                          
+                                          <f:validateRegex pattern="[a-zA-Z0-9\-]*"  />
+                                        <f:ajax render="serial" event="keyup" /> 
                                         </p:inputText> 
                                         <h:message id="serial" for="serie"/>
 
@@ -137,57 +139,57 @@
                                         <h:message id="resp" for="responsable"/>  
 
                                         <p:outputLabel styleClass="labelproveedor" value="Proveedor: " style="font-weight: bold;color: darkgreen" />
-                                        <p:inputText id="proveedor" style="font-weight: bold;"  value="#{mat.probedor}" validatorMessage="Invalido" styleClass="ipproveedor" disabled="#{mat.disableTab2}" >
-                                            <f:validateLength minimum="0" maximum="60"/>
-                                            <f:validateRegex pattern="[a-zA-ZñÑ\s]+"/>
+                                        <p:inputText id="proveedor" style="font-weight: bold;" required="false" value="#{mat.probedor}" validatorMessage="Invalido" styleClass="ipproveedor" disabled="#{mat.disableTab2}" >
+                                            <f:validateLength  maximum="60"/>
+                                            <f:validateRegex pattern="[a-zA-ZñÑ\s]*"/>
                                             <f:ajax render="provee" event="keyup" />
                                         </p:inputText> 
                                         <h:message id="provee" for="proveedor"/>
 
                                         <p:outputLabel styleClass="labelfactura" value="No. Factura: " style="font-weight: bold;color: darkgreen"/>
-                                        <p:inputText id="factura" style="font-weight: bold;" value="#{mat.noFactura}" validatorMessage="Invalido" styleClass="ipfactura" disabled="#{mat.disableTab2}"> 
-                                            <f:validateLength minimum="0" maximum="15"/>
-                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
+                                        <p:inputText id="factura" style="font-weight: bold;" required="false" value="#{mat.noFactura}" validatorMessage="Invalido" styleClass="ipfactura" disabled="#{mat.disableTab2}"> 
+                                            <f:validateLength  maximum="60"/>
+                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                             <f:ajax render="fac" event="keyup" />
                                         </p:inputText> 
                                         <h:message id="fac" for="factura"/>
 
                                         <p:outputLabel styleClass="labelorden" value="Orden De Compra: " style="font-weight: bold;color: darkgreen"/>
-                                        <p:inputText id="orden" style="font-weight: bold;" value="#{mat.ordenDcompra}" validatorMessage="Invalido" styleClass="iporden" disabled="#{mat.disableTab2}" >
-                                            <f:validateLength minimum="0" maximum="15"/>
-                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
+                                        <p:inputText id="orden" style="font-weight: bold;" required="false" value="#{mat.ordenDcompra}" validatorMessage="Invalido" styleClass="iporden" disabled="#{mat.disableTab2}" >
+                                            <f:validateLength  maximum="15"/>
+                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                             <f:ajax render="order" event="keyup" />
                                         </p:inputText> 
                                         <h:message id="order" for="orden"/>
 
                                         <p:outputLabel styleClass="labelcodigo" value="Codigo Zip: " style="font-weight: bold;color: darkgreen"/>
-                                        <p:inputText id="zip" style="font-weight: bold;" value="#{mat.zip}" validatorMessage="Invalido" styleClass="ipcodigo"  disabled="#{mat.disableTab2}"> 
-                                            <f:validateLength minimum="0" maximum="15"/>
-                                            <f:validateRegex pattern="[0-9]+"/>
+                                        <p:inputText id="zip" style="font-weight: bold;" required="false" value="#{mat.zip}" validatorMessage="Invalido" styleClass="ipcodigo"  disabled="#{mat.disableTab2}"> 
+                                            <f:validateLength  maximum="15"/>
+                                            <f:validateRegex pattern="[0-9]*"/>
                                             <f:ajax render="codigo" event="keyup" />
                                         </p:inputText>
                                         <h:message id="codigo" for="zip"/>
 
                                         <p:outputLabel styleClass="labelfinanciamiento" value="Financiamiento: " style="font-weight: bold;color: darkgreen" />
-                                        <p:inputText id="finance" style="font-weight: bold;" value="#{mat.financiamiento}" validatorMessage="Invalido" styleClass="ipfinanciamiento" disabled="#{mat.disableTab2}" >
-                                            <f:validateLength minimum="0" maximum="15"/>
-                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
+                                        <p:inputText id="finance" style="font-weight: bold;" required="false" value="#{mat.financiamiento}" validatorMessage="Invalido" styleClass="ipfinanciamiento" disabled="#{mat.disableTab2}" >
+                                            <f:validateLength  maximum="15"/>
+                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                             <f:ajax render="finan" event="keyup" />
                                         </p:inputText> 
                                         <h:message id="finan" for="finance"/>
 
                                         <p:outputLabel styleClass="labeltipcompra" value="Tipo De Compra: " style="font-weight: bold;color: darkgreen" />
-                                        <p:inputText id="compra" style="font-weight: bold;" value="#{mat.tipodecompra}" validatorMessage="Invalido" styleClass="iptipcompra" disabled="#{mat.disableTab2}" >
-                                            <f:validateLength minimum="0" maximum="20"/>
-                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
+                                        <p:inputText id="compra" style="font-weight: bold;" required="false" value="#{mat.tipodecompra}" validatorMessage="Invalido" styleClass="iptipcompra" disabled="#{mat.disableTab2}" >
+                                            <f:validateLength  maximum="20"/>
+                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                             <f:ajax render="buy" event="keyup" />
                                         </p:inputText> 
                                         <h:message id="buy" for="compra"/>
 
                                         <p:outputLabel styleClass="labeliduabc" value="ID UABC: " style="font-weight: bold;color: darkgreen"/>
-                                        <p:inputText id="iduabc" style="font-weight: bold;" value="#{mat.idUABC}" validatorMessage="Invalido" styleClass="ipiduabc" disabled="#{mat.disableTab2}"  >
-                                            <f:validateLength minimum="0" maximum="15"/>
-                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9\-]+"/>
+                                        <p:inputText id="iduabc" style="font-weight: bold;"  required="false" value="#{mat.idUABC}" validatorMessage="Invalido" styleClass="ipiduabc" disabled="#{mat.disableTab2}"  >
+                                            <f:validateLength  maximum="15"/>
+                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9\-]*"/>
                                             <f:ajax render="idua" event="keyup" /> 
                                         </p:inputText> 
                                         <h:message id="idua" for="iduabc"/>
@@ -260,12 +262,14 @@
  <p:growl id="g1" showDetail="true" life="3000"/>
                                     </h:panelGrid>
                                 </p:tab>
-                                
+                 
 
                             </p:tabView>
+                
                             </div>
                         </h:form>
-           
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 
