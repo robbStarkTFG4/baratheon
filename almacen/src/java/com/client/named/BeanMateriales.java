@@ -76,7 +76,8 @@ public class BeanMateriales implements Serializable {
  
  private UploadedFile file;
     private String imagen;
-    private final String ruta = "C:\\imagenes\\";
+private final String ruta = "C:\\Users\\cristian\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
+//"C:\\Users\\cristian\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\"
 @EJB  TblMaterialFacade mf; 
 @EJB AlmacenFacade af;
 @EJB SubfamiliasFacade sff;
