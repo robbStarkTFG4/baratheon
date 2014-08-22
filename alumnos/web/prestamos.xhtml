@@ -20,7 +20,7 @@
             <p:messages id="notificaciones"/>
             <h:panelGrid id="grid" columns="4">
                 <p:outputLabel style="margin-right: 20px" value="Matricula :" />
-                <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Inserta matricula" style="height: 20px; width: 150px;">
+                <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Inserta matricula" style="height: 30px; width: 150px;">
                     <f:validateRegex pattern="[0-9]+" />
                     <f:validateLength minimum="3" maximum="20" >
                     </f:validateLength> 
