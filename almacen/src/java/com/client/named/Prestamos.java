@@ -300,8 +300,8 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void resetListener() {
         for (DetailDTO dl : dtls) {
-            dl.setFecharetorno("");
-            dl.setHoraretorno("");
+            dl.setActivated(false);
+            //  dl.setHoraretorno();
         }
     }
 
@@ -331,7 +331,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void savePres() throws ParseException {
 
-        if (pr.updatePres(currentPres, listLoans,this.getUs())) {
+        if (pr.updatePres(currentPres, listLoans, this.getUs())) {
 
             FacesContext context = FacesContext.getCurrentInstance();
 
@@ -463,7 +463,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         this.listLoans = null;
         this.freeds = null;
         this.ListSol = null;
-        this.activo=9;
+        this.activo = 9;
         RequestContext.getCurrentInstance().update("forma:tabView:soles");
         RequestContext.getCurrentInstance().update("forma:tabView:freed");
         RequestContext.getCurrentInstance().update("forma:tabView:debts");

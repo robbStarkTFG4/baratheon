@@ -12,31 +12,31 @@
     <h:body>
         <h:form id="form">
             <h:panelGrid columns="7" cellspacing="7px" cellpadding="5px" style="margin-bottom: 10px">
-                
-                 <p:outputLabel value="area " for="area"/>
-             
-                 <p:selectOneMenu value="#{gd.selectedArea}" id="area" style="width: 150px" converter="areaC" valueChangeListener="#{gd.areasListener}" >
+
+                <p:outputLabel value="area " for="area"/>
+
+                <p:selectOneMenu value="#{gd.selectedArea}" id="area" style="width: 150px" converter="areaC" valueChangeListener="#{gd.areasListener}" >
                     <f:ajax  execute="@this"  render=" @this  familia subFam  "/>
                     <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                     <f:selectItems value="#{gd.areas}" var="ar" itemLabel="#{ar.nombre}" itemValue="#{ar}"/>  
                 </p:selectOneMenu>
-                 
+
                 <p:outputLabel value="familia " for="familia"/>
-                
+
                 <p:selectOneMenu value="#{gd.selectedType}" id="familia" style="width: 150px" converter="type" valueChangeListener="#{gd.typesListener}" >
                     <f:ajax  execute="@this"  render=" @this  subFam  "/>
                     <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                     <f:selectItems value="#{gd.typesList}" var="player" itemLabel="#{player.nombre}" itemValue="#{player}"/>  
                 </p:selectOneMenu>
-                
+
                 <p:outputLabel value="subfamilia " for="subFam"/>
-                
+
                 <p:selectOneMenu value="#{gd.selectedFam}" id="subFam" style="width: 150px"  valueChangeListener="#{gd.subFamsListener}" converter="sub"  >
                     <f:ajax  execute="@this" />
                     <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                     <f:selectItems value="#{gd.famsList}" var="player2" itemLabel="#{player2.nombre}" itemValue="#{playe2}"/>  
                 </p:selectOneMenu>
-                
+
                 <p:commandButton value="filtrar"  action="#{gd.filter}"/>
             </h:panelGrid>
 
@@ -52,7 +52,7 @@
                         <h:panelGrid  id="gridp" columns="1" style="width:100%; text-align:center;">  
 
                             <p:commandLink action="#{gd.openPopUp}" ajax="true">
-                                <p:graphicImage value="/resources/imagenes/#{car.imagen}"  />  
+                                <p:graphicImage value="image/#{car.imagen}" />  
                                 <f:setPropertyActionListener value="#{car}" target="#{gd.current}" />
                             </p:commandLink>
 

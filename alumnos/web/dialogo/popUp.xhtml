@@ -25,7 +25,7 @@
                     <p:outputLabel value="Stock " for="ctg" />
                     <p:inputText id="ctg" value="#{gd.current.stock}" size="20" disabled="true"/>
 
-                     <p:outputLabel value="Area " for="ar" />
+                    <p:outputLabel value="Area " for="ar" />
                     <p:inputText id="ar" value="#{gd.current.idArea.descripcion}" size="20" disabled="true"/>
 
                     <p:outputLabel value="Tipo " for="tipp" />
@@ -36,7 +36,7 @@
                 </h:panelGrid>
 
                 <h:panelGrid columns="1" cellpadding="5px">
-                    <h:graphicImage value="/resources/imagenes/#{gd.current.imagen}" rendered="#{gd.current.imagen ne null}"  />
+                    <p:graphicImage value="image/#{gd.current.imagen}"   />  
                 </h:panelGrid>
 
 
