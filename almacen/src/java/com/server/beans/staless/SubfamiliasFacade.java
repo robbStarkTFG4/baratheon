@@ -54,33 +54,40 @@ public class SubfamiliasFacade extends AbstractFacade<Subfamilias> {
         }
         return res;
     }
- public boolean agregar(String nombre, String descripcion){
-Subfamilias us2=null;
- Query search1 =em.createQuery("SELECT t FROM Subfamilias t WHERE t.nombre = :nom");
- search1.setParameter("nom", nombre);
 
- try{
- us2=  (Subfamilias) search1.getSingleResult();
- return false;
- }
- catch(Exception e){
-  Subfamilias sf=new Subfamilias();
-sf.setNombre(nombre);
-sf.setDescripcion(descripcion);
-em.persist(sf);
-return true;
- 
- }
+    public boolean agregar(String nombre, String descripcion) {
+        Subfamilias us2 = null;
+        Query search1 = em.createQuery("SELECT t FROM Subfamilias t WHERE t.nombre = :nom");
+        search1.setParameter("nom", nombre);
 
-} 
-   public List<Subfamilias> listAL() {
+        try {
+            us2 = (Subfamilias) search1.getSingleResult();
+            return false;
+        } catch (Exception e) {
+            Subfamilias sf = new Subfamilias();
+            sf.setNombre(nombre);
+            sf.setDescripcion(descripcion);
+            em.persist(sf);
+            return true;
 
-        List<Subfamilias> list ;
+        }
 
-            TypedQuery<Subfamilias> search = em.createQuery("SELECT NEW com.server.entity.beans.Subfamilias(u.idsubFam,u.nombre) FROM Subfamilias u ", Subfamilias.class);
-            //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
-        list = search.getResultList();
-     return list;
-  
+    }
+
+    public List<Subfamilias> listAL(Integer idTipo) {
+
+        List<Subfamilias> res = new ArrayList<>();
+// com.server.entity.beans.Subfamilias(u.idsubFam,u.nombre)
+        Query search = em.createQuery("SELECT c.subfamilias.idsubFam, c.subfamilias.nombre FROM Map c WHERE c.tblTipomaterialIdTipomaterial.idTipomaterial = :id");
+        search.setParameter("id", idTipo);
+        //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
+        for (Iterator it = search.getResultList().iterator(); it.hasNext();) {
+            Object[] object = (Object[]) it.next();
+
+            Subfamilias temp = new Subfamilias((int) object[0], (String) object[1]);
+            res.add(temp);
+        }
+        return res;
+
     }
 }

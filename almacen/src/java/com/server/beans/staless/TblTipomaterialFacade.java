@@ -24,7 +24,7 @@ import javax.persistence.TypedQuery;
  */
 @Stateless
 public class TblTipomaterialFacade extends AbstractFacade<TblTipomaterial> {
-    
+
     @EJB
     SubfamiliasFacade subs;
 
@@ -59,35 +59,37 @@ public class TblTipomaterialFacade extends AbstractFacade<TblTipomaterial> {
         }
         return res;
     }
- public boolean agregar(String nombre, String area){
-TblTipomaterial us2=null;
- Query search1 =em.createQuery("SELECT t FROM TblTipomaterial t WHERE t.descripcion = :nom");
- search1.setParameter("nom", nombre);
 
- try{
- us2= (TblTipomaterial) search1.getSingleResult();
- return false;
- }
- catch(Exception e){
-  TblTipomaterial tm=new TblTipomaterial();
- TblArea ar=new TblArea();
- ar.setIdArea(Integer.parseInt(area));
- tm.setDescripcion(nombre);
- tm.setTblAreaIdArea(ar);
-em.persist(tm);
-return true;
- 
- }
+    public boolean agregar(String nombre, String area) {
+        TblTipomaterial us2 = null;
+        Query search1 = em.createQuery("SELECT t FROM TblTipomaterial t WHERE t.descripcion = :nom");
+        search1.setParameter("nom", nombre);
 
-}  
-   public List<TblTipomaterial> listAtm() {
+        try {
+            us2 = (TblTipomaterial) search1.getSingleResult();
+            return false;
+        } catch (Exception e) {
+            TblTipomaterial tm = new TblTipomaterial();
+            TblArea ar = new TblArea();
+            ar.setIdArea(Integer.parseInt(area));
+            tm.setDescripcion(nombre);
+            tm.setTblAreaIdArea(ar);
+            em.persist(tm);
+            return true;
 
-        List<TblTipomaterial> list ;
+        }
 
-            TypedQuery<TblTipomaterial> search = em.createQuery("SELECT NEW com.server.entity.beans.TblTipomaterial(u.idTipomaterial,u.descripcion) FROM TblTipomaterial u ", TblTipomaterial.class);
-            //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
+    }
+
+    public List<TblTipomaterial> listAtm(Integer idArea) {
+
+        List<TblTipomaterial> list;
+
+        TypedQuery<TblTipomaterial> search = em.createQuery("SELECT NEW com.server.entity.beans.TblTipomaterial(u.idTipomaterial,u.descripcion) FROM TblTipomaterial u WHERE u.tblAreaIdArea.idArea = :id", TblTipomaterial.class);
+        search.setParameter("id", idArea);
+        //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
         list = search.getResultList();
-     return list;
-  
-    } 
+        return list;
+
+    }
 }
