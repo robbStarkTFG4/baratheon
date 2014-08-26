@@ -146,7 +146,7 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
         try {
 
             Query search = em.createQuery("SELECT u.nombre, u.apellidop, u.apellidom, u.email, u.tel, u.usuario FROM TblUsuarios u WHERE u.idTipousuarios.idTipousuarios = :tipo");
-            search.setParameter("tipo", "uss");
+            search.setParameter("tipo", "1");
             List obj = search.getResultList();
            
 if (obj != null) {

@@ -95,6 +95,16 @@ public class TblUsuarios implements Serializable {
         this.idUsuarios = idUsuarios;
     }
 
+
+    public TblUsuarios(String nombre, String apellidop, String apellidom, String email, String tel, String usuario) {
+        this.nombre = nombre;
+        this.apellidop = apellidop;
+        this.apellidom = apellidom;
+        this.email = email;
+        this.tel = tel;
+        this.usuario = usuario;
+    }
+        
     public TblUsuarios(Integer idUsuarios, String nombre, String contraseña, String apellidop, String apellidom, String usuario) {
         this.idUsuarios = idUsuarios;
         this.nombre = nombre;
