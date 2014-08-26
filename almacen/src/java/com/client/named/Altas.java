@@ -180,24 +180,7 @@ public class Altas implements Serializable {
 
     }
 
-    public void agregarSubfam() {
-        boolean hecho;
-
-        hecho = sff.agregar(nombreSubfam, descripcionSubfam);
-
-        if (hecho == true) {
-            nombreSubfam = null;
-            descripcionSubfam = null;
-            System.out.println("creando msj growl");
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Subfamilia se ha agregado con exito!!"));
-
-   // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
-        } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
-        }
-
-    }
+   
 
     public void agregarTipo() {
         boolean hecho;

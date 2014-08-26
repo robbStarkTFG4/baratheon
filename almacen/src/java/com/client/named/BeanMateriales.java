@@ -72,7 +72,8 @@ public class BeanMateriales implements Serializable {
     private boolean disableTab2 = true;
     private boolean disableTab3 = true;
     private String activeIndex;
-
+    private String nombreSubfam;
+    private String descripcionSubfam;
     private UploadedFile file;
     private String imagen;
     private final String ruta = "C:\\Users\\NORE\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
@@ -106,6 +107,22 @@ public class BeanMateriales implements Serializable {
     @PostConstruct
     private void init() {
         this.listArea = arf.listAr();
+    }
+
+    public String getNombreSubfam() {
+        return nombreSubfam;
+    }
+
+    public void setNombreSubfam(String nombreSubfam) {
+        this.nombreSubfam = nombreSubfam;
+    }
+
+    public String getDescripcionSubfam() {
+        return descripcionSubfam;
+    }
+
+    public void setDescripcionSubfam(String descripcionSubfam) {
+        this.descripcionSubfam = descripcionSubfam;
     }
 
     public List<TblArea> getListArea() {
@@ -620,5 +637,23 @@ public class BeanMateriales implements Serializable {
             //  RequestContext.getCurrentInstance().update("form:subFam");
         }
     }
+ public void agregarSubfam() {
+        boolean hecho;
 
+        hecho = sff.agregar2(nombreSubfam, descripcionSubfam, selectedTipo);
+
+        if (hecho == true) {
+            nombreSubfam = null;
+            descripcionSubfam = null;
+            System.out.println("creando msj growl");
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Subfamilia se ha agregado con exito!!"));
+         //selectedSubFamilia;
+            RequestContext.getCurrentInstance().closeDialog(null);
+   // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+        }
+
+    }
 }

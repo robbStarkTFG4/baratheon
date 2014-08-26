@@ -12,14 +12,14 @@
             <p:growl id="growl" showDetail="true" life="3000"/>
         <h:panelGrid columns="2" >
         <p:outputLabel value="Nombre: " style="font-weight: bold;color: darkolivegreen"/>
-        <p:inputText id="nm" style="font-weight: bold; margin-bottom: -5%" value="#{altas.nombreSubfam}" validatorMessage="Minimo 2, maximo 15 carcateres" styleClass="ipfactura" > 
+        <p:inputText id="nm" style="font-weight: bold; margin-bottom: -5%" value="#{mat.nombreSubfam}" validatorMessage="Minimo 2, maximo 15 carcateres" styleClass="ipfactura" > 
             <f:validateLength minimum="2" maximum="15"/>
             <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
             <f:ajax render="fac" event="keyup" />
         </p:inputText> <h:outputLabel value="hhdjfh" style="font-size: xx-small; color: white"/>
         <h:message id="fac" for="nm" style="font-size: xx-small; color: red"/>
         <p:outputLabel styleClass="labeldescripcion" value="Descripción: " style="font-weight: bold;color: darkgreen" />  
-        <p:inputTextarea id="desc" style="font-weight: bold; width: 240px" value="#{altas.descripcionSubfam}"  validatorMessage="Tamaño invalido" autoResize="false" maxlength="140" rows="2" styleClass="iparea" >
+        <p:inputTextarea id="desc" style="font-weight: bold; width: 240px" value="#{mat.descripcionSubfam}"  validatorMessage="Tamaño invalido" autoResize="false" maxlength="140" rows="2" styleClass="iparea" >
                                             <f:validateLength minimum="2" maximum="45"/>
                                             <f:validateRegex pattern="[a-zA-ZñÑ0-9\s-_@!#$%/()=?,;.:{*}¡°¬|`~^]+"/>
                                             <f:ajax render="Marea" event="keyup" />
@@ -27,7 +27,7 @@
                                         <h:message id="Marea" for="desc" style="font-size: xx-small; color: red"/>
         </h:panelGrid>
        
-            <p:commandButton value="Guardar" actionListener="#{altas.agregarSubfam()}" style="margin-left: 27%" update=":fr"/>
+            <p:commandButton value="Guardar" actionListener="#{mat.agregarSubfam()}" style="margin-left: 27%" update=":fr"/>
             <p:commandButton value="Cerrar" immediate="true" actionListener="#{altas.cerrar()}"  style="margin-right: -5%"/>
         </h:form>
     </h:body>
