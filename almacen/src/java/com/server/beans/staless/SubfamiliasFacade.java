@@ -28,7 +28,9 @@ public class SubfamiliasFacade extends AbstractFacade<Subfamilias> {
 
     @PersistenceContext(unitName = "almacenPU")
     private EntityManager em;
- @EJB MapFacade mf;
+    @EJB
+    MapFacade mf;
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -58,47 +60,38 @@ public class SubfamiliasFacade extends AbstractFacade<Subfamilias> {
         return res;
     }
 
-   
-public boolean agregar2(String nombre, String descripcion, TblTipomaterial tm) {
+    public boolean agregar2(String nombre, String descripcion, TblTipomaterial tm) {
 
-    System.out.println(nombre);
-    System.out.println(descripcion);
-    System.out.println(tm);
-    Subfamilias us2 = null;
-    //Subfamilias sf2=null;
+        System.out.println(nombre);
+        System.out.println(descripcion);
+        System.out.println(tm);
+        Subfamilias us2 = null;
+        //Subfamilias sf2=null;
         Query search1 = em.createQuery("SELECT t FROM Subfamilias t WHERE t.nombre = :nom");
         search1.setParameter("nom", nombre);
 
-        
-        
         try {
             us2 = (Subfamilias) search1.getSingleResult();
             return false;
         } catch (Exception e) {
-           
+
             Subfamilias sf = new Subfamilias();
             sf.setNombre(nombre);
             sf.setDescripcion(descripcion);
-           
+
             em.persist(sf);
             em.flush();
-            
-       
-           
-          
+
          //   nuevomapa.setTblTipomaterialIdTipomaterial(tm);
-            
           //  em.persist(nuevomapa);*/
-            
-          mf.agregarmap(tm, sf);
-            
+            mf.agregarmap(tm, sf);
+
             return true;
-
-
 
         }
 
-}
+    }
+
     public List<Subfamilias> listAL(Integer idTipo) {
 
         List<Subfamilias> res = new ArrayList<>();

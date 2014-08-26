@@ -377,62 +377,61 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     public boolean agregar11(String nombre, String noParte, String descripcion, String cantidad, String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
             String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub) {
-        TblMaterial mt2 = null;
-        Query search1 = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :nopart or t.idUabc = :iduabc or t.numeroFactura = :nofact or t.codigoSip = :sip or t.ordenCompra = :oco");
-        search1.setParameter("nopart", noParte);
-        search1.setParameter("iduabc", idUABC);
-        search1.setParameter("nofact", noFactura);
-        search1.setParameter("sip", zip);
-        search1.setParameter("oco", ordenDcompra);
+        /* TblMaterial mt2 = null;
+         Query search1 = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :nopart or t.idUabc = :iduabc or t.numeroFactura = :nofact or t.codigoSip = :sip or t.ordenCompra = :oco");
+         search1.setParameter("nopart", noParte);
+         search1.setParameter("iduabc", idUABC);
+         search1.setParameter("nofact", noFactura);
+         search1.setParameter("sip", zip);
+         search1.setParameter("oco", ordenDcompra);
 
-        try {
-            mt2 = (TblMaterial) search1.getSingleResult();
-            return false;
-        } catch (Exception e) {
-            TblMaterial mat = new TblMaterial();
-            TblArea ar = new TblArea();
-            TblTipomaterial tm = new TblTipomaterial();
-            Subfamilias sf = new Subfamilias();
-            Almacen al = new Almacen();
-            Date date1 = new Date();
-            mat.setNombre(nombre);
-            mat.setNoParte(noParte);
-            mat.setDescripcion(descripcion);
-            mat.setStock(Integer.parseInt(cantidad));
-            mat.setCosto(Long.parseLong(costo));
-            mat.setUnidadMedida(unidadmedida);
-            mat.setMarca(marca);
-            mat.setSerie(serie);
-            mat.setEstado(estado);
-            mat.setUbicacionActual(ubicacion);
-            mat.setResponsable(responsable);
-            mat.setProveedor(probedor);
-            mat.setNumeroFactura(noFactura);
-            mat.setOrdenCompra(ordenDcompra);
-            mat.setCodigoSip(zip);
-            mat.setFinanciamiento(financiamiento);
-            mat.setTipoCompra(tipodecompra);
-            mat.setIdUabc(idUABC);
-            mat.setFechaRecepcion(date1);
-            mat.setImagen(imagen);
-            //ar.setIdArea(Integer.parseInt(area));
+         try {
+         mt2 = (TblMaterial) search1.getSingleResult();
+         return false;
+         } catch (Exception e) {*/
+        TblMaterial mat = new TblMaterial();
+        TblArea ar = new TblArea();
+        TblTipomaterial tm = new TblTipomaterial();
+        Subfamilias sf = new Subfamilias();
+        Almacen al = new Almacen();
+        Date date1 = new Date();
+        mat.setNombre(nombre);
+        mat.setNoParte(noParte);
+        mat.setDescripcion(descripcion);
+        mat.setStock(Integer.parseInt(cantidad));
+        mat.setCosto(Long.parseLong(costo));
+        mat.setUnidadMedida(unidadmedida);
+        mat.setMarca(marca);
+        mat.setSerie(serie);
+        mat.setEstado(estado);
+        mat.setUbicacionActual(ubicacion);
+        mat.setResponsable(responsable);
+        mat.setProveedor(probedor);
+        mat.setNumeroFactura(noFactura);
+        mat.setOrdenCompra(ordenDcompra);
+        mat.setCodigoSip(zip);
+        mat.setFinanciamiento(financiamiento);
+        mat.setTipoCompra(tipodecompra);
+        mat.setIdUabc(idUABC);
+        mat.setFechaRecepcion(date1);
+        mat.setImagen(imagen);
+        //ar.setIdArea(Integer.parseInt(area));
 
-            if (!(almacen == null || almacen.trim().equals(""))) {
-                al.setIdalmacen(Integer.parseInt(almacen));
-                mat.setAlmacenIdalmacen(al);
-            }
-
-            //tm.setIdTipomaterial(tipo);
-           // sf.setIdsubFam(Integer.parseInt(subfamilia));
-
-            mat.setIdTipomaterial(tipo);
-            mat.setSubFamiliasidsubFam(sub);
-            mat.setIdArea(area2);
-
-            em.persist(mat);
-
-            return true;
+        if (!(almacen == null || almacen.trim().equals(""))) {
+            al.setIdalmacen(Integer.parseInt(almacen));
+            mat.setAlmacenIdalmacen(al);
         }
+
+        //tm.setIdTipomaterial(tipo);
+        // sf.setIdsubFam(Integer.parseInt(subfamilia));
+        mat.setIdTipomaterial(tipo);
+        mat.setSubFamiliasidsubFam(sub);
+        mat.setIdArea(area2);
+
+        em.persist(mat);
+
+        return true;
+        //  }
 
     }
 

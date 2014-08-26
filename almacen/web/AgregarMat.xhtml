@@ -202,7 +202,7 @@
                             <p:tab id="tab3" title="Ubicación" titleStyleClass="t3" disabled="#{mat.disableTab3}" >
                                 <h:panelGrid id="ubi" columns="3" cellspacing="5">
                                     <p:outputLabel styleClass="labelarea" value="Area: " style="font-weight: bold;color: darkgreen" />
-                                    <p:selectOneMenu  value="#{mat.selectedArea}" styleClass="mnu1" valueChangeListener="#{mat.areasListener}" disabled="#{mat.disableTab3}" converter="matAreaC" required="true">
+                                    <p:selectOneMenu  id="areaOne" value="#{mat.selectedArea}" styleClass="mnu1" valueChangeListener="#{mat.areasListener}" disabled="#{mat.disableTab3}" converter="matAreaC">
                                         <f:ajax  execute="@this"  render=" @this  tipo subFam  "/>
                                         <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                                         <f:selectItems value="#{mat.listArea}" var="cat"
@@ -214,7 +214,7 @@
                                     </p:commandButton>
 
                                     <p:outputLabel styleClass="labeltipmaterial" value="Tipo De Material: " style="font-weight: bold;color: darkgreen"/>
-                                    <p:selectOneMenu  id="tipo" value="#{mat.selectedTipo}" valueChangeListener="#{mat.typeListener}" styleClass="mnu2" disabled="#{mat.disableTab3}" converter="matTypeConv" required="true" >
+                                    <p:selectOneMenu  id="tipo" value="#{mat.selectedTipo}" valueChangeListener="#{mat.typeListener}" styleClass="mnu2" disabled="#{mat.disableTab3}" converter="matTypeConv"  >
                                         <f:ajax  execute="@this"  render=" @this   subFam  "/>
                                         <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                                         <f:selectItems value="#{mat.listTM}" var="cat"
@@ -226,7 +226,7 @@
                                     </p:commandButton>
 
                                     <p:outputLabel styleClass="labelsub" value="Subfamilia: " style="font-weight: bold;color: darkgreen"/>
-                                    <p:selectOneMenu   id="subFam" value="#{mat.selectedSubFamilia}"   styleClass="mnu3" disabled="#{mat.disableTab3}" converter="addSubFamConv" required="true">
+                                    <p:selectOneMenu   id="subFam" value="#{mat.selectedSubFamilia}"   styleClass="mnu3" disabled="#{mat.disableTab3}" converter="addSubFamConv" >
                                         <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                                         <f:selectItems value="#{mat.listSF}" var="ml"
                                                        itemLabel="#{ml.nombre}"
@@ -259,7 +259,7 @@
                                     <p:commandButton immediate="true" id="bt931" action="#{mat.cancelar()}" value="Cancelar"   update=":formadatos" />
 
                                     <p:outputLabel/>
-                                    <p:growl id="g1" showDetail="true" life="3000"/>
+                                    <p:growl id="g1" autoUpdate="true" showDetail="true" life="3000"/>
                                 </h:panelGrid>
                             </p:tab>
 

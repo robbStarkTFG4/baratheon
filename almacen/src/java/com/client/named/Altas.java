@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
@@ -27,6 +28,9 @@ import org.primefaces.context.RequestContext;
 @SessionScoped
 
 public class Altas implements Serializable {
+
+    @Inject
+    BeanMateriales mate;
 
     private String descripcionArea;
     private String descripcionAlmacen;
@@ -102,7 +106,7 @@ public class Altas implements Serializable {
         options.put("contentWidth", 400);
         RequestContext.getCurrentInstance().openDialog("/dialogo/addArea.xhtml", options, null);
 
-     // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
+        // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }
 
     public void dialogAl() {
@@ -115,7 +119,7 @@ public class Altas implements Serializable {
         options.put("contentWidth", 400);
         RequestContext.getCurrentInstance().openDialog("/dialogo/addAlmacen.xhtml", options, null);
 
-     // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
+        // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }
 
     public void dialogSF() {
@@ -128,7 +132,7 @@ public class Altas implements Serializable {
         options.put("contentWidth", 430);
         RequestContext.getCurrentInstance().openDialog("/dialogo/addSubfam.xhtml", options, null);
 
-     // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
+        // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }
 
     public void dialogTM() {
@@ -141,7 +145,7 @@ public class Altas implements Serializable {
         options.put("contentWidth", 390);
         RequestContext.getCurrentInstance().openDialog("/dialogo/addTipo.xhtml", options, null);
 
-     // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
+        // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }
 
     public void agregarAl() {
@@ -155,7 +159,7 @@ public class Altas implements Serializable {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Almacen se ha agregado con exito!!"));
 
-   // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+            // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
         }
@@ -173,21 +177,19 @@ public class Altas implements Serializable {
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Area se ha agregado con exito!!"));
 
-   // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+            // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
         }
 
     }
 
-   
-
     public void agregarTipo() {
         boolean hecho;
-        if (AreaTM == null) {
+        if (mate.getSelectedArea() == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Debe seleccionar area"));
         } else {
-            hecho = tmf.agregar(descripcionTipoMat, AreaTM);
+            hecho = tmf.agregar(descripcionTipoMat, mate.getSelectedArea());
 
             if (hecho == true) {
                 descripcionTipoMat = null;
@@ -195,8 +197,10 @@ public class Altas implements Serializable {
                 System.out.println("creando msj growl");
 
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Tipo de material se ha agregado con exito!!"));
-
-   // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+                RequestContext.getCurrentInstance().closeDialog(null);
+                mate.listTM = tmf.listAtm(mate.getSelectedArea().getIdArea());
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
+                // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
             }

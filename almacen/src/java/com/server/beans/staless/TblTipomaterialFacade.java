@@ -60,7 +60,7 @@ public class TblTipomaterialFacade extends AbstractFacade<TblTipomaterial> {
         return res;
     }
 
-    public boolean agregar(String nombre, String area) {
+    public boolean agregar(String nombre, TblArea area) {
         TblTipomaterial us2 = null;
         Query search1 = em.createQuery("SELECT t FROM TblTipomaterial t WHERE t.descripcion = :nom");
         search1.setParameter("nom", nombre);
@@ -70,10 +70,9 @@ public class TblTipomaterialFacade extends AbstractFacade<TblTipomaterial> {
             return false;
         } catch (Exception e) {
             TblTipomaterial tm = new TblTipomaterial();
-            TblArea ar = new TblArea();
-            ar.setIdArea(Integer.parseInt(area));
+
             tm.setDescripcion(nombre);
-            tm.setTblAreaIdArea(ar);
+            tm.setTblAreaIdArea(area);
             em.persist(tm);
             return true;
 

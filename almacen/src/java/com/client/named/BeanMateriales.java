@@ -100,6 +100,8 @@ public class BeanMateriales implements Serializable {
 
     @Inject
     Catalog catalog;
+    private String descripcionTipoMat;
+    private String descripcionArea;
 
     public BeanMateriales() {
     }
@@ -436,6 +438,22 @@ public class BeanMateriales implements Serializable {
         this.selectedSubFamilia = selectedSubFamilia;
     }
 
+    public String getDescripcionTipoMat() {
+        return descripcionTipoMat;
+    }
+
+    public void setDescripcionTipoMat(String descripcionTipoMat) {
+        this.descripcionTipoMat = descripcionTipoMat;
+    }
+
+    public String getDescripcionArea() {
+        return descripcionArea;
+    }
+
+    public void setDescripcionArea(String descripcionArea) {
+        this.descripcionArea = descripcionArea;
+    }
+
     public void agregar() {
 
         /*nombre+noParte+descripcion+cantidad+costo+unidadmedida+marca+serie+estado+ubicacion+responsable+probedor+noFactura;
@@ -482,48 +500,53 @@ public class BeanMateriales implements Serializable {
 
     public void agregarmat() {
         boolean hecho;
-     
-            hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia);
 
-            if (hecho == true) {
-                nombre = null;
-                noParte = null;
-                descripcion = null;
-                cantidad = null;
-                costo = null;
-                unidadmedida = null;
-                marca = null;
-                serie = null;
-                estado = null;
-                ubicacion = null;
-                responsable = null;
-                probedor = null;
-                noFactura = null;
-                ordenDcompra = null;
-                zip = null;
-                financiamiento = null;
-                tipodecompra = null;
-                idUABC = null;
-                fecharecepcion = null;
-                area = null;
-                tipodematerial = null;
-                subfamilia = null;
-                almacen = null;
-                imagen = null;
-                System.out.println("creando msj growl");
-                disableTab1 = false;
-                disableTab2 = true;
-                disableTab3 = true;
-                disableGuardar = true;
-                activeIndex = "0";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El material se ha agregado con exito!!"));
+        if (this.selectedArea == null || this.selectedTipo == null || this.selectedSubFamilia == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "debes seleccionar las categorias"));
+            return;
+            //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+        }
 
-                // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
-            } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
-            }
+        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia);
 
-        
+        if (hecho == true) {
+            nombre = null;
+            noParte = null;
+            descripcion = null;
+            cantidad = null;
+            costo = null;
+            unidadmedida = null;
+            marca = null;
+            serie = null;
+            estado = null;
+            ubicacion = null;
+            responsable = null;
+            probedor = null;
+            noFactura = null;
+            ordenDcompra = null;
+            zip = null;
+            financiamiento = null;
+            tipodecompra = null;
+            idUABC = null;
+            fecharecepcion = null;
+            area = null;
+            tipodematerial = null;
+            subfamilia = null;
+            almacen = null;
+            imagen = null;
+            System.out.println("creando msj growl");
+            disableTab1 = false;
+            disableTab2 = true;
+            disableTab3 = true;
+            disableGuardar = true;
+            activeIndex = "0";
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El material se ha agregado con exito!!"));
+
+            // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+        }
+
     }
 
     public void imprimir() {
@@ -637,7 +660,8 @@ public class BeanMateriales implements Serializable {
             //  RequestContext.getCurrentInstance().update("form:subFam");
         }
     }
- public void agregarSubfam() {
+
+    public void agregarSubfam() {
         boolean hecho;
 
         hecho = sff.agregar2(nombreSubfam, descripcionSubfam, selectedTipo);
@@ -648,12 +672,58 @@ public class BeanMateriales implements Serializable {
             System.out.println("creando msj growl");
 
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Subfamilia se ha agregado con exito!!"));
-         //selectedSubFamilia;
+            //selectedSubFamilia;
             RequestContext.getCurrentInstance().closeDialog(null);
-   // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+            listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
+            RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
         }
 
     }
+
+    public void agregarTipo() {
+        boolean hecho;
+        if (this.getSelectedArea() == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Debe seleccionar area"));
+        } else {
+            hecho = tmf.agregar(descripcionTipoMat, this.getSelectedArea());
+
+            if (hecho == true) {
+                descripcionTipoMat = null;
+
+                System.out.println("creando msj growl");
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Tipo de material se ha agregado con exito!!"));
+                RequestContext.getCurrentInstance().closeDialog(null);
+                this.listTM = tmf.listAtm(this.getSelectedArea().getIdArea());
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
+                // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+            }
+
+        }
+    }
+
+    public void agregarArea() {
+        boolean hecho;
+
+        hecho = arf.agregar(descripcionArea);
+
+        if (hecho == true) {
+            descripcionArea = null;
+            System.out.println("creando msj growl");
+
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Area se ha agregado con exito!!"));
+            RequestContext.getCurrentInstance().closeDialog(null);
+            this.listArea = arf.listAr();
+            RequestContext.getCurrentInstance().update("formadatos:tbw1:areaOne");
+            // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+        }
+
+    }
+
 }
