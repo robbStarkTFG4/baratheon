@@ -65,6 +65,21 @@ public class BeanUsuarios implements Serializable {
     String tel;
     String password;
 
+    public boolean isHabilita() {
+        if (usuario.getIdTipousuarios().getIdTipousuarios()==2) {
+            return habilita = false;
+
+        } else {
+
+            return habilita = true;
+        }
+        
+    }
+
+    public void setHabilita(boolean habilita) {
+        this.habilita = habilita;
+    }
+
     public List<TblMaterial> getListamat() {
         this.listamat = mat.findAll();
         return listamat;
@@ -203,7 +218,9 @@ public class BeanUsuarios implements Serializable {
         }
         if (usuario != null) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(usuario.getUsuario(), "usuario autentificado ?++");
-
+if (usuario.getIdTipousuarios().getIdTipousuarios()==2) {
+habilita=false;
+}
             System.out.println(tipo);
 
             return "index.xhtml?faces-redirect=true";
@@ -313,16 +330,7 @@ public class BeanUsuarios implements Serializable {
 
     }
 
-    public boolean isHabilita() {
-        tipous = String.valueOf(usuario.getIdTipousuarios().getIdTipousuarios());
-        if (tipous.equals("admin")) {
-            return habilita = false;
-
-        } else {
-
-            return habilita = true;
-        }
-    }
+    
 
     public String getStatus() {
         return status;

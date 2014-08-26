@@ -58,39 +58,7 @@ public class SubfamiliasFacade extends AbstractFacade<Subfamilias> {
         return res;
     }
 
-    public boolean agregar(String nombre, String descripcion, TblTipomaterial tm) {
-        System.out.println("nombre");
-        Subfamilias us2 = null;
-       // Subfamilias sf2=null;
-        Query search1 = em.createQuery("SELECT t FROM Subfamilias t WHERE t.nombre = :nom");
-        search1.setParameter("nom", nombre);
-
-        
-        
-        try {
-            us2 = (Subfamilias) search1.getSingleResult();
-            return false;
-        } catch (Exception e) {
-           // Map nuevomapa =new Map();
-            
-            Subfamilias sf = new Subfamilias();
-            sf.setNombre(nombre);
-            sf.setDescripcion(descripcion);
-            em.persist(sf);
-         //  Query search2 = em.createQuery("SELECT t FROM Subfamilias t WHERE t.nombre = :nom");
-         // sf2=(Subfamilias) search1.setParameter("nom", nombre);
-            //System.out.println(sf2.getNombre()); 
-            System.out.println(tm);
-           
-            /*nuevomapa.setSubfamilias(sf2);
-            nuevomapa.setTblTipomaterialIdTipomaterial(tm);
-            
-            em.persist(nuevomapa);*/
-            return true;
-
-        }
-
-    }
+   
 public boolean agregar2(String nombre, String descripcion, TblTipomaterial tm) {
 
     System.out.println(nombre);
@@ -115,17 +83,14 @@ public boolean agregar2(String nombre, String descripcion, TblTipomaterial tm) {
             em.persist(sf);
             em.flush();
             
-       //  Query search2 = em.createQuery("SELECT t FROM Subfamilias t WHERE t.nombre = :nom");
-      //  sf2=(Subfamilias) search1.setParameter("nom", nombre);
-           System.out.println(sf); 
-            System.out.println(tm);
+       
            
           
          //   nuevomapa.setTblTipomaterialIdTipomaterial(tm);
             
           //  em.persist(nuevomapa);*/
             
-          mf.agregarmap(tm, nombre);
+          mf.agregarmap(tm, sf);
             
             return true;
 
