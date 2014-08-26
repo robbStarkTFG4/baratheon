@@ -98,8 +98,8 @@ public class Altas implements Serializable {
         options.put("closable", false);
         options.put("draggable", false);
         options.put("resizable", false);
-        options.put("contentHeight", 120);
-        options.put("contentWidth", 370);
+        options.put("contentHeight", 130);
+        options.put("contentWidth", 400);
         RequestContext.getCurrentInstance().openDialog("/dialogo/addArea.xhtml", options, null);
 
      // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
@@ -111,8 +111,8 @@ public class Altas implements Serializable {
         options.put("closable", false);
         options.put("draggable", false);
         options.put("resizable", false);
-        options.put("contentHeight", 120);
-        options.put("contentWidth", 370);
+        options.put("contentHeight", 130);
+        options.put("contentWidth", 400);
         RequestContext.getCurrentInstance().openDialog("/dialogo/addAlmacen.xhtml", options, null);
 
      // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
