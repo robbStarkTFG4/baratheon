@@ -442,5 +442,29 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
         return !query.getResultList().isEmpty();
     }
+public TblMaterial bpormat (String noparte){
+    System.out.println(noparte);
+    TblMaterial mt2 = null ;
+       
+     Query query = em.createQuery("SELECT c FROM TblMaterial c WHERE c.noParte = :nopart");
+     
+       query.setParameter("nopart", noparte);
+       try{
+       mt2=(TblMaterial) query.getSingleResult();
+        System.out.println("encontrado: "+mt2);}
+       catch(Exception e){
+           System.out.println("error");
+       return mt2;
+          
+       }
+       
+       finally {
+            return mt2;
+        }
+       
 
+
+
+
+}
 }

@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/Admin.xhtml" >
+            <ui:define name="contentenidoAdmin">
+        <h:form id="frm"> 
+            <div align="center">
+            <p:panel id="pan" style="width: 50%">
+            
+        <p:growl id="g1" autoUpdate="true" showDetail="true" life="3000"/>
+            <p:autoComplete   value="#{material.material}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
+                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
+                                               maxResults="15" queryDelay="500"
+                                              >
+                                <p:column>  
+                                    #{p.nombre} - #{p.noParte}  
+                                </p:column>
+
+                            </p:autoComplete> 
+            <p:commandButton value="Buscar" actionListener="#{material.busqueda()}" update="pan"/>
+            
+            <br>
+                
+            </br>
+            
+            <p:dataTable id="crs" value="#{material.matencontrado}" var="car"  style="width: 70%">
+                <p:column style="width: 100%">
+                    <h:panelGrid  style="width:100%" cellpadding="5" columns="2"  >
+                   
+                <f:facet name="header" >
+                    <h:commandButton image="resources/imagenes/#{material.matencontrado.imagen}" />   
+                </f:facet>
+               
+                    
+            <h:outputText value="Numero de parte: " style="font-weight: bold"/>
+            <h:outputText value="#{material.matencontrado.noParte}" style="color: #045491;font-weight: bold"/>
+ 
+            <h:outputText value="Nombre: " style="font-weight: bold"/>
+            <h:outputText value="#{material.matencontrado.nombre}" style="color: #045491;font-weight: bold"/>
+            
+            <h:outputText value="Descripcion: " style="font-weight: bold"/>
+            <h:outputText value="#{material.matencontrado.descripcion}" style="color: #045491;font-weight: bold"/>
+            <h:outputText value="Stock: " style="font-weight: bold"/>
+            <h:outputText value="#{material.matencontrado.stock}" style="color: #045491;font-weight: bold"/>
+            <h:outputText value="Ubicacion actual: " style="font-weight: bold"/>
+            <h:outputText value="#{material.matencontrado.ubicacionActual}" style="color: #045491;font-weight: bold" />
+             <h:outputText value="Marca: " style="font-weight: bold"/>
+            <h:outputText value="#{material.matencontrado.marca}" style="color: #045491;font-weight: bold"/>
+ 
+            <h:outputText value="Responsable: " style="font-weight: bold" />
+            <h:outputText value="#{material.matencontrado.responsable}" style="color: #045491;font-weight: bold"/>
+             <h:outputText value="Almacen: " style="font-weight: bold"/>
+             <h:outputText value="#{material.matencontrado.almacenIdalmacen.descripcion}" style="color: #045491;font-weight: bold" />
+             <h:outputText value="Area: " style="font-weight: bold"/>
+             <h:outputText value="#{material.matencontrado.idArea.descripcion}" style="color: #045491;font-weight: bold"/>
+             <h:outputText value="Tipo de material: " style="font-weight: bold"/>
+             <h:outputText value="#{material.matencontrado.idTipomaterial.descripcion}" style="color: #045491;font-weight: bold"/>
+             <h:outputText value="Subfamilia:  " style="font-weight: bold"/>
+             <h:outputText value="#{material.matencontrado.subFamiliasidsubFam.nombre}" style="color: #045491;font-weight: bold" />
+ 
+           
+           
+        </h:panelGrid>
+ 
+</p:column>
+            </p:dataTable>
+            
+         
+            
+      
+<h:panelGrid columns="1">  
+    <p:panel header="Exportar reporte"> 
+       
+        <h:commandButton image="/imagenes/excel.png">       
+            <p:dataExporter type="xls" target="crs" fileName="Material" />  
+        </h:commandButton>  
+  
+        <h:commandButton image="/imagenes/pdf.png">   
+          <p:dataExporter type="pdf" target="crs" fileName="Material"/>  
+        </h:commandButton>  
+          
+        <h:commandButton image="/imagenes/csv.png">   
+            <p:dataExporter type="csv" target="crs" fileName="Material"/>  
+        </h:commandButton>  
+          
+        <h:commandButton image="/imagenes/xml.jpg">  
+            <p:dataExporter type="xml" target="crs" fileName="Material"/>  
+        </h:commandButton>
+    </p:panel>  
+      
+   
+</h:panelGrid> 
+       
+            </p:panel></div>
+        </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
