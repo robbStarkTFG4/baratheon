@@ -6,14 +6,24 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
   
     <h:head>
-         <f:event type="preRenderView" listener="#{user.verificar(e)}" />
+       
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <h:form id="pepe">
             <p:inputText id="texto" />
-            <p:commandButton id="botonazo" actionListener="#{user.agregarusuario()}" value="ANVIAR"/>
+            <p:commandButton id="botonazo" actionListener="#{material.prueba2()}" value="ANVIAR" update="tbl"/>
             
+            
+            
+            <p:dataTable id="tbl" var="car" value="#{material.listaEtiquetas}" paginator="true" rows="10">  
+    <p:column>  
+        <f:facet name="header">  
+            <h:outputText value="Usuario" />  
+        </f:facet>  
+        <h:outputText value="#{car.etiqueta}" />  
+    </p:column> 
+            </p:dataTable>
         </h:form>
     </h:body>
 </html>

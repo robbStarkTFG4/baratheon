@@ -26,50 +26,26 @@
 
                             </p:autoComplete> 
             <p:commandButton value="Buscar" actionListener="#{material.busqueda()}" update="pan"/>
-            
             <br>
                 
             </br>
-            
-            <p:dataTable id="crs" value="#{material.matencontrado}" var="car"  style="width: 70%">
-                <p:column style="width: 100%">
-                    <h:panelGrid  style="width:100%" cellpadding="5" columns="2"  >
-                   
+             
+            <p:dataTable id="crs" value="#{material.listaEtiquetas}" var="car"  style="width: 70%" >
                 <f:facet name="header" >
-                    <h:commandButton image="resources/imagenes/#{material.matencontrado.imagen}" />   
+                      ESPECIFICACIONES DE MATERIAL
+                      <br/>
+                      <p:graphicImage title="#{material.matencontrado.imagen}" value="resources/imagenes/#{material.matencontrado.imagen}" /> 
                 </f:facet>
-               
-                    
-            <h:outputText value="Numero de parte: " style="font-weight: bold"/>
-            <h:outputText value="#{material.matencontrado.noParte}" style="color: #045491;font-weight: bold"/>
- 
-            <h:outputText value="Nombre: " style="font-weight: bold"/>
-            <h:outputText value="#{material.matencontrado.nombre}" style="color: #045491;font-weight: bold"/>
-            
-            <h:outputText value="Descripcion: " style="font-weight: bold"/>
-            <h:outputText value="#{material.matencontrado.descripcion}" style="color: #045491;font-weight: bold"/>
-            <h:outputText value="Stock: " style="font-weight: bold"/>
-            <h:outputText value="#{material.matencontrado.stock}" style="color: #045491;font-weight: bold"/>
-            <h:outputText value="Ubicacion actual: " style="font-weight: bold"/>
-            <h:outputText value="#{material.matencontrado.ubicacionActual}" style="color: #045491;font-weight: bold" />
-             <h:outputText value="Marca: " style="font-weight: bold"/>
-            <h:outputText value="#{material.matencontrado.marca}" style="color: #045491;font-weight: bold"/>
- 
-            <h:outputText value="Responsable: " style="font-weight: bold" />
-            <h:outputText value="#{material.matencontrado.responsable}" style="color: #045491;font-weight: bold"/>
-             <h:outputText value="Almacen: " style="font-weight: bold"/>
-             <h:outputText value="#{material.matencontrado.almacenIdalmacen.descripcion}" style="color: #045491;font-weight: bold" />
-             <h:outputText value="Area: " style="font-weight: bold"/>
-             <h:outputText value="#{material.matencontrado.idArea.descripcion}" style="color: #045491;font-weight: bold"/>
-             <h:outputText value="Tipo de material: " style="font-weight: bold"/>
-             <h:outputText value="#{material.matencontrado.idTipomaterial.descripcion}" style="color: #045491;font-weight: bold"/>
-             <h:outputText value="Subfamilia:  " style="font-weight: bold"/>
-             <h:outputText value="#{material.matencontrado.subFamiliasidsubFam.nombre}" style="color: #045491;font-weight: bold" />
- 
-           
-           
-        </h:panelGrid>
- 
+                <p:column style="width: 50%" >
+      
+                    <h:outputText value="#{car.etiqueta}" style="font-weight: bold"/>
+                </p:column>
+    
+                <p:column style="width: 50%">
+      
+       <h:outputText value="#{car.resultados}" style="color: #045491;font-weight: bold"/>
+        
+          
 </p:column>
             </p:dataTable>
             

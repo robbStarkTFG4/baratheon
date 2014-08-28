@@ -5,9 +5,12 @@
  */
 package com.client.named;
 
+
 import com.server.beans.staless.TblMaterialFacade;
 import com.server.entity.beans.TblMaterial;
+import com.util.materialBusqueda;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -28,6 +31,21 @@ public class BeanMat implements Serializable {
     TblMaterial matencontrado;
     List<TblMaterial> listamat;
     String noparte;
+    List<materialBusqueda> listaEtiquetas;
+    List<String> lista = new ArrayList<>();
+
+
+
+    public List<materialBusqueda> getListaEtiquetas() {
+        
+        return listaEtiquetas;
+    }
+
+    public void setListaEtiquetas(List<materialBusqueda> listaEtiquetas) {
+        this.listaEtiquetas = listaEtiquetas;
+    }
+
+   
 
     public TblMaterial getMatencontrado() {
         return matencontrado;
@@ -65,18 +83,55 @@ TblMaterial material;
         mat.listafull();
 
     }
+    
 public void busqueda(){
     
 matencontrado=mat.bpormat(material.getNoParte());
 if(matencontrado!=null){
  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado!", "Material encontrado!!"));
-material=null;
+listaEtiquetas=getList();
+ material=null;
 }
 else{
 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
+listaEtiquetas=null;
 material=null;
 }
 
 
 }
+public void prueba2(){
+       /* lista.add("Numero de parte:");
+        lista.add("Nombre:");
+        lista.add("Descripcion:");
+        lista.add("Stock:");
+        lista.add("Ubicacion actual:");
+        lista.add("Marca:");
+        lista.add("Responsable:");
+        lista.add("Almacen:");
+        lista.add("Area:");
+        lista.add("Tipo de material:");
+        lista.add("Subfamilia:");  */
+listaEtiquetas=getList();
+    System.out.println(listaEtiquetas);
+}
+
+ public List<materialBusqueda> getList(){
+   List<materialBusqueda> list=new ArrayList<>();
+    
+  //public Productos(String numPart, String nombre, String descripcion, String marca)  
+    list.add(new materialBusqueda("Numero de parte:",matencontrado.getNoParte()));
+    list.add(new materialBusqueda("Nombre:",matencontrado.getNombre()));
+    list.add(new materialBusqueda("Descripcion:",matencontrado.getDescripcion()));
+    list.add(new materialBusqueda("Stock:",matencontrado.getStock().toString()));
+    list.add(new materialBusqueda("Ubicacion actual:",matencontrado.getUbicacionActual()));
+    list.add(new materialBusqueda("Marca:",matencontrado.getMarca()));
+    list.add(new materialBusqueda("Responsable:",matencontrado.getResponsable()));
+    list.add(new materialBusqueda("Almacen:",matencontrado.getAlmacenIdalmacen().getDescripcion()));
+    list.add(new materialBusqueda("Area:",matencontrado.getIdArea().getDescripcion()));
+    list.add(new materialBusqueda("Tipo de material:",matencontrado.getIdTipomaterial().getDescripcion()));
+    list.add(new materialBusqueda("Subfamilia",matencontrado.getSubFamiliasidsubFam().getNombre()));
+   
+    return list;
+    }
 }
