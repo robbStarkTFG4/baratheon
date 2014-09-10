@@ -5,7 +5,6 @@
  */
 package com.client.named;
 
-
 import com.server.beans.staless.AlmacenFacade;
 import com.server.beans.staless.SubfamiliasFacade;
 import com.server.beans.staless.TblAreaFacade;
@@ -31,8 +30,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
-
-
 /**
  *
  * @author cristian
@@ -40,7 +37,8 @@ import org.primefaces.context.RequestContext;
 @Named("material")
 @SessionScoped
 public class BeanMat implements Serializable {
-   @EJB
+
+    @EJB
     TblMaterialFacade mf;
     @EJB
     AlmacenFacade af;
@@ -54,11 +52,12 @@ public class BeanMat implements Serializable {
     TblMaterialFacade mat;
     TblMaterial matencontrado;
     List<TblMaterial> listamat;
-    @Inject BeanUsuarios beanuser;
+    @Inject
+    BeanUsuarios beanuser;
     String noparte;
     List<materialBusqueda> listaEtiquetas;
     List<String> lista = new ArrayList<>();
-private String nombre;
+    private String nombre;
     private String noParte;
     private String descripcion;
     private String cantidad;
@@ -84,18 +83,17 @@ private String nombre;
     private String subfamilia;
     private String almacen;
     private String imagen;
-    List<TblArea> listArea;
-    List<Almacen> lalm;
-    List<TblTipomaterial> listTM;
-    List<Subfamilias> listSF;
-    private boolean habilitarTab =true;
-private TblArea selectedArea = null;
-    private TblTipomaterial selectedTipo =null;
-    private Subfamilias selectedSubFamilia=null;
-   TblMaterial material;
-   TblMaterial material2;
+    private List<TblArea> listArea;
+    private List<Almacen> lalm;
+    private List<TblTipomaterial> listTM;
+    private List<Subfamilias> listSF;
+    private boolean habilitarTab = true;
+    private TblArea selectedArea = null;
+    private TblTipomaterial selectedTipo = null;
+    private Subfamilias selectedSubFamilia = null;
+    private TblMaterial material;
+    private TblMaterial material2;
 
-    
     public List<TblArea> getListArea() {
         return listArea;
     }
@@ -105,7 +103,7 @@ private TblArea selectedArea = null;
     }
 
     public List<Almacen> getLalm() {
-       
+
         return lalm;
     }
 
@@ -114,7 +112,7 @@ private TblArea selectedArea = null;
     }
 
     public List<TblTipomaterial> getListTM() {
-      //  this.listTM = tmf.listAtm(selectedArea.getIdArea());
+        //  this.listTM = tmf.listAtm(selectedArea.getIdArea());
         return listTM;
     }
 
@@ -123,16 +121,13 @@ private TblArea selectedArea = null;
     }
 
     public List<Subfamilias> getListSF() {
-       // this.listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
+        // this.listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
         return listSF;
     }
 
     public void setListSF(List<Subfamilias> listSF) {
         this.listSF = listSF;
     }
-
-
-
 
     public boolean isHabilitarTab() {
         return habilitarTab;
@@ -173,7 +168,7 @@ private TblArea selectedArea = null;
     public void setSelectedSubFamilia(Subfamilias selectedSubFamilia) {
         this.selectedSubFamilia = selectedSubFamilia;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
@@ -366,17 +361,14 @@ private TblArea selectedArea = null;
         this.imagen = imagen;
     }
 
-
     public List<materialBusqueda> getListaEtiquetas() {
-        
+
         return listaEtiquetas;
     }
 
     public void setListaEtiquetas(List<materialBusqueda> listaEtiquetas) {
         this.listaEtiquetas = listaEtiquetas;
     }
-
-   
 
     public TblMaterial getMatencontrado() {
         return matencontrado;
@@ -386,7 +378,6 @@ private TblArea selectedArea = null;
         this.matencontrado = matencontrado;
     }
 
-
     public TblMaterial getMaterial() {
         return material;
     }
@@ -394,8 +385,6 @@ private TblArea selectedArea = null;
     public void setMaterial(TblMaterial material) {
         this.material = material;
     }
-    
-
 
     public String getNoparte() {
         return noparte;
@@ -406,9 +395,9 @@ private TblArea selectedArea = null;
     }
 
     public List<TblMaterial> getListamat() {
-        
+
         this.listamat = mat.listafull();
-        
+
         return listamat;
     }
 
@@ -416,28 +405,26 @@ private TblArea selectedArea = null;
         System.out.println(material2.getNoParte());
 
     }
-    
-public void busqueda(){
-    
-matencontrado=mat.bpormat(material.getNoParte());
-if(matencontrado!=null){
- FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado!", "Material encontrado!!"));
 
- 
- listaEtiquetas=getList();
- beanuser.acciones("Reporte de material generado " , matencontrado.getNoParte());
- material=null;
-}
-else{
-FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
-listaEtiquetas=null;
-material=null;
-}
+    public void busqueda() {
 
+        matencontrado = mat.bpormat(material.getNoParte());
+        if (matencontrado != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado!", "Material encontrado!!"));
 
-}
-public void busquedaUpdate(){
-    nombre = null;
+            listaEtiquetas = getList();
+            beanuser.acciones("Reporte de material generado ", matencontrado.getNoParte());
+            material = null;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
+            listaEtiquetas = null;
+            material = null;
+        }
+
+    }
+
+    public void busquedaUpdate() {
+        nombre = null;
         noParte = null;
         descripcion = null;
         cantidad = null;
@@ -461,9 +448,9 @@ public void busquedaUpdate(){
         subfamilia = null;
         almacen = null;
         imagen = null;
-matencontrado=mat.bpormat(material2.getNoParte());
-if(matencontrado!=null){
- FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado!", "Material encontrado!!"));
+        matencontrado = mat.bpormat(material2.getNoParte());
+        if (matencontrado != null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado!", "Material encontrado!!"));
             nombre = matencontrado.getNombre();
             noParte = matencontrado.getNoParte();
             descripcion = matencontrado.getDescripcion();
@@ -471,100 +458,108 @@ if(matencontrado!=null){
             costo = matencontrado.getCosto().toString();
             unidadmedida = matencontrado.getUnidadMedida();
             marca = matencontrado.getMarca();
-            if(matencontrado.getSerie()!=null){
-            serie = matencontrado.getSerie();}//puede ser nulo
+            if (matencontrado.getSerie() != null) {
+                serie = matencontrado.getSerie();
+            }//puede ser nulo
             estado = matencontrado.getEstado();
             ubicacion = matencontrado.getUbicacionActual();
             responsable = matencontrado.getResponsable();
-            if(matencontrado.getProveedor()!=null){
-            probedor = matencontrado.getProveedor();}//puede ser nulo
-            if(matencontrado.getNumeroFactura()!=null){
-            noFactura = matencontrado.getNumeroFactura();}//puede ser nulo
-            if(matencontrado.getOrdenCompra()!=null){
-            ordenDcompra = matencontrado.getOrdenCompra();}//puede ser nulo
-            if(matencontrado.getCodigoSip()!=null){
-            zip = matencontrado.getCodigoSip();}//puede ser nulo
-            if(matencontrado.getFinanciamiento()!=null){
-            financiamiento =matencontrado.getFinanciamiento();}//puede ser nulo
-            if(matencontrado.getTipoCompra()!=null){
-            tipodecompra = matencontrado.getTipoCompra();}//puede ser nulo
-            if(matencontrado.getIdUabc()!=null){
-            idUABC = matencontrado.getIdUabc();}//puede ser nulo
-            if(matencontrado.getFechaRecepcion()!=null){
-            fecharecepcion = matencontrado.getFechaRecepcion().toString();}
-           // area = matencontrado.getIdArea().toString();
-           // tipodematerial = matencontrado.getIdTipomaterial().toString();
-           // subfamilia = matencontrado.getSubFamiliasidsubFam().toString();
+            if (matencontrado.getProveedor() != null) {
+                probedor = matencontrado.getProveedor();
+            }//puede ser nulo
+            if (matencontrado.getNumeroFactura() != null) {
+                noFactura = matencontrado.getNumeroFactura();
+            }//puede ser nulo
+            if (matencontrado.getOrdenCompra() != null) {
+                ordenDcompra = matencontrado.getOrdenCompra();
+            }//puede ser nulo
+            if (matencontrado.getCodigoSip() != null) {
+                zip = matencontrado.getCodigoSip();
+            }//puede ser nulo
+            if (matencontrado.getFinanciamiento() != null) {
+                financiamiento = matencontrado.getFinanciamiento();
+            }//puede ser nulo
+            if (matencontrado.getTipoCompra() != null) {
+                tipodecompra = matencontrado.getTipoCompra();
+            }//puede ser nulo
+            if (matencontrado.getIdUabc() != null) {
+                idUABC = matencontrado.getIdUabc();
+            }//puede ser nulo
+            if (matencontrado.getFechaRecepcion() != null) {
+                fecharecepcion = matencontrado.getFechaRecepcion().toString();
+            }
+            // area = matencontrado.getIdArea().toString();
+            // tipodematerial = matencontrado.getIdTipomaterial().toString();
+            // subfamilia = matencontrado.getSubFamiliasidsubFam().toString();
             this.lalm = af.listAL();
-            this.selectedArea=matencontrado.getIdArea();
+            this.selectedArea = matencontrado.getIdArea();
             listTM = tmf.listAtm(this.selectedArea.getIdArea());
             System.out.println(matencontrado.getIdArea());
-           
-            this.selectedTipo=matencontrado.getIdTipomaterial();
-             listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
-             //setSelectedSubFamilia(matencontrado.getSubFamiliasidsubFam());
-             this.selectedSubFamilia=matencontrado.getSubFamiliasidsubFam();
+
+            this.selectedTipo = matencontrado.getIdTipomaterial();
+            listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
+            //setSelectedSubFamilia(matencontrado.getSubFamiliasidsubFam());
+            this.selectedSubFamilia = matencontrado.getSubFamiliasidsubFam();
             almacen = matencontrado.getAlmacenIdalmacen().getIdalmacen().toString();
             imagen = matencontrado.getImagen();
-         
-                
-               System.out.println("TIPO DE MAT:" +selectedTipo);
-               System.out.println("SUBFAMILIA:" +selectedSubFamilia);
-                 
-                
 
-habilitarTab=false;
- material2=null;
-}
-else{
-FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
-habilitarTab=false;
-listaEtiquetas=null;
-material2=null;
-}
+            System.out.println("TIPO DE MAT:" + selectedTipo);
+            System.out.println("SUBFAMILIA:" + selectedSubFamilia);
 
+            habilitarTab = false;
+            material2 = null;
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
+            habilitarTab = false;
+            listaEtiquetas = null;
+            material2 = null;
+        }
 
-}
+    }
 
-public void prueba2(){
-       /* lista.add("Numero de parte:");
-        lista.add("Nombre:");
-        lista.add("Descripcion:");
-        lista.add("Stock:");
-        lista.add("Ubicacion actual:");
-        lista.add("Marca:");
-        lista.add("Responsable:");
-        lista.add("Almacen:");
-        lista.add("Area:");
-        lista.add("Tipo de material:");
-        lista.add("Subfamilia:");  */
-listaEtiquetas=getList();
-    System.out.println(listaEtiquetas);
-}
-  @PostConstruct
+    public void prueba2() {
+        /* lista.add("Numero de parte:");
+         lista.add("Nombre:");
+         lista.add("Descripcion:");
+         lista.add("Stock:");
+         lista.add("Ubicacion actual:");
+         lista.add("Marca:");
+         lista.add("Responsable:");
+         lista.add("Almacen:");
+         lista.add("Area:");
+         lista.add("Tipo de material:");
+         lista.add("Subfamilia:");  */
+        listaEtiquetas = getList();
+        System.out.println(listaEtiquetas);
+    }
+
+    @PostConstruct
     private void init() {
         this.listArea = arf.listAr();
-       
+
     }
- public List<materialBusqueda> getList(){
-   List<materialBusqueda> list=new ArrayList<>();
-    
-  //public Productos(String numPart, String nombre, String descripcion, String marca)  
-    list.add(new materialBusqueda("Numero de parte:",matencontrado.getNoParte()));
-    list.add(new materialBusqueda("Nombre:",matencontrado.getNombre()));
-    list.add(new materialBusqueda("Descripcion:",matencontrado.getDescripcion()));
-    list.add(new materialBusqueda("Stock:",matencontrado.getStock().toString()));
-    list.add(new materialBusqueda("Ubicacion actual:",matencontrado.getUbicacionActual()));
-    list.add(new materialBusqueda("Marca:",matencontrado.getMarca()));
-    list.add(new materialBusqueda("Responsable:",matencontrado.getResponsable()));
-    list.add(new materialBusqueda("Almacen:",matencontrado.getAlmacenIdalmacen().getDescripcion()));
-    list.add(new materialBusqueda("Area:",matencontrado.getIdArea().getDescripcion()));
-    list.add(new materialBusqueda("Tipo de material:",matencontrado.getIdTipomaterial().getDescripcion()));
-    list.add(new materialBusqueda("Subfamilia",matencontrado.getSubFamiliasidsubFam().getNombre()));
-   
-    return list;
+
+    public List<materialBusqueda> getList() {
+        List<materialBusqueda> list = new ArrayList<>();
+
+        //public Productos(String numPart, String nombre, String descripcion, String marca)  
+        list.add(new materialBusqueda("Numero de parte:", matencontrado.getNoParte()));
+        list.add(new materialBusqueda("Nombre:", matencontrado.getNombre()));
+        list.add(new materialBusqueda("Descripcion:", matencontrado.getDescripcion()));
+        list.add(new materialBusqueda("Stock:", matencontrado.getStock().toString()));
+        list.add(new materialBusqueda("Ubicacion actual:", matencontrado.getUbicacionActual()));
+        list.add(new materialBusqueda("Marca:", matencontrado.getMarca()));
+        list.add(new materialBusqueda("Responsable:", matencontrado.getResponsable()));
+        list.add(new materialBusqueda("Almacen:", matencontrado.getAlmacenIdalmacen().getDescripcion()));
+        list.add(new materialBusqueda("Area:", matencontrado.getIdArea().getDescripcion()));
+        list.add(new materialBusqueda("Tipo de material:", matencontrado.getIdTipomaterial().getDescripcion()));
+        list.add(new materialBusqueda("Subfamilia", matencontrado.getSubFamiliasidsubFam().getNombre()));
+
+        return list;
     }
-  public void typeListener(ValueChangeEvent e) {
+
+    public void typeListener(ValueChangeEvent e) {
+        System.out.println("ENTRO LISTENER DE TIPOS");
         if (e != null) {
 
             if (e.getNewValue() != null) {
@@ -584,7 +579,8 @@ listaEtiquetas=getList();
             //  RequestContext.getCurrentInstance().update("form:subFam");
         }
     }
-  public void areasListener(ValueChangeEvent e) {
+
+    public void areasListener(ValueChangeEvent e) {
         System.out.println("ENTRO EL LISTENER DE AREAS");
         if (e != null) {
 
@@ -594,7 +590,7 @@ listaEtiquetas=getList();
 //                System.out.println(this.selectedType);
 //                tipos.clear();
                 listTM = tmf.listAtm(this.selectedArea.getIdArea());
-              this.selectedTipo = null;
+                this.selectedTipo = null;
                 this.selectedSubFamilia = null;
                 listSF = null;
 
@@ -607,65 +603,65 @@ listaEtiquetas=getList();
             RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
         }
     }
-public void modificarMat() {
+
+    public void modificarMat() {
         boolean ex;
-               System.out.println("TIPO DE MAT:" +this.selectedTipo);
-               System.out.println("SUBFAMILIA:" +this.selectedSubFamilia);
-               System.out.println("AREA: "+this.selectedArea);
+        System.out.println("TIPO DE MAT:" + this.selectedTipo);
+        System.out.println("SUBFAMILIA:" + this.selectedSubFamilia);
+        System.out.println("AREA: " + this.selectedArea);
         if (this.selectedArea == null || this.selectedTipo == null || this.selectedSubFamilia == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "debes seleccionar las categorias"));
-         
+
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
-        }
-        else{
-        ex = mf.modificar(matencontrado.getIdtblMaterial(),nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia);
-
-        if (ex == false) {
-  beanuser.acciones("Material Modificado: "+nombre+", "+ "cantidad: "+cantidad, noParte);          
-            nombre = null;
-            noParte = null;
-            descripcion = null;
-            cantidad = null;
-            costo = null;
-            unidadmedida = null;
-            marca = null;
-            serie = null;
-            estado = null;
-            ubicacion = null;
-            responsable = null;
-            probedor = null;
-            noFactura = null;
-            ordenDcompra = null;
-            zip = null;
-            financiamiento = null;
-            tipodecompra = null;
-            idUABC = null;
-            fecharecepcion = null;
-            area = null;
-            tipodematerial = null;
-            subfamilia = null;
-            almacen = null;
-            imagen = null;
-            System.out.println("creando msj growl");
-            //disableTab1 = false;
-          //  disableTab2 = true;
-          //  disableTab3 = true;
-          //  disableGuardar = true;
-          //  activeIndex = "0";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El material se ha agregado con exito!!"));
-
-            // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
-        }
+            ex = mf.modificar(matencontrado.getIdtblMaterial(), nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia);
+
+            if (ex == false) {
+                beanuser.acciones("Material Modificado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
+                nombre = null;
+                noParte = null;
+                descripcion = null;
+                cantidad = null;
+                costo = null;
+                unidadmedida = null;
+                marca = null;
+                serie = null;
+                estado = null;
+                ubicacion = null;
+                responsable = null;
+                probedor = null;
+                noFactura = null;
+                ordenDcompra = null;
+                zip = null;
+                financiamiento = null;
+                tipodecompra = null;
+                idUABC = null;
+                fecharecepcion = null;
+                area = null;
+                tipodematerial = null;
+                subfamilia = null;
+                almacen = null;
+                imagen = null;
+                System.out.println("creando msj growl");
+                //disableTab1 = false;
+                //  disableTab2 = true;
+                //  disableTab3 = true;
+                //  disableGuardar = true;
+                //  activeIndex = "0";
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El material se ha agregado con exito!!"));
+
+                // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+            }
         }
     }
 
-    public void pruebasf (){
-    
-    System.out.println("TIPO DE MAT:" +this.selectedTipo);
-    System.out.println("SUBFAMILIA:" +this.selectedSubFamilia);
-    System.out.println("AREA: "+this.selectedArea);
-    
+    public void pruebasf() {
+
+        System.out.println("TIPO DE MAT:" + this.selectedTipo);
+        System.out.println("SUBFAMILIA:" + this.selectedSubFamilia);
+        System.out.println("AREA: " + this.selectedArea);
+
     }
 }
