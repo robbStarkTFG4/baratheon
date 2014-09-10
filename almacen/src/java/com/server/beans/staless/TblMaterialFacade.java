@@ -461,10 +461,107 @@ public TblMaterial bpormat (String noparte){
        finally {
             return mt2;
         }
-       
-
-
-
+  
 
 }
+public boolean modificar(int id,String nombre, String noParte, String descripcion, String cantidad, String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
+            String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub) {
+        boolean existe = true;
+
+        TblMaterial busc;
+        Query search = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :noparte OR t.codigoSip = :sip OR t.idUabc = :uabc");
+
+        search.setParameter("noparte", noParte);
+        search.setParameter("sip", zip);
+        search.setParameter("uabc", idUABC);
+        try {
+            busc =  (TblMaterial) search.getSingleResult();
+            if (noFactura.equals(busc.getNoParte())||zip.equals(busc.getCodigoSip())||idUABC.equals(busc.getIdUabc())) {
+            TblMaterial mat = em.find(TblMaterial.class, id);
+            TblArea ar = new TblArea();
+            TblTipomaterial tm = new TblTipomaterial();
+            Subfamilias sf = new Subfamilias();
+            Almacen al = new Almacen();
+            Date date1 = new Date();
+            mat.setNombre(nombre);
+            mat.setNoParte(noParte);
+            mat.setDescripcion(descripcion);
+            mat.setStock(Integer.parseInt(cantidad));
+            mat.setCosto(Long.valueOf(costo));
+            mat.setUnidadMedida(unidadmedida);
+            mat.setMarca(marca);
+            mat.setSerie(serie);
+            mat.setEstado(estado);
+            mat.setUbicacionActual(ubicacion);
+            mat.setResponsable(responsable);
+            mat.setProveedor(probedor);
+            mat.setNumeroFactura(noFactura);
+            mat.setOrdenCompra(ordenDcompra);
+            mat.setCodigoSip(zip);
+            mat.setFinanciamiento(financiamiento);
+            mat.setTipoCompra(tipodecompra);
+            mat.setIdUabc(idUABC);
+            mat.setFechaRecepcion(date1);
+            mat.setImagen(imagen);
+            ar.setIdArea(Integer.parseInt(area));
+            al.setIdalmacen(Integer.parseInt(almacen));
+            tm.setIdTipomaterial(Integer.parseInt(tipodematerial));
+            sf.setIdsubFam(Integer.parseInt(subfamilia));
+
+            mat.setAlmacenIdalmacen(al);
+            mat.setIdTipomaterial(tm);
+            mat.setSubFamiliasidsubFam(sf);
+            mat.setIdArea(ar);
+            getEntityManager().merge(mat);
+                System.out.println("MATERIAL MODIFICADO");
+                existe = false;
+
+            } else {
+                existe = true;
+            }
+
+        } catch (Exception e) {
+            TblMaterial mat = em.find(TblMaterial.class, id);
+            TblArea ar = new TblArea();
+            TblTipomaterial tm = new TblTipomaterial();
+            Subfamilias sf = new Subfamilias();
+            Almacen al = new Almacen();
+            Date date1 = new Date();
+            mat.setNombre(nombre);
+            mat.setNoParte(noParte);
+            mat.setDescripcion(descripcion);
+            mat.setStock(Integer.parseInt(cantidad));
+            mat.setCosto(Long.valueOf(costo));
+            mat.setUnidadMedida(unidadmedida);
+            mat.setMarca(marca);
+            mat.setSerie(serie);
+            mat.setEstado(estado);
+            mat.setUbicacionActual(ubicacion);
+            mat.setResponsable(responsable);
+            mat.setProveedor(probedor);
+            mat.setNumeroFactura(noFactura);
+            mat.setOrdenCompra(ordenDcompra);
+            mat.setCodigoSip(zip);
+            mat.setFinanciamiento(financiamiento);
+            mat.setTipoCompra(tipodecompra);
+            mat.setIdUabc(idUABC);
+            mat.setFechaRecepcion(date1);
+            mat.setImagen(imagen);
+            ar.setIdArea(Integer.parseInt(area));
+            al.setIdalmacen(Integer.parseInt(almacen));
+            tm.setIdTipomaterial(Integer.parseInt(tipodematerial));
+            sf.setIdsubFam(Integer.parseInt(subfamilia));
+
+            mat.setAlmacenIdalmacen(al);
+            mat.setIdTipomaterial(tm);
+            mat.setSubFamiliasidsubFam(sf);
+            mat.setIdArea(ar);
+            getEntityManager().merge(mat);
+            existe = false;
+            System.out.println("MATERIAL MODIFICADO");
+            System.out.println("ERROR IN Question FACADE:" + e.getMessage());
+        }
+        return existe;
+    }
+
 }

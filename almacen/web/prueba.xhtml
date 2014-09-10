@@ -11,19 +11,16 @@
     </h:head>
     <h:body>
         <h:form id="pepe">
-            <p:inputText id="texto" />
-            <p:commandButton id="botonazo" actionListener="#{material.prueba2()}" value="ANVIAR" update="tbl"/>
-            
-            
-            
-            <p:dataTable id="tbl" var="car" value="#{material.listaEtiquetas}" paginator="true" rows="10">  
-    <p:column>  
-        <f:facet name="header">  
-            <h:outputText value="Usuario" />  
-        </f:facet>  
-        <h:outputText value="#{car.etiqueta}" />  
-    </p:column> 
-            </p:dataTable>
+              <p:autoComplete   value="#{material.material2}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
+                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
+                                               maxResults="15" queryDelay="500"
+                                              >
+                                <p:column>  
+                                    #{p.nombre} - #{p.noParte}  
+                                </p:column>
+
+                            </p:autoComplete> 
+            <p:commandButton value="Buscar"  actionListener="#{material.probar()}"/>
         </h:form>
     </h:body>
 </html>

@@ -40,7 +40,7 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 
 public class BeanMateriales implements Serializable {
-
+@Inject BeanUsuarios beanuser;
     private String nombre;
     private String noParte;
     private String descripcion;
@@ -68,6 +68,7 @@ public class BeanMateriales implements Serializable {
     private String almacen;
 
     private boolean disableGuardar = true;
+    private boolean disableTabMod=true;
     private boolean disableTab1 = false;
     private boolean disableTab2 = true;
     private boolean disableTab3 = true;
@@ -109,6 +110,14 @@ public class BeanMateriales implements Serializable {
     @PostConstruct
     private void init() {
         this.listArea = arf.listAr();
+    }
+
+    public boolean isDisableTabMod() {
+        return disableTabMod;
+    }
+
+    public void setDisableTabMod(boolean disableTabMod) {
+        this.disableTabMod = disableTabMod;
     }
 
     public String getNombreSubfam() {
@@ -155,7 +164,7 @@ public class BeanMateriales implements Serializable {
     }
 
     public List<Almacen> getLalm() {
-        //   this.lalm = af.listAL();
+        //this.lalm = af.listAL();
         return lalm;
     }
 
@@ -510,6 +519,7 @@ public class BeanMateriales implements Serializable {
         hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia);
 
         if (hecho == true) {
+  beanuser.acciones("Material Agregado: "+nombre+", "+ "cantidad: "+cantidad, noParte);          
             nombre = null;
             noParte = null;
             descripcion = null;

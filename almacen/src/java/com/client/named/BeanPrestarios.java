@@ -21,12 +21,14 @@ import javax.faces.component.UIInput;
 import javax.faces.component.UIOutput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("prest")
 @SessionScoped
 public class BeanPrestarios implements Serializable {
  @EJB TblPrestariosFacade pres;TblPrestamoFacade ptmo;
+ @Inject BeanUsuarios beanuser;
  List<TblPrestarios> list;
  List<PrestarioDTO> listmoroso;
  TblPrestarios prestmodi;
@@ -42,8 +44,8 @@ public class BeanPrestarios implements Serializable {
  boolean Hregistros=true;
 
     public List<PrestarioDTO> getListmoroso() {
+     
       this.listmoroso=pres.Morosos();
-      
         return listmoroso;
     }
  
@@ -91,6 +93,7 @@ existe=pres.agregar(compNombre.getValue().toString(), compApat.getValue().toStri
  }
  else{
 borrar="";
+ beanuser.acciones("Prestario Agregado: "+compUsuario.getValue().toString()+", "+ "Tipo: "+compTipo.getValue().toString(), compUsuario.getValue().toString());
  UIOutput cnombre = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:aprestario:nom");   
 UIOutput capaterno = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:aprestario:ap");     
 UIOutput camaterno = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:aprestario:am");     
@@ -118,7 +121,7 @@ borrar="";
  UIInput compUsuario= (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:eliminarprest:usuariop");
      
  pres.eliminar(compUsuario.getValue().toString());
-
+beanuser.acciones("Prestario Eliminado: "+compUsuario.getValue().toString(), compUsuario.getValue().toString());
  
 FacesContext context = FacesContext.getCurrentInstance();
 context.addMessage(null, new FacesMessage("Successful", "Usuario " +compUsuario.getValue().toString()+ " Eliminado con exito"));  
@@ -187,7 +190,7 @@ if(existe==true){
  }
  else{
     Hregistros=true;
-  
+  beanuser.acciones("Prestario Modificado: "+compUsuario.getValue().toString()+", "+ "Tipo: "+compTipo.getValue().toString(), compUsuario.getValue().toString());
 borrar="";
  UIOutput cnombre = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:nom");   
 UIOutput capaterno = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:ap");     
