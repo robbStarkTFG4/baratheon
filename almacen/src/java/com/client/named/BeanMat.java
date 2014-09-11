@@ -678,4 +678,37 @@ public class BeanMat implements Serializable {
         System.out.println("AREA: " + this.selectedArea);
 
     }
+    public String cancelar() {
+        beanmat.setActiveIndex("0");
+        nombre = null;
+        noParte = null;
+        descripcion = null;
+        cantidad = null;
+        costo = null;
+        unidadmedida = null;
+        marca = null;
+        serie = null;
+        estado = null;
+        ubicacion = null;
+        responsable = null;
+        probedor = null;
+        noFactura = null;
+        ordenDcompra = null;
+        zip = null;
+        financiamiento = null;
+        tipodecompra = null;
+        idUABC = null;
+        fecharecepcion = null;
+        area = null;
+        tipodematerial = null;
+        subfamilia = null;
+        almacen = null;
+        imagen = null;
+        selectedArea=null;
+        selectedTipo=null;
+        selectedTipo=null;
+        habilitarTab=true;
+        return "index.xhtml?faces-redirect=true";
+
+    }
 }

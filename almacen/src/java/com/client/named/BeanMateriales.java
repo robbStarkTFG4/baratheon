@@ -508,6 +508,10 @@ public class BeanMateriales implements Serializable {
         subfamilia = null;
         almacen = null;
         imagen = null;
+        selectedArea=null;
+                selectedSubFamilia=null;
+                selectedTipo=null;
+         
         disableTab1 = false;
         disableTab2 = true;
         disableTab3 = true;
