@@ -10,9 +10,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
     <h:body>
-
+<ui:composition template="/index.xhtml" >
+            <ui:define name="content">
         <h:form id="formadatos">
-            <p:panel id="pan1"  >
+            <center>
+            <p:panel id="pan1" style="width: 52%"  >
+                <center>
+                    <p:outputLabel value="Ingrese numero de parte: " style="font-weight: bold;color: #558e4d"/>
                 <p:autoComplete   value="#{material.material2}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
                                   var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
                                   maxResults="15" queryDelay="500"
@@ -22,8 +26,10 @@
                     </p:column>
 
                 </p:autoComplete> 
+               
                 <p:commandButton value="Buscar"  actionListener="#{material.busquedaUpdate()}" update=":formadatos"/>
-            </p:panel>
+             </center>
+            </p:panel></center>
             <div align="center" >
                 <p:tabView id="tbw1" activeIndex="#{mat.activeIndex}" style="width: 52%" >
 
@@ -124,7 +130,7 @@
                         </p:panel>
                     </p:tab>
 
-                    <p:tab title="Datos De La Compra" id="tab2" titleStyleClass="t2" >
+                    <p:tab title="Datos De La Compra" id="tab2" titleStyleClass="t2" disabled="#{material.habilitarTab}" >
                         <p:panel style="border: none">
                             <div align="left" style="margin-left: 11%">
                                 <h:panelGrid id="gridbuy" columns="3" cellspacing="5" >
@@ -192,15 +198,21 @@
                                         <f:ajax render="idua" event="keyup" /> 
                                     </p:inputText> 
                                     <h:message id="idua" for="iduabc"/>
-
-                                    <h:outputLabel/>
+                                           <p:outputLabel styleClass="labeliduabc" value="Muestra en consultas: " style="font-weight: bold;color: darkgreen"/>
+                                           <p:selectOneMenu  value="#{material.showinquery}" styleClass="mnu2"  style="width: 200px" >
+                                                <f:selectItem itemLabel="Si se muestra" itemValue="true"/>
+                                                <f:selectItem itemLabel="No se muestra" itemValue="false"/>
+                                       
+                                            </p:selectOneMenu>
+                                             <h:outputLabel/>
+                                             <h:outputLabel/>
                                     <p:commandButton value="Siguiente" actionListener="#{mat.goToTab(2)}" update=":formadatos:tbw1"/>
 
                                 </h:panelGrid>
                             </div>
                         </p:panel>
                     </p:tab>
-                    <p:tab id="tab3" title="Ubicación" titleStyleClass="t3"  >
+                    <p:tab id="tab3" title="Ubicación" titleStyleClass="t3" disabled="#{material.habilitarTab}" >
                         <h:panelGrid id="ubi" columns="3" cellspacing="5">
                             <p:outputLabel styleClass="labelarea" value="Area: " style="font-weight: bold;color: darkgreen" />
                             <p:selectOneMenu  id="areaOne" value="#{material.selectedArea}" styleClass="mnu1" valueChangeListener="#{material.areasListener}"  converter="matAreaC">
@@ -255,7 +267,7 @@
                             <p:commandButton actionListener="#{mat.dialogimagen}" value="Actualizar imagen" >
                                 <p:ajax event="dialogReturn"  update=":formadatos:tbw1:bt1"  />  
                             </p:commandButton>
-                            <p:commandButton  id="bt1" actionListener="#{material.pruebasf()}" value="Modificar"  update=":formadatos:tbw1"  />
+                            <p:commandButton  id="bt1" actionListener="#{material.modificarMat()}" value="Modificar"  update=":formadatos:tbw1"  />
 
                             <p:commandButton immediate="true" id="bt931" action="#{mat.cancelar()}" value="Cancelar"   update=":formadatos" />
 
@@ -269,7 +281,8 @@
 
             </div>
         </h:form>
-
+            </ui:define>
+          </ui:composition>
     </h:body>
 </html>
 

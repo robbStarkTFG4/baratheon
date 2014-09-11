@@ -61,7 +61,7 @@ public class BeanMateriales implements Serializable {
     private String tipodecompra;
     private String idUABC;
     private String fecharecepcion;
-
+    private boolean showinquery;
     private String area;
     private String tipodematerial;
     private String subfamilia;
@@ -79,6 +79,7 @@ public class BeanMateriales implements Serializable {
     private String imagen;
     private final String ruta = "C:\\Users\\NORE\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
 //"C:\\Users\\cristian\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\"
+    
     @EJB
     TblMaterialFacade mf;
     @EJB
@@ -98,7 +99,7 @@ public class BeanMateriales implements Serializable {
     private TblArea selectedArea = null;
     private TblTipomaterial selectedTipo = null;
     private Subfamilias selectedSubFamilia = null;
-
+@Inject BeanMat beanmat;
     @Inject
     Catalog catalog;
     private String descripcionTipoMat;
@@ -110,6 +111,14 @@ public class BeanMateriales implements Serializable {
     @PostConstruct
     private void init() {
         this.listArea = arf.listAr();
+    }
+
+    public boolean isShowinquery() {
+        return showinquery;
+    }
+
+    public void setShowinquery(boolean showinquery) {
+        this.showinquery = showinquery;
     }
 
     public boolean isDisableTabMod() {
@@ -164,7 +173,7 @@ public class BeanMateriales implements Serializable {
     }
 
     public List<Almacen> getLalm() {
-        //this.lalm = af.listAL();
+        this.lalm = af.listAL();
         return lalm;
     }
 
@@ -516,7 +525,7 @@ public class BeanMateriales implements Serializable {
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         }
 
-        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia);
+        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia,showinquery);
 
         if (hecho == true) {
   beanuser.acciones("Material Agregado: "+nombre+", "+ "cantidad: "+cantidad, noParte);          
@@ -544,6 +553,9 @@ public class BeanMateriales implements Serializable {
             subfamilia = null;
             almacen = null;
             imagen = null;
+            selectedArea=null;
+                selectedSubFamilia=null;
+                selectedTipo=null;
             System.out.println("creando msj growl");
             disableTab1 = false;
             disableTab2 = true;
@@ -594,6 +606,7 @@ public class BeanMateriales implements Serializable {
 
     public void guardarImagen(String nombre, InputStream in) {
         imagen = nombre;
+        beanmat.setImagen(imagen);
         try {
             OutputStream out = new FileOutputStream(new File(ruta + nombre));
 
@@ -735,5 +748,7 @@ public class BeanMateriales implements Serializable {
         }
 
     }
-
+public void otraprueba(){
+            System.out.println(showinquery);
+}
 }

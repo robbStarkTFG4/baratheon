@@ -37,7 +37,7 @@ import org.primefaces.context.RequestContext;
 @Named("material")
 @SessionScoped
 public class BeanMat implements Serializable {
-
+@Inject BeanMateriales beanmat;
     @EJB
     TblMaterialFacade mf;
     @EJB
@@ -67,7 +67,7 @@ public class BeanMat implements Serializable {
     private String serie;
     private String estado;
     private String ubicacion;
-
+    private boolean showinquery;
     private String responsable;
     private String probedor;
     private String noFactura;
@@ -105,6 +105,14 @@ public class BeanMat implements Serializable {
     public List<Almacen> getLalm() {
 
         return lalm;
+    }
+
+    public boolean isShowinquery() {
+        return showinquery;
+    }
+
+    public void setShowinquery(boolean showinquery) {
+        this.showinquery = showinquery;
     }
 
     public void setLalm(List<Almacen> lalm) {
@@ -458,6 +466,7 @@ public class BeanMat implements Serializable {
             costo = matencontrado.getCosto().toString();
             unidadmedida = matencontrado.getUnidadMedida();
             marca = matencontrado.getMarca();
+            showinquery=matencontrado.getShowInQuery();
             if (matencontrado.getSerie() != null) {
                 serie = matencontrado.getSerie();
             }//puede ser nulo
@@ -510,7 +519,7 @@ public class BeanMat implements Serializable {
             material2 = null;
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
-            habilitarTab = false;
+            habilitarTab = true;
             listaEtiquetas = null;
             material2 = null;
         }
@@ -614,10 +623,10 @@ public class BeanMat implements Serializable {
 
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            ex = mf.modificar(matencontrado.getIdtblMaterial(), nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia);
+            ex = mf.modificar(matencontrado.getIdtblMaterial(), nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia,showinquery);
 
             if (ex == false) {
-                beanuser.acciones("Material Modificado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
+             beanuser.acciones("Material Modificado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
                 nombre = null;
                 noParte = null;
                 descripcion = null;
@@ -642,6 +651,11 @@ public class BeanMat implements Serializable {
                 subfamilia = null;
                 almacen = null;
                 imagen = null;
+                selectedArea=null;
+                selectedSubFamilia=null;
+                selectedTipo=null;
+               beanmat.setActiveIndex("0");
+               habilitarTab=true;
                 System.out.println("creando msj growl");
                 //disableTab1 = false;
                 //  disableTab2 = true;

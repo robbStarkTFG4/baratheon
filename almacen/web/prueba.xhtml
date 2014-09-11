@@ -11,16 +11,12 @@
     </h:head>
     <h:body>
         <h:form id="pepe">
-              <p:autoComplete   value="#{material.material2}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
-                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
-                                               maxResults="15" queryDelay="500"
-                                              >
-                                <p:column>  
-                                    #{p.nombre} - #{p.noParte}  
-                                </p:column>
-
-                            </p:autoComplete> 
-            <p:commandButton value="Buscar"  actionListener="#{material.probar()}"/>
+            <p:selectOneMenu  value="#{mat.showinquery}" styleClass="mnu2"  style="width: 200px" >
+                                                <f:selectItem itemLabel="Si se muestra" itemValue="true"/>
+                                                <f:selectItem itemLabel="No se muestra" itemValue="false"/>
+                                       
+                                            </p:selectOneMenu>
+            <p:commandButton value="jhds" actionListener="#{mat.otraprueba()}"/>
         </h:form>
     </h:body>
 </html>

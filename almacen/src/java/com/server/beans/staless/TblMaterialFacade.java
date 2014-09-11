@@ -376,7 +376,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public boolean agregar11(String nombre, String noParte, String descripcion, String cantidad, String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
-            String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub) {
+            String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub,boolean showinquery) {
         /* TblMaterial mt2 = null;
          Query search1 = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :nopart or t.idUabc = :iduabc or t.numeroFactura = :nofact or t.codigoSip = :sip or t.ordenCompra = :oco");
          search1.setParameter("nopart", noParte);
@@ -415,6 +415,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         mat.setIdUabc(idUABC);
         mat.setFechaRecepcion(date1);
         mat.setImagen(imagen);
+        mat.setShowInQuery(showinquery);
         //ar.setIdArea(Integer.parseInt(area));
 
         if (!(almacen == null || almacen.trim().equals(""))) {
@@ -465,18 +466,19 @@ public TblMaterial bpormat (String noparte){
 
 }
 public boolean modificar(int id,String nombre, String noParte, String descripcion, String cantidad, String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
-            String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub) {
+            String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub,boolean showinquery) {
         boolean existe = true;
 
         TblMaterial busc;
-        Query search = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :noparte OR t.codigoSip = :sip OR t.idUabc = :uabc");
-
+        //Query search = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :noparte OR t.codigoSip = :sip OR t.idUabc = :uabc");
+Query search = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :noparte");
         search.setParameter("noparte", noParte);
-        search.setParameter("sip", zip);
-        search.setParameter("uabc", idUABC);
+      //  search.setParameter("sip", zip);
+      //  search.setParameter("uabc", idUABC);
         try {
             busc =  (TblMaterial) search.getSingleResult();
-            if (noFactura.equals(busc.getNoParte())||zip.equals(busc.getCodigoSip())||idUABC.equals(busc.getIdUabc())) {
+          //  if (noFactura.equals(busc.getNoParte())||zip.equals(busc.getCodigoSip())||idUABC.equals(busc.getIdUabc())) {
+            if (noParte.equals(busc.getNoParte())){
             TblMaterial mat = em.find(TblMaterial.class, id);
             TblArea ar = new TblArea();
             TblTipomaterial tm = new TblTipomaterial();
@@ -503,15 +505,20 @@ public boolean modificar(int id,String nombre, String noParte, String descripcio
             mat.setIdUabc(idUABC);
             mat.setFechaRecepcion(date1);
             mat.setImagen(imagen);
-            ar.setIdArea(Integer.parseInt(area));
-            al.setIdalmacen(Integer.parseInt(almacen));
-            tm.setIdTipomaterial(Integer.parseInt(tipodematerial));
-            sf.setIdsubFam(Integer.parseInt(subfamilia));
+            mat.setShowInQuery(showinquery);
 
+            if (!(almacen == null || almacen.trim().equals(""))) {
+            al.setIdalmacen(Integer.parseInt(almacen));
             mat.setAlmacenIdalmacen(al);
-            mat.setIdTipomaterial(tm);
-            mat.setSubFamiliasidsubFam(sf);
-            mat.setIdArea(ar);
+        }
+
+        //tm.setIdTipomaterial(tipo);
+        // sf.setIdsubFam(Integer.parseInt(subfamilia));
+        mat.setIdTipomaterial(tipo);
+        mat.setSubFamiliasidsubFam(sub);
+        mat.setIdArea(area2);
+
+    
             getEntityManager().merge(mat);
                 System.out.println("MATERIAL MODIFICADO");
                 existe = false;
@@ -547,15 +554,17 @@ public boolean modificar(int id,String nombre, String noParte, String descripcio
             mat.setIdUabc(idUABC);
             mat.setFechaRecepcion(date1);
             mat.setImagen(imagen);
-            ar.setIdArea(Integer.parseInt(area));
+            mat.setShowInQuery(showinquery);
+            if (!(almacen == null || almacen.trim().equals(""))) {
             al.setIdalmacen(Integer.parseInt(almacen));
-            tm.setIdTipomaterial(Integer.parseInt(tipodematerial));
-            sf.setIdsubFam(Integer.parseInt(subfamilia));
-
             mat.setAlmacenIdalmacen(al);
-            mat.setIdTipomaterial(tm);
-            mat.setSubFamiliasidsubFam(sf);
-            mat.setIdArea(ar);
+        }
+
+        //tm.setIdTipomaterial(tipo);
+        // sf.setIdsubFam(Integer.parseInt(subfamilia));
+        mat.setIdTipomaterial(tipo);
+        mat.setSubFamiliasidsubFam(sub);
+        mat.setIdArea(area2);
             getEntityManager().merge(mat);
             existe = false;
             System.out.println("MATERIAL MODIFICADO");
