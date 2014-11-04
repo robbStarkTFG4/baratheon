@@ -5,8 +5,8 @@
 
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 
-          
-          
+
+
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
@@ -14,25 +14,25 @@
 
     </h:head>
     <h:body>
-      
-                <h:form id="form" enctype="multipart/form-data">
-                    <tt>
-                        <p:growl id="grow" showDetail="true" sticky="false"/>
-                        <h:panelGrid id="grid" columns="2" cellpadding="5px" cellspacing="5px">
-                            <p:outputLabel value="Imagen :"  />  
-                            <p:fileUpload requiredMessage="se necesiat" validator="up"  value="#{mat.file}" mode="simple"  required="true" style="margin-left: -1%"/>
-                            
-        
-                             
-                            
+
+        <h:form id="form" enctype="multipart/form-data">
+            <tt>
+                <p:growl id="grow" showDetail="true" sticky="false"/>
+                <h:panelGrid id="grid" columns="2" cellpadding="5px" cellspacing="5px">
+                    <p:outputLabel value="Imagen :"  />  
+                    <p:fileUpload requiredMessage="se necesiat" validator="up"  value="#{mat.file}" mode="simple"  required="true" style="margin-left: -1%"/>
 
 
-                        </h:panelGrid>
-                        <p:commandButton action="#{altas.cerrar()}"  ajax="false" value="Cancelar"  immediate="true" style="margin-left: 22%;margin-top: 3%"/>
-                           
-                            <p:commandButton   actionListener="#{mat.upload()}" ajax="false" value="Guardar"  style="margin-left: 2%;margin-top: 3%"/>
-                    </tt>
-                </h:form>
-          
+
+
+
+
+                </h:panelGrid>
+                <p:commandButton action="#{altas.cerrar()}"  ajax="false" value="Cancelar"  immediate="true" style="margin-left: 22%;margin-top: 3%"/>
+
+                <p:commandButton   actionListener="#{mat.upload()}" ajax="false" value="Guardar"  style="margin-left: 2%;margin-top: 3%"/>
+            </tt>
+        </h:form>
+
     </h:body>
 </html>
