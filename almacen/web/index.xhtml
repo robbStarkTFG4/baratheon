@@ -27,7 +27,9 @@
                 <h:form id="formass">
                     <p:growl id="messages"  showDetail="true" life="2000" />
 
-                    <h:commandButton image="/imagenes/banner.jpg" style="height: 190px;width: 1300px"/> 
+                    <h:commandButton image="/imagenes/banner.jpg" style="height: 190px;width: 1300px; position: relative">
+                        <p:commandLink id="link" value="Logout" action="#{user.logout()}" style="color: red; position:absolute;top: 20px; left: 20px; width: 100%"/>
+                    </h:commandButton> 
                     <p:idleMonitor  timeout="100000" >
 
                         <p:ajax event="idle" listener="#{user.idleListener()}"   />
@@ -72,7 +74,7 @@
                         </f:facet>  
 
                     </p:menubar>  
-                    <p:commandLink id="link" value="Logout" action="#{user.logout()}" style="color: red;margin-top: -200px"/>
+
                 </h:form>
             </ui:insert>
         </div>
