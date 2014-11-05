@@ -12,408 +12,416 @@
             .txtColor{
                 color: green; 
             }
+
+
+            .cl{
+                font-size: 12px !important;
+            }
+
         </style>
     </h:head>
-    <h:body>
-        <h:form id="forma">     
-            <p:growl id="notify" showDetail="true" sticky="false"/>
-            <p:messages id="notificaciones"/>
-            <h:panelGrid id="grid" columns="4">
-                <p:outputLabel style="margin-right: 20px" value="Matricula :" />
-                <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Inserta matricula" style="height: 20px; width: 150px;">
-                    <f:validateRegex pattern="[0-9]+" />
-                    <f:validateLength minimum="3" maximum="20" >
-                    </f:validateLength> 
+    <h:body styleClass="cl">
+        <p:panel style="margin: 10px; margin-top: 25px">
+            <h:form id="forma">     
+                <p:growl id="notify" showDetail="true" sticky="false"/>
+                <p:messages id="notificaciones"/>
+                <h:panelGrid id="grid" columns="4" cellspacing="5">
+                    <p:outputLabel style="margin-right: 20px; " value="Matricula :"  styleClass="cl" />
+                    <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Inserta matricula" style="height: 20px; width: 150px;" styleClass="cl">
+                        <f:validateRegex pattern="[0-9]+" />
+                        <f:validateLength minimum="3" maximum="20" >
+                        </f:validateLength> 
 
-                </p:inputText>
+                    </p:inputText>
 
-                <p:commandButton id="find" value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" 
-                                 update="presName,carrera,mail,tel,notify,log,@this"   disabled="#{pres.us ne null}"/>   
+                    <p:commandButton id="find" value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" styleClass="cl" 
+                                     update="presName,carrera,mail,tel,notify,log,@this"   disabled="#{pres.us ne null}"/>   
 
-                <p:commandLink id="log" value="cerrar sesion" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this,find" disabled="#{pres.us eq null}" />
+                    <p:commandLink id="log" value="cerrar sesion" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this,find" disabled="#{pres.us eq null}" styleClass="cl" />
 
-            </h:panelGrid>
+                </h:panelGrid>
 
-            <h:panelGrid id="pan2" columns="4" cellspacing="5" cellpadding="5px">
+                <h:panelGrid id="pan2" columns="4" cellspacing="5" cellpadding="5px">
 
-                <p:outputLabel value="nombre: " for="presName"/> <p:inputText value="#{pres.nombre}" id="presName" size="30" disabled="true"/>
-                <p:outputLabel value="carrera: " for="carrera"/> <p:inputText value="#{pres.carrera}" id="carrera" size="10" disabled="true"/>
+                    <p:outputLabel value="nombre: " for="presName" styleClass="cl"/> <p:inputText value="#{pres.nombre}" id="presName" size="30" disabled="true" styleClass="cl"/>
+                    <p:outputLabel value="carrera: " for="carrera" styleClass="cl" /> <p:inputText value="#{pres.carrera}" id="carrera" size="10" disabled="true" styleClass="cl"/>
 
-                <p:outputLabel value="correo: " for="mail"/> <p:inputText value="#{pres.correo}" id="mail" size="10" disabled="true"/>
-                <p:outputLabel value="telefono: " for="tel"/> <p:inputText value="#{pres.telefono}" id="tel" size="10" disabled="true"/>
+                    <p:outputLabel value="correo: " for="mail" styleClass="cl"/> <p:inputText value="#{pres.correo}" id="mail" size="10" disabled="true"/>
+                    <p:outputLabel value="telefono: " for="tel" styleClass="cl"/> <p:inputText value="#{pres.telefono}" id="tel" size="10" disabled="true" styleClass="cl"/>
 
-            </h:panelGrid>
+                </h:panelGrid>
 
-            <p:tabView id="tabView" style="margin-top: 10px;" >  
+                <p:tabView id="tabView" style="margin-top: 10px;" >  
 
-                <p:ajax event="tabChange" listener="#{pres.onTabChange}" />
+                    <p:ajax event="tabChange" listener="#{pres.onTabChange}" />
 
-                <p:tab id="sol" title="solicitudes">
-                    <p:dataTable id="soles" value="#{pres.listSol}" var="sl" rows="6" paginator="true"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">
+                    <p:tab id="sol" title="solicitudes">
+                        <p:dataTable id="soles" value="#{pres.listSol}" var="sl" rows="6" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
 
-                        <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
-                        <p:column style="width:2%">  
-                            <p:rowToggler  />  
-                        </p:column>  
+                            <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
+                            <p:column style="width:2%">  
+                                <p:rowToggler  />  
+                            </p:column>  
 
-                        <p:column style="width:10%">  
-                            <f:facet name="header">  
-                                #prestamo  
-                            </f:facet>  
-                            <h:outputText value="#{sl.idPrestamo}" />  
-                        </p:column>  
+                            <p:column style="width:10%">  
+                                <f:facet name="header">  
+                                    #prestamo  
+                                </f:facet>  
+                                <h:outputText value="#{sl.idPrestamo}" />  
+                            </p:column>  
 
-                        <p:column style="width:22%">  
-                            <f:facet name="header">  
-                                Fecha Solicitud  
-                            </f:facet>  
-                            <h:outputText value="#{sl.fechaSolicitud}" />  
-                        </p:column>  
-
-
-
-
-
-                        <p:column style="width:22%">  
-                            <f:facet name="header">  
-                                estatus prestamo
-                            </f:facet>  
-                            <h:outputText id="estatus" value="#{sl.statusprestamo}" />  
-                        </p:column>  
-
-                        <p:column style="width:22%">  
-                            <f:facet name="header">  
-                                fecha vencimiento
-                            </f:facet>  
-                            <p:calendar id="datetime" value="#{sl.date10}" showOn="button" pattern="MM/dd/yyyy HH:mm:ss"  >
-                                <f:attribute name="prestamito" value="#{sl}"/>
-                                <p:ajax event="dateSelect" listener="#{pres.dateListener}" />
-                            </p:calendar>
-
-                        </p:column>  
-
-                        <p:rowExpansion>  
-                            <p:growl id="noti" showDetail="true" sticky="false"/>
-                            <p:dataTable id="dtls"   value="#{sl.tblDetalleprestamoList}" var="hl" editable="true"
-                                         >
-                                <p:ajax event="rowEdit" listener="#{pres.onRowEdit}">
-
-                                </p:ajax>
-                                <p:ajax event="rowEditCancel" listener="#{pres.onRowCancel}"  />
-
-
-                                <p:column >  
-                                    <f:facet name="header">  
-                                        id
-                                    </f:facet>  
-                                    <h:outputText value="#{hl.idDetalleprestamo}" />  
-                                </p:column>  
-
-                                <p:column >  
-                                    <f:facet name="header" >  
-                                        #parte
-                                    </f:facet>  
-
-                                    <p:commandLink  value="#parte" action="#{pres.listenPartNumber()}">
-                                        <f:setPropertyActionListener value="#{hl}" target="#{pres.showInfo}"/>
-                                    </p:commandLink>
-
-
-                                </p:column>  
-
-                                <p:column >  
-                                    <f:facet name="header">  
-                                        nombre
-                                    </f:facet>  
-                                    <h:outputText value="#{hl.nombre}" />  
-                                </p:column>  
+                            <p:column style="width:22%">  
+                                <f:facet name="header">  
+                                    Fecha Solicitud  
+                                </f:facet>  
+                                <h:outputText value="#{sl.fechaSolicitud}" />  
+                            </p:column>  
 
 
 
-                                <p:column >  
-                                    <f:facet name="header">  
-                                        cantidad solicitada
-                                    </f:facet>  
-                                    <p:cellEditor>  
-                                        <f:facet name="output"><h:outputText value="#{hl.cantidad}" /></f:facet>  
-                                        <f:facet name="input">
-                                            <p:inputText id="modelInput" value="#{hl.cantidad}" style="width:96%" validator="inspector" >
-                                                <f:attribute name="obj" value="#{hl}"/>
-                                            </p:inputText>
+
+
+                            <p:column style="width:22%">  
+                                <f:facet name="header">  
+                                    estatus prestamo
+                                </f:facet>  
+                                <h:outputText id="estatus" value="#{sl.statusprestamo}" />  
+                            </p:column>  
+
+                            <p:column style="width:22%">  
+                                <f:facet name="header">  
+                                    fecha vencimiento
+                                </f:facet>  
+                                <p:calendar id="datetime" value="#{sl.date10}" showOn="button" pattern="MM/dd/yyyy HH:mm:ss"  >
+                                    <f:attribute name="prestamito" value="#{sl}"/>
+                                    <p:ajax event="dateSelect" listener="#{pres.dateListener}" />
+                                </p:calendar>
+
+                            </p:column>  
+
+                            <p:rowExpansion>  
+                                <p:growl id="noti" showDetail="true" sticky="false"/>
+                                <p:dataTable id="dtls"   value="#{sl.tblDetalleprestamoList}" var="hl" editable="true"
+                                             >
+                                    <p:ajax event="rowEdit" listener="#{pres.onRowEdit}">
+
+                                    </p:ajax>
+                                    <p:ajax event="rowEditCancel" listener="#{pres.onRowCancel}"  />
+
+
+                                    <p:column >  
+                                        <f:facet name="header">  
+                                            id
                                         </f:facet>  
-                                    </p:cellEditor>  
-                                </p:column>  
-                                <p:column style="width:32px">
-                                    <p:rowEditor />
-                                </p:column>
-                                <p:column >
-                                    <p:selectBooleanCheckbox valueChangeListener="#{pres.checkBox}">
-                                        <f:attribute name="obj" value="#{hl}"/>
-                                        <p:ajax/>
-                                    </p:selectBooleanCheckbox>
-                                </p:column> 
+                                        <h:outputText value="#{hl.idDetalleprestamo}" />  
+                                    </p:column>  
 
-                            </p:dataTable>
-
-                            <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
-                                <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
-                                    <f:setPropertyActionListener value="#{sl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
-                                </p:commandButton>
-                                <p:commandButton value="Guardar" action="#{pres.saveSelected}" update="noti" disabled="#{pres.activo eq 2}">
-                                    <f:setPropertyActionListener value="#{sl}" target="#{pres.currentPres}"/>
-
-                                </p:commandButton>
-                            </h:panelGrid>
-
-                        </p:rowExpansion>  
-                    </p:dataTable>
-                </p:tab>
-
-                <p:tab id="tab1" title="adeudos"> 
-
-                    <p:dataTable id="debts" value="#{pres.listLoans}" var="pl" rows="6" paginator="true"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">
-
-                        <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
-                        <p:column style="width:2%">  
-                            <p:rowToggler  />  
-                        </p:column>  
-
-                        <p:column style="width:15%">  
-                            <f:facet name="header">  
-                                #prestamo  
-                            </f:facet>  
-                            <h:outputText value="#{pl.idPrestamo}" />  
-                        </p:column>  
-
-                        <p:column style="width:20%">  
-                            <f:facet name="header">  
-                                fecha aprobacion  
-                            </f:facet>  
-                            <h:outputText value="#{pl.fechaprestamo}" />  
-                        </p:column>  
-
-                        <p:column style="width:20%">  
-                            <f:facet name="header">  
-                                fecha vencimiento
-                            </f:facet>  
-                            <h:outputText value="#{pl.fechaVencimiento}" />  
-                        </p:column>  
-
-                        <p:column style="width:20%">  
-                            <f:facet name="header">  
-                                usuario  
-                            </f:facet>  
-                            <p:commandLink value="#{pl.idUsuarios}" action="#{pres.showUser}" >
-                                <f:setPropertyActionListener value="#{pl.idUsuarios}" target="#{pres.idUsuario}"/>
-                            </p:commandLink>  
-                        </p:column>  
-
-                        <p:column style="width:20%">  
-                            <f:facet name="header">  
-                                estatus prestamo
-                            </f:facet>  
-                            <h:outputText id="estatus" value="#{pl.statusprestamo}" />  
-                        </p:column>  
-
-                        <p:rowExpansion>  
-                            <p:growl id="noti" showDetail="true" sticky="false"/>
-                            <p:dataTable id="dtls"   value="#{pl.tblDetalleprestamoList}" var="dl" editable="true" >
-                                <p:ajax event="rowEdit" listener="#{pres.onRowEdit}" update="fr,hr">
-
-                                </p:ajax>
-                                <p:ajax event="rowEditCancel" listener="#{pres.onRowCancel}"  />
-
-                                <p:column style="width:49%">  
-                                    <f:facet name="header" >  
-                                        #parte
-                                    </f:facet>  
-
-                                    <p:commandLink  value="#parte" action="#{pres.listenPartNumber()}">
-                                        <f:setPropertyActionListener value="#{dl}" target="#{pres.showInfo}"/>
-                                    </p:commandLink>
-
-
-                                </p:column>  
-
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        nombre
-                                    </f:facet>  
-                                    <h:outputText value="#{dl.nombre}" />  
-                                </p:column>  
-
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        cantidad prestada
-                                    </f:facet>  
-                                    <h:outputText value="#{dl.cantidad}" />  
-                                </p:column>  
-
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        cantidad entregada
-                                    </f:facet>  
-                                    <p:cellEditor>  
-                                        <f:facet name="output"><h:outputText value="#{dl.regresados}" /></f:facet>  
-                                        <f:facet name="input">
-                                            <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="cantidad" >
-                                                <f:attribute name="valor" value="#{dl.cantidad}"/>
-
-                                            </p:inputText>
+                                    <p:column >  
+                                        <f:facet name="header" >  
+                                            #parte
                                         </f:facet>  
-                                    </p:cellEditor>  
-                                </p:column>  
-                                <p:column style="width:32px">
-                                    <p:rowEditor />
-                                </p:column>
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        fecha retorno
-                                    </f:facet>  
-                                    <h:outputText id="fr" value="#{dl.fecharetorno}" />  
-                                </p:column>  
 
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        hora retorno
-                                    </f:facet>  
-                                    <h:outputText id="hr"  value="#{dl.horaretorno}" />  
-                                </p:column>  
+                                        <p:commandLink  value="#parte" action="#{pres.listenPartNumber()}">
+                                            <f:setPropertyActionListener value="#{hl}" target="#{pres.showInfo}"/>
+                                        </p:commandLink>
 
 
-                            </p:dataTable>
+                                    </p:column>  
 
-                            <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
-                                <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
-                                    <f:setPropertyActionListener value="#{pl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
-                                </p:commandButton>
-                                <p:commandButton value="Guardar" action="#{pres.savePres}" update="noti">
-                                    <f:setPropertyActionListener value="#{pl}" target="#{pres.currentPres}"/>
-                                </p:commandButton>
-                            </h:panelGrid>
-
-                        </p:rowExpansion>  
-                    </p:dataTable>
-
-                </p:tab>  
-
-                <p:tab id="tab2" title="liberados">  
+                                    <p:column >  
+                                        <f:facet name="header">  
+                                            nombre
+                                        </f:facet>  
+                                        <h:outputText value="#{hl.nombre}" />  
+                                    </p:column>  
 
 
 
-                    <p:dataTable id="freed" value="#{pres.freeds}" var="pf"  paginator="true" rows="6"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">
+                                    <p:column >  
+                                        <f:facet name="header">  
+                                            cantidad solicitada
+                                        </f:facet>  
+                                        <p:cellEditor>  
+                                            <f:facet name="output"><h:outputText value="#{hl.cantidad}" /></f:facet>  
+                                            <f:facet name="input">
+                                                <p:inputText id="modelInput" value="#{hl.cantidad}" style="width:96%" validator="inspector" >
+                                                    <f:attribute name="obj" value="#{hl}"/>
+                                                </p:inputText>
+                                            </f:facet>  
+                                        </p:cellEditor>  
+                                    </p:column>  
+                                    <p:column style="width:32px">
+                                        <p:rowEditor />
+                                    </p:column>
+                                    <p:column >
+                                        <p:selectBooleanCheckbox valueChangeListener="#{pres.checkBox}">
+                                            <f:attribute name="obj" value="#{hl}"/>
+                                            <p:ajax/>
+                                        </p:selectBooleanCheckbox>
+                                    </p:column> 
 
-                        <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
-                        <p:column style="width:2%">  
-                            <p:rowToggler  />  
-                        </p:column>  
+                                </p:dataTable>
 
-                        <p:column style="width:49%">  
-                            <f:facet name="header">  
-                                #prestamo  
-                            </f:facet>  
-                            <h:outputText value="#{pf.idPrestamo}" />  
-                        </p:column>  
+                                <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
+                                    <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
+                                        <f:setPropertyActionListener value="#{sl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Guardar" action="#{pres.saveSelected}" update="noti" disabled="#{pres.activo eq 2}">
+                                        <f:setPropertyActionListener value="#{sl}" target="#{pres.currentPres}"/>
 
-                        <p:column style="width:49%">  
-                            <f:facet name="header">  
-                                fecha aprobacion  
-                            </f:facet>  
-                            <h:outputText value="#{pf.fechaprestamo}" />  
-                        </p:column>  
+                                    </p:commandButton>
+                                </h:panelGrid>
 
-                        <p:column style="width:49%">  
-                            <f:facet name="header">  
-                                hora aprobacion  
-                            </f:facet>  
-                            <h:outputText value="#{pf.horaprestamo}" />  
-                        </p:column>  
+                            </p:rowExpansion>  
+                        </p:dataTable>
+                    </p:tab>
 
-                        <p:column style="width:49%">  
-                            <f:facet name="header">  
-                                usuario  
-                            </f:facet>  
-                            <p:commandLink value="#{pf.idUsuarios}" action="#{pres.showUser()}" >
-                                <f:setPropertyActionListener value="#{pf.idUsuarios}" target="#{pres.idUsuario}"/>
-                            </p:commandLink>   
-                        </p:column>  
+                    <p:tab id="tab1" title="adeudos"> 
 
-                        <p:column style="width:49%">  
-                            <f:facet name="header">  
-                                fecha retorno
-                            </f:facet>  
-                            <h:outputText id="estatus" value="#{pf.fecharetorno}" />  
-                        </p:column>  
+                        <p:dataTable id="debts" value="#{pres.listLoans}" var="pl" rows="6" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
 
-                        <p:rowExpansion>  
+                            <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
+                            <p:column style="width:2%">  
+                                <p:rowToggler  />  
+                            </p:column>  
 
-                            <p:dataTable id="dtls"   value="#{pf.tblDetalleprestamoList}" var="ld" >
+                            <p:column style="width:15%">  
+                                <f:facet name="header">  
+                                    #prestamo  
+                                </f:facet>  
+                                <h:outputText value="#{pl.idPrestamo}" />  
+                            </p:column>  
 
-                                <p:column style="width:49%">  
-                                    <f:facet name="header" >  
-                                        #parte
-                                    </f:facet>  
+                            <p:column style="width:20%">  
+                                <f:facet name="header">  
+                                    fecha aprobacion  
+                                </f:facet>  
+                                <h:outputText value="#{pl.fechaprestamo}" />  
+                            </p:column>  
 
-                                    <p:commandLink value="#parte" action="#{pres.listenPartNumber()}">
-                                        <f:setPropertyActionListener value="#{ld}" target="#{pres.showInfo}"/>
-                                    </p:commandLink>
+                            <p:column style="width:20%">  
+                                <f:facet name="header">  
+                                    fecha vencimiento
+                                </f:facet>  
+                                <h:outputText value="#{pl.fechaVencimiento}" />  
+                            </p:column>  
 
+                            <p:column style="width:20%">  
+                                <f:facet name="header">  
+                                    usuario  
+                                </f:facet>  
+                                <p:commandLink value="#{pl.idUsuarios}" action="#{pres.showUser}" >
+                                    <f:setPropertyActionListener value="#{pl.idUsuarios}" target="#{pres.idUsuario}"/>
+                                </p:commandLink>  
+                            </p:column>  
 
-                                </p:column>  
+                            <p:column style="width:20%">  
+                                <f:facet name="header">  
+                                    estatus prestamo
+                                </f:facet>  
+                                <h:outputText id="estatus" value="#{pl.statusprestamo}" />  
+                            </p:column>  
 
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        nombre
-                                    </f:facet>  
-                                    <h:outputText value="#{ld.nombre}" />  
-                                </p:column>  
+                            <p:rowExpansion>  
+                                <p:growl id="noti" showDetail="true" sticky="false"/>
+                                <p:dataTable id="dtls"   value="#{pl.tblDetalleprestamoList}" var="dl" editable="true" >
+                                    <p:ajax event="rowEdit" listener="#{pres.onRowEdit}" update="fr,hr">
 
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        cantidad
-                                    </f:facet>  
-                                    <h:outputText value="#{ld.cantidad}" />  
-                                </p:column>  
+                                    </p:ajax>
+                                    <p:ajax event="rowEditCancel" listener="#{pres.onRowCancel}"  />
 
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        fecha retorno
-                                    </f:facet>  
-                                    <h:outputText id="fr" value="#{ld.fecharetorno}" />  
-                                </p:column>  
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header" >  
+                                            #parte
+                                        </f:facet>  
 
-                                <p:column style="width:49%">  
-                                    <f:facet name="header">  
-                                        hora retorno
-                                    </f:facet>  
-                                    <h:outputText id="hr"  value="#{ld.horaretorno}" />  
-                                </p:column>  
-
-                                <p:column style="width:49%">  
-
-
-
-                                </p:column>  
-                            </p:dataTable>
-
-                        </p:rowExpansion>  
-                    </p:dataTable>
-
-
-
-
-                </p:tab>  
-
-            </p:tabView>  
+                                        <p:commandLink  value="#parte" action="#{pres.listenPartNumber()}">
+                                            <f:setPropertyActionListener value="#{dl}" target="#{pres.showInfo}"/>
+                                        </p:commandLink>
 
 
-        </h:form>
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            nombre
+                                        </f:facet>  
+                                        <h:outputText value="#{dl.nombre}" />  
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            cantidad prestada
+                                        </f:facet>  
+                                        <h:outputText value="#{dl.cantidad}" />  
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            cantidad entregada
+                                        </f:facet>  
+                                        <p:cellEditor>  
+                                            <f:facet name="output"><h:outputText value="#{dl.regresados}" /></f:facet>  
+                                            <f:facet name="input">
+                                                <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="cantidad" >
+                                                    <f:attribute name="valor" value="#{dl.cantidad}"/>
+
+                                                </p:inputText>
+                                            </f:facet>  
+                                        </p:cellEditor>  
+                                    </p:column>  
+                                    <p:column style="width:32px">
+                                        <p:rowEditor />
+                                    </p:column>
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            fecha retorno
+                                        </f:facet>  
+                                        <h:outputText id="fr" value="#{dl.fecharetorno}" />  
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            hora retorno
+                                        </f:facet>  
+                                        <h:outputText id="hr"  value="#{dl.horaretorno}" />  
+                                    </p:column>  
+
+
+                                </p:dataTable>
+
+                                <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
+                                    <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
+                                        <f:setPropertyActionListener value="#{pl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
+                                    </p:commandButton>
+                                    <p:commandButton value="Guardar" action="#{pres.savePres}" update="noti">
+                                        <f:setPropertyActionListener value="#{pl}" target="#{pres.currentPres}"/>
+                                    </p:commandButton>
+                                </h:panelGrid>
+
+                            </p:rowExpansion>  
+                        </p:dataTable>
+
+                    </p:tab>  
+
+                    <p:tab id="tab2" title="liberados">  
+
+
+
+                        <p:dataTable id="freed" value="#{pres.freeds}" var="pf"  paginator="true" rows="6"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
+
+                            <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
+                            <p:column style="width:2%">  
+                                <p:rowToggler  />  
+                            </p:column>  
+
+                            <p:column style="width:49%">  
+                                <f:facet name="header">  
+                                    #prestamo  
+                                </f:facet>  
+                                <h:outputText value="#{pf.idPrestamo}" />  
+                            </p:column>  
+
+                            <p:column style="width:49%">  
+                                <f:facet name="header">  
+                                    fecha aprobacion  
+                                </f:facet>  
+                                <h:outputText value="#{pf.fechaprestamo}" />  
+                            </p:column>  
+
+                            <p:column style="width:49%">  
+                                <f:facet name="header">  
+                                    hora aprobacion  
+                                </f:facet>  
+                                <h:outputText value="#{pf.horaprestamo}" />  
+                            </p:column>  
+
+                            <p:column style="width:49%">  
+                                <f:facet name="header">  
+                                    usuario  
+                                </f:facet>  
+                                <p:commandLink value="#{pf.idUsuarios}" action="#{pres.showUser()}" >
+                                    <f:setPropertyActionListener value="#{pf.idUsuarios}" target="#{pres.idUsuario}"/>
+                                </p:commandLink>   
+                            </p:column>  
+
+                            <p:column style="width:49%">  
+                                <f:facet name="header">  
+                                    fecha retorno
+                                </f:facet>  
+                                <h:outputText id="estatus" value="#{pf.fecharetorno}" />  
+                            </p:column>  
+
+                            <p:rowExpansion>  
+
+                                <p:dataTable id="dtls"   value="#{pf.tblDetalleprestamoList}" var="ld" >
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header" >  
+                                            #parte
+                                        </f:facet>  
+
+                                        <p:commandLink value="#parte" action="#{pres.listenPartNumber()}">
+                                            <f:setPropertyActionListener value="#{ld}" target="#{pres.showInfo}"/>
+                                        </p:commandLink>
+
+
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            nombre
+                                        </f:facet>  
+                                        <h:outputText value="#{ld.nombre}" />  
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            cantidad
+                                        </f:facet>  
+                                        <h:outputText value="#{ld.cantidad}" />  
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            fecha retorno
+                                        </f:facet>  
+                                        <h:outputText id="fr" value="#{ld.fecharetorno}" />  
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+                                        <f:facet name="header">  
+                                            hora retorno
+                                        </f:facet>  
+                                        <h:outputText id="hr"  value="#{ld.horaretorno}" />  
+                                    </p:column>  
+
+                                    <p:column style="width:49%">  
+
+
+
+                                    </p:column>  
+                                </p:dataTable>
+
+                            </p:rowExpansion>  
+                        </p:dataTable>
+
+
+
+
+                    </p:tab>  
+
+                </p:tabView>  
+
+
+            </h:form>
+        </p:panel>
     </h:body>
 </html>
 
