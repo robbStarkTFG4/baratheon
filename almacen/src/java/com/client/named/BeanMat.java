@@ -37,7 +37,9 @@ import org.primefaces.context.RequestContext;
 @Named("material")
 @SessionScoped
 public class BeanMat implements Serializable {
-@Inject BeanMateriales beanmat;
+
+    @Inject
+    BeanMateriales beanmat;
     @EJB
     TblMaterialFacade mf;
     @EJB
@@ -466,7 +468,9 @@ public class BeanMat implements Serializable {
             costo = matencontrado.getCosto().toString();
             unidadmedida = matencontrado.getUnidadMedida();
             marca = matencontrado.getMarca();
-            showinquery=matencontrado.getShowInQuery();
+            if (matencontrado.getShowInQuery() != null) {
+                showinquery = matencontrado.getShowInQuery();
+            }
             if (matencontrado.getSerie() != null) {
                 serie = matencontrado.getSerie();
             }//puede ser nulo
@@ -623,10 +627,10 @@ public class BeanMat implements Serializable {
 
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            ex = mf.modificar(matencontrado.getIdtblMaterial(), nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia,showinquery);
+            ex = mf.modificar(matencontrado.getIdtblMaterial(), nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery);
 
             if (ex == false) {
-             beanuser.acciones("Material Modificado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
+                beanuser.acciones("Material Modificado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
                 nombre = null;
                 noParte = null;
                 descripcion = null;
@@ -651,11 +655,11 @@ public class BeanMat implements Serializable {
                 subfamilia = null;
                 almacen = null;
                 imagen = null;
-                selectedArea=null;
-                selectedSubFamilia=null;
-                selectedTipo=null;
-               beanmat.setActiveIndex("0");
-               habilitarTab=true;
+                selectedArea = null;
+                selectedSubFamilia = null;
+                selectedTipo = null;
+                beanmat.setActiveIndex("0");
+                habilitarTab = true;
                 System.out.println("creando msj growl");
                 //disableTab1 = false;
                 //  disableTab2 = true;
@@ -678,6 +682,7 @@ public class BeanMat implements Serializable {
         System.out.println("AREA: " + this.selectedArea);
 
     }
+
     public String cancelar() {
         beanmat.setActiveIndex("0");
         nombre = null;
@@ -704,10 +709,10 @@ public class BeanMat implements Serializable {
         subfamilia = null;
         almacen = null;
         imagen = null;
-        selectedArea=null;
-        selectedTipo=null;
-        selectedTipo=null;
-        habilitarTab=true;
+        selectedArea = null;
+        selectedTipo = null;
+        selectedTipo = null;
+        habilitarTab = true;
         return "index.xhtml?faces-redirect=true";
 
     }

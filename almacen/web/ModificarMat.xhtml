@@ -200,11 +200,10 @@
                                                 </p:inputText> 
                                                 <h:message id="idua" for="iduabc"/>
                                                 <p:outputLabel styleClass="labeliduabc" value="Muestra en consultas: " style="font-weight: bold;color: darkgreen"/>
-                                                <p:selectOneMenu  value="#{material.showinquery}" styleClass="mnu2"  style="width: 200px" >
-                                                    <f:selectItem itemLabel="Si se muestra" itemValue="true"/>
-                                                    <f:selectItem itemLabel="No se muestra" itemValue="false"/>
 
-                                                </p:selectOneMenu>
+                                                <p:selectBooleanCheckbox  value="#{material.showinquery}" styleClass="mnu2"/>
+
+
                                                 <h:outputLabel/>
                                                 <h:outputLabel/>
                                                 <p:commandButton value="Siguiente" actionListener="#{mat.goToTab(2)}" update=":formadatos:tbw1"/>
