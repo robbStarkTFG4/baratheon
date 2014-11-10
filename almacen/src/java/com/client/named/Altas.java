@@ -31,7 +31,7 @@ public class Altas implements Serializable {
 
     @Inject
     BeanMateriales mate;
-
+    private int prioridad;
     private String descripcionArea;
     private String descripcionAlmacen;
     private String nombreSubfam;
@@ -47,6 +47,14 @@ public class Altas implements Serializable {
     TblAreaFacade arf;
     @EJB
     TblTipomaterialFacade tmf;
+
+    public int getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(int prioridad) {
+        this.prioridad = prioridad;
+    }
 
     public String getDescripcionArea() {
         return descripcionArea;
@@ -96,7 +104,8 @@ public class Altas implements Serializable {
         this.AreaTM = AreaTM;
     }
 
-    public void dialogArea() {
+    public void dialogArea(int p) {
+        prioridad=p;
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
@@ -122,7 +131,9 @@ public class Altas implements Serializable {
         // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }
 
-    public void dialogSF() {
+    public void dialogSF(int p) {
+        prioridad=p;
+        mate.setListTM(tmf.listaTipoAll());
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
@@ -134,8 +145,23 @@ public class Altas implements Serializable {
 
         // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }
+     public void dialogSF2(int p) {
+        prioridad=p;
+     
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", false);
+        options.put("closable", false);
+        options.put("draggable", false);
+        options.put("resizable", false);
+        options.put("contentHeight", 250);
+        options.put("contentWidth", 430);
+        RequestContext.getCurrentInstance().openDialog("/dialogo/addSubfam2.xhtml", options, null);
 
-    public void dialogTM() {
+        // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
+    }
+
+    public void dialogTM(int p) {
+         prioridad=p;
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
@@ -172,11 +198,17 @@ public class Altas implements Serializable {
         hecho = arf.agregar(descripcionArea);
 
         if (hecho == true) {
+            if(prioridad==1){
             descripcionArea = null;
             System.out.println("creando msj growl");
-
+             RequestContext.getCurrentInstance().closeDialog(null);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Area se ha agregado con exito!!"));
-
+            }else{
+            descripcionArea = null;
+            mate.setSelectedArea(null);
+            mate.setListArea(null);
+             RequestContext.getCurrentInstance().closeDialog(null);
+            }
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
@@ -192,6 +224,7 @@ public class Altas implements Serializable {
             hecho = tmf.agregar(descripcionTipoMat, mate.getSelectedArea());
 
             if (hecho == true) {
+                if(prioridad==1){
                 descripcionTipoMat = null;
                 AreaTM = null;
                 System.out.println("creando msj growl");
@@ -201,6 +234,13 @@ public class Altas implements Serializable {
                 mate.listTM = tmf.listAtm(mate.getSelectedArea().getIdArea());
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
                 // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+                }else{
+                descripcionTipoMat = null;
+                AreaTM = null;
+                mate.setListTM(null);
+                mate.setSelectedTipo(null);
+                RequestContext.getCurrentInstance().closeDialog(null);
+                }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
             }

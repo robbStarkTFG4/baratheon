@@ -41,6 +41,7 @@ import org.primefaces.model.UploadedFile;
 
 public class BeanMateriales implements Serializable {
 @Inject BeanUsuarios beanuser;
+@Inject Altas beanAltas;
     private String nombre;
     private String noParte;
     private String descripcion;
@@ -66,7 +67,7 @@ public class BeanMateriales implements Serializable {
     private String tipodematerial;
     private String subfamilia;
     private String almacen;
-
+    private boolean disAddsf=true;
     private boolean disableGuardar = true;
     private boolean disableTabMod=true;
     private boolean disableTab1 = false;
@@ -105,11 +106,20 @@ public class BeanMateriales implements Serializable {
     private String descripcionTipoMat;
     private String descripcionArea;
 
+    public boolean isDisAddsf() {
+        return disAddsf;
+    }
+
+    public void setDisAddsf(boolean disAddsf) {
+        this.disAddsf = disAddsf;
+    }
+
     public BeanMateriales() {
     }
 
     @PostConstruct
     private void init() {
+        disAddsf=false;
         this.listArea = arf.listAr();
     }
 
@@ -483,6 +493,7 @@ public class BeanMateriales implements Serializable {
     }
 
     public String cancelar() {
+        disAddsf=false;
         activeIndex = "0";
         nombre = null;
         noParte = null;
@@ -532,6 +543,7 @@ public class BeanMateriales implements Serializable {
         hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia,showinquery);
 
         if (hecho == true) {
+            disAddsf=false;
   beanuser.acciones("Material Agregado: "+nombre+", "+ "cantidad: "+cantidad, noParte);          
             nombre = null;
             noParte = null;
@@ -668,6 +680,8 @@ public class BeanMateriales implements Serializable {
     }
 
     public void typeListener(ValueChangeEvent e) {
+        disAddsf=false;
+        RequestContext.getCurrentInstance().update("formadatos:tbw1:sflink");
         if (e != null) {
 
             if (e.getNewValue() != null) {
@@ -694,6 +708,7 @@ public class BeanMateriales implements Serializable {
         hecho = sff.agregar2(nombreSubfam, descripcionSubfam, selectedTipo);
 
         if (hecho == true) {
+            if(beanAltas.getPrioridad()==1){
             nombreSubfam = null;
             descripcionSubfam = null;
             System.out.println("creando msj growl");
@@ -703,7 +718,17 @@ public class BeanMateriales implements Serializable {
             RequestContext.getCurrentInstance().closeDialog(null);
             listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
             RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
-        } else {
+            }else{
+               System.out.println("PUSO NULO");
+               selectedSubFamilia=null;
+               listSF=null;
+                nombreSubfam = null;
+               descripcionSubfam = null;
+               RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
+               RequestContext.getCurrentInstance().closeDialog(null);
+            }
+            
+            } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
         }
 
@@ -711,12 +736,14 @@ public class BeanMateriales implements Serializable {
 
     public void agregarTipo() {
         boolean hecho;
-        if (this.getSelectedArea() == null) {
+     /*   if (this.getSelectedArea() == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Debe seleccionar area"));
-        } else {
+        } else {*/
             hecho = tmf.agregar(descripcionTipoMat, this.getSelectedArea());
 
             if (hecho == true) {
+                if(beanAltas.getPrioridad()==1){
+                
                 descripcionTipoMat = null;
 
                 System.out.println("creando msj growl");
@@ -726,26 +753,41 @@ public class BeanMateriales implements Serializable {
                 this.listTM = tmf.listAtm(this.getSelectedArea().getIdArea());
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
                 // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+                }
+                else{
+                    System.out.println("PUSO NULO");
+                    descripcionTipoMat = null;
+                    selectedTipo=null;
+                    selectedArea=null;
+                    listTM=null;
+                    RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
+                    RequestContext.getCurrentInstance().closeDialog(null);
+                }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
-            }
+            
 
         }
     }
 
     public void agregarArea() {
-        boolean hecho;
+       boolean hecho;
 
         hecho = arf.agregar(descripcionArea);
 
         if (hecho == true) {
+            if(beanAltas.getPrioridad()==1){
             descripcionArea = null;
             System.out.println("creando msj growl");
-
+             RequestContext.getCurrentInstance().closeDialog(null);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Area se ha agregado con exito!!"));
-            RequestContext.getCurrentInstance().closeDialog(null);
-            this.listArea = arf.listAr();
-            RequestContext.getCurrentInstance().update("formadatos:tbw1:areaOne");
+            }else{
+                System.out.println("PUSO NULO");
+            descripcionArea = null;
+           selectedArea=null;
+           RequestContext.getCurrentInstance().update("formadatos:tbw1:areaOne");
+             RequestContext.getCurrentInstance().closeDialog(null);
+            }
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));

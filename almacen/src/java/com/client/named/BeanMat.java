@@ -572,6 +572,8 @@ public class BeanMat implements Serializable {
     }
 
     public void typeListener(ValueChangeEvent e) {
+        beanmat.setDisAddsf(false);
+        RequestContext.getCurrentInstance().update("formadatos:tbw1:sflink");
         System.out.println("ENTRO LISTENER DE TIPOS");
         if (e != null) {
 
@@ -618,6 +620,7 @@ public class BeanMat implements Serializable {
     }
 
     public void modificarMat() {
+        beanmat.setDisAddsf(true);
         boolean ex;
         System.out.println("TIPO DE MAT:" + this.selectedTipo);
         System.out.println("SUBFAMILIA:" + this.selectedSubFamilia);
@@ -684,6 +687,7 @@ public class BeanMat implements Serializable {
     }
 
     public String cancelar() {
+        beanmat.setDisAddsf(true);
         beanmat.setActiveIndex("0");
         nombre = null;
         noParte = null;

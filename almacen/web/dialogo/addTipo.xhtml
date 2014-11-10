@@ -12,14 +12,14 @@
             <p:growl id="growl" showDetail="true" life="3000"/>
             <h:panelGrid columns="2">
                 <p:outputLabel value="Nombre: " style="font-weight: bold;color: darkolivegreen"/>
-                <p:inputText id="nm" style="font-weight: bold; margin-bottom: -10%" value="#{mat.descripcionTipoMat}" validatorMessage="Minimo 2, maximo 15 carcateres" styleClass="ipfactura" > 
+                <p:inputText id="nm" style="font-weight: bold; margin-bottom: -10%;width: 220px" value="#{mat.descripcionTipoMat}" validatorMessage="Minimo 2, maximo 15 carcateres" styleClass="ipfactura" > 
                     <f:validateLength minimum="2" maximum="15"/>
                     <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
                     <f:ajax render="fac" event="keyup" />
-                </p:inputText> <h:outputLabel value="3jfkjd" style="color: white;font-size: xx-small;margin-top: -2%"/>
+                </p:inputText> <h:outputLabel value="3jfkjd" style="color:transparent;font-size: xx-small;margin-top: -2%"/>
                 <h:message id="fac" for="nm" style="color: red; font-size: xx-small; margin-top: -5%" />
                 <h:outputLabel value="Seleccione area: " style="font-weight: bold;color: darkolivegreen"/>
-                <p:selectOneMenu  value="#{mat.selectedArea}" styleClass="mnu1" valueChangeListener="#{mat.areasListener}" disabled="#{mat.disableTab3}" converter="matAreaC">
+                <p:selectOneMenu  value="#{mat.selectedArea}" styleClass="mnu1" valueChangeListener="#{mat.areasListener}" converter="matAreaC" style="width: 220px">
                     <f:ajax  execute="@this" />
                     <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                     <f:selectItems value="#{mat.listArea}" var="cat"
@@ -28,8 +28,8 @@
                 </p:selectOneMenu><h:outputLabel/>
 
             </h:panelGrid>
-            <p:commandButton value="Guardar" actionListener="#{mat.agregarTipo()}" style="margin-top: .2%; margin-left: 30%" update=":fr"  />
-            <p:commandButton value="Cerrar" immediate="true" actionListener="#{altas.cerrar()}"  style="margin-right: -5%"/>
+            <p:commandButton value="Guardar" actionListener="#{mat.agregarTipo()}" style="margin-top: .2%; margin-left: 25%" update=":fr"  />
+            <p:commandButton value="Cerrar" immediate="true" actionListener="#{altas.cerrar()}"  style="margin-right: -7%"/>
         </h:form>
     </h:body>
 </html>

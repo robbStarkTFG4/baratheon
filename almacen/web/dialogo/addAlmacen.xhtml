@@ -16,15 +16,17 @@
             <f:validateLength minimum="2" maximum="15"/>
             <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
             <f:ajax render="fac" event="keyup" />
-        </p:inputText> <h:outputLabel value="3jfkjd" style="color: white;font-size: xx-small;margin-top: -2%"/>
+        </p:inputText> <h:outputLabel value="3jfkjd" style="color:transparent;font-size: xx-small;margin-top: -2%"/>
         <h:message id="fac" for="nm" style="color: red; font-size: xx-small; margin-top: -2%" />
       
       
             </h:panelGrid>
-             <h:panelGrid columns="2">
-              <p:commandButton value="Guardar" actionListener="#{altas.agregarAl()}" style="margin-top: -1%; margin-left: 45%" update=":fr"  />
-              <p:commandButton value="Cerrar" immediate="true" actionListener="#{altas.cerrar()}" style=" margin-right: -20%"  />   
+           
+             <h:panelGrid columns="2" style="margin-left: 20%">
+              <p:commandButton value="Guardar" actionListener="#{altas.agregarAl()}"  update=":fr"  />
+              <p:commandButton value="Cerrar" immediate="true" actionListener="#{altas.cerrar()}"   />   
              </h:panelGrid>
+             
         </h:form>
     </h:body>
 </html>

@@ -222,7 +222,7 @@
                                                            itemLabel="#{cat.descripcion}"
                                                            itemValue="#{cat}" />  
                                         </p:selectOneMenu>
-                                        <p:commandButton id="kl" immediate="true" value=">>Agregar area" actionListener="#{altas.dialogArea()}" style="margin-left: 2%;background: none;border: none;color: #045491" >
+                                        <p:commandButton id="kl" immediate="true" value=">>Agregar area" actionListener="#{altas.dialogArea(1)}" style="margin-left: 2%;background: none;border: none;color: #045491" >
                                             <p:ajax event="dialogReturn"  update=":formadatos:tbw1"   />
                                         </p:commandButton>
 
@@ -234,7 +234,7 @@
                                                            itemLabel="#{cat.descripcion}"
                                                            itemValue="#{cat}" />  
                                         </p:selectOneMenu>
-                                        <p:commandButton value=">>Agregar tipo" actionListener="#{altas.dialogTM()}" style="margin-left: 2%;background: none;border: none;color: #045491" >
+                                        <p:commandButton value=">>Agregar tipo" actionListener="#{altas.dialogTM(1)}" style="margin-left: 2%;background: none;border: none;color: #045491" >
                                             <p:ajax event="dialogReturn"  update=":formadatos:tbw1"  />
                                         </p:commandButton>
 
@@ -246,7 +246,7 @@
                                                            itemValue="#{ml}" />  
                                         </p:selectOneMenu>
 
-                                        <p:commandButton value=">>Agregar subfamilia" actionListener="#{altas.dialogSF()}" style="margin-left: 2%;background: none;border: none;color: #045491" >
+                                        <p:commandButton id="sflink" value=">>ADD subfamilia" actionListener="#{altas.dialogSF2(1)}" disabled="#{mat.disAddsf}" style="margin-left: 0%;background: none;border: none;color: #045491" >
                                             <p:ajax event="dialogReturn"  update=":formadatos:tbw1"  />
                                         </p:commandButton>
 
