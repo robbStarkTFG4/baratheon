@@ -420,13 +420,13 @@ public class BeanMat implements Serializable {
 
         matencontrado = mat.bpormat(material.getNoParte());
         if (matencontrado != null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado!", "Material encontrado!!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado", "Material encontrado"));
 
             listaEtiquetas = getList();
             beanuser.acciones("Reporte de material generado ", matencontrado.getNoParte());
             material = null;
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Material inexistente"));
             listaEtiquetas = null;
             material = null;
         }
@@ -460,7 +460,7 @@ public class BeanMat implements Serializable {
         imagen = null;
         matencontrado = mat.bpormat(material2.getNoParte());
         if (matencontrado != null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado!", "Material encontrado!!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado", "Material encontrado"));
             nombre = matencontrado.getNombre();
             noParte = matencontrado.getNoParte();
             descripcion = matencontrado.getDescripcion();
@@ -522,7 +522,7 @@ public class BeanMat implements Serializable {
             habilitarTab = false;
             material2 = null;
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Material no existente"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Material inexistente"));
             habilitarTab = true;
             listaEtiquetas = null;
             material2 = null;
@@ -626,7 +626,7 @@ public class BeanMat implements Serializable {
         System.out.println("SUBFAMILIA:" + this.selectedSubFamilia);
         System.out.println("AREA: " + this.selectedArea);
         if (this.selectedArea == null || this.selectedTipo == null || this.selectedSubFamilia == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "debes seleccionar las categorias"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Seleccionar categorías"));
 
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
@@ -669,11 +669,11 @@ public class BeanMat implements Serializable {
                 //  disableTab3 = true;
                 //  disableGuardar = true;
                 //  activeIndex = "0";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El material se ha agregado con exito!!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Material agregado con éxito"));
 
                 // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
             }
         }
     }

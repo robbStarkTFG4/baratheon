@@ -161,7 +161,7 @@ public class BeanUsuarios implements Serializable {
         System.out.println(existe);
 
         if (existe == true) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Usuario o correo ya utilizados"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Usuario o correo existente"));
             /*status="Usuario o Correo ya utilizados";
  
              out.setValue(status);
@@ -188,7 +188,7 @@ public class BeanUsuarios implements Serializable {
 
             out.setValue(status);
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Successful", "Usuario " + compUsuario.getValue().toString() + " Agregado con exito"));
+            context.addMessage(null, new FacesMessage("Successful", "Usuario " + compUsuario.getValue().toString() + " agregado con éxito"));
            
         }
 
@@ -232,7 +232,7 @@ habilita=false;
             return "index.xhtml?faces-redirect=true";
         } else {
             System.out.println("USUARIOS NO VALIDOS");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Usuario o contraseña invalido"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Usuario o contraseña inválido"));
             UIOutput compU = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:usuario");
             UIOutput compC = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("login:clave");
 
@@ -284,12 +284,12 @@ habilita=false;
 
     public void ocultListener() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                "Parece que estas ausente", "Tu sesion se cerrara automaticamente en 2 minutos"));
+                "Parece que estas ausente", "Tu sesión cerrara automáticamente en 2 minutos"));
     }
 
     public void activeListener() {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                "Bienvenido de vuelta", "Fue un largo descanzo "));
+                "Bienvenido de vuelta", "Fue un largo descanso "));
     }
 
     public void redirectA() {
@@ -390,7 +390,7 @@ habilita=false;
         System.out.println(exist);
 
         if (exist == true) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "correo ya utilizado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Correo existente"));
 
             System.out.println("Usuario o correo usados");
 
@@ -415,7 +415,7 @@ habilita=false;
             compU.setValue(borrar);
             compBu.setValue(borrar);
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Successful", "Usuario " + compUsuario.getValue().toString() + " Modificado con exito"));
+            context.addMessage(null, new FacesMessage("Successful", "Usuario " + compUsuario.getValue().toString() + " modificado con éxito"));
         }
 
         System.out.println(compNombre.getValue().toString() + compClave.getValue().toString() + compApat.getValue().toString() + compAmat.getValue().toString() + compCorreo.getValue().toString() + compTel.getValue().toString() + compUsuario.getValue().toString() + compTipo.getValue().toString());

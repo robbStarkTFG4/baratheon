@@ -535,7 +535,7 @@ public class BeanMateriales implements Serializable {
         boolean hecho;
 
         if (this.selectedArea == null || this.selectedTipo == null || this.selectedSubFamilia == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "debes seleccionar las categorias"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Seleccionar categorías"));
             return;
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         }
@@ -544,7 +544,7 @@ public class BeanMateriales implements Serializable {
 
         if (hecho == true) {
             disAddsf=false;
-  beanuser.acciones("Material Agregado: "+nombre+", "+ "cantidad: "+cantidad, noParte);          
+  beanuser.acciones("Material agregado: "+nombre+", "+ "cantidad: "+cantidad, noParte);          
             nombre = null;
             noParte = null;
             descripcion = null;
@@ -578,11 +578,11 @@ public class BeanMateriales implements Serializable {
             disableTab3 = true;
             disableGuardar = true;
             activeIndex = "0";
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El material se ha agregado con exito!!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Material agregado con éxito"));
 
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
         }
 
     }
@@ -713,7 +713,7 @@ public class BeanMateriales implements Serializable {
             descripcionSubfam = null;
             System.out.println("creando msj growl");
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Subfamilia se ha agregado con exito!!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Subfamilia agregada con éxito"));
             //selectedSubFamilia;
             RequestContext.getCurrentInstance().closeDialog(null);
             listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
@@ -729,7 +729,7 @@ public class BeanMateriales implements Serializable {
             }
             
             } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
         }
 
     }
@@ -748,7 +748,7 @@ public class BeanMateriales implements Serializable {
 
                 System.out.println("creando msj growl");
 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Tipo de material se ha agregado con exito!!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Tipo de material agregado con éxito!!"));
                 RequestContext.getCurrentInstance().closeDialog(null);
                 this.listTM = tmf.listAtm(this.getSelectedArea().getIdArea());
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
@@ -764,7 +764,7 @@ public class BeanMateriales implements Serializable {
                     RequestContext.getCurrentInstance().closeDialog(null);
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
             
 
         }
@@ -780,7 +780,7 @@ public class BeanMateriales implements Serializable {
             descripcionArea = null;
             System.out.println("creando msj growl");
              RequestContext.getCurrentInstance().closeDialog(null);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Area se ha agregado con exito!!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito"));
             }else{
                 System.out.println("PUSO NULO");
             descripcionArea = null;
@@ -790,7 +790,7 @@ public class BeanMateriales implements Serializable {
             }
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
         }
 
     }

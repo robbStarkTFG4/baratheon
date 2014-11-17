@@ -88,7 +88,7 @@ existe=pres.agregar(compNombre.getValue().toString(), compApat.getValue().toStri
   //status="Usuario o Correo ya utilizados";
 
   //out.setValue(status);
- FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "Usuario o correo ya utilizados"));
+ FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "Usuario o correo existente"));
 
  }
  else{
@@ -112,7 +112,7 @@ UIOutput cus = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findCo
 
   out.setValue(status);
   FacesContext context = FacesContext.getCurrentInstance();
-   context.addMessage(null, new FacesMessage("Successful", "Usuario " +compUsuario.getValue().toString()+ " Agregado con exito"));  
+   context.addMessage(null, new FacesMessage("Successful", "Usuario " +compUsuario.getValue().toString()+ " agregado con éxito"));  
  }
 }
     
@@ -124,7 +124,7 @@ borrar="";
 beanuser.acciones("Prestario Eliminado: "+compUsuario.getValue().toString(), compUsuario.getValue().toString());
  
 FacesContext context = FacesContext.getCurrentInstance();
-context.addMessage(null, new FacesMessage("Successful", "Usuario " +compUsuario.getValue().toString()+ " Eliminado con exito"));  
+context.addMessage(null, new FacesMessage("Successful", "Usuario " +compUsuario.getValue().toString()+ " eliminado con éxito"));  
  
  UIOutput compU= (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:eliminarprest:usuariop");
 compU.setValue(borrar);
@@ -185,7 +185,7 @@ existe=pres.modificar(prestmodi.getIdPrestario(),compNombre.getValue().toString(
 System.out.println(existe);
 if(existe==true){
 
- FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "correo ya utilizados"));
+ FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR", "correo ya utilizado"));
 
  }
  else{
@@ -210,7 +210,7 @@ UIOutput cuBu = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findC
  cuBu.setValue(borrar);
 
   FacesContext context = FacesContext.getCurrentInstance();
-   context.addMessage(null, new FacesMessage("Successful", "Prestario " +compUsuario.getValue().toString()+ " Modificado con exito"));  
+   context.addMessage(null, new FacesMessage("Successful", "Prestatario " +compUsuario.getValue().toString()+ " modificado con éxito"));  
  }
  
  

@@ -215,7 +215,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage("error", "no se encontro ningun prestario "));
+            context.addMessage(null, new FacesMessage("ERROR", "No se encontró ningún prestatario "));
             RequestContext.getCurrentInstance().update("forma:notify");
         }
     }
@@ -248,7 +248,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
          currentDtl.setHoraretorno(date[1]);
          }*/
         System.out.println("nombre de la pieza: " + currentDtl.getNombre());
-        System.out.println("fecha retorno: " + currentDtl.getFecharetorno() + "  hora retorno: " + currentDtl.getHoraretorno());
+        System.out.println("Fecha retorno: " + currentDtl.getFecharetorno() + ", hora retorno: " + currentDtl.getHoraretorno());
 
         return null;
     }
@@ -335,7 +335,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage("exito", "cambios guardados "));
+            context.addMessage(null, new FacesMessage("Éxito", "Cambios guardados "));
             listLoans = null;
             freeds = null;
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
@@ -346,7 +346,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage("error", "hubo alguna falla "));
+            context.addMessage(null, new FacesMessage("ERROR", "Ocurrió un problema "));
             RequestContext.getCurrentInstance().update("forma:notify");
         }
     }
@@ -524,7 +524,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "error", "proporciona los datos nesecesarios"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "ERROR", "Datos insuficientes"));
 
             RequestContext.getCurrentInstance().update("forma:notify");
         }

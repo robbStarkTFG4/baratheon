@@ -17,9 +17,9 @@
                         <center>
                             <p:panel id="pan1" style="width: 52%"  >
                                 <center>
-                                    <p:outputLabel value="Ingrese numero de parte: " style="font-weight: bold;color: #558e4d"/>
+                                    <p:outputLabel value="Ingresar No. Parte: " style="font-weight: bold;color: #558e4d"/>
                                     <p:autoComplete   value="#{material.material2}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
-                                                      var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
+                                                      var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
                                                       maxResults="15" queryDelay="500"
                                                       >
                                         <p:column>  
@@ -34,14 +34,14 @@
                         <div align="center" >
                             <p:tabView id="tbw1" activeIndex="#{mat.activeIndex}" style="width: 52%" >
 
-                                <p:tab id="tab1" title="Datos Del Material"  titleStyleClass="t1" disabled="#{material.habilitarTab}" >
+                                <p:tab id="tab1" title="Datos del material"  titleStyleClass="t1" disabled="#{material.habilitarTab}" >
 
                                     <p:panel style="border: none" id="pan2"  >
                                         <div align="left" style="margin-left: 23%">
                                             <h:panelGrid id="grid" columns="3" cellspacing="5">
 
                                                 <p:outputLabel styleClass="labelnombre" value="Nombre: "  style="font-weight: bold;color: darkgreen" />
-                                                <p:inputText id="nombre" value="#{material.nombre}" validatorMessage="Invalido" styleClass="ipnombre" style="font-weight: bold;" disabled="#{material.habilitarTab}" >
+                                                <p:inputText id="nombre" value="#{material.nombre}" validatorMessage="Inválido" styleClass="ipnombre" style="font-weight: bold;" disabled="#{material.habilitarTab}" >
                                                     <f:validateLength minimum="1" maximum="45"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ\s]+"/>
                                                     <f:ajax render="mensaje" event="keyup"/>
@@ -76,7 +76,7 @@
                                                 </p:inputText>
                                                 <h:message id="cant" for="cantidad"/>
 
-                                                <p:outputLabel styleClass="labelcosto" value="Costo Unitario: " style="font-weight: bold;color: darkgreen" />
+                                                <p:outputLabel styleClass="labelcosto" value="Costo unitario: " style="font-weight: bold;color: darkgreen" />
                                                 <p:inputText id="costo" style="font-weight: bold;" value="#{material.costo}" disabled="#{material.habilitarTab}" validatorMessage="valor invalido" styleClass="ipcosto" >
                                                     <f:validateLength minimum="0" maximum="10"/>
                                                     <f:validateRegex pattern="[0-9]+"/>
@@ -84,7 +84,7 @@
                                                 </p:inputText> 
                                                 <h:message id="cost" for="costo"/>
 
-                                                <p:outputLabel styleClass="labelunidad" value="Unidad De Medida: " style="font-weight: bold;color: darkgreen" />
+                                                <p:outputLabel styleClass="labelunidad" value="Unidad de medida: " style="font-weight: bold;color: darkgreen" />
                                                 <p:inputText id="unidad" style="font-weight: bold;" value="#{material.unidadmedida}" disabled="#{material.habilitarTab}" validatorMessage="unidad invalida" styleClass="ipunidad" >
                                                     <f:validateLength minimum="0" maximum="2"/>
                                                     <f:validateRegex pattern="[a-zA-Z]+"/>
@@ -131,13 +131,13 @@
                                     </p:panel>
                                 </p:tab>
 
-                                <p:tab title="Datos De La Compra" id="tab2" titleStyleClass="t2" disabled="#{material.habilitarTab}" >
+                                <p:tab title="Datos de la compra" id="tab2" titleStyleClass="t2" disabled="#{material.habilitarTab}" >
                                     <p:panel style="border: none">
                                         <div align="left" style="margin-left: 11%">
                                             <h:panelGrid id="gridbuy" columns="3" cellspacing="5" >
 
                                                 <p:outputLabel styleClass="labelresponsable" value="Responsable: " style="font-weight: bold;color: darkgreen" />
-                                                <p:inputText id="responsable" style="font-weight: bold;" value="#{material.responsable}" validatorMessage="Invalido" styleClass="ipresponsable" disabled="#{material.habilitarTab}" >
+                                                <p:inputText id="responsable" style="font-weight: bold;" value="#{material.responsable}" validatorMessage="Inválido" styleClass="ipresponsable" disabled="#{material.habilitarTab}" >
                                                     <f:validateLength minimum="0" maximum="50"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ\s]+"/>
                                                     <f:ajax render="resp" event="keyup" />
@@ -145,7 +145,7 @@
                                                 <h:message id="resp" for="responsable"/>  
 
                                                 <p:outputLabel styleClass="labelproveedor" value="Proveedor: " style="font-weight: bold;color: darkgreen" />
-                                                <p:inputText id="proveedor" style="font-weight: bold;" required="false" value="#{material.probedor}" validatorMessage="Invalido" styleClass="ipproveedor"  >
+                                                <p:inputText id="proveedor" style="font-weight: bold;" required="false" value="#{material.probedor}" validatorMessage="Inválido" styleClass="ipproveedor"  >
                                                     <f:validateLength  maximum="60"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ\s]*"/>
                                                     <f:ajax render="provee" event="keyup" />
@@ -153,23 +153,23 @@
                                                 <h:message id="provee" for="proveedor"/>
 
                                                 <p:outputLabel styleClass="labelfactura" value="No. Factura: " style="font-weight: bold;color: darkgreen"/>
-                                                <p:inputText id="factura" style="font-weight: bold;" required="false" value="#{material.noFactura}" validatorMessage="Invalido" styleClass="ipfactura" > 
+                                                <p:inputText id="factura" style="font-weight: bold;" required="false" value="#{material.noFactura}" validatorMessage="Inválido" styleClass="ipfactura" > 
                                                     <f:validateLength  maximum="60"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                                     <f:ajax render="fac" event="keyup" />
                                                 </p:inputText> 
                                                 <h:message id="fac" for="factura"/>
 
-                                                <p:outputLabel styleClass="labelorden" value="Orden De Compra: " style="font-weight: bold;color: darkgreen"/>
-                                                <p:inputText id="orden" style="font-weight: bold;" required="false" value="#{material.ordenDcompra}" validatorMessage="Invalido" styleClass="iporden"  >
+                                                <p:outputLabel styleClass="labelorden" value="Orden de compra: " style="font-weight: bold;color: darkgreen"/>
+                                                <p:inputText id="orden" style="font-weight: bold;" required="false" value="#{material.ordenDcompra}" validatorMessage="Inválido" styleClass="iporden"  >
                                                     <f:validateLength  maximum="15"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                                     <f:ajax render="order" event="keyup" />
                                                 </p:inputText> 
                                                 <h:message id="order" for="orden"/>
 
-                                                <p:outputLabel styleClass="labelcodigo" value="Codigo Zip: " style="font-weight: bold;color: darkgreen"/>
-                                                <p:inputText id="zip" style="font-weight: bold;" required="false" value="#{material.zip}" validatorMessage="Invalido" styleClass="ipcodigo"  > 
+                                                <p:outputLabel styleClass="labelcodigo" value="Código ZIP: " style="font-weight: bold;color: darkgreen"/>
+                                                <p:inputText id="zip" style="font-weight: bold;" required="false" value="#{material.zip}" validatorMessage="Inválido" styleClass="ipcodigo"  > 
                                                     <f:validateLength  maximum="15"/>
                                                     <f:validateRegex pattern="[0-9]*"/>
                                                     <f:ajax render="codigo" event="keyup" />
@@ -177,15 +177,15 @@
                                                 <h:message id="codigo" for="zip"/>
 
                                                 <p:outputLabel styleClass="labelfinanciamiento" value="Financiamiento: " style="font-weight: bold;color: darkgreen" />
-                                                <p:inputText id="finance" style="font-weight: bold;" required="false" value="#{material.financiamiento}" validatorMessage="Invalido" styleClass="ipfinanciamiento"  >
+                                                <p:inputText id="finance" style="font-weight: bold;" required="false" value="#{material.financiamiento}" validatorMessage="Inválido" styleClass="ipfinanciamiento"  >
                                                     <f:validateLength  maximum="15"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                                     <f:ajax render="finan" event="keyup" />
                                                 </p:inputText> 
                                                 <h:message id="finan" for="finance"/>
 
-                                                <p:outputLabel styleClass="labeltipcompra" value="Tipo De Compra: " style="font-weight: bold;color: darkgreen" />
-                                                <p:inputText id="compra" style="font-weight: bold;" required="false" value="#{material.tipodecompra}" validatorMessage="Invalido" styleClass="iptipcompra"  >
+                                                <p:outputLabel styleClass="labeltipcompra" value="Tipo de compra: " style="font-weight: bold;color: darkgreen" />
+                                                <p:inputText id="compra" style="font-weight: bold;" required="false" value="#{material.tipodecompra}" validatorMessage="Inválido" styleClass="iptipcompra"  >
                                                     <f:validateLength  maximum="20"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ0-9]*"/>
                                                     <f:ajax render="buy" event="keyup" />
@@ -193,13 +193,13 @@
                                                 <h:message id="buy" for="compra"/>
 
                                                 <p:outputLabel styleClass="labeliduabc" value="ID UABC: " style="font-weight: bold;color: darkgreen"/>
-                                                <p:inputText id="iduabc" style="font-weight: bold;"  required="false" value="#{material.idUABC}" validatorMessage="Invalido" styleClass="ipiduabc"   >
+                                                <p:inputText id="iduabc" style="font-weight: bold;"  required="false" value="#{material.idUABC}" validatorMessage="Inválido" styleClass="ipiduabc"   >
                                                     <f:validateLength  maximum="15"/>
                                                     <f:validateRegex pattern="[a-zA-ZñÑ0-9\-]*"/>
                                                     <f:ajax render="idua" event="keyup" /> 
                                                 </p:inputText> 
                                                 <h:message id="idua" for="iduabc"/>
-                                                <p:outputLabel styleClass="labeliduabc" value="Muestra en consultas: " style="font-weight: bold;color: darkgreen"/>
+                                                <p:outputLabel styleClass="labeliduabc" value="Mostrar en consultas: " style="font-weight: bold;color: darkgreen"/>
 
                                                 <p:selectBooleanCheckbox  value="#{material.showinquery}" styleClass="mnu2"/>
 
@@ -214,7 +214,7 @@
                                 </p:tab>
                                 <p:tab id="tab3" title="Ubicación" titleStyleClass="t3" disabled="#{material.habilitarTab}" >
                                     <h:panelGrid id="ubi" columns="3" cellspacing="5">
-                                        <p:outputLabel styleClass="labelarea" value="Area: " style="font-weight: bold;color: darkgreen" />
+                                        <p:outputLabel styleClass="labelarea" value="Área: " style="font-weight: bold;color: darkgreen" />
                                         <p:selectOneMenu  id="areaOne" value="#{material.selectedArea}" styleClass="mnu1" valueChangeListener="#{material.areasListener}"  converter="matAreaC">
                                             <f:ajax  execute="@this"  render=" @this  tipo subFam  "/>
                                             <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
@@ -222,11 +222,11 @@
                                                            itemLabel="#{cat.descripcion}"
                                                            itemValue="#{cat}" />  
                                         </p:selectOneMenu>
-                                        <p:commandButton id="kl" immediate="true" value=">>Agregar area" actionListener="#{altas.dialogArea(1)}" style="margin-left: 2%;background: none;border: none;color: #045491" >
+                                        <p:commandButton id="kl" immediate="true" value=">>Agregar área" actionListener="#{altas.dialogArea(1)}" style="margin-left: 2%;background: none;border: none;color: #045491" >
                                             <p:ajax event="dialogReturn"  update=":formadatos:tbw1"   />
                                         </p:commandButton>
 
-                                        <p:outputLabel styleClass="labeltipmaterial" value="Tipo De Material: " style="font-weight: bold;color: darkgreen"/>
+                                        <p:outputLabel styleClass="labeltipmaterial" value="Tipo de material: " style="font-weight: bold;color: darkgreen"/>
                                         <p:selectOneMenu  id="tipo" value="#{material.selectedTipo}" valueChangeListener="#{material.typeListener}" styleClass="mnu2"  converter="modType"  >
                                             <f:ajax  execute="@this"  render=" @this   subFam  "/>
                                             <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
@@ -246,18 +246,18 @@
                                                            itemValue="#{ml}" />  
                                         </p:selectOneMenu>
 
-                                        <p:commandButton id="sflink" value=">>ADD subfamilia" actionListener="#{altas.dialogSF2(1)}" disabled="#{mat.disAddsf}" style="margin-left: 0%;background: none;border: none;color: #045491" >
+                                        <p:commandButton id="sflink" value=">>Agregar subfamilia" actionListener="#{altas.dialogSF2(1)}" disabled="#{mat.disAddsf}" style="margin-left: 0%;background: none;border: none;color: #045491" >
                                             <p:ajax event="dialogReturn"  update=":formadatos:tbw1"  />
                                         </p:commandButton>
 
-                                        <p:outputLabel styleClass="labelalmacen" value="Almacen: " style="font-weight: bold;color: darkgreen"/> 
+                                        <p:outputLabel styleClass="labelalmacen" value="Almacén: " style="font-weight: bold;color: darkgreen"/> 
                                         <p:selectOneMenu  value="#{material.almacen}" styleClass="mnu2"  >
                                             <f:selectItem itemLabel="Selecciona"/>
                                             <f:selectItems value="#{material.lalm}" var="cat"
                                                            itemLabel="#{cat.descripcion}"
                                                            itemValue="#{cat.idalmacen.toString()}" />  
                                         </p:selectOneMenu>
-                                        <p:commandButton value=">>Agregar almacen" actionListener="#{altas.dialogAl()}" style="margin-left: 2%;background: none;border: none;color: #045491" >
+                                        <p:commandButton value=">>Agregar almacén" actionListener="#{altas.dialogAl()}" style="margin-left: 2%;background: none;border: none;color: #045491" >
                                             <p:ajax event="dialogReturn"  update=":formadatos:tbw1"  />
                                         </p:commandButton>
 

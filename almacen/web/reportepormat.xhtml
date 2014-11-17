@@ -17,7 +17,7 @@
             
         <p:growl id="g1" autoUpdate="true" showDetail="true" life="3000"/>
             <p:autoComplete   value="#{material.material}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
-                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="#Parte o Nombre" converter="mtl" minQueryLength="3" 
+                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
                                                maxResults="15" queryDelay="500"
                                               >
                                 <p:column>  
@@ -32,7 +32,7 @@
              
             <p:dataTable id="crs" value="#{material.listaEtiquetas}" var="car"  style="width: 70%" >
                 <f:facet name="header" >
-                      ESPECIFICACIONES DE MATERIAL
+                      Especificaciones del material
                       <br/>
                       <p:graphicImage title="#{material.matencontrado.imagen}" value="resources/imagenes/#{material.matencontrado.imagen}" /> 
                 </f:facet>

@@ -150,14 +150,14 @@ public class DataGridSearch implements Serializable {
                 cantidad = 0;
             } else {
                 FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agrego : " + current.getNombre(), null));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Se agregó : " + current.getNombre(), null));
                 cantidad = 0;
                 nm.setKarControl(false);
                 RequestContext.getCurrentInstance().update("formass:iconOnly");
             }
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Especifica cantidad", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Especificar cantidad", null));
         }
     }
 
@@ -239,14 +239,14 @@ public class DataGridSearch implements Serializable {
             RequestContext.getCurrentInstance().closeDialog(null);
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage("exito", "prestamo guardado"));
+            context.addMessage(null, new FacesMessage("Éxito", "Prestamo guardado"));
 
             RequestContext.getCurrentInstance().update("formass:not");
             pres.updateDebts();
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "error", "hubo algun problema"));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Ocurrió un problema"));
             RequestContext.getCurrentInstance().update("formass:not");
         }
     }

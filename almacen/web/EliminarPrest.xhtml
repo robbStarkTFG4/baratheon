@@ -19,15 +19,15 @@
 
           <p:panel style="width:500px;  " >  
             <f:facet name="header" >  
-                Eliminar prestario
+                Eliminar prestatario
              </f:facet>
               <div align="left">
               <h:panelGrid id="panel" columns="3">
               
               
-              <p:outputLabel value="Ingrese Matricula:  " />
+              <p:outputLabel value="Ingrese matrícula:  " />
                <p:autoComplete id="usuariop" dropdown="true" forceSelection="true"  autocomplete="true"   
-                               completeMethod="#{prest.completeEliminar}"  required="true" requiredMessage="inserte usuario">  
+                               completeMethod="#{prest.completeEliminar}"  required="true" requiredMessage="Insertar matrícula">  
            
                    <f:ajax render="mensajeus" event="keyup"/>
               </p:autoComplete>

@@ -24,9 +24,9 @@
               <h:panelGrid columns="3">
               
               
-              <p:outputLabel value="Ingrese usuario:  " />
+              <p:outputLabel value="Ingresar usuario:  " />
               <p:autoComplete id="usuariof" dropdown="true" forceSelection="true"  autocomplete="true"   
-                              completeMethod="#{user.complete}"  required="true" requiredMessage="inserte usuario">  
+                              completeMethod="#{user.complete}"  required="true" requiredMessage="Insertar usuario">  
            
                    <f:ajax render="msjus" event="keyup"/>
               </p:autoComplete>
@@ -39,7 +39,7 @@
            
             <h:outputLabel/>
            <p:outputLabel value="Nombre :"  />  
-           <p:inputText id="nomus"  required="true"  requiredMessage="inserta nombre" validatorMessage="Solo Letras(2-20)" disabled="#{user.hregistros}" >
+           <p:inputText id="nomus"  required="true"  requiredMessage="Insertar nombre" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}" >
                    <f:validateLength minimum="3" maximum="20" />
                    <f:validateRegex pattern="[a-zA-Z]+" />
                    <f:ajax render="mensajenom" event="keyup"/>
@@ -47,54 +47,54 @@
                 <p:message id="mensajenom"  for="nomus" />
                    
                    <p:outputLabel value="Apellido paterno :"  />  
-                   <p:inputText id="ap" required="true"  requiredMessage="inserta apellido" validatorMessage="Solo Letras(2-20)" disabled="#{user.hregistros}" >
+                   <p:inputText id="ap" required="true"  requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}" >
                    <f:validateRegex pattern="[a-zA-Z]+" />
                    <f:validateLength minimum="1" maximum="20"/>  
                    <f:ajax render="mensajeap" event="keyup"/>
                  </p:inputText>
                    <p:message id="mensajeap"  for="ap" />
                   
-                 <p:outputLabel value="Apellido Materno :"  />  
-                 <p:inputText id="am"  required="true"  requiredMessage="inserta apellido" validatorMessage="Solo Letras(2-20)" disabled="#{user.hregistros}">
+                 <p:outputLabel value="Apellido materno :"  />  
+                 <p:inputText id="am"  required="true"  requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}">
                    <f:validateLength minimum="1" maximum="20"/>
                     <f:validateRegex pattern="[a-zA-Z]+" />
                    <f:ajax render="mensajeam" event="keyup"/>
                   </p:inputText> 
                  <p:message id="mensajeam"  for="am" />
                  
-                 <p:outputLabel value="Contrasena :"  />  
-                 <p:inputText id="pass"  required="true"  requiredMessage="inserta contrasena" validatorMessage="Maximo 20 caracteres" disabled="#{user.hregistros}">
+                 <p:outputLabel value="Contraseña :"  />  
+                 <p:inputText id="pass"  required="true"  requiredMessage="Insertar contraseña" validatorMessage="Máximo 20 caracteres" disabled="#{user.hregistros}">
                    <f:validateLength minimum="1" maximum="20"/>
                    <f:ajax render="mensajepass" event="keyup"/>
                   </p:inputText>   
                  <p:message id="mensajepass"  for="pass" />
                  
                  <p:outputLabel value="Correo :"  />  
-                 <p:inputText id="correo"  required="true"  requiredMessage="inserta correo" validatorMessage="Formato erroneo" disabled="#{user.hregistros}">
+                 <p:inputText id="correo"  required="true"  requiredMessage="Insertar correo" validatorMessage="Formato erróneo" disabled="#{user.hregistros}">
                    <f:validateLength minimum="1" maximum="35"/>
                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                    <f:ajax render="mensajecorreo" event="keyup"/>
                   </p:inputText> 
                  <p:message id="mensajecorreo"  for="correo" />
                  
-                 <p:outputLabel value="Telefono :"  />  
-                 <p:inputMask id="tel"  required="true"  requiredMessage="inserta telefono"  mask="9999999999" disabled="#{user.hregistros}">
+                 <p:outputLabel value="Teléfono :"  />  
+                 <p:inputMask id="tel"  required="true"  requiredMessage="Insertar teléfono"  mask="9999999999" disabled="#{user.hregistros}">
                   
                   </p:inputMask>
                  <h:outputLabel/>
                  
                  <p:outputLabel value="Usuario :"  />  
-                 <p:inputText id="us"  required="true"  requiredMessage="inserta usuario" validatorMessage="Maximo 20 caracteres" disabled="true">
+                 <p:inputText id="us"  required="true"  requiredMessage="Insertar usuario" validatorMessage="Máximo 20 caracteres" disabled="true">
                    <f:validateLength minimum="1" maximum="20"/>
                    <f:ajax render="mensajeus" event="keyup"/>
                   </p:inputText> 
                  <p:message id="mensajeus"  for="us" />
              
-                 <p:outputLabel value="Tipo de Usuario :" style="width: 300px" />    
+                 <p:outputLabel value="Tipo de usuario :" style="width: 300px" />    
                  <p:selectOneMenu value="Tipo" id="tipo" disabled="#{user.hregistros}">  
            
-            <f:selectItem itemLabel="administrador" itemValue="2" />  
-            <f:selectItem itemLabel="servicio social" itemValue="1" />  
+            <f:selectItem itemLabel="Administrador" itemValue="2" />  
+            <f:selectItem itemLabel="USS" itemValue="1" />  
            
         </p:selectOneMenu>  
          <h:outputLabel/>

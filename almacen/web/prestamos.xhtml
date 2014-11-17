@@ -26,8 +26,8 @@
                 <p:growl id="notify" showDetail="true" sticky="false"/>
                 <p:messages id="notificaciones"/>
                 <h:panelGrid id="grid" columns="4" cellspacing="5">
-                    <p:outputLabel style="margin-right: 20px; " value="Matricula :"  styleClass="cl" />
-                    <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Inserta matricula" style="height: 20px; width: 150px;" styleClass="cl">
+                    <p:outputLabel style="margin-right: 20px; " value="Matrícula :"  styleClass="cl" />
+                    <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Insertar matrícula" style="height: 20px; width: 150px;" styleClass="cl">
                         <f:validateRegex pattern="[0-9]+" />
                         <f:validateLength minimum="3" maximum="20" >
                         </f:validateLength> 
@@ -37,17 +37,17 @@
                     <p:commandButton id="find" value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" styleClass="cl" 
                                      update="presName,carrera,mail,tel,notify,log,@this"   disabled="#{pres.us ne null}"/>   
 
-                    <p:commandLink id="log" value="cerrar sesion" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this,find" disabled="#{pres.us eq null}" styleClass="cl" />
+                    <p:commandLink id="log" value="Cerrar sesión" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this,find" disabled="#{pres.us eq null}" styleClass="cl" />
 
                 </h:panelGrid>
 
                 <h:panelGrid id="pan2" columns="4" cellspacing="5" cellpadding="5px">
 
-                    <p:outputLabel value="nombre: " for="presName" styleClass="cl"/> <p:inputText value="#{pres.nombre}" id="presName" size="30" disabled="true" styleClass="cl"/>
-                    <p:outputLabel value="carrera: " for="carrera" styleClass="cl" /> <p:inputText value="#{pres.carrera}" id="carrera" size="10" disabled="true" styleClass="cl"/>
+                    <p:outputLabel value="Nombre: " for="presName" styleClass="cl"/> <p:inputText value="#{pres.nombre}" id="presName" size="30" disabled="true" styleClass="cl"/>
+                    <p:outputLabel value="Carrera: " for="carrera" styleClass="cl" /> <p:inputText value="#{pres.carrera}" id="carrera" size="10" disabled="true" styleClass="cl"/>
 
-                    <p:outputLabel value="correo: " for="mail" styleClass="cl"/> <p:inputText value="#{pres.correo}" id="mail" size="10" disabled="true"/>
-                    <p:outputLabel value="telefono: " for="tel" styleClass="cl"/> <p:inputText value="#{pres.telefono}" id="tel" size="10" disabled="true" styleClass="cl"/>
+                    <p:outputLabel value="Correo: " for="mail" styleClass="cl"/> <p:inputText value="#{pres.correo}" id="mail" size="10" disabled="true"/>
+                    <p:outputLabel value="Teléfono: " for="tel" styleClass="cl"/> <p:inputText value="#{pres.telefono}" id="tel" size="10" disabled="true" styleClass="cl"/>
 
                 </h:panelGrid>
 
@@ -55,7 +55,7 @@
 
                     <p:ajax event="tabChange" listener="#{pres.onTabChange}" />
 
-                    <p:tab id="sol" title="solicitudes">
+                    <p:tab id="sol" title="Solicitudes">
                         <p:dataTable id="soles" value="#{pres.listSol}" var="sl" rows="6" paginator="true"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="5,10,15">
@@ -67,14 +67,14 @@
 
                             <p:column style="width:10%">  
                                 <f:facet name="header">  
-                                    #prestamo  
+                                    No. Prestamo  
                                 </f:facet>  
                                 <h:outputText value="#{sl.idPrestamo}" />  
                             </p:column>  
 
                             <p:column style="width:22%">  
                                 <f:facet name="header">  
-                                    Fecha Solicitud  
+                                    Fecha de solicitud  
                                 </f:facet>  
                                 <h:outputText value="#{sl.fechaSolicitud}" />  
                             </p:column>  
@@ -85,14 +85,14 @@
 
                             <p:column style="width:22%">  
                                 <f:facet name="header">  
-                                    estatus prestamo
+                                    Estatus del prestamo
                                 </f:facet>  
                                 <h:outputText id="estatus" value="#{sl.statusprestamo}" />  
                             </p:column>  
 
                             <p:column style="width:22%">  
                                 <f:facet name="header">  
-                                    fecha vencimiento
+                                    Fecha vencimiento
                                 </f:facet>  
                                 <p:calendar id="datetime" value="#{sl.date10}" showOn="button" pattern="MM/dd/yyyy HH:mm:ss"  >
                                     <f:attribute name="prestamito" value="#{sl}"/>
@@ -113,17 +113,17 @@
 
                                     <p:column >  
                                         <f:facet name="header">  
-                                            id
+                                            ID
                                         </f:facet>  
                                         <h:outputText value="#{hl.idDetalleprestamo}" />  
                                     </p:column>  
 
                                     <p:column >  
                                         <f:facet name="header" >  
-                                            #parte
+                                            No. Parte
                                         </f:facet>  
 
-                                        <p:commandLink  value="#parte" action="#{pres.listenPartNumber()}">
+                                        <p:commandLink  value="No. Parte" action="#{pres.listenPartNumber()}">
                                             <f:setPropertyActionListener value="#{hl}" target="#{pres.showInfo}"/>
                                         </p:commandLink>
 
@@ -132,7 +132,7 @@
 
                                     <p:column >  
                                         <f:facet name="header">  
-                                            nombre
+                                            Nombre
                                         </f:facet>  
                                         <h:outputText value="#{hl.nombre}" />  
                                     </p:column>  
@@ -141,12 +141,12 @@
 
                                     <p:column >  
                                         <f:facet name="header">  
-                                            cantidad solicitada
+                                            Cantidad solicitada
                                         </f:facet>  
                                         <p:cellEditor>  
                                             <f:facet name="output"><h:outputText value="#{hl.cantidad}" /></f:facet>  
                                             <f:facet name="input">
-                                                <p:inputText id="modelInput" value="#{hl.cantidad}" style="width:96%" validator="inspector" >
+                                                <p:inputText id="modelInput" value="#{hl.cantidad}" style="width:96%" validator="Inspector" >
                                                     <f:attribute name="obj" value="#{hl}"/>
                                                 </p:inputText>
                                             </f:facet>  
@@ -165,7 +165,7 @@
                                 </p:dataTable>
 
                                 <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
-                                    <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
+                                    <p:commandButton value="Deshacer" action="#{pres.resetListener}" update="dtls">
                                         <f:setPropertyActionListener value="#{sl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
                                     </p:commandButton>
                                     <p:commandButton value="Guardar" action="#{pres.saveSelected}" update="noti" disabled="#{pres.activo eq 2}">
@@ -178,7 +178,7 @@
                         </p:dataTable>
                     </p:tab>
 
-                    <p:tab id="tab1" title="adeudos"> 
+                    <p:tab id="tab1" title="Adeudos"> 
 
                         <p:dataTable id="debts" value="#{pres.listLoans}" var="pl" rows="6" paginator="true"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -191,28 +191,28 @@
 
                             <p:column style="width:15%">  
                                 <f:facet name="header">  
-                                    #prestamo  
+                                    No. Prestamo  
                                 </f:facet>  
                                 <h:outputText value="#{pl.idPrestamo}" />  
                             </p:column>  
 
                             <p:column style="width:20%">  
                                 <f:facet name="header">  
-                                    fecha aprobacion  
+                                    Fecha de aprobación  
                                 </f:facet>  
                                 <h:outputText value="#{pl.fechaprestamo}" />  
                             </p:column>  
 
                             <p:column style="width:20%">  
                                 <f:facet name="header">  
-                                    fecha vencimiento
+                                    Fecha vencimiento
                                 </f:facet>  
                                 <h:outputText value="#{pl.fechaVencimiento}" />  
                             </p:column>  
 
                             <p:column style="width:20%">  
                                 <f:facet name="header">  
-                                    usuario  
+                                    Usuario  
                                 </f:facet>  
                                 <p:commandLink value="#{pl.idUsuarios}" action="#{pres.showUser}" >
                                     <f:setPropertyActionListener value="#{pl.idUsuarios}" target="#{pres.idUsuario}"/>
@@ -221,7 +221,7 @@
 
                             <p:column style="width:20%">  
                                 <f:facet name="header">  
-                                    estatus prestamo
+                                    Estatus prestamo
                                 </f:facet>  
                                 <h:outputText id="estatus" value="#{pl.statusprestamo}" />  
                             </p:column>  
@@ -236,10 +236,10 @@
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header" >  
-                                            #parte
+                                            No. Parte
                                         </f:facet>  
 
-                                        <p:commandLink  value="#parte" action="#{pres.listenPartNumber()}">
+                                        <p:commandLink  value="No. Parte" action="#{pres.listenPartNumber()}">
                                             <f:setPropertyActionListener value="#{dl}" target="#{pres.showInfo}"/>
                                         </p:commandLink>
 
@@ -248,26 +248,26 @@
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            nombre
+                                            Nombre
                                         </f:facet>  
                                         <h:outputText value="#{dl.nombre}" />  
                                     </p:column>  
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            cantidad prestada
+                                            Cantidad prestada
                                         </f:facet>  
                                         <h:outputText value="#{dl.cantidad}" />  
                                     </p:column>  
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            cantidad entregada
+                                            Cantidad entregada
                                         </f:facet>  
                                         <p:cellEditor>  
                                             <f:facet name="output"><h:outputText value="#{dl.regresados}" /></f:facet>  
                                             <f:facet name="input">
-                                                <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="cantidad" >
+                                                <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="Cantidad" >
                                                     <f:attribute name="valor" value="#{dl.cantidad}"/>
 
                                                 </p:inputText>
@@ -279,14 +279,14 @@
                                     </p:column>
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            fecha retorno
+                                            Fecha retorno
                                         </f:facet>  
                                         <h:outputText id="fr" value="#{dl.fecharetorno}" />  
                                     </p:column>  
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            hora retorno
+                                            Hora retorno
                                         </f:facet>  
                                         <h:outputText id="hr"  value="#{dl.horaretorno}" />  
                                     </p:column>  
@@ -295,7 +295,7 @@
                                 </p:dataTable>
 
                                 <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
-                                    <p:commandButton value="deshacer" action="#{pres.resetListener}" update="dtls">
+                                    <p:commandButton value="Deshacer" action="#{pres.resetListener}" update="dtls">
                                         <f:setPropertyActionListener value="#{pl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
                                     </p:commandButton>
                                     <p:commandButton value="Guardar" action="#{pres.savePres}" update="noti">
@@ -308,7 +308,7 @@
 
                     </p:tab>  
 
-                    <p:tab id="tab2" title="liberados">  
+                    <p:tab id="tab2" title="Liberados">  
 
 
 
@@ -323,28 +323,28 @@
 
                             <p:column style="width:49%">  
                                 <f:facet name="header">  
-                                    #prestamo  
+                                    No. Prestamo  
                                 </f:facet>  
                                 <h:outputText value="#{pf.idPrestamo}" />  
                             </p:column>  
 
                             <p:column style="width:49%">  
                                 <f:facet name="header">  
-                                    fecha aprobacion  
+                                    Fecha aprobación  
                                 </f:facet>  
                                 <h:outputText value="#{pf.fechaprestamo}" />  
                             </p:column>  
 
                             <p:column style="width:49%">  
                                 <f:facet name="header">  
-                                    hora aprobacion  
+                                    Hora aprobación  
                                 </f:facet>  
                                 <h:outputText value="#{pf.horaprestamo}" />  
                             </p:column>  
 
                             <p:column style="width:49%">  
                                 <f:facet name="header">  
-                                    usuario  
+                                    Usuario  
                                 </f:facet>  
                                 <p:commandLink value="#{pf.idUsuarios}" action="#{pres.showUser()}" >
                                     <f:setPropertyActionListener value="#{pf.idUsuarios}" target="#{pres.idUsuario}"/>
@@ -353,7 +353,7 @@
 
                             <p:column style="width:49%">  
                                 <f:facet name="header">  
-                                    fecha retorno
+                                    Fecha retorno
                                 </f:facet>  
                                 <h:outputText id="estatus" value="#{pf.fecharetorno}" />  
                             </p:column>  
@@ -364,10 +364,10 @@
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header" >  
-                                            #parte
+                                            No. Parte
                                         </f:facet>  
 
-                                        <p:commandLink value="#parte" action="#{pres.listenPartNumber()}">
+                                        <p:commandLink value="No. Parte" action="#{pres.listenPartNumber()}">
                                             <f:setPropertyActionListener value="#{ld}" target="#{pres.showInfo}"/>
                                         </p:commandLink>
 
@@ -376,28 +376,28 @@
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            nombre
+                                            Nombre
                                         </f:facet>  
                                         <h:outputText value="#{ld.nombre}" />  
                                     </p:column>  
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            cantidad
+                                            Cantidad
                                         </f:facet>  
                                         <h:outputText value="#{ld.cantidad}" />  
                                     </p:column>  
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            fecha retorno
+                                            Fecha retorno
                                         </f:facet>  
                                         <h:outputText id="fr" value="#{ld.fecharetorno}" />  
                                     </p:column>  
 
                                     <p:column style="width:49%">  
                                         <f:facet name="header">  
-                                            hora retorno
+                                            Hora retorno
                                         </f:facet>  
                                         <h:outputText id="hr"  value="#{ld.horaretorno}" />  
                                     </p:column>  

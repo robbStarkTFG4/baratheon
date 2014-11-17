@@ -189,7 +189,7 @@ public class Catalog implements Serializable {
         }
 
         FacesContext.getCurrentInstance().getExternalContext().redirect("grid.xhtml");
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "selected", obj.toString());
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Selected", obj.toString());
 
         FacesContext.getCurrentInstance().addMessage(null, message);
     }

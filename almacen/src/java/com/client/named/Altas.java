@@ -183,11 +183,11 @@ public class Altas implements Serializable {
             descripcionAlmacen = null;
             System.out.println("creando msj growl");
 
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Almacen se ha agregado con exito!!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Almacén agregado éxito"));
 
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
         }
 
     }
@@ -202,7 +202,7 @@ public class Altas implements Serializable {
             descripcionArea = null;
             System.out.println("creando msj growl");
              RequestContext.getCurrentInstance().closeDialog(null);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "El Area se ha agregado con exito!!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito!!"));
             }else{
             descripcionArea = null;
             mate.setSelectedArea(null);
@@ -211,7 +211,7 @@ public class Altas implements Serializable {
             }
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
         }
 
     }
@@ -219,7 +219,7 @@ public class Altas implements Serializable {
     public void agregarTipo() {
         boolean hecho;
         if (mate.getSelectedArea() == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Debe seleccionar area"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Seleccionar área"));
         } else {
             hecho = tmf.agregar(descripcionTipoMat, mate.getSelectedArea());
 
@@ -229,7 +229,7 @@ public class Altas implements Serializable {
                 AreaTM = null;
                 System.out.println("creando msj growl");
 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado!", "Tipo de material se ha agregado con exito!!"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Tipo de material agregado con éxito"));
                 RequestContext.getCurrentInstance().closeDialog(null);
                 mate.listTM = tmf.listAtm(mate.getSelectedArea().getIdArea());
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
@@ -242,7 +242,7 @@ public class Altas implements Serializable {
                 RequestContext.getCurrentInstance().closeDialog(null);
                 }
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Existen parametros unicos ya existentes en la base de datos"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
             }
 
         }
