@@ -146,7 +146,7 @@
                                         <p:cellEditor>  
                                             <f:facet name="output"><h:outputText value="#{hl.cantidad}" /></f:facet>  
                                             <f:facet name="input">
-                                                <p:inputText id="modelInput" value="#{hl.cantidad}" style="width:96%" validator="Inspector" >
+                                                <p:inputText id="modelInput" value="#{hl.cantidad}" style="width:96%" validator="inspector" >
                                                     <f:attribute name="obj" value="#{hl}"/>
                                                 </p:inputText>
                                             </f:facet>  
@@ -267,7 +267,7 @@
                                         <p:cellEditor>  
                                             <f:facet name="output"><h:outputText value="#{dl.regresados}" /></f:facet>  
                                             <f:facet name="input">
-                                                <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="Cantidad" >
+                                                <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="cantidad" >
                                                     <f:attribute name="valor" value="#{dl.cantidad}"/>
 
                                                 </p:inputText>

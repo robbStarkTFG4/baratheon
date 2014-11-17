@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-09-2014 a las 18:43:48
+-- Tiempo de generación: 17-11-2014 a las 08:33:53
 -- Versión del servidor: 5.6.14
 -- Versión de PHP: 5.5.6
 
@@ -297,10 +297,10 @@ CREATE TABLE IF NOT EXISTS `tbl_material` (
 --
 
 INSERT INTO `tbl_material` (`idtbl_material`, `noParte`, `nombre`, `descripcion`, `stock`, `id_area`, `id_tipomaterial`, `costo`, `imagen`, `subFamilias_id_subFam`, `unidad_medida`, `marca`, `serie`, `estado`, `ubicacion_actual`, `responsable`, `proveedor`, `numero_factura`, `orden_compra`, `codigo_sip`, `financiamiento`, `tipo_compra`, `fecha_recepcion`, `idUabc`, `almacen_idalmacen`, `showInQuery`) VALUES
-(1, '2n2222', 'transistor', 'npn ', 62, 1, 1, '15', 'selyR.jpg', 2, 'pz', 'hallmakr', '34234', 'nuevo', 'b1', 'victor', 'steren', '432424332', '342423', '423423', 'uabc', 'dasdas', '2014-06-08', '0', 1, NULL),
-(2, '42634', 'capacitor', 'capacitor electrolitico', 34, 1, 1, '25', 'selyR.jpg', 1, 'pz', 'steren', NULL, 'nuevo', 'b1', 'victor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL),
-(3, '2n225533', 'transote', 'adasdasdas', 37, 2, 2, '89', 'selyR.jpg', 3, 'pz', 'asdasd', '21312321', 'nuevo', 'l2b', 'asdasdasdas', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL),
-(4, 'kjjk', 'kjdkjfk', 'kjjjjk', 99, 1, 1, '99', 'img.jpg', 1, 'kj', 'kjjkjk', '990', 'jkjkj', 'kj', 'jkkf', 'kjjkk', 'jk', 'jk', '2234', 'kj', 'kj', '2014-08-21', 'kjjk', 1, NULL);
+(1, '2n2222', 'transistor', 'npn ', 62, 1, 1, '15', 'selyR.jpg', 2, 'pz', 'hallmakr', '34234', 'nuevo', 'b1', 'victor', 'steren', '432424332', '342423', '423423', 'uabc', 'dasdas', '2014-06-08', '0', 1, 0),
+(2, '42634', 'capacitor', 'capacitor electrolitico', 34, 1, 1, '25', 'selyR.jpg', 1, 'pz', 'steren', NULL, 'nuevo', 'b1', 'victor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
+(3, '2n225533', 'transote', 'adasdasdas', 37, 2, 2, '89', 'selyR.jpg', 3, 'pz', 'asdasd', '21312321', 'nuevo', 'l2b', 'asdasdasdas', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
+(4, 'kjjk', 'kjdkjfk', 'kjjjjk', 99, 1, 1, '99', 'img.jpg', 1, 'kj', 'kjjkjk', '990', 'jkjkj', 'kj', 'jkkf', 'kjjkk', 'jk', 'jk', '2234', 'kj', 'kj', '2014-08-21', 'kjjk', 1, 1);
 
 -- --------------------------------------------------------
 
