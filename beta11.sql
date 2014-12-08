@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2014 a las 08:33:53
+-- Tiempo de generación: 08-12-2014 a las 07:45:28
 -- Versión del servidor: 5.6.14
 -- Versión de PHP: 5.5.6
 
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `map` (
   PRIMARY KEY (`id_map`,`subFamilias_id_subFam`),
   KEY `fk_table1_subFamilias1_idx` (`subFamilias_id_subFam`),
   KEY `fk_map_tbl_tipomaterial1_idx` (`tbl_tipomaterial_id_tipomaterial`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `map`
@@ -79,7 +79,8 @@ CREATE TABLE IF NOT EXISTS `map` (
 INSERT INTO `map` (`id_map`, `subFamilias_id_subFam`, `tbl_tipomaterial_id_tipomaterial`) VALUES
 (1, 1, 1),
 (2, 2, 1),
-(3, 3, 2);
+(3, 3, 2),
+(4, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -93,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `subfamilias` (
   `descripcion` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id_subFam`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `subfamilias`
@@ -102,7 +103,8 @@ CREATE TABLE IF NOT EXISTS `subfamilias` (
 INSERT INTO `subfamilias` (`id_subFam`, `nombre`, `descripcion`) VALUES
 (1, 'resistencias', 'varios tipos de resistencias, carbon, alambre,'),
 (2, 'transistores', 'npn, pnp, potencia y baja potencia'),
-(3, 'laboratorio quimica', 'probeta,balanza');
+(3, 'laboratorio quimica', 'probeta,balanza'),
+(4, 'pistones', 'varios vistones');
 
 -- --------------------------------------------------------
 
@@ -114,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `tbl_area` (
   `id_area` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id_area`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `tbl_area`
@@ -123,7 +125,9 @@ CREATE TABLE IF NOT EXISTS `tbl_area` (
 INSERT INTO `tbl_area` (`id_area`, `descripcion`) VALUES
 (1, 'consumibles'),
 (2, 'materiales'),
-(3, 'sdkjjkdf');
+(3, 'sdkjjkdf'),
+(4, 'prueba'),
+(5, 'automatizacion');
 
 -- --------------------------------------------------------
 
@@ -420,6 +424,9 @@ CREATE TABLE IF NOT EXISTS `tbl_rastreo` (
   `num_serie` varchar(100) NOT NULL,
   `responsable` varchar(100) NOT NULL,
   `financiamiento` varchar(100) NOT NULL,
+  `numParte` varchar(80) NOT NULL,
+  `estatus` int(1) NOT NULL,
+  `idUabc` varchar(25) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `num_serie` (`num_serie`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -436,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `tbl_tipomaterial` (
   `tbl_area_id_area` int(11) NOT NULL,
   PRIMARY KEY (`id_tipomaterial`),
   KEY `fk_tbl_tipomaterial_tbl_area1_idx` (`tbl_area_id_area`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `tbl_tipomaterial`
@@ -444,7 +451,8 @@ CREATE TABLE IF NOT EXISTS `tbl_tipomaterial` (
 
 INSERT INTO `tbl_tipomaterial` (`id_tipomaterial`, `descripcion`, `tbl_area_id_area`) VALUES
 (1, 'electronicos', 1),
-(2, 'laboratorios', 2);
+(2, 'laboratorios', 2),
+(3, 'mecatronica', 5);
 
 -- --------------------------------------------------------
 
