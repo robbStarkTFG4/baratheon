@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./index.xhtml">
+
+            <ui:define name="content">
+                <h:form id="formita">
+                    <p:panel style="margin: 20px">
+                        <center>
+                            <p:panel id="pan1" style="width: 52%"  >
+                                <center>
+                                    <p:outputLabel value="Buscador " style="font-weight: bold;color: #558e4d"/>
+                                    <p:autoComplete   value="#{personal.res}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
+                                                      var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
+                                                      maxResults="15" queryDelay="500"
+                                                      >
+                                        <p:column>  
+                                            #{p.nombre} - #{p.noParte}  
+                                        </p:column>
+
+                                    </p:autoComplete> 
+
+                                    <p:commandButton value="Buscar"  actionListener="#{personal.asigna}"  update="formita"/>
+                                </center>
+                            </p:panel>
+                        </center>
+                    </p:panel>
+
+                    <p:panel style="margin-top: 10px;margin-left: 20px;margin-right: 20px">
+                        <center>
+                            <p:panel style="width: 52%">
+
+                                <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
+
+                                    <p:outputLabel value="Nombre"/>
+                                    <p:inputText value="#{personal.res.nombre}" disabled="true"/>
+
+                                    <p:outputLabel value="#Parte"/>
+                                    <p:inputText value="#{personal.res.noParte}" disabled="true"/>
+
+                                    <p:outputLabel value="Serie"/>
+                                    <p:inputText value="#{personal.serie}" />
+
+                                    <p:outputLabel value="#Empleado"/>
+                                    <p:inputText value="#{personal.responsable}" />
+
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <p:panel style="margin-top: 10px;margin-left: 20px;margin-right: 20px">
+                                <h:panelGrid columns="3" cellspacing="10" cellpadding="5">
+                                    <p:commandButton value="Crear" action="#{personal.creaPrestamo}"/>
+                                    <p:commandButton value="Liberar"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </center>
+                    </p:panel>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

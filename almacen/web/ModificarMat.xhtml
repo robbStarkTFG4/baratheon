@@ -17,8 +17,8 @@
                         <center>
                             <p:panel id="pan1" style="width: 52%"  >
                                 <center>
-                                    <p:outputLabel value="Ingresar No. Parte: " style="font-weight: bold;color: #558e4d"/>
-                                    <p:autoComplete   value="#{material.material2}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
+                                    <p:outputLabel value="Buscador " style="font-weight: bold;color: #558e4d"/>
+                                    <p:autoComplete   value="#{personal.res}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
                                                       var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
                                                       maxResults="15" queryDelay="500"
                                                       >
@@ -30,7 +30,8 @@
 
                                     <p:commandButton value="Buscar"  actionListener="#{material.busquedaUpdate()}" update=":formadatos"/>
                                 </center>
-                            </p:panel></center>
+                            </p:panel>
+                        </center>
                         <div align="center" >
                             <p:tabView id="tbw1" activeIndex="#{mat.activeIndex}" style="width: 52%" >
 
