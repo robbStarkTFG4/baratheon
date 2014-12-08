@@ -105,7 +105,7 @@ public class Altas implements Serializable {
     }
 
     public void dialogArea(int p) {
-        prioridad=p;
+        prioridad = p;
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
@@ -132,7 +132,7 @@ public class Altas implements Serializable {
     }
 
     public void dialogSF(int p) {
-        prioridad=p;
+        prioridad = p;
         mate.setListTM(tmf.listaTipoAll());
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
@@ -145,9 +145,10 @@ public class Altas implements Serializable {
 
         // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }
-     public void dialogSF2(int p) {
-        prioridad=p;
-     
+
+    public void dialogSF2(int p) {
+        prioridad = p;
+
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
@@ -161,7 +162,7 @@ public class Altas implements Serializable {
     }
 
     public void dialogTM(int p) {
-         prioridad=p;
+        prioridad = p;
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
@@ -169,6 +170,8 @@ public class Altas implements Serializable {
         options.put("resizable", false);
         options.put("contentHeight", 170);
         options.put("contentWidth", 390);
+
+        mate.updateAreas();
         RequestContext.getCurrentInstance().openDialog("/dialogo/addTipo.xhtml", options, null);
 
         // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
@@ -198,16 +201,16 @@ public class Altas implements Serializable {
         hecho = arf.agregar(descripcionArea);
 
         if (hecho == true) {
-            if(prioridad==1){
-            descripcionArea = null;
-            System.out.println("creando msj growl");
-             RequestContext.getCurrentInstance().closeDialog(null);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito!!"));
-            }else{
-            descripcionArea = null;
-            mate.setSelectedArea(null);
-            mate.setListArea(null);
-             RequestContext.getCurrentInstance().closeDialog(null);
+            if (prioridad == 1) {
+                descripcionArea = null;
+                System.out.println("creando msj growl");
+                RequestContext.getCurrentInstance().closeDialog(null);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito!!"));
+            } else {
+                descripcionArea = null;
+                mate.setSelectedArea(null);
+                mate.setListArea(null);
+                RequestContext.getCurrentInstance().closeDialog(null);
             }
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
@@ -224,22 +227,22 @@ public class Altas implements Serializable {
             hecho = tmf.agregar(descripcionTipoMat, mate.getSelectedArea());
 
             if (hecho == true) {
-                if(prioridad==1){
-                descripcionTipoMat = null;
-                AreaTM = null;
-                System.out.println("creando msj growl");
+                if (prioridad == 1) {
+                    descripcionTipoMat = null;
+                    AreaTM = null;
+                    System.out.println("creando msj growl");
 
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Tipo de material agregado con éxito"));
-                RequestContext.getCurrentInstance().closeDialog(null);
-                mate.listTM = tmf.listAtm(mate.getSelectedArea().getIdArea());
-                RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
-                // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
-                }else{
-                descripcionTipoMat = null;
-                AreaTM = null;
-                mate.setListTM(null);
-                mate.setSelectedTipo(null);
-                RequestContext.getCurrentInstance().closeDialog(null);
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Tipo de material agregado con éxito"));
+                    RequestContext.getCurrentInstance().closeDialog(null);
+                    mate.listTM = tmf.listAtm(mate.getSelectedArea().getIdArea());
+                    RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
+                    // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
+                } else {
+                    descripcionTipoMat = null;
+                    AreaTM = null;
+                    mate.setListTM(null);
+                    mate.setSelectedTipo(null);
+                    RequestContext.getCurrentInstance().closeDialog(null);
                 }
             } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));

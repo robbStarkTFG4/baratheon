@@ -40,8 +40,11 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 
 public class BeanMateriales implements Serializable {
-@Inject BeanUsuarios beanuser;
-@Inject Altas beanAltas;
+
+    @Inject
+    BeanUsuarios beanuser;
+    @Inject
+    Altas beanAltas;
     private String nombre;
     private String noParte;
     private String descripcion;
@@ -67,9 +70,9 @@ public class BeanMateriales implements Serializable {
     private String tipodematerial;
     private String subfamilia;
     private String almacen;
-    private boolean disAddsf=true;
+    private boolean disAddsf = true;
     private boolean disableGuardar = true;
-    private boolean disableTabMod=true;
+    private boolean disableTabMod = true;
     private boolean disableTab1 = false;
     private boolean disableTab2 = true;
     private boolean disableTab3 = true;
@@ -80,7 +83,7 @@ public class BeanMateriales implements Serializable {
     private String imagen;
     private final String ruta = "C:\\Users\\UABC\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
 //"C:\\Users\\cristian\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\"
-    
+
     @EJB
     TblMaterialFacade mf;
     @EJB
@@ -100,7 +103,8 @@ public class BeanMateriales implements Serializable {
     private TblArea selectedArea = null;
     private TblTipomaterial selectedTipo = null;
     private Subfamilias selectedSubFamilia = null;
-@Inject BeanMat beanmat;
+    @Inject
+    BeanMat beanmat;
     @Inject
     Catalog catalog;
     private String descripcionTipoMat;
@@ -119,7 +123,7 @@ public class BeanMateriales implements Serializable {
 
     @PostConstruct
     private void init() {
-        disAddsf=false;
+        disAddsf = false;
         this.listArea = arf.listAr();
     }
 
@@ -493,7 +497,7 @@ public class BeanMateriales implements Serializable {
     }
 
     public String cancelar() {
-        disAddsf=false;
+        disAddsf = false;
         activeIndex = "0";
         nombre = null;
         noParte = null;
@@ -519,10 +523,10 @@ public class BeanMateriales implements Serializable {
         subfamilia = null;
         almacen = null;
         imagen = null;
-        selectedArea=null;
-                selectedSubFamilia=null;
-                selectedTipo=null;
-         
+        selectedArea = null;
+        selectedSubFamilia = null;
+        selectedTipo = null;
+
         disableTab1 = false;
         disableTab2 = true;
         disableTab3 = true;
@@ -540,11 +544,11 @@ public class BeanMateriales implements Serializable {
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         }
 
-        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia,showinquery);
+        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery);
 
         if (hecho == true) {
-            disAddsf=false;
-  beanuser.acciones("Material agregado: "+nombre+", "+ "cantidad: "+cantidad, noParte);          
+            disAddsf = false;
+            beanuser.acciones("Material agregado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
             nombre = null;
             noParte = null;
             descripcion = null;
@@ -569,9 +573,9 @@ public class BeanMateriales implements Serializable {
             subfamilia = null;
             almacen = null;
             imagen = null;
-            selectedArea=null;
-                selectedSubFamilia=null;
-                selectedTipo=null;
+            selectedArea = null;
+            selectedSubFamilia = null;
+            selectedTipo = null;
             System.out.println("creando msj growl");
             disableTab1 = false;
             disableTab2 = true;
@@ -680,7 +684,7 @@ public class BeanMateriales implements Serializable {
     }
 
     public void typeListener(ValueChangeEvent e) {
-        disAddsf=false;
+        disAddsf = false;
         RequestContext.getCurrentInstance().update("formadatos:tbw1:sflink");
         if (e != null) {
 
@@ -708,27 +712,27 @@ public class BeanMateriales implements Serializable {
         hecho = sff.agregar2(nombreSubfam, descripcionSubfam, selectedTipo);
 
         if (hecho == true) {
-            if(beanAltas.getPrioridad()==1){
-            nombreSubfam = null;
-            descripcionSubfam = null;
-            System.out.println("creando msj growl");
-
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Subfamilia agregada con éxito"));
-            //selectedSubFamilia;
-            RequestContext.getCurrentInstance().closeDialog(null);
-            listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
-            RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
-            }else{
-               System.out.println("PUSO NULO");
-               selectedSubFamilia=null;
-               listSF=null;
+            if (beanAltas.getPrioridad() == 1) {
                 nombreSubfam = null;
-               descripcionSubfam = null;
-               RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
-               RequestContext.getCurrentInstance().closeDialog(null);
-            }
-            
+                descripcionSubfam = null;
+                System.out.println("creando msj growl");
+
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Subfamilia agregada con éxito"));
+                //selectedSubFamilia;
+                RequestContext.getCurrentInstance().closeDialog(null);
+                listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
             } else {
+                System.out.println("PUSO NULO");
+                selectedSubFamilia = null;
+                listSF = null;
+                nombreSubfam = null;
+                descripcionSubfam = null;
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
+                RequestContext.getCurrentInstance().closeDialog(null);
+            }
+
+        } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
         }
 
@@ -736,14 +740,14 @@ public class BeanMateriales implements Serializable {
 
     public void agregarTipo() {
         boolean hecho;
-     /*   if (this.getSelectedArea() == null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Debe seleccionar area"));
-        } else {*/
-            hecho = tmf.agregar(descripcionTipoMat, this.getSelectedArea());
+        /*   if (this.getSelectedArea() == null) {
+         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR!", "Debe seleccionar area"));
+         } else {*/
+        hecho = tmf.agregar(descripcionTipoMat, this.getSelectedArea());
 
-            if (hecho == true) {
-                if(beanAltas.getPrioridad()==1){
-                
+        if (hecho == true) {
+            if (beanAltas.getPrioridad() == 1) {
+
                 descripcionTipoMat = null;
 
                 System.out.println("creando msj growl");
@@ -753,40 +757,38 @@ public class BeanMateriales implements Serializable {
                 this.listTM = tmf.listAtm(this.getSelectedArea().getIdArea());
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
                 // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
-                }
-                else{
-                    System.out.println("PUSO NULO");
-                    descripcionTipoMat = null;
-                    selectedTipo=null;
-                    selectedArea=null;
-                    listTM=null;
-                    RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
-                    RequestContext.getCurrentInstance().closeDialog(null);
-                }
             } else {
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
-            
+                System.out.println("PUSO NULO");
+                descripcionTipoMat = null;
+                selectedTipo = null;
+                selectedArea = null;
+                listTM = null;
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
+                RequestContext.getCurrentInstance().closeDialog(null);
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Parámetros existentes"));
 
         }
     }
 
     public void agregarArea() {
-       boolean hecho;
+        boolean hecho;
 
         hecho = arf.agregar(descripcionArea);
 
         if (hecho == true) {
-            if(beanAltas.getPrioridad()==1){
-            descripcionArea = null;
-            System.out.println("creando msj growl");
-             RequestContext.getCurrentInstance().closeDialog(null);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito"));
-            }else{
+            if (beanAltas.getPrioridad() == 1) {
+                descripcionArea = null;
+                System.out.println("creando msj growl");
+                RequestContext.getCurrentInstance().closeDialog(null);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito"));
+            } else {
                 System.out.println("PUSO NULO");
-            descripcionArea = null;
-           selectedArea=null;
-           RequestContext.getCurrentInstance().update("formadatos:tbw1:areaOne");
-             RequestContext.getCurrentInstance().closeDialog(null);
+                descripcionArea = null;
+                selectedArea = null;
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:areaOne");
+                RequestContext.getCurrentInstance().closeDialog(null);
             }
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
@@ -794,7 +796,12 @@ public class BeanMateriales implements Serializable {
         }
 
     }
-public void otraprueba(){
-            System.out.println(showinquery);
-}
+
+    public void otraprueba() {
+        System.out.println(showinquery);
+    }
+
+    public void updateAreas() {
+        this.listArea = arf.findAll();
+    }
 }
