@@ -5,47 +5,47 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-   
+
     <h:head>
-         <f:event type="preRenderView" listener="#{user.verificar(e)}" />
+        <f:event type="preRenderView" listener="#{user.verificar(e)}" />
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-         <ui:composition template="/Admin.xhtml" >
+        <ui:composition template="/Admin.xhtml" >
             <ui:define name="contentenidoAdmin">
-        <h:form id="eliminarprest">
-             
-            <center>  
+                <h:form id="eliminarprest">
 
-          <p:panel style="width:500px;  " >  
-            <f:facet name="header" >  
-                Eliminar prestatario
-             </f:facet>
-              <div align="left">
-              <h:panelGrid id="panel" columns="3">
-              
-              
-              <p:outputLabel value="Ingrese matrícula:  " />
-               <p:autoComplete id="usuariop" dropdown="true" forceSelection="true"  autocomplete="true"   
-                               completeMethod="#{prest.completeEliminar}"  required="true" requiredMessage="Insertar matrícula">  
-           
-                   <f:ajax render="mensajeus" event="keyup"/>
-              </p:autoComplete>
-               <p:message id="mensajeus"  for="usuariop"  />
-               <h:outputLabel/>
-               <p:commandButton value="Eliminar" actionListener="#{prest.eliminarPrestario}" update="panel"  >
-                   
-               </p:commandButton>
+                    <center>  
 
-             <p:growl id="growl" showDetail="true" life="5000"/>    
-              </h:panelGrid> 
-                    </div>
-          </p:panel> 
-            </center>
-             
-        </h:form>
+                        <p:panel style="width:50%;  " >  
+                            <f:facet name="header" >  
+                                Eliminar prestatario
+                            </f:facet>
+                            <div align="left">
+                                <h:panelGrid id="panel" columns="3">
+
+
+                                    <p:outputLabel value="Ingrese matrícula:  " style="margin-right: 5px" />
+                                    <p:autoComplete id="usuariop" dropdown="true" forceSelection="true"  autocomplete="true"   
+                                                    completeMethod="#{prest.completeEliminar}"  required="true" requiredMessage="Insertar matrícula">  
+
+                                        <f:ajax render="mensajeus" event="keyup"/>
+                                    </p:autoComplete>
+                                    <p:message id="mensajeus"  for="usuariop"  />
+                                    <h:outputLabel/>
+                                    <p:commandButton value="Eliminar" style="margin-top: 5px" actionListener="#{prest.eliminarPrestario}" update="panel"  >
+
+                                    </p:commandButton>
+
+                                    <p:growl id="growl" showDetail="true" life="5000"/>    
+                                </h:panelGrid> 
+                            </div>
+                        </p:panel> 
+                    </center>
+
+                </h:form>
             </ui:define>
-         </ui:composition>
+        </ui:composition>
     </h:body>
 </html>
 

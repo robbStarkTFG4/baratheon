@@ -5,102 +5,102 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-   
+
     <h:head>
         <f:event type="preRenderView" listener="#{user.verificar(e)}" />
         <title>Facelet Title</title>
-         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </h:head>
     <h:body>
-        
-         <ui:composition template="/Admin.xhtml" >
+
+        <ui:composition template="/Admin.xhtml" >
             <ui:define name="contentenidoAdmin">
-        <h:form id="agreus">
-            <center>
-                <p:panel id="panel" style="width:500px;  " >  
-            <f:facet name="header" >  
-                Agregar Usuario
-             </f:facet>   
-                    <div align="left">
-         <h:panelGrid id="grid" columns="3">
-                   <p:outputLabel value="Nombre :"  />  
-                   <p:inputText id="nomus"  required="true"  requiredMessage="Insertar nombre" validatorMessage="Solo letras(2-20)" >
-                   <f:validateLength minimum="3" maximum="20" />
-                   <f:validateRegex pattern="[a-zA-Z]+" />
-                   <f:ajax render="mensajenom" event="keyup"/>
-                </p:inputText>
-                <p:message id="mensajenom"  for="nomus" />
-                   
-                   <p:outputLabel value="Apellido paterno :"  />  
-                 <p:inputText id="ap" required="true"  requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" >
-                   <f:validateRegex pattern="[a-zA-Z]+" />
-                   <f:validateLength minimum="1" maximum="20"/>  
-                   <f:ajax render="mensajeap" event="keyup"/>
-                 </p:inputText>
-                   <p:message id="mensajeap"  for="ap" />
-                  
-                 <p:outputLabel value="Apellido materno :"  />  
-                 <p:inputText id="am"  required="true"  requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)">
-                   <f:validateLength minimum="1" maximum="20"/>
-                    <f:validateRegex pattern="[a-zA-Z]+" />
-                   <f:ajax render="mensajeam" event="keyup"/>
-                  </p:inputText> 
-                 <p:message id="mensajeam"  for="am" />
-                 
-                 <p:outputLabel value="Contraseña :"  />  
-                 <p:inputText id="pass"  required="true"  requiredMessage="Insertar contraseña" validatorMessage="Máximo 20 caracteres">
-                   <f:validateLength minimum="1" maximum="20"/>
-                   <f:ajax render="mensajepass" event="keyup"/>
-                  </p:inputText>   
-                 <p:message id="mensajepass"  for="pass" />
-                 
-                 <p:outputLabel value="Correo :"  />  
-                 <p:inputText id="correo"  required="true"  requiredMessage="Insertar correo" validatorMessage="Formato erróneo">
-                   <f:validateLength minimum="1" maximum="35"/>
-                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                   <f:ajax render="mensajecorreo" event="keyup"/>
-                  </p:inputText> 
-                 <p:message id="mensajecorreo"  for="correo" />
-                 
-                 <p:outputLabel value="Teléfono :"  />  
-                 <p:inputMask id="tel"  required="true"  requiredMessage="Insertar teléfono"  mask="9999999999">
-                  
-                  </p:inputMask>
-                 <h:outputLabel/>
-                 
-                 <p:outputLabel value="Usuario :"  />  
-                 <p:inputText id="us"  required="true"  requiredMessage="Insertar usuario" validatorMessage="Máximo 20 caracteres">
-                   <f:validateLength minimum="1" maximum="20"/>
-                   <f:ajax render="mensajeus" event="keyup"/>
-                  </p:inputText> 
-                 <p:message id="mensajeus"  for="us" />
-             
-                 <p:outputLabel value="Tipo de usuario :" style="width: 300px" />    
-                  <p:selectOneMenu value="Tipo" id="tipo">  
-           
-            <f:selectItem itemLabel="Administrador" itemValue="2" />  
-            <f:selectItem itemLabel="USS" itemValue="1" />  
-           
-        </p:selectOneMenu>  
-                 
-            
-         </h:panelGrid> 
-                    </div>
-                   
-                    <p:commandButton  actionListener="#{user.agregarusuario()}" value="Guardar" update="panel" />  
-                    <h:outputLabel id="indicador" style="color: red"/>
-                    <p></p>
-                    <div align="left">
-                       <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true"     />     
-                       <p:growl id="growl" showDetail="true" life="3000"/>   
-                      </div>
-                   
-</p:panel>  
-            </center>
-        </h:form>
+                <h:form id="agreus">
+                    <center>
+                        <p:panel id="panel" style="width:80%;  " >  
+                            <f:facet name="header" >  
+                                Agregar Usuario
+                            </f:facet>   
+                            <div align="left">
+                                <h:panelGrid id="grid" columns="3" cellspacing="5">
+                                    <p:outputLabel value="Nombre :"  />  
+                                    <p:inputText id="nomus"  required="true"  requiredMessage="Insertar nombre" validatorMessage="Solo letras(2-20)" >
+                                        <f:validateLength minimum="3" maximum="20" />
+                                        <f:validateRegex pattern="[a-zA-Z\s]*"/>
+                                        <f:ajax render="mensajenom" event="keyup"/>
+                                    </p:inputText>
+                                    <p:message id="mensajenom"  for="nomus" />
+
+                                    <p:outputLabel value="Apellido paterno :" styleClass="spacio" />  
+                                    <p:inputText id="ap" required="true"   styleClass="spacio" requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" >
+                                      <f:validateRegex pattern="[a-zA-Z\s]*"/>
+                                        <f:validateLength minimum="1" maximum="20"/>  
+                                        <f:ajax render="mensajeap" event="keyup"/>
+                                    </p:inputText>
+                                    <p:message id="mensajeap"  for="ap"   styleClass="spacio"/>
+
+                                    <p:outputLabel value="Apellido materno :"  styleClass="spacio" />  
+                                    <p:inputText id="am"  required="true"   styleClass="spacio" requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)">
+                                        <f:validateLength minimum="1" maximum="20"/>
+                                       <f:validateRegex pattern="[a-zA-Z\s]*"/>
+                                        <f:ajax render="mensajeam" event="keyup"/>
+                                    </p:inputText> 
+                                    <p:message id="mensajeam"  for="am"  styleClass="spacio" />
+
+                                    <p:outputLabel value="Contraseña :"  styleClass="spacio" />  
+                                    <p:inputText id="pass"  required="true"   styleClass="spacio" requiredMessage="Insertar contraseña" validatorMessage="Máximo 20 caracteres">
+                                        <f:validateLength minimum="1" maximum="20"/>
+                                        <f:ajax render="mensajepass" event="keyup"/>
+                                    </p:inputText>   
+                                    <p:message id="mensajepass"  for="pass"  styleClass="spacio" />
+
+                                    <p:outputLabel value="Correo :"  styleClass="spacio" />  
+                                    <p:inputText id="correo"  required="true"  styleClass="spacio" requiredMessage="Insertar correo" validatorMessage="Formato erróneo">
+                                        <f:validateLength minimum="1" maximum="35"/>
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <f:ajax render="mensajecorreo" event="keyup"/>
+                                    </p:inputText> 
+                                    <p:message id="mensajecorreo"  for="correo"  styleClass="spacio" />
+
+                                    <p:outputLabel value="Teléfono :"  styleClass="spacio" />  
+                                    <p:inputMask id="tel"  required="true"  requiredMessage="Insertar teléfono"  styleClass="spacio"  mask="9999999999">
+
+                                    </p:inputMask>
+                                    <h:outputLabel/>
+
+                                    <p:outputLabel value="Usuario :"  styleClass="spacio" />  
+                                    <p:inputText id="us"  required="true"   styleClass="spacio" requiredMessage="Insertar usuario" validatorMessage="Máximo 20 caracteres">
+                                        <f:validateLength minimum="1" maximum="20"/>
+                                        <f:ajax render="mensajeus" event="keyup"/>
+                                    </p:inputText> 
+                                    <p:message id="mensajeus"  for="us"  styleClass="spacio" />
+
+                                    <p:outputLabel value="Tipo de usuario :"  styleClass="spacio" style="width: 300px" />    
+                                    <p:selectOneMenu value="Tipo" id="tipo"  styleClass="spacio">  
+
+                                        <f:selectItem itemLabel="Administrador" itemValue="2" />  
+                                        <f:selectItem itemLabel="USS" itemValue="1" />  
+
+                                    </p:selectOneMenu>  
+
+
+                                </h:panelGrid> 
+                            </div>
+
+                            <p:commandButton  actionListener="#{user.agregarusuario()}" value="Guardar" update="panel" />  
+                            <h:outputLabel id="indicador" style="color: red"/>
+                            <p></p>
+                            <div align="left">
+                                <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true"     />     
+                                <p:growl id="growl" showDetail="true" life="3000"/>   
+                            </div>
+
+                        </p:panel>  
+                    </center>
+                </h:form>
             </ui:define>
-         </ui:composition>
-                
+        </ui:composition>
+
     </h:body>
 </html>
 

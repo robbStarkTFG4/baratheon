@@ -15,7 +15,7 @@
                         <center>
                             <p:panel id="pan1" style="width: 52%"  >
                                 <center>
-                                    <p:outputLabel value="Buscador " style="font-weight: bold;color: #558e4d"/>
+                                    <p:outputLabel value="Buscador " style="font-weight: bold;color: #558e4d ;margin-right: 5px"/>
                                     <p:autoComplete   value="#{personal.res}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
                                                       var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
                                                       maxResults="15" queryDelay="500"
@@ -38,17 +38,17 @@
 
                                 <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
 
-                                    <p:outputLabel value="Nombre"/>
-                                    <p:inputText value="#{personal.res.nombre}" disabled="true"/>
+                                    <p:outputLabel value="Nombre" styleClass="spacio"/>
+                                    <p:inputText value="#{personal.res.nombre}" disabled="true" styleClass="spacio"/>
 
                                     <p:outputLabel value="#Parte"/>
-                                    <p:inputText value="#{personal.res.noParte}" disabled="true"/>
+                                    <p:inputText value="#{personal.res.noParte}" disabled="true" styleClass="spacio"/>
 
-                                    <p:outputLabel value="Serie"/>
-                                    <p:inputText value="#{personal.serie}" />
+                                    <p:outputLabel value="Serie" styleClass="spacio"/>
+                                    <p:inputText value="#{personal.serie}"  styleClass="spacio"/>
 
-                                    <p:outputLabel value="#Empleado"/>
-                                    <p:inputText value="#{personal.responsable}" />
+                                    <p:outputLabel value="#Empleado " styleClass="spacio"/>
+                                    <p:inputText value="#{personal.responsable}"  styleClass="spacio"/>
 
                                 </h:panelGrid>
                             </p:panel>

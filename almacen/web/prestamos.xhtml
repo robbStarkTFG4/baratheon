@@ -21,35 +21,73 @@
         </style>
     </h:head>
     <h:body styleClass="cl">
-        <p:panel style="margin: 10px; margin-top: 25px">
+        <p:panel >
             <h:form id="forma">     
                 <p:growl id="notify" showDetail="true" sticky="false"/>
                 <p:messages id="notificaciones"/>
-                <h:panelGrid id="grid" columns="4" cellspacing="5">
-                    <p:outputLabel style="margin-right: 20px; " value="Matrícula :"  styleClass="cl" />
-                    <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Insertar matrícula" style="height: 20px; width: 150px;" styleClass="cl">
-                        <f:validateRegex pattern="[0-9]+" />
-                        <f:validateLength minimum="3" maximum="20" >
-                        </f:validateLength> 
+                <div style="margin-top: 5px">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <p:outputLabel  value="Matrícula: "  styleClass="cl" />
+                        </div>
+                        <div class="col-lg-3">
+                            <p:inputText id="mat" value="#{pres.matricula}" required="true"  requiredMessage="Insertar matrícula" style="width: 100%" styleClass="cl">
+                                <f:validateRegex pattern="[0-9]+" />
+                                <f:validateLength minimum="3" maximum="20" >
+                                </f:validateLength> 
 
-                    </p:inputText>
+                            </p:inputText>
+                        </div >
 
-                    <p:commandButton id="find" value="Verificar" style="border-radius: 5px; height: 30px; width: 150px;" action="#{pres.findPres}" styleClass="cl" 
-                                     update="presName,carrera,mail,tel,notify,log,@this"   disabled="#{pres.us ne null}"/>   
+                        <div class="col-lg-1">
+                            <p:commandButton id="find" value="Verificar" style="border-radius: 5px; height: 30px;" action="#{pres.findPres}" styleClass="cl" 
+                                             update="presName,carrera,mail,tel,notify,log,@this"   disabled="#{pres.us ne null}"/>   
+                        </div>
 
-                    <p:commandLink id="log" value="Cerrar sesión" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this,find" disabled="#{pres.us eq null}" styleClass="cl" />
+                        <div class="col-lg-2">
+                            <p:commandLink id="log" value="Cerrar sesión" action="#{pres.logOut}" update="mat,presName,carrera,mail,tel,@this,find" disabled="#{pres.us eq null}" />
+                        </div>
+                    </div>
+                </div>
 
-                </h:panelGrid>
+                <div style="margin-top: 7px">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <p:outputLabel value="Nombre: " for="presName" styleClass="cl"/> 
+                        </div>
+                        <div class="col-lg-8">
+                            <p:inputText value="#{pres.nombre}" id="presName" size="50" disabled="true" style="font-size: 14px"/>
+                        </div>
+                    </div>
+                </div>
 
-                <h:panelGrid id="pan2" columns="4" cellspacing="5" cellpadding="5px">
+                <div style="margin-top: 7px">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <p:outputLabel value="Carrera: " for="carrera" styleClass="cl" />
+                        </div>
+                        <div class="col-lg-5">
+                            <p:inputText value="#{pres.carrera}" id="carrera" style="width: 100%" disabled="true" styleClass="cl"/>
+                        </div>
+                        <div class="col-lg-1">
+                            <p:outputLabel value="Teléfono: " for="tel" styleClass="cl"/> 
+                        </div>
+                        <div class="col-lg-4">
+                            <p:inputText value="#{pres.telefono}" id="tel" style="width: 100%" disabled="true" styleClass="cl"/>
+                        </div>
+                    </div>
+                </div>
 
-                    <p:outputLabel value="Nombre: " for="presName" styleClass="cl"/> <p:inputText value="#{pres.nombre}" id="presName" size="30" disabled="true" styleClass="cl"/>
-                    <p:outputLabel value="Carrera: " for="carrera" styleClass="cl" /> <p:inputText value="#{pres.carrera}" id="carrera" size="10" disabled="true" styleClass="cl"/>
-
-                    <p:outputLabel value="Correo: " for="mail" styleClass="cl"/> <p:inputText value="#{pres.correo}" id="mail" size="10" disabled="true"/>
-                    <p:outputLabel value="Teléfono: " for="tel" styleClass="cl"/> <p:inputText value="#{pres.telefono}" id="tel" size="10" disabled="true" styleClass="cl"/>
-
-                </h:panelGrid>
+                <div style="margin-top: 7px">
+                    <div class="row">
+                        <div class="col-lg-1">
+                            <p:outputLabel value="Correo: " for="mail" styleClass="cl"/> 
+                        </div>
+                        <div class="col-lg-8">
+                            <p:inputText value="#{pres.correo}" id="mail" style="width: 100%" disabled="true"/>
+                        </div>
+                    </div>
+                </div>
 
                 <p:tabView id="tabView" style="margin-top: 10px;" >  
 
@@ -61,20 +99,20 @@
                                      rowsPerPageTemplate="5,10,15">
 
                             <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
-                            <p:column style="width:2%">  
+                            <p:column style="width:10%">  
                                 <p:rowToggler  />  
                             </p:column>  
 
-                            <p:column style="width:10%">  
+                            <p:column style="width:20%">  
                                 <f:facet name="header">  
-                                    No. Prestamo  
+                                    #Prestamo  
                                 </f:facet>  
                                 <h:outputText value="#{sl.idPrestamo}" />  
                             </p:column>  
 
-                            <p:column style="width:22%">  
+                            <p:column style="width:25%">  
                                 <f:facet name="header">  
-                                    Fecha de solicitud  
+                                    Fecha solicitud  
                                 </f:facet>  
                                 <h:outputText value="#{sl.fechaSolicitud}" />  
                             </p:column>  
@@ -83,22 +121,23 @@
 
 
 
-                            <p:column style="width:22%">  
+                            <p:column style="width:25%">  
                                 <f:facet name="header">  
-                                    Estatus del prestamo
+                                    Estatus
                                 </f:facet>  
                                 <h:outputText id="estatus" value="#{sl.statusprestamo}" />  
                             </p:column>  
 
-                            <p:column style="width:22%">  
+                            <p:column style="width:30%">  
                                 <f:facet name="header">  
-                                    Fecha vencimiento
+                                    Vencimiento
                                 </f:facet>  
-                                <p:calendar id="datetime" value="#{sl.date10}" showOn="button" pattern="MM/dd/yyyy HH:mm:ss"  >
-                                    <f:attribute name="prestamito" value="#{sl}"/>
-                                    <p:ajax event="dateSelect" listener="#{pres.dateListener}" />
-                                </p:calendar>
-
+                                <div style="width: 80%">
+                                    <p:calendar id="datetime" value="#{sl.date10}" showOn="button" pattern="MM/dd/yyyy HH:mm:ss" size="15" style="font-size: 12px">
+                                        <f:attribute name="prestamito" value="#{sl}"/>
+                                        <p:ajax event="dateSelect" listener="#{pres.dateListener}" />
+                                    </p:calendar>
+                                </div>
                             </p:column>  
 
                             <p:rowExpansion>  
@@ -185,32 +224,32 @@
                                      rowsPerPageTemplate="5,10,15">
 
                             <p:ajax event="rowToggle" listener="#{pres.onRowToggle}"  />  
-                            <p:column style="width:2%">  
+                            <p:column style="width:10%">  
                                 <p:rowToggler  />  
                             </p:column>  
 
-                            <p:column style="width:15%">  
+                            <p:column style="width:10%">  
                                 <f:facet name="header">  
-                                    No. Prestamo  
+                                    #Prestamo  
                                 </f:facet>  
                                 <h:outputText value="#{pl.idPrestamo}" />  
                             </p:column>  
 
-                            <p:column style="width:20%">  
+                            <p:column style="width:30%">  
                                 <f:facet name="header">  
-                                    Fecha de aprobación  
+                                    Aprobación  
                                 </f:facet>  
                                 <h:outputText value="#{pl.fechaprestamo}" />  
                             </p:column>  
 
-                            <p:column style="width:20%">  
+                            <p:column style="width:30%">  
                                 <f:facet name="header">  
-                                    Fecha vencimiento
+                                    Vencimiento
                                 </f:facet>  
                                 <h:outputText value="#{pl.fechaVencimiento}" />  
                             </p:column>  
 
-                            <p:column style="width:20%">  
+                            <p:column style="width:10%">  
                                 <f:facet name="header">  
                                     Usuario  
                                 </f:facet>  
@@ -219,9 +258,9 @@
                                 </p:commandLink>  
                             </p:column>  
 
-                            <p:column style="width:20%">  
+                            <p:column style="width:10%">  
                                 <f:facet name="header">  
-                                    Estatus prestamo
+                                    Estatus 
                                 </f:facet>  
                                 <h:outputText id="estatus" value="#{pl.statusprestamo}" />  
                             </p:column>  

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <p:autoComplete   value="#{nm.caja}" id="sr" completeMethod="#{nm.autoComplete}"  style="margin-right:150px; height: 25px; width: 50px; "
+                          var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
+                          forceSelection="true" maxResults="15" queryDelay="500"
+                          >
+            <p:column>  
+                #{p.nombre} - #{p.noParte}  
+            </p:column>
+
+        </p:autoComplete>  
+
+        <p:commandButton   icon="ui-icon-search" style=" height: 30px; " action="#{nm.processQuery}" />  
+    </cc:implementation>
+</html>

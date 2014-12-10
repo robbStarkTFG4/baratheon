@@ -44,7 +44,8 @@ public class BeanUsuarios implements Serializable {
     @EJB
     TblUsuariosFacade us;
     TblMaterialFacade mat;
-    @EJB AccionesFacade accfac;
+    @EJB
+    AccionesFacade accfac;
     TblUsuarios usuario = null, usmodif = null;
     TblTipousuarios tu = null;
     List<UsuarioDTO> listauss;
@@ -68,14 +69,14 @@ public class BeanUsuarios implements Serializable {
     String password;
 
     public boolean isHabilita() {
-        if (usuario.getIdTipousuarios().getIdTipousuarios()==2) {
+        if (usuario.getIdTipousuarios().getIdTipousuarios() == 2) {
             return habilita = false;
 
         } else {
 
             return habilita = true;
         }
-        
+
     }
 
     public void setHabilita(boolean habilita) {
@@ -88,9 +89,9 @@ public class BeanUsuarios implements Serializable {
     }
 
     public List<UsuarioDTO> getListauss() {
-         
+
         this.listauss = us.listausuariosSS();
-        
+
         return listauss;
     }
 
@@ -168,7 +169,7 @@ public class BeanUsuarios implements Serializable {
              System.out.println("Usuario o correo usados");
              */
         } else {
-          acciones("Usuario agregado: "+compUsuario.getValue().toString()+", "+ "Permisos: "+compTipo.getValue().toString(), compUsuario.getValue().toString());
+            acciones("Usuario agregado: " + compUsuario.getValue().toString() + ", " + "Permisos: " + compTipo.getValue().toString(), compUsuario.getValue().toString());
             borrar = "";
             UIOutput compN = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:agreus:nomus");
             UIOutput compC = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:agreus:pass");
@@ -189,7 +190,7 @@ public class BeanUsuarios implements Serializable {
             out.setValue(status);
             FacesContext context = FacesContext.getCurrentInstance();
             context.addMessage(null, new FacesMessage("Successful", "Usuario " + compUsuario.getValue().toString() + " agregado con éxito"));
-           
+
         }
 
     }
@@ -203,7 +204,7 @@ public class BeanUsuarios implements Serializable {
     public void eliminar() {
         UIInput compUsuario = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:eliminarus:usuariof");
         us.eliminar(compUsuario.getValue().toString());
-        acciones("Usuario Eliminado: "+compUsuario.getValue().toString(), compUsuario.getValue().toString());
+        acciones("Usuario Eliminado: " + compUsuario.getValue().toString(), compUsuario.getValue().toString());
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Successful", "Usuario " + compUsuario.getValue().toString() + " Eliminado con exito"));
 
@@ -224,9 +225,9 @@ public class BeanUsuarios implements Serializable {
         }
         if (usuario != null) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(usuario.getUsuario(), "usuario autentificado ?++");
-if (usuario.getIdTipousuarios().getIdTipousuarios()==2) {
-habilita=false;
-}
+            if (usuario.getIdTipousuarios().getIdTipousuarios() == 2) {
+                habilita = false;
+            }
             System.out.println(tipo);
 
             return "index.xhtml?faces-redirect=true";
@@ -336,8 +337,6 @@ habilita=false;
 
     }
 
-    
-
     public String getStatus() {
         return status;
     }
@@ -397,7 +396,7 @@ habilita=false;
         } else {
             Hregistros = true;
             borrar = "";
- acciones("Usuario Modificado: "+compUsuario.getValue().toString()+", "+ "Permisos: "+compTipo.getValue().toString(), compUsuario.getValue().toString());
+            acciones("Usuario Modificado: " + compUsuario.getValue().toString() + ", " + "Permisos: " + compTipo.getValue().toString(), compUsuario.getValue().toString());
             UIOutput compN = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:nomus");
             UIOutput compC = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:pass");
             UIOutput compAp = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarUs:ap");
@@ -429,22 +428,22 @@ habilita=false;
         return "ModificarUs.xhtml?faces-redirect=true";
 
     }
-public void acciones(String descripcion, String idelemento){
 
+    public void acciones(String descripcion, String idelemento) {
 
-   accfac.create(descripcion, usuario.getUsuario(), idelemento);
-    
-    
-}
-    public void conexion(int i){
-        if(i==1){
-   acciones("Reporte de prestarios moroso", null); }
-       else if(i==2){
-          acciones("Reporte de materiales existentes",null);  
-        }else{
-        acciones("Reporte de usuarios del servicio social", null);
-        
+        accfac.create(descripcion, usuario.getUsuario(), idelemento);
+
+    }
+
+    public void conexion(int i) {
+        if (i == 1) {
+            acciones("Reporte de prestarios moroso", null);
+        } else if (i == 2) {
+            acciones("Reporte de materiales existentes", null);
+        } else {
+            acciones("Reporte de usuarios del servicio social", null);
+
         }
-    
+
     }
 }

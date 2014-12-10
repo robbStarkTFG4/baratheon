@@ -185,26 +185,28 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             this.nombre = us.getNombre();
             this.telefono = us.getTel();
             this.activo = us.getActivo();
-            System.out.println("me llamo: " + us.getEmail());
+            //  System.out.println("me llamo: " + us.getEmail());
 
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
 
             if (listLoans != null) {
                 for (PresDTO dt : listLoans) {
-                    System.out.println("Datos Prestamo: ");
-                    System.out.println(dt.getIdPrestamo());
-                    System.out.println(dt.getFechaprestamo());
-                    System.out.println(dt.getHoraprestamo());
-                    System.out.println("el estatus" + dt.getStatusprestamo());
+                    /*     System.out.println("Datos Prestamo: ");
+                     System.out.println(dt.getIdPrestamo());
+                     System.out.println(dt.getFechaprestamo());
+                     System.out.println(dt.getHoraprestamo());
+                     System.out.println("el estatus" + dt.getStatusprestamo());*/
 
                     for (DetailDTO dtl : dt.getTblDetalleprestamoList()) {
-                        System.out.println("Nombre Pieza: " + dtl.getNombre());
-                        System.out.println("Cantidad: " + dtl.getCantidad());
+                        //  System.out.println("Nombre Pieza: " + dtl.getNombre());
+                        //  System.out.println("Cantidad: " + dtl.getCantidad());
                     }
 
                 }
 
                 RequestContext.getCurrentInstance().update("forma:tabView:debts");
+                RequestContext.getCurrentInstance().update("forma:tabView:freed");
+
                 RequestContext.getCurrentInstance().update("forma:grid:log");
             }
 
@@ -409,7 +411,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     private void openDialog() {
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
-        options.put("draggable", false);
+        options.put("draggable", true);
         options.put("resizable", false);
         options.put("contentHeight", 300);
 

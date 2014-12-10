@@ -5,110 +5,110 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    
+
     <h:head>
         <f:event type="preRenderView" listener="#{user.verificar(e)}" />
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-         <ui:composition template="/Admin.xhtml" >
+        <ui:composition template="/Admin.xhtml" >
             <ui:define name="contentenidoAdmin">
-        <h:form id="modificarUs">
-            <center>  
+                <h:form id="modificarUs">
+                    <center>  
 
-          <p:panel id="panel" style="width:500px;  " >  
-            <f:facet name="header" >  
-                Modificar Usuario
-             </f:facet>
-              <div align="left">
-              <h:panelGrid columns="3">
-              
-              
-              <p:outputLabel value="Ingresar usuario:  " />
-              <p:autoComplete id="usuariof" dropdown="true" forceSelection="true"  autocomplete="true"   
-                              completeMethod="#{user.complete}"  required="true" requiredMessage="Insertar usuario">  
-           
-                   <f:ajax render="msjus" event="keyup"/>
-              </p:autoComplete>
-              <p:commandButton id="botonmodif" value="Buscar" actionListener="#{user.searchUModificar()}"  update="panel"/>   
-          
-           <h:outputLabel/>
-   
-            <p:message id="msjus"  for="usuariof" />
+                        <p:panel id="panel" style="width:80%;  " >  
+                            <f:facet name="header" >  
+                                Modificar Usuario
+                            </f:facet>
+                            <div align="left">
+                                <h:panelGrid columns="3">
 
-           
-            <h:outputLabel/>
-           <p:outputLabel value="Nombre :"  />  
-           <p:inputText id="nomus"  required="true"  requiredMessage="Insertar nombre" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}" >
-                   <f:validateLength minimum="3" maximum="20" />
-                   <f:validateRegex pattern="[a-zA-Z]+" />
-                   <f:ajax render="mensajenom" event="keyup"/>
-                </p:inputText>
-                <p:message id="mensajenom"  for="nomus" />
-                   
-                   <p:outputLabel value="Apellido paterno :"  />  
-                   <p:inputText id="ap" required="true"  requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}" >
-                   <f:validateRegex pattern="[a-zA-Z]+" />
-                   <f:validateLength minimum="1" maximum="20"/>  
-                   <f:ajax render="mensajeap" event="keyup"/>
-                 </p:inputText>
-                   <p:message id="mensajeap"  for="ap" />
-                  
-                 <p:outputLabel value="Apellido materno :"  />  
-                 <p:inputText id="am"  required="true"  requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}">
-                   <f:validateLength minimum="1" maximum="20"/>
-                    <f:validateRegex pattern="[a-zA-Z]+" />
-                   <f:ajax render="mensajeam" event="keyup"/>
-                  </p:inputText> 
-                 <p:message id="mensajeam"  for="am" />
-                 
-                 <p:outputLabel value="Contraseña :"  />  
-                 <p:inputText id="pass"  required="true"  requiredMessage="Insertar contraseña" validatorMessage="Máximo 20 caracteres" disabled="#{user.hregistros}">
-                   <f:validateLength minimum="1" maximum="20"/>
-                   <f:ajax render="mensajepass" event="keyup"/>
-                  </p:inputText>   
-                 <p:message id="mensajepass"  for="pass" />
-                 
-                 <p:outputLabel value="Correo :"  />  
-                 <p:inputText id="correo"  required="true"  requiredMessage="Insertar correo" validatorMessage="Formato erróneo" disabled="#{user.hregistros}">
-                   <f:validateLength minimum="1" maximum="35"/>
-                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                   <f:ajax render="mensajecorreo" event="keyup"/>
-                  </p:inputText> 
-                 <p:message id="mensajecorreo"  for="correo" />
-                 
-                 <p:outputLabel value="Teléfono :"  />  
-                 <p:inputMask id="tel"  required="true"  requiredMessage="Insertar teléfono"  mask="9999999999" disabled="#{user.hregistros}">
-                  
-                  </p:inputMask>
-                 <h:outputLabel/>
-                 
-                 <p:outputLabel value="Usuario :"  />  
-                 <p:inputText id="us"  required="true"  requiredMessage="Insertar usuario" validatorMessage="Máximo 20 caracteres" disabled="true">
-                   <f:validateLength minimum="1" maximum="20"/>
-                   <f:ajax render="mensajeus" event="keyup"/>
-                  </p:inputText> 
-                 <p:message id="mensajeus"  for="us" />
-             
-                 <p:outputLabel value="Tipo de usuario :" style="width: 300px" />    
-                 <p:selectOneMenu value="Tipo" id="tipo" disabled="#{user.hregistros}">  
-           
-            <f:selectItem itemLabel="Administrador" itemValue="2" />  
-            <f:selectItem itemLabel="USS" itemValue="1" />  
-           
-        </p:selectOneMenu>  
-         <h:outputLabel/>
-          <h:outputLabel/>
-          <p:commandButton value="Modificar" disabled="#{user.hregistros}" actionListener="#{user.modificarusuario()}" update="panel"/>
-           <p:growl id="growl" showDetail="true" life="5000"/>      
-              
-              </h:panelGrid> 
-              </div>
-          </p:panel> 
-            </center>
-        </h:form>
+
+                                    <p:outputLabel value="Ingresar usuario:  " />
+                                    <p:autoComplete id="usuariof" dropdown="true" forceSelection="true"  autocomplete="true"   
+                                                    completeMethod="#{user.complete}"  required="true" requiredMessage="Insertar usuario">  
+
+                                        <f:ajax render="msjus" event="keyup"/>
+                                    </p:autoComplete>
+                                    <p:commandButton id="botonmodif" value="Buscar" actionListener="#{user.searchUModificar()}"  update="panel"/>   
+
+                                    <h:outputLabel/>
+
+                                    <p:message id="msjus"  for="usuariof" />
+
+
+                                    <h:outputLabel/>
+                                    <p:outputLabel value="Nombre :"  />  
+                                    <p:inputText id="nomus"  required="true"  requiredMessage="Insertar nombre" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}" >
+                                        <f:validateLength minimum="3"/>
+                                        <f:validateRegex pattern="[a-zA-Z\s]*"/>
+                                        <f:ajax render="mensajenom" event="keyup"/>
+                                    </p:inputText>
+                                    <p:message id="mensajenom"  for="nomus" />
+
+                                    <p:outputLabel value="Apellido paterno :"  styleClass="spacio"/>  
+                                    <p:inputText id="ap" required="true"  styleClass="spacio" requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}" >
+                                        <f:validateRegex pattern="[a-zA-Z]+" />
+                                        <f:validateLength minimum="1" maximum="20"/>  
+                                        <f:ajax render="mensajeap" event="keyup"/>
+                                    </p:inputText>
+                                    <p:message id="mensajeap"  for="ap" styleClass="spacio"/>
+
+                                    <p:outputLabel value="Apellido materno :" styleClass="spacio" />  
+                                    <p:inputText id="am"  required="true" styleClass="spacio" requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" disabled="#{user.hregistros}">
+                                        <f:validateLength minimum="1" maximum="20"/>
+                                        <f:validateRegex pattern="[a-zA-Z]+" />
+                                        <f:ajax render="mensajeam" event="keyup"/>
+                                    </p:inputText> 
+                                    <p:message id="mensajeam"  for="am" styleClass="spacio" />
+
+                                    <p:outputLabel value="Contraseña :" styleClass="spacio" />  
+                                    <p:inputText id="pass"  required="true" styleClass="spacio" requiredMessage="Insertar contraseña" validatorMessage="Máximo 20 caracteres" disabled="#{user.hregistros}">
+                                        <f:validateLength minimum="1" maximum="20"/>
+                                        <f:ajax render="mensajepass" event="keyup"/>
+                                    </p:inputText>   
+                                    <p:message id="mensajepass"  for="pass" styleClass="spacio" />
+
+                                    <p:outputLabel value="Correo :" styleClass="spacio"  />  
+                                    <p:inputText id="correo"  required="true"  styleClass="spacio" requiredMessage="Insertar correo" validatorMessage="Formato erróneo" disabled="#{user.hregistros}">
+                                        <f:validateLength minimum="1" maximum="35"/>
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <f:ajax render="mensajecorreo" event="keyup"/>
+                                    </p:inputText> 
+                                    <p:message id="mensajecorreo"  for="correo" styleClass="spacio" />
+
+                                    <p:outputLabel value="Teléfono :" styleClass="spacio"  />  
+                                    <p:inputMask id="tel"  required="true"  styleClass="spacio" requiredMessage="Insertar teléfono"  mask="9999999999" disabled="#{user.hregistros}">
+
+                                    </p:inputMask>
+                                    <h:outputLabel/>
+
+                                    <p:outputLabel value="Usuario :" styleClass="spacio"  />  
+                                    <p:inputText id="us"  required="true"  styleClass="spacio" requiredMessage="Insertar usuario" validatorMessage="Máximo 20 caracteres" disabled="true">
+                                        <f:validateLength minimum="1" maximum="20"/>
+                                        <f:ajax render="mensajeus" event="keyup"/>
+                                    </p:inputText> 
+                                    <p:message id="mensajeus"  for="us" styleClass="spacio" />
+
+                                    <p:outputLabel value="Tipo de usuario :" styleClass="spacio" style="width: 300px" />    
+                                    <p:selectOneMenu value="Tipo" id="tipo" styleClass="spacio" disabled="#{user.hregistros}">  
+
+                                        <f:selectItem itemLabel="Administrador" itemValue="2" />  
+                                        <f:selectItem itemLabel="USS" itemValue="1" />  
+
+                                    </p:selectOneMenu>  
+                                    <h:outputLabel/>
+                                    <h:outputLabel/>
+                                    <p:commandButton value="Modificar"  styleClass="spacio" disabled="#{user.hregistros}" actionListener="#{user.modificarusuario()}" update="panel"/>
+                                    <p:growl id="growl" showDetail="true" life="5000"/>      
+
+                                </h:panelGrid> 
+                            </div>
+                        </p:panel> 
+                    </center>
+                </h:form>
             </ui:define>
-         </ui:composition>
+        </ui:composition>
     </h:body>
 </html>
 
