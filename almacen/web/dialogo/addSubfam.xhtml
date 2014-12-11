@@ -11,16 +11,16 @@
         <h:form id="fr">
             <p:growl id="growl" showDetail="true" life="3000"/>
             <h:panelGrid columns="2" >
-                
-                <p:outputLabel styleClass="labeltipmaterial" value="Area: " style="font-weight: bold;color: darkgreen"/>
-                <p:selectOneMenu  id="ar" value="#{mat.selectedArea}" styleClass="mnu2"  converter="matAreaC" style="width: 220px"  >
 
+                <p:outputLabel styleClass="labeltipmaterial" value="Area: " style="font-weight: bold;color: darkgreen"/>
+                <p:selectOneMenu  id="ar" value="#{mat.selectedArea}" styleClass="mnu2"  valueChangeListener="#{mat.araDialogListener}" converter="matAreaC" style="width: 220px"  >
+                    <f:ajax  execute="@this"  render=" @this  tipo   "/>
                     <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                     <f:selectItems value="#{mat.listArea}" var="cat"
                                    itemLabel="#{cat.descripcion}"
                                    itemValue="#{cat}" />  
                 </p:selectOneMenu>     
-                
+
                 <p:outputLabel styleClass="labeltipmaterial" value="Tipo De Material: " style="font-weight: bold;color: darkgreen"/>
                 <p:selectOneMenu  id="tipo" value="#{mat.selectedTipo}" styleClass="mnu2"  converter="matTypeConv" style="width: 220px"  >
 
@@ -34,7 +34,8 @@
                     <f:validateLength minimum="2" maximum="15"/>
                     <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
                     <f:ajax render="fac" event="keyup" />
-                </p:inputText> <h:outputLabel value="hhdjfh" style="font-size: xx-small;color:transparent"/>
+                </p:inputText>
+                <h:outputLabel value="hhdjfh" style="font-size: xx-small;color:transparent"/>
                 <h:message id="fac" for="nm" style="font-size: xx-small; color: red"/>
                 <p:outputLabel styleClass="labeldescripcion" value="Descripción: " style="font-weight: bold;color: darkgreen" />  
                 <p:inputTextarea id="desc" style="font-weight: bold; width: 220px" value="#{mat.descripcionSubfam}"  validatorMessage="Tamaño invalido" autoResize="false" maxlength="140" rows="2" styleClass="iparea" >

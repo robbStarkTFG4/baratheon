@@ -133,7 +133,7 @@ public class Altas implements Serializable {
 
     public void dialogSF(int p) {
         prioridad = p;
-        mate.setListTM(tmf.listaTipoAll());
+       // mate.setListTM(tmf.listaTipoAll());
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
@@ -156,7 +156,7 @@ public class Altas implements Serializable {
         options.put("resizable", false);
         options.put("contentHeight", 250);
         options.put("contentWidth", 430);
-        RequestContext.getCurrentInstance().openDialog("/dialogo/addSubfam2.xhtml", options, null);
+        RequestContext.getCurrentInstance().openDialog("/dialogo/addSubfam.xhtml", options, null);
 
         // RequestContext.getCurrentInstance().openDialog("/Imagen.xhtml");
     }

@@ -160,16 +160,19 @@ public class BeanMateriales implements Serializable {
     }
 
     public List<TblArea> getListArea() {
-
+        listArea = arf.listAr();
         return listArea;
     }
 
     public void setListArea(List<TblArea> listArea) {
+
         this.listArea = listArea;
     }
 
     public List<TblTipomaterial> getListTM() {
-        //  this.listTM = tmf.listAtm();
+        if (selectedArea != null) {
+            this.listTM = tmf.listAtm(selectedArea.getIdArea());
+        }
         return listTM;
     }
 
@@ -709,6 +712,9 @@ public class BeanMateriales implements Serializable {
     public void agregarSubfam() {
         boolean hecho;
 
+        if(selectedTipo==null){
+            return;
+        }
         hecho = sff.agregar2(nombreSubfam, descripcionSubfam, selectedTipo);
 
         if (hecho == true) {
@@ -780,7 +786,7 @@ public class BeanMateriales implements Serializable {
         if (hecho == true) {
             if (beanAltas.getPrioridad() == 1) {
                 descripcionArea = null;
-               // System.out.println("creando msj growl");
+                // System.out.println("creando msj growl");
                 RequestContext.getCurrentInstance().closeDialog(null);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito"));
                 //catalog.updateTree();
@@ -807,5 +813,12 @@ public class BeanMateriales implements Serializable {
 
     public void updateAreas() {
         this.listArea = arf.findAll();
+    }
+    
+    public void araDialogListener(ValueChangeEvent e){
+        selectedTipo=null;
+        System.out.println("HOLA SOY EL LISTENER");
+        System.out.println(((TblArea)e.getNewValue()).getDescripcion());
+        listTM=tmf.listaTipoAll(((TblArea)e.getNewValue()).getIdArea());
     }
 }

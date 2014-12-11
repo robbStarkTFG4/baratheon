@@ -91,6 +91,7 @@ public class TblTipomaterialFacade extends AbstractFacade<TblTipomaterial> {
         return list;
 
     }
+
     public List<TblTipomaterial> listaTipoAll() {
 
         List<TblTipomaterial> list;
@@ -100,5 +101,13 @@ public class TblTipomaterialFacade extends AbstractFacade<TblTipomaterial> {
         list = search.getResultList();
         return list;
 
+    }
+
+    public List<TblTipomaterial> listaTipoAll(Integer idArea) {
+        List<TblTipomaterial> list;
+
+        TypedQuery<TblTipomaterial> search = em.createQuery("SELECT NEW com.server.entity.beans.TblTipomaterial(u.idTipomaterial,u.descripcion) FROM TblTipomaterial u WHERE u.tblAreaIdArea.idArea = :id ", TblTipomaterial.class);
+        search.setParameter("id", (int)idArea);
+        return search.getResultList();
     }
 }

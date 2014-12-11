@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-12-2014 a las 07:45:28
+-- Tiempo de generación: 11-12-2014 a las 06:08:28
 -- Versión del servidor: 5.6.14
 -- Versión de PHP: 5.5.6
 
@@ -34,7 +34,19 @@ CREATE TABLE IF NOT EXISTS `acciones` (
   `hora` varchar(7) NOT NULL,
   `id_elementoModif` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id_acciones`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+--
+-- Volcado de datos para la tabla `acciones`
+--
+
+INSERT INTO `acciones` (`id_acciones`, `descripcion`, `usuario`, `fecha`, `hora`, `id_elementoModif`) VALUES
+(1, 'Usuario agregado: temoc, Permisos: 2', 'lara', '12/09/14', '19:29', 'temoc'),
+(2, 'Usuario Modificado: temoc, Permisos: 2', 'lara', '12/09/14', '20:12', 'temoc'),
+(3, 'Reporte de prestarios moroso', 'lara', '12/09/14', '20:31', NULL),
+(4, 'Reporte de prestarios moroso', 'lara', '12/09/14', '20:32', NULL),
+(5, 'Reporte de materiales existentes', 'lara', '12/09/14', '20:32', NULL),
+(6, 'Reporte de usuarios del servicio social', 'lara', '12/09/14', '20:33', NULL);
 
 -- --------------------------------------------------------
 
@@ -70,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `map` (
   PRIMARY KEY (`id_map`,`subFamilias_id_subFam`),
   KEY `fk_table1_subFamilias1_idx` (`subFamilias_id_subFam`),
   KEY `fk_map_tbl_tipomaterial1_idx` (`tbl_tipomaterial_id_tipomaterial`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `map`
@@ -80,6 +92,7 @@ INSERT INTO `map` (`id_map`, `subFamilias_id_subFam`, `tbl_tipomaterial_id_tipom
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 2),
+(5, 5, 2),
 (4, 4, 3);
 
 -- --------------------------------------------------------
@@ -94,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `subfamilias` (
   `descripcion` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id_subFam`),
   UNIQUE KEY `nombre_UNIQUE` (`nombre`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
 
 --
 -- Volcado de datos para la tabla `subfamilias`
@@ -104,7 +117,8 @@ INSERT INTO `subfamilias` (`id_subFam`, `nombre`, `descripcion`) VALUES
 (1, 'resistencias', 'varios tipos de resistencias, carbon, alambre,'),
 (2, 'transistores', 'npn, pnp, potencia y baja potencia'),
 (3, 'laboratorio quimica', 'probeta,balanza'),
-(4, 'pistones', 'varios vistones');
+(4, 'pistones', 'varios vistones'),
+(5, 'qqqqqqqq', 'dsfsdfs');
 
 -- --------------------------------------------------------
 
@@ -116,7 +130,7 @@ CREATE TABLE IF NOT EXISTS `tbl_area` (
   `id_area` int(11) NOT NULL AUTO_INCREMENT,
   `descripcion` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
   PRIMARY KEY (`id_area`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=18 ;
 
 --
 -- Volcado de datos para la tabla `tbl_area`
@@ -127,7 +141,19 @@ INSERT INTO `tbl_area` (`id_area`, `descripcion`) VALUES
 (2, 'materiales'),
 (3, 'sdkjjkdf'),
 (4, 'prueba'),
-(5, 'automatizacion');
+(5, 'automatizacion'),
+(6, 'prueba5'),
+(7, 'prueba10'),
+(8, 'prueba20'),
+(9, 'prueba30'),
+(10, 'prueba50'),
+(11, 'prueba70'),
+(12, 'prueba90'),
+(13, 'prueba110'),
+(14, 'prueba130'),
+(15, 'prueba150'),
+(16, 'prueba170'),
+(17, 'prueba190');
 
 -- --------------------------------------------------------
 
@@ -146,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `tbl_detalleprestamo` (
   PRIMARY KEY (`id_detalleprestamo`),
   KEY `fk_tbl_detalleprestamo_tbl_prestamo1_idx` (`id_prestamo`),
   KEY `fk_tbl_detalleprestamo_tbl_material1_idx` (`id_material`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=175 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=177 ;
 
 --
 -- Volcado de datos para la tabla `tbl_detalleprestamo`
@@ -253,7 +279,9 @@ INSERT INTO `tbl_detalleprestamo` (`id_detalleprestamo`, `id_prestamo`, `id_mate
 (171, 99, 1, 3, NULL, NULL, 0),
 (172, 100, 3, 11, NULL, NULL, 0),
 (173, 101, 1, 13, '', '', 0),
-(174, 102, 1, 2, NULL, NULL, 0);
+(174, 102, 1, 2, NULL, NULL, 0),
+(175, 103, 2, 3, NULL, NULL, 0),
+(176, 101, 1, 13, '2014/12/09', '08:17', 3);
 
 -- --------------------------------------------------------
 
@@ -301,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `tbl_material` (
 --
 
 INSERT INTO `tbl_material` (`idtbl_material`, `noParte`, `nombre`, `descripcion`, `stock`, `id_area`, `id_tipomaterial`, `costo`, `imagen`, `subFamilias_id_subFam`, `unidad_medida`, `marca`, `serie`, `estado`, `ubicacion_actual`, `responsable`, `proveedor`, `numero_factura`, `orden_compra`, `codigo_sip`, `financiamiento`, `tipo_compra`, `fecha_recepcion`, `idUabc`, `almacen_idalmacen`, `showInQuery`) VALUES
-(1, '2n2222', 'transistor', 'npn ', 62, 1, 1, '15', 'selyR.jpg', 2, 'pz', 'hallmakr', '34234', 'nuevo', 'b1', 'victor', 'steren', '432424332', '342423', '423423', 'uabc', 'dasdas', '2014-06-08', '0', 1, 0),
+(1, '2n2222', 'transistor', 'npn ', 65, 1, 1, '15', 'selyR.jpg', 2, 'pz', 'hallmakr', '34234', 'nuevo', 'b1', 'victor', 'steren', '432424332', '342423', '423423', 'uabc', 'dasdas', '2014-06-08', '0', 1, 0),
 (2, '42634', 'capacitor', 'capacitor electrolitico', 34, 1, 1, '25', 'selyR.jpg', 1, 'pz', 'steren', NULL, 'nuevo', 'b1', 'victor', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
 (3, '2n225533', 'transote', 'adasdasdas', 37, 2, 2, '89', 'selyR.jpg', 3, 'pz', 'asdasd', '21312321', 'nuevo', 'l2b', 'asdasdasdas', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1),
 (4, 'kjjk', 'kjdkjfk', 'kjjjjk', 99, 1, 1, '99', 'img.jpg', 1, 'kj', 'kjjkjk', '990', 'jkjkj', 'kj', 'jkkf', 'kjjkk', 'jk', 'jk', '2234', 'kj', 'kj', '2014-08-21', 'kjjk', 1, 1);
@@ -325,7 +353,7 @@ CREATE TABLE IF NOT EXISTS `tbl_prestamo` (
   PRIMARY KEY (`id_prestamo`),
   KEY `fk_tbl_prestamo_tbl_usuarios1_idx` (`id_usuarios`),
   KEY `fk_tbl_prestamo_tbl_prestarios1_idx` (`id_prestario`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=103 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=104 ;
 
 --
 -- Volcado de datos para la tabla `tbl_prestamo`
@@ -379,7 +407,8 @@ INSERT INTO `tbl_prestamo` (`id_prestamo`, `id_usuarios`, `id_prestario`, `fecha
 (99, NULL, 3, NULL, NULL, 0, NULL, '2014-08-19', NULL),
 (100, NULL, 4, NULL, NULL, 0, NULL, '2014-08-19', NULL),
 (101, 1, 1, '2014-08-19', NULL, 4, '22:34', '2014-08-19', '2014-08-20'),
-(102, NULL, 2, NULL, NULL, 0, NULL, '2014-08-20', NULL);
+(102, NULL, 2, NULL, NULL, 0, NULL, '2014-08-20', NULL),
+(103, NULL, 2, NULL, NULL, 0, NULL, '2014-12-07', NULL);
 
 -- --------------------------------------------------------
 
@@ -443,7 +472,7 @@ CREATE TABLE IF NOT EXISTS `tbl_tipomaterial` (
   `tbl_area_id_area` int(11) NOT NULL,
   PRIMARY KEY (`id_tipomaterial`),
   KEY `fk_tbl_tipomaterial_tbl_area1_idx` (`tbl_area_id_area`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=5 ;
 
 --
 -- Volcado de datos para la tabla `tbl_tipomaterial`
@@ -452,7 +481,8 @@ CREATE TABLE IF NOT EXISTS `tbl_tipomaterial` (
 INSERT INTO `tbl_tipomaterial` (`id_tipomaterial`, `descripcion`, `tbl_area_id_area`) VALUES
 (1, 'electronicos', 1),
 (2, 'laboratorios', 2),
-(3, 'mecatronica', 5);
+(3, 'mecatronica', 5),
+(4, 'tipoPrueba1', 7);
 
 -- --------------------------------------------------------
 
@@ -513,14 +543,15 @@ CREATE TABLE IF NOT EXISTS `tbl_usuarios` (
   PRIMARY KEY (`id_usuarios`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`),
   KEY `fk_tbl_usuarios_tbl_tipousuarios1_idx` (`id_tipousuarios`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `tbl_usuarios`
 --
 
 INSERT INTO `tbl_usuarios` (`id_usuarios`, `nombre`, `contraseña`, `apellidop`, `apellidom`, `id_tipousuarios`, `email`, `tel`, `usuario`) VALUES
-(1, 'nelva', 'croft', 'camacho', 'obeso', 2, 'lara@stark.com', '423423', 'lara');
+(1, 'nelva', 'croft', 'camacho', 'obeso', 2, 'lara@stark.com', '423423', 'lara'),
+(2, 'temoc dsdsdsds', '12345', 'dasdasd', 'eqewqe', 2, 'asdas@dads.com', '3242343242', 'temoc');
 
 --
 -- Restricciones para tablas volcadas
