@@ -72,6 +72,26 @@ public class Catalog implements Serializable {
     private void init() {
         System.out.println("si se invoca el init de catalog");
         root = new DefaultTreeNode("Root", root);
+        updateTree();
+
+    }
+
+    public void updateTree() {
+
+        if (!(root.getChildCount() > 0)) {
+            createTree();
+        } else {
+            //System.out.println("ACTUALIZANDO EL ARBOL");
+            root.getChildren().clear();
+            areas.clear();
+            tipos.clear();
+            dynamicTypes.clear();
+            dynamicSubs.clear();
+            createTree();
+        }
+    }
+
+    private void createTree() {
         List<AreasDTO> areasLocal = areaFacade.getCategories();
         if (areasLocal != null) {
             areas.addAll(areasLocal);
@@ -100,7 +120,6 @@ public class Catalog implements Serializable {
                 }
             }
         }
-
     }
 
     public TreeNode getRoot() {

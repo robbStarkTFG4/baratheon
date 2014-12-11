@@ -780,13 +780,17 @@ public class BeanMateriales implements Serializable {
         if (hecho == true) {
             if (beanAltas.getPrioridad() == 1) {
                 descripcionArea = null;
-                System.out.println("creando msj growl");
+               // System.out.println("creando msj growl");
                 RequestContext.getCurrentInstance().closeDialog(null);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito"));
+                //catalog.updateTree();
             } else {
-                System.out.println("PUSO NULO");
+                //System.out.println("PUSO NULO");
                 descripcionArea = null;
                 selectedArea = null;
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito"));
+                catalog.updateTree();
+                updateAreas();
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:areaOne");
                 RequestContext.getCurrentInstance().closeDialog(null);
             }

@@ -10,24 +10,25 @@
     <h:body>
         <h:form id="fr">
             <p:growl id="growl" showDetail="true" life="3000"/>
-        <h:panelGrid columns="2" >
-         
-        <p:outputLabel value="Nombre: " style="font-weight: bold;color: darkgreen"/>
-        <p:inputText id="nm" style="font-weight: bold;width: 220px" value="#{mat.nombreSubfam}" validatorMessage="Minimo 2, maximo 15 carcateres" styleClass="ipfactura" > 
-            <f:validateLength minimum="2" maximum="15"/>
-            <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
-            <f:ajax render="fac" event="keyup" />
-        </p:inputText> <h:outputLabel value="hhdjfh" style="font-size: xx-small;color:transparent"/>
-        <h:message id="fac" for="nm" style="font-size: xx-small; color: red"/>
-        <p:outputLabel styleClass="labeldescripcion" value="Descripción: " style="font-weight: bold;color: darkgreen" />  
-        <p:inputTextarea id="desc" style="font-weight: bold; width: 220px" value="#{mat.descripcionSubfam}"  validatorMessage="Tamaño invalido" autoResize="false" maxlength="140" rows="2" styleClass="iparea" >
-                                            <f:validateLength minimum="2" maximum="45"/>
-                                            <f:validateRegex pattern="[a-zA-ZñÑ0-9\s-_@!#$%/()=?,;.:{*}¡°¬|`~^]+"/>
-                                            <f:ajax render="Marea" event="keyup" />
-                                      </p:inputTextarea><h:outputLabel value="hhdjfh" style="font-size: xx-small; color:transparent"/>
-                                        <h:message id="Marea" for="desc" style="font-size: xx-small; color: red"/>
-        </h:panelGrid>
-       
+            <h:panelGrid columns="2" >
+
+                <p:outputLabel value="Nombre: " style="font-weight: bold;color: darkgreen"/>
+                <p:inputText id="nm" style="font-weight: bold;width: 220px" value="#{mat.nombreSubfam}" validatorMessage="Minimo 2, maximo 15 carcateres" styleClass="ipfactura" > 
+                    <f:validateLength minimum="2" maximum="15"/>
+                    <f:validateRegex pattern="[a-zA-ZñÑ0-9]+"/>
+                    <f:ajax render="fac" event="keyup" />
+                </p:inputText> <h:outputLabel value="hhdjfh" style="font-size: xx-small;color:transparent"/>
+                <h:message id="fac" for="nm" style="font-size: xx-small; color: red"/>
+                <p:outputLabel styleClass="labeldescripcion" value="Descripción: " style="font-weight: bold;color: darkgreen" />  
+                <p:inputTextarea id="desc" style="font-weight: bold; width: 220px" value="#{mat.descripcionSubfam}"  validatorMessage="Tamaño invalido" autoResize="false" maxlength="140" rows="2" styleClass="iparea" >
+                    <f:validateLength minimum="2" maximum="45"/>
+                    <f:validateRegex pattern="[a-zA-ZñÑ0-9\s-_@!#$%/()=?,;.:{*}¡°¬|`~^]+"/>
+                    <f:ajax render="Marea" event="keyup" />
+                </p:inputTextarea>
+                <h:outputLabel value="hhdjfh" style="font-size: xx-small; color:transparent"/>
+                <h:message id="Marea" for="desc" style="font-size: xx-small; color: red"/>
+            </h:panelGrid>
+
             <p:commandButton value="Guardar" actionListener="#{mat.agregarSubfam()}" style="margin-left: 25%" update=":fr"/>
             <p:commandButton value="Cerrar" immediate="true" actionListener="#{altas.cerrar()}"  style="margin-right: -7%"/>
         </h:form>
