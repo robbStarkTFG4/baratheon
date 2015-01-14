@@ -313,7 +313,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         try {
 
             Query search1 = em.createQuery("SELECT t.idPrestario FROM TblPrestamo t WHERE t.statusprestamo = :status OR t.statusprestamo = :status1");
-            search1.setParameter("status", 1);
+            search1.setParameter("status", 4);
             search1.setParameter("status1", 2);
             list = search1.getResultList();
             //Iterator li=list.iterator();

@@ -226,7 +226,7 @@ public class TblPrestariosFacade extends AbstractFacade<TblPrestarios> {
         try {
             //  t.idPrestario.nombre, t.idPrestario.apaterno, t.idPrestario.amaterno, t.idPrestario.email, t.idPrestario.tel, t.idPrestario.usuario, t.idPrestario.carrera 
             Query search1 = em.createQuery("SELECT  t.idPrestario FROM TblPrestamo t WHERE t.statusprestamo = :status OR t.statusprestamo = :status1");
-            search1.setParameter("status", 1);
+            search1.setParameter("status", 4);
             search1.setParameter("status1", 2);
             List<TblPrestarios> obj = search1.getResultList();
 
