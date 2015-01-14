@@ -5,6 +5,7 @@
  */
 package com.client.named;
 
+import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblMaterial;
 import java.io.Serializable;
 import javax.enterprise.context.*;
@@ -18,18 +19,19 @@ import javax.inject.Named;
 @SessionScoped
 public class PersonalLoans implements Serializable {
 
-    private TblMaterial res;
+    private String res;
     private String responsable;
     private String serie;
+    private TblDetalleprestamo dtl;
 
     public PersonalLoans() {
     }
 
-    public TblMaterial getRes() {
+    public String getRes() {
         return res;
     }
 
-    public void setRes(TblMaterial res) {
+    public void setRes(String res) {
         this.res = res;
     }
 

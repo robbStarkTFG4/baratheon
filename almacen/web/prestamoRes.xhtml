@@ -6,65 +6,67 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
 
     <body>
+        
+            <ui:composition template="./index.xhtml">
+                <link href="../css/grid2.css" rel="stylesheet"></link>
+                <ui:define name="content">
+                    <h:form id="formita">
+                        <p:panel style="margin: 20px">
+                            <center>
+                                <p:panel id="pan1" style="width: 52%"  >
+                                    <center>
+                                        <div class="ui-grid-responsive">
+                                            <div class="ui-grid-row">
+                                          
+                                                <div class="ui-grid-col-1">
+                                                    <p:outputLabel value="Buscador " style="font-weight: bold;color: #558e4d ;"/>
+                                                </div>
+                                                <div class="ui-grid-col-1" style="margin-top: 7px">
+                                                    <p:inputText value="#{personal.res}"   />
+                                                </div>
+                                                <div class="ui-grid-col-1" style="margin-top: 5px">
+                                                    <p:commandButton icon="ui-icon-search"  actionListener="#{personal.asigna}" style="width: 100px" update="formita"/>
+                                                </div>
+                                            </div>
+                                        </div>                  
+                                    </center>
+                                </p:panel>
+                            </center>
+                        </p:panel>
 
-        <ui:composition template="./index.xhtml">
+                        <p:panel style="margin-top: 10px;margin-left: 20px;margin-right: 20px">
+                            <center>
+                                <p:panel style="width: 52%">
 
-            <ui:define name="content">
-                <h:form id="formita">
-                    <p:panel style="margin: 20px">
-                        <center>
-                            <p:panel id="pan1" style="width: 52%"  >
-                                <center>
-                                    <p:outputLabel value="Buscador " style="font-weight: bold;color: #558e4d ;margin-right: 5px"/>
-                                    <p:autoComplete   value="#{personal.res}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
-                                                      var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
-                                                      maxResults="15" queryDelay="500"
-                                                      >
-                                        <p:column>  
-                                            #{p.nombre} - #{p.noParte}  
-                                        </p:column>
+                                    <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
 
-                                    </p:autoComplete> 
+                                        <p:outputLabel value="Nombre" styleClass="spacio"/>
+                                        <p:inputText value="#{personal.res.nombre}" disabled="true" styleClass="spacio"/>
 
-                                    <p:commandButton value="Buscar"  actionListener="#{personal.asigna}"  update="formita"/>
-                                </center>
-                            </p:panel>
-                        </center>
-                    </p:panel>
+                                        <p:outputLabel value="#Parte"/>
+                                        <p:inputText value="#{personal.res.noParte}" disabled="true" styleClass="spacio"/>
 
-                    <p:panel style="margin-top: 10px;margin-left: 20px;margin-right: 20px">
-                        <center>
-                            <p:panel style="width: 52%">
+                                        <p:outputLabel value="Serie" styleClass="spacio"/>
+                                        <p:inputText value="#{personal.serie}"  styleClass="spacio"/>
 
-                                <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
+                                        <p:outputLabel value="#Empleado " styleClass="spacio"/>
+                                        <p:inputText value="#{personal.responsable}"  styleClass="spacio"/>
 
-                                    <p:outputLabel value="Nombre" styleClass="spacio"/>
-                                    <p:inputText value="#{personal.res.nombre}" disabled="true" styleClass="spacio"/>
+                                    </h:panelGrid>
+                                </p:panel>
 
-                                    <p:outputLabel value="#Parte"/>
-                                    <p:inputText value="#{personal.res.noParte}" disabled="true" styleClass="spacio"/>
+                                <p:panel style="margin-top: 10px;margin-left: 20px;margin-right: 20px">
+                                    <h:panelGrid columns="3" cellspacing="10" cellpadding="5">
+                                        <p:commandButton value="Crear" action="#{personal.creaPrestamo}"/>
+                                        <p:commandButton value="Liberar"/>
+                                    </h:panelGrid>
+                                </p:panel>
+                            </center>
+                        </p:panel>
+                    </h:form>
+                </ui:define>
 
-                                    <p:outputLabel value="Serie" styleClass="spacio"/>
-                                    <p:inputText value="#{personal.serie}"  styleClass="spacio"/>
-
-                                    <p:outputLabel value="#Empleado " styleClass="spacio"/>
-                                    <p:inputText value="#{personal.responsable}"  styleClass="spacio"/>
-
-                                </h:panelGrid>
-                            </p:panel>
-
-                            <p:panel style="margin-top: 10px;margin-left: 20px;margin-right: 20px">
-                                <h:panelGrid columns="3" cellspacing="10" cellpadding="5">
-                                    <p:commandButton value="Crear" action="#{personal.creaPrestamo}"/>
-                                    <p:commandButton value="Liberar"/>
-                                </h:panelGrid>
-                            </p:panel>
-                        </center>
-                    </p:panel>
-                </h:form>
-            </ui:define>
-
-        </ui:composition>
+            </ui:composition>
 
     </body>
 </html>
