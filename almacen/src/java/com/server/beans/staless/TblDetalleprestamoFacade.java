@@ -46,7 +46,7 @@ public class TblDetalleprestamoFacade extends AbstractFacade<TblDetalleprestamo>
    
      private String nombre;*/
     public List<DetailDTO> getDtls(int idLoan) {
-        Query query = em.createQuery("SELECT c.idDetalleprestamo, c.cantidad, c.fecharetorno, c.horaretorno, c.idMaterial.noParte , c.idMaterial.nombre , c.idMaterial.idtblMaterial, c.idPrestamo.idPrestamo, c.regresados  FROM  TblDetalleprestamo c WHERE c.idPrestamo.idPrestamo = :id");
+        Query query = em.createQuery("SELECT c.idDetalleprestamo, c.cantidad, c.fecharetorno, c.horaretorno, c.idMaterial.noParte , c.idMaterial.nombre , c.idMaterial.idtblMaterial, c.idPrestamo.idPrestamo, c.regresados, c.infroPres  FROM  TblDetalleprestamo c WHERE c.idPrestamo.idPrestamo = :id");
         query.setParameter("id", idLoan);
 
         List<DetailDTO> data = new ArrayList<>();
@@ -68,6 +68,7 @@ public class TblDetalleprestamoFacade extends AbstractFacade<TblDetalleprestamo>
                 temp.setIdMaterial((int) object[6]);
                 temp.setIdPres((int) object[7]);
                 temp.setRegresados((int) object[8]);
+                temp.setInfoAdd((String) object[9]);
                 data.add(temp);
             }
             return data;

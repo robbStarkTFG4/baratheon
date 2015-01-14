@@ -191,15 +191,23 @@
                                             </f:facet>  
                                         </p:cellEditor>  
                                     </p:column>  
+
                                     <p:column style="width:32px">
                                         <p:rowEditor />
                                     </p:column>
+
                                     <p:column >
                                         <p:selectBooleanCheckbox valueChangeListener="#{pres.checkBox}">
                                             <f:attribute name="obj" value="#{hl}"/>
                                             <p:ajax/>
                                         </p:selectBooleanCheckbox>
                                     </p:column> 
+
+                                    <p:column >
+                                        <p:commandButton  icon="ui-icon-zoomin"   action="#{pres.infoAction}">
+                                            <f:setPropertyActionListener value="#{hl}" target="#{pres.forInfo}"/>
+                                        </p:commandButton>                
+                                    </p:column>
 
                                 </p:dataTable>
 
@@ -273,33 +281,33 @@
                                     </p:ajax>
                                     <p:ajax event="rowEditCancel" listener="#{pres.onRowCancel}"  />
 
-                                    <p:column style="width:49%">  
+                                    <p:column style="width:12.5%">  
                                         <f:facet name="header" >  
                                             No. Parte
                                         </f:facet>  
 
-                                        <p:commandLink  value="No. Parte" action="#{pres.listenPartNumber()}">
+                                        <p:commandLink  value="#{dl.noParte}" action="#{pres.listenPartNumber()}">
                                             <f:setPropertyActionListener value="#{dl}" target="#{pres.showInfo}"/>
                                         </p:commandLink>
 
 
                                     </p:column>  
 
-                                    <p:column style="width:49%">  
+                                    <p:column style="width:12.5%">  
                                         <f:facet name="header">  
                                             Nombre
                                         </f:facet>  
                                         <h:outputText value="#{dl.nombre}" />  
                                     </p:column>  
 
-                                    <p:column style="width:49%">  
+                                    <p:column style="width:12.5%">  
                                         <f:facet name="header">  
                                             Cantidad prestada
                                         </f:facet>  
                                         <h:outputText value="#{dl.cantidad}" />  
                                     </p:column>  
 
-                                    <p:column style="width:49%">  
+                                    <p:column style="width:12.5%">  
                                         <f:facet name="header">  
                                             Cantidad entregada
                                         </f:facet>  
@@ -308,29 +316,34 @@
                                             <f:facet name="input">
                                                 <p:inputText id="modelInput" value="#{dl.regresados}" style="width:96%" validator="cantidad" >
                                                     <f:attribute name="valor" value="#{dl.cantidad}"/>
-
                                                 </p:inputText>
                                             </f:facet>  
                                         </p:cellEditor>  
                                     </p:column>  
-                                    <p:column style="width:32px">
+
+                                    <p:column style="width:12.5px">
                                         <p:rowEditor />
                                     </p:column>
-                                    <p:column style="width:49%">  
+
+                                    <p:column style="width:12.5%">  
                                         <f:facet name="header">  
                                             Fecha retorno
                                         </f:facet>  
                                         <h:outputText id="fr" value="#{dl.fecharetorno}" />  
                                     </p:column>  
 
-                                    <p:column style="width:49%">  
+                                    <p:column style="width: 12.5%">  
                                         <f:facet name="header">  
                                             Hora retorno
                                         </f:facet>  
                                         <h:outputText id="hr"  value="#{dl.horaretorno}" />  
                                     </p:column>  
 
-
+                                    <p:column style="width: 12.5%">
+                                        <p:commandButton   icon="ui-icon-zoomin"  action="#{pres.shoInfoAdd}">
+                                            <f:setPropertyActionListener value="#{dl}" target="#{pres.forInfo}"/>
+                                        </p:commandButton>                
+                                    </p:column>
                                 </p:dataTable>
 
                                 <h:panelGrid columns="2" cellpadding="5px" cellspacing="5px" style="border: 0px none; margin-top: 10px"> 
@@ -348,8 +361,6 @@
                     </p:tab>  
 
                     <p:tab id="tab2" title="Liberados">  
-
-
 
                         <p:dataTable id="freed" value="#{pres.freeds}" var="pf"  paginator="true" rows="6"
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

@@ -5,6 +5,8 @@
  */
 package com.client.named;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.server.beans.staless.TblDetalleprestamoFacade;
 import com.server.beans.staless.TblMaterialFacade;
 import com.server.beans.staless.TblPrestamoFacade;
@@ -13,9 +15,11 @@ import com.server.beans.staless.TblUsuariosFacade;
 import com.server.entity.beans.TblMaterial;
 import com.server.entity.beans.TblPrestarios;
 import com.server.entity.beans.TblUsuarios;
+import com.util.DataObject1;
 import com.util.DetailDTO;
 import com.util.PresDTO;
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -96,6 +100,14 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     private List<DetailDTO> solicitudes;
 
     private int activo;
+
+    private DetailDTO forInfo;
+
+    private List<DataObject1> listForInfo;
+
+    private DataObject1 newForInfo = new DataObject1();
+
+    private DataObject1 optional;
 
     public Prestamos() {
 
@@ -223,7 +235,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     }
 
     public String checkDtl() {
-        System.out.println("INFO DEL DETALLE");
+        //System.out.println("INFO DEL DETALLE");
 
         String[] date = currentDate();
 
@@ -249,9 +261,8 @@ public class Prestamos implements Serializable { //clase para manejar los presta
          currentDtl.setFecharetorno(date[0]);
          currentDtl.setHoraretorno(date[1]);
          }*/
-        System.out.println("nombre de la pieza: " + currentDtl.getNombre());
-        System.out.println("Fecha retorno: " + currentDtl.getFecharetorno() + ", hora retorno: " + currentDtl.getHoraretorno());
-
+        //System.out.println("nombre de la pieza: " + currentDtl.getNombre());
+        //System.out.println("Fecha retorno: " + currentDtl.getFecharetorno() + ", hora retorno: " + currentDtl.getHoraretorno());
         return null;
     }
 
@@ -293,9 +304,9 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         SimpleDateFormat hora = new SimpleDateFormat("HH:mm");
         String currentTime = hora.format(date.getTime());
         datos[1] = currentTime;
-        System.out.println("HORA: " + currentTime);
-        System.out.println("hora: " + System.currentTimeMillis());
-        System.out.println("Current Date: " + stringDate);
+        // System.out.println("HORA: " + currentTime);
+        //System.out.println("hora: " + System.currentTimeMillis());
+        //System.out.println("Current Date: " + stringDate);
         //Date date2 = sdf.parse(stringDate);
         return datos;
     }
@@ -329,6 +340,22 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void setActivo(int activo) {
         this.activo = activo;
+    }
+
+    public List<DataObject1> getListForInfo() {
+        return listForInfo;
+    }
+
+    public void setListForInfo(List<DataObject1> listForInfo) {
+        this.listForInfo = listForInfo;
+    }
+
+    public DataObject1 getNewForInfo() {
+        return newForInfo;
+    }
+
+    public void setNewForInfo(DataObject1 newForInfo) {
+        this.newForInfo = newForInfo;
     }
 
     public void savePres() throws ParseException {
@@ -408,6 +435,14 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         this.usuario = usuario;
     }
 
+    public DataObject1 getOptional() {
+        return optional;
+    }
+
+    public void setOptional(DataObject1 optional) {
+        this.optional = optional;
+    }
+
     private void openDialog() {
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
@@ -434,10 +469,18 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         this.currentView = currentView;
     }
 
+    public DetailDTO getForInfo() {
+        return forInfo;
+    }
+
+    public void setForInfo(DetailDTO forInfo) {
+        this.forInfo = forInfo;
+    }
+
     private void openPartBasicInfo() {
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
-        options.put("draggable", false);
+        options.put("draggable", true);
         options.put("resizable", false);
         options.put("contentHeight", 300);
 
@@ -489,9 +532,9 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     public void cantidadListener(ValueChangeEvent e) {//423423
         //   System.out.println("VALOR VIEJO "+);
         int valor = (int) e.getComponent().getAttributes().get("valor");
-        System.out.println("VALOR VIEJO " + valor);
-        System.out.println("VALOR NUEVO " + e.getNewValue());
-        System.out.println("ME LLAMAN , EDGE OF TOMORROW");
+        //System.out.println("VALOR VIEJO " + valor);
+        //System.out.println("VALOR NUEVO " + e.getNewValue());
+        // System.out.println("ME LLAMAN , EDGE OF TOMORROW");
     }
 
     public void saveSelected() throws ParseException {
@@ -563,5 +606,98 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         PresDTO temp = (PresDTO) e.getComponent().getAttributes().get("prestamito");
 
         temp.setDateAdded(true);
+    }
+
+    public void infoAction() {
+
+        Gson gson = new Gson();
+        // System.out.println("korrasami infoLab");
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("draggable", true);
+        options.put("resizable", true);
+        options.put("contentHeight", 400);
+        options.put("contentWidth", 800);
+
+        if (!(forInfo.getInfoAdd() == null || forInfo.getInfoAdd().trim().equals(""))) {
+            System.out.println("entre donde no debia porque yolo " + forInfo.getInfoAdd());
+            Type type = new TypeToken<List<DataObject1>>() {
+            }.getType();
+            listForInfo = new Gson().fromJson(forInfo.getInfoAdd(), type);
+        } else {
+            listForInfo = new ArrayList<>();
+        }
+
+        newForInfo.setResponsable(us.getNombre());
+        newForInfo.setNombreObjeto(forInfo.getNombre());
+        RequestContext.getCurrentInstance().openDialog("/dialogo/infoLab", options, null);
+    }
+
+    public void addForInfo() {
+        //  System.out.println("agregalo");
+        //System.out.println(newForInfo.getResponsable());
+        listForInfo.add(new DataObject1(newForInfo.getClave1(), newForInfo.getClave2(), newForInfo.getResponsable(), newForInfo.getComentario(), newForInfo.getNombreObjeto(), newForInfo.getSerie()));
+        // newForInfo = null;
+        RequestContext.getCurrentInstance().update("infoDialog:infoTable");
+        // newForInfo=new DataObject1();
+        newForInfo.setClave1("");
+        newForInfo.setClave2("");
+        newForInfo.setComentario("");
+        newForInfo.setNombreObjeto("");
+        newForInfo.setResponsable("");
+        newForInfo.setSerie("");
+        List<String> lista = new ArrayList<String>();
+        lista.add("infoDialog:clv1");
+        lista.add("infoDialog:clv2");
+        lista.add("infoDialog:res");
+        lista.add("infoDialog:areaText");
+        lista.add("infoDialog:serie");
+        lista.add("infoDialog:nombreEquipo");
+
+        RequestContext.getCurrentInstance().update(lista);
+    }
+
+    public void addForInfoFinalizar() {
+        //System.out.println("robbStark aryaStark");
+        Gson gson = new Gson();
+
+        if (listForInfo.size() > 0) {
+            forInfo.setInfoAdd(gson.toJson(listForInfo));
+        } else {
+            forInfo.setInfoAdd("");
+        }
+        RequestContext.getCurrentInstance().closeDialog(null);
+    }
+
+    public void closeAddDialog() {
+        RequestContext.getCurrentInstance().closeDialog(null);
+    }
+
+    public void quitarAddInfo() {
+        System.out.println("wooooow " + optional.getNombreObjeto());
+        listForInfo.remove(optional);
+        RequestContext.getCurrentInstance().update("infoDialog:infoTable");
+    }
+
+    public void shoInfoAdd() {
+
+        Map<String, Object> options = new HashMap<>();
+        options.put("modal", true);
+        options.put("draggable", true);
+        options.put("resizable", true);
+        options.put("contentHeight", 400);
+        options.put("contentWidth", 800);
+
+        if (!(forInfo.getInfoAdd() == null || forInfo.getInfoAdd().trim().equals(""))) {
+            System.out.println("entre donde no debia porque yolo " + forInfo.getInfoAdd());
+            Type type = new TypeToken<List<DataObject1>>() {
+            }.getType();
+            listForInfo = new Gson().fromJson(forInfo.getInfoAdd(), type);
+        } else {
+            listForInfo = new ArrayList<>();
+        }
+        // RequestContext.getCurrentInstance().update("infoDialog:infoTable");
+        System.out.println("lo que tiene: "+forInfo.getInfoAdd());
+        RequestContext.getCurrentInstance().openDialog("/dialogo/showInfoAdd", options, null);
     }
 }
