@@ -5,11 +5,16 @@
  */
 package com.client.named;
 
+import com.server.beans.staless.TblDetalleprestamoFacade;
 import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblMaterial;
+import com.util.DataObject1;
 import java.io.Serializable;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.enterprise.context.*;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -22,7 +27,10 @@ public class PersonalLoans implements Serializable {
     private String res;
     private String responsable;
     private String serie;
-    private TblDetalleprestamo dtl;
+    private List<DataObject1>  dtl;
+    
+    @EJB
+    TblDetalleprestamoFacade detalleFacade;
 
     public PersonalLoans() {
     }
@@ -53,10 +61,20 @@ public class PersonalLoans implements Serializable {
 
     public void asigna() {
         System.out.println("ME INVOCARON");
+       dtl= detalleFacade.rastrea(res);
+       RequestContext.getCurrentInstance().update("formita/searchInfo");
     }
 
     public String creaPrestamo() {
         System.out.println("crea prestamo");
         return null;
+    }
+
+    public List<DataObject1> getDtl() {
+        return dtl;
+    }
+
+    public void setDtl(List<DataObject1> dtl) {
+        this.dtl = dtl;
     }
 }

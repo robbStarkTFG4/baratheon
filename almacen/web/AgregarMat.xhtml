@@ -118,7 +118,7 @@
                                                 </p:inputText> 
                                                 <h:message id="place" for="ubicacion" styleClass="spacio"/>   
                                                 <h:outputLabel/>
-                                                
+
                                                 <p:commandButton value="Siguiente" actionListener="#{mat.goToTab(1)}" update=":formadatos:tbw1" style="margin-left: 25%" styleClass="spacio"/>
                                             </h:panelGrid> 
                                         </div>
@@ -202,6 +202,11 @@
 
                                                 </p:selectOneMenu>
                                                 <h:outputLabel/>
+
+                                                <p:outputLabel styleClass="labeliduabc spacio" value="Inventariable: " style="font-weight: bold;color: darkgreen"/>
+                                                <p:selectBooleanCheckbox value="#{mat.invent}" styleClass="mnu2 spacio" />
+                                                <h:outputLabel/>
+
                                                 <h:outputLabel/>
                                                 <p:commandButton value="Siguiente" actionListener="#{mat.goToTab(2)}" update=":formadatos:tbw1" styleClass="spacio"/>
 

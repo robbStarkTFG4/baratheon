@@ -5,9 +5,14 @@
  */
 package com.server.beans.staless;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.server.entity.beans.TblDetalleprestamo;
+import com.util.DataObject1;
 import com.util.DetailDTO;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -83,5 +88,24 @@ public class TblDetalleprestamoFacade extends AbstractFacade<TblDetalleprestamo>
             query.setParameter("id", detailDTO.getIdDetalleprestamo());
             em.remove(query.getSingleResult());
         }
+    }
+
+    public List<DataObject1> rastrea(String res) {
+        TypedQuery<TblDetalleprestamo> query = em.createQuery("SELECT c FROM TblDetalleprestamo c WHERE c.infroPres LIKE :pattern ", TblDetalleprestamo.class);
+        query.setParameter("pattern", "%" + res + "%");
+
+        List<DataObject1> resultList = new ArrayList<>();
+        List<TblDetalleprestamo> list = query.getResultList();
+        for (TblDetalleprestamo list1 : list) {
+            // System.out.println(list1.getInfroPres());
+            Type type = new TypeToken<List<DataObject1>>() {
+            }.getType();
+            resultList.addAll((Collection<? extends DataObject1>) new Gson().fromJson(list1.getInfroPres(), type));
+        }
+
+        /*   for (DataObject1 li : resultList) {
+         System.out.println(li);
+         }*/
+        return resultList;
     }
 }

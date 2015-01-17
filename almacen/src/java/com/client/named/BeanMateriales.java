@@ -82,6 +82,7 @@ public class BeanMateriales implements Serializable {
     private UploadedFile file;
     private String imagen;
     private final String ruta = "C:\\Users\\UABC\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
+    private boolean invent = false;
 //"C:\\Users\\cristian\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\"
 
     @EJB
@@ -489,6 +490,14 @@ public class BeanMateriales implements Serializable {
         this.descripcionArea = descripcionArea;
     }
 
+    public boolean isInvent() {
+        return invent;
+    }
+
+    public void setInvent(boolean invent) {
+        this.invent = invent;
+    }
+
     public void agregar() {
 
         /*nombre+noParte+descripcion+cantidad+costo+unidadmedida+marca+serie+estado+ubicacion+responsable+probedor+noFactura;
@@ -547,10 +556,14 @@ public class BeanMateriales implements Serializable {
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         }
 
-        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery);
+        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery,invent);
 
         if (hecho == true) {
-            disAddsf = false;
+
+            // check  if (inventariable==true)
+            
+            //End check
+                    disAddsf = false;
             beanuser.acciones("Material agregado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
             nombre = null;
             noParte = null;
@@ -712,7 +725,7 @@ public class BeanMateriales implements Serializable {
     public void agregarSubfam() {
         boolean hecho;
 
-        if(selectedTipo==null){
+        if (selectedTipo == null) {
             return;
         }
         hecho = sff.agregar2(nombreSubfam, descripcionSubfam, selectedTipo);
@@ -814,11 +827,11 @@ public class BeanMateriales implements Serializable {
     public void updateAreas() {
         this.listArea = arf.findAll();
     }
-    
-    public void araDialogListener(ValueChangeEvent e){
-        selectedTipo=null;
+
+    public void araDialogListener(ValueChangeEvent e) {
+        selectedTipo = null;
         System.out.println("HOLA SOY EL LISTENER");
-        System.out.println(((TblArea)e.getNewValue()).getDescripcion());
-        listTM=tmf.listaTipoAll(((TblArea)e.getNewValue()).getIdArea());
+        System.out.println(((TblArea) e.getNewValue()).getDescripcion());
+        listTM = tmf.listaTipoAll(((TblArea) e.getNewValue()).getIdArea());
     }
 }
