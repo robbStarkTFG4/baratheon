@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 public class DataObject1 implements Serializable {
 
+    private int id;
     private String clave1;
     private String clave2;
     private String responsable;
@@ -23,13 +24,22 @@ public class DataObject1 implements Serializable {
     public DataObject1() {
     }
 
-    public DataObject1(String clave1, String clave2, String responsable, String comentario, String nombreObjeto, String serie) {
+    public DataObject1(int id, String clave1, String clave2, String responsable, String comentario, String nombreObjeto, String serie) {
+        this.id = id;
         this.clave1 = clave1;
         this.clave2 = clave2;
         this.responsable = responsable;
         this.comentario = comentario;
         this.nombreObjeto = nombreObjeto;
         this.serie = serie;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getClave1() {
@@ -83,7 +93,7 @@ public class DataObject1 implements Serializable {
     @Override
 
     public String toString() {
-        return "DataObject1 [clave1=" + clave1 + ", clave2=" + clave2 + ", responsable=" + responsable + ", comentario=" + comentario
+        return "DataObject1 [id=" + id + "clave1=" + clave1 + ", clave2=" + clave2 + ", responsable=" + responsable + ", comentario=" + comentario
                 + "]";
     }
 

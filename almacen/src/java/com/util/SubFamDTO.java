@@ -6,12 +6,13 @@
 package com.util;
 
 import com.util.interfaces.SubFamilia; 
+import java.io.Serializable;
 
 /**
  *
  * @author NORE
  */
-public class SubFamDTO implements  SubFamilia {
+public class SubFamDTO implements  SubFamilia,Serializable {
 
     private Integer id;
     private String nombre;

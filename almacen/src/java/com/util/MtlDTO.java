@@ -18,6 +18,7 @@ public class MtlDTO implements Serializable {
     private String nombre;
     private int cantidad;
     private int Stock;
+    private boolean inventariable = false;
 
     public MtlDTO() {
     }
@@ -68,5 +69,13 @@ public class MtlDTO implements Serializable {
 
     public void setIdMaterial(int idMaterial) {
         this.idMaterial = idMaterial;
+    }
+
+    public boolean isInventariable() {
+        return inventariable;
+    }
+
+    public void setInventariable(boolean inventariable) {
+        this.inventariable = inventariable;
     }
 }

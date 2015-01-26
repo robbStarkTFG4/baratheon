@@ -9,17 +9,23 @@ import com.server.beans.staless.AlmacenFacade;
 import com.server.beans.staless.SubfamiliasFacade;
 import com.server.beans.staless.TblAreaFacade;
 import com.server.beans.staless.TblMaterialFacade;
+import com.server.beans.staless.TblPendientesFacade;
 import com.server.beans.staless.TblTipomaterialFacade;
+import com.server.beans.staless.TblpiezasFacade;
 import com.server.entity.beans.Almacen;
 import com.server.entity.beans.Subfamilias;
 import com.server.entity.beans.TblArea;
 import com.server.entity.beans.TblMaterial;
+import com.server.entity.beans.TblPendientes;
 import com.server.entity.beans.TblTipomaterial;
+import com.server.entity.beans.Tblpiezas;
 import com.util.materialBusqueda;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -52,6 +58,11 @@ public class BeanMat implements Serializable {
     TblTipomaterialFacade tmf;
     @EJB
     TblMaterialFacade mat;
+    @EJB
+    TblpiezasFacade pzs;
+    @EJB
+    TblPendientesFacade pendientes;
+
     TblMaterial matencontrado;
     List<TblMaterial> listamat;
     @Inject
@@ -95,6 +106,9 @@ public class BeanMat implements Serializable {
     private Subfamilias selectedSubFamilia = null;
     private TblMaterial material;
     private TblMaterial material2;
+    private boolean inventariable = false;
+    private String request;
+    private String partToModify;
 
     public List<TblArea> getListArea() {
         return listArea;
@@ -460,67 +474,21 @@ public class BeanMat implements Serializable {
         imagen = null;
         matencontrado = mat.bpormat(material2.getNoParte());
         if (matencontrado != null) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado", "Material encontrado"));
-            nombre = matencontrado.getNombre();
-            noParte = matencontrado.getNoParte();
-            descripcion = matencontrado.getDescripcion();
-            cantidad = matencontrado.getStock().toString();
-            costo = matencontrado.getCosto().toString();
-            unidadmedida = matencontrado.getUnidadMedida();
-            marca = matencontrado.getMarca();
-            if (matencontrado.getShowInQuery() != null) {
-                showinquery = matencontrado.getShowInQuery();
+          
+            if (!pendientes.checkIFListed(matencontrado.getNoParte())) {
+                  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado", "Material encontrado"));
+                updateFields();
+            }else{
+                System.out.println("poner dialogo de aviso");
+                 Map<String, Object> options = new HashMap<>();
+                        options.put("modal", true);
+                        options.put("draggable", true);
+                        options.put("resizable", false);
+                        options.put("contentHeight", 200);
+                        options.put("contentWidth", 600);
+
+                        RequestContext.getCurrentInstance().openDialog("/dialogo/dialogoAviso", options, null);
             }
-            if (matencontrado.getSerie() != null) {
-                serie = matencontrado.getSerie();
-            }//puede ser nulo
-            estado = matencontrado.getEstado();
-            ubicacion = matencontrado.getUbicacionActual();
-            responsable = matencontrado.getResponsable();
-            if (matencontrado.getProveedor() != null) {
-                probedor = matencontrado.getProveedor();
-            }//puede ser nulo
-            if (matencontrado.getNumeroFactura() != null) {
-                noFactura = matencontrado.getNumeroFactura();
-            }//puede ser nulo
-            if (matencontrado.getOrdenCompra() != null) {
-                ordenDcompra = matencontrado.getOrdenCompra();
-            }//puede ser nulo
-            if (matencontrado.getCodigoSip() != null) {
-                zip = matencontrado.getCodigoSip();
-            }//puede ser nulo
-            if (matencontrado.getFinanciamiento() != null) {
-                financiamiento = matencontrado.getFinanciamiento();
-            }//puede ser nulo
-            if (matencontrado.getTipoCompra() != null) {
-                tipodecompra = matencontrado.getTipoCompra();
-            }//puede ser nulo
-            if (matencontrado.getIdUabc() != null) {
-                idUABC = matencontrado.getIdUabc();
-            }//puede ser nulo
-            if (matencontrado.getFechaRecepcion() != null) {
-                fecharecepcion = matencontrado.getFechaRecepcion().toString();
-            }
-            // area = matencontrado.getIdArea().toString();
-            // tipodematerial = matencontrado.getIdTipomaterial().toString();
-            // subfamilia = matencontrado.getSubFamiliasidsubFam().toString();
-            this.lalm = af.listAL();
-            this.selectedArea = matencontrado.getIdArea();
-            listTM = tmf.listAtm(this.selectedArea.getIdArea());
-            System.out.println(matencontrado.getIdArea());
-
-            this.selectedTipo = matencontrado.getIdTipomaterial();
-            listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
-            //setSelectedSubFamilia(matencontrado.getSubFamiliasidsubFam());
-            this.selectedSubFamilia = matencontrado.getSubFamiliasidsubFam();
-            almacen = matencontrado.getAlmacenIdalmacen().getIdalmacen().toString();
-            imagen = matencontrado.getImagen();
-
-            System.out.println("TIPO DE MAT:" + selectedTipo);
-            System.out.println("SUBFAMILIA:" + selectedSubFamilia);
-
-            habilitarTab = false;
-            material2 = null;
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Material inexistente"));
             habilitarTab = true;
@@ -528,6 +496,77 @@ public class BeanMat implements Serializable {
             material2 = null;
         }
 
+    }
+
+    private void updateFields() {
+        nombre = matencontrado.getNombre();
+        noParte = matencontrado.getNoParte();
+        descripcion = matencontrado.getDescripcion();
+        cantidad = matencontrado.getStock().toString();
+        request = cantidad;
+        costo = matencontrado.getCosto().toString();
+        unidadmedida = matencontrado.getUnidadMedida();
+        marca = matencontrado.getMarca();
+        if (matencontrado.getShowInQuery() != null) {
+            showinquery = matencontrado.getShowInQuery();
+        }
+        if (matencontrado.getSerie() != null) {
+            serie = matencontrado.getSerie();
+        }//puede ser nulo
+        estado = matencontrado.getEstado();
+        ubicacion = matencontrado.getUbicacionActual();
+        responsable = matencontrado.getResponsable();
+        if (matencontrado.getProveedor() != null) {
+            probedor = matencontrado.getProveedor();
+        }//puede ser nulo
+        if (matencontrado.getNumeroFactura() != null) {
+            noFactura = matencontrado.getNumeroFactura();
+        }//puede ser nulo
+        if (matencontrado.getOrdenCompra() != null) {
+            ordenDcompra = matencontrado.getOrdenCompra();
+        }//puede ser nulo
+        if (matencontrado.getCodigoSip() != null) {
+            zip = matencontrado.getCodigoSip();
+        }//puede ser nulo
+        if (matencontrado.getFinanciamiento() != null) {
+            financiamiento = matencontrado.getFinanciamiento();
+        }//puede ser nulo
+        if (matencontrado.getTipoCompra() != null) {
+            tipodecompra = matencontrado.getTipoCompra();
+        }//puede ser nulo
+        if (matencontrado.getIdUabc() != null) {
+            idUABC = matencontrado.getIdUabc();
+        }//puede ser nulo
+        if (matencontrado.getFechaRecepcion() != null) {
+            fecharecepcion = matencontrado.getFechaRecepcion().toString();
+        }
+
+        if (matencontrado.getInventariable() != null) {
+            inventariable = matencontrado.getInventariable();
+        }
+
+        // area = matencontrado.getIdArea().toString();
+        // tipodematerial = matencontrado.getIdTipomaterial().toString();
+        // subfamilia = matencontrado.getSubFamiliasidsubFam().toString();
+        this.lalm = af.listAL();
+        this.selectedArea = matencontrado.getIdArea();
+        listTM = tmf.listAtm(this.selectedArea.getIdArea());
+        System.out.println(matencontrado.getIdArea());
+
+        this.selectedTipo = matencontrado.getIdTipomaterial();
+        listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
+        //setSelectedSubFamilia(matencontrado.getSubFamiliasidsubFam());
+        this.selectedSubFamilia = matencontrado.getSubFamiliasidsubFam();
+        if (matencontrado.getAlmacenIdalmacen() != null) {
+            almacen = matencontrado.getAlmacenIdalmacen().getIdalmacen().toString();
+        }
+        imagen = matencontrado.getImagen();
+
+        System.out.println("TIPO DE MAT:" + selectedTipo);
+        System.out.println("SUBFAMILIA:" + selectedSubFamilia);
+
+        habilitarTab = false;
+        material2 = null;
     }
 
     public void prueba2() {
@@ -630,9 +669,43 @@ public class BeanMat implements Serializable {
 
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         } else {
-            ex = mf.modificar(matencontrado.getIdtblMaterial(), nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery);
+            ex = mf.modificar(matencontrado.getIdtblMaterial(), nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery, inventariable);
 
             if (ex == false) {
+
+                // check number of items matchs new value in cantidad
+                if (inventariable) {
+                    int status = pzs.check(request, noParte);
+                    if (status == 0) {
+
+                    } else if (status < 0) {
+                        status = -1 * status;
+                        System.out.println("!!!!BORRAR: " + status);
+                        partToModify = noParte;
+                        //add record to TblPendientes
+                        TblPendientes task = new TblPendientes(noParte, "eliminar", String.valueOf(status));
+                        pendientes.create(task);
+                        //dialog asking to proceed to selection
+                        // dialog for choosing wich  pzs will be removed
+                        Map<String, Object> options = new HashMap<>();
+                        options.put("modal", true);
+                        options.put("draggable", true);
+                        options.put("resizable", false);
+                        options.put("contentHeight", 200);
+                        options.put("contentWidth", 600);
+
+                        RequestContext.getCurrentInstance().openDialog("/dialogo/confirmationDialog", options, null);
+
+                    } else if (status > 0) {
+                        //create more pzs
+                        System.out.println("$$$$$ CREAR MAS: " + status);
+                        pzs.create(nombre, noParte, status);
+                    }
+                } else {
+                    // delete all items in TblPiezas
+                }
+
+                //End Check
                 beanuser.acciones("Material Modificado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
                 nombre = null;
                 noParte = null;
@@ -663,13 +736,15 @@ public class BeanMat implements Serializable {
                 selectedTipo = null;
                 beanmat.setActiveIndex("0");
                 habilitarTab = true;
+                showinquery = false;
+                inventariable = false;
                 System.out.println("creando msj growl");
                 //disableTab1 = false;
                 //  disableTab2 = true;
                 //  disableTab3 = true;
                 //  disableGuardar = true;
                 //  activeIndex = "0";
-                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Material agregado con éxito"));
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Material modificado con éxito"));
 
                 // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
             } else {
@@ -720,4 +795,22 @@ public class BeanMat implements Serializable {
         return "index.xhtml?faces-redirect=true";
 
     }
+
+    public boolean isInventariable() {
+        return inventariable;
+    }
+
+    public void setInventariable(boolean inventariable) {
+        this.inventariable = inventariable;
+    }
+
+    public void forwardDialog() {
+        System.out.println("ir a la pagina nueva: " + partToModify);
+        RequestContext.getCurrentInstance().closeDialog(null);
+    }
+
+    public void cancelDialog() {
+        RequestContext.getCurrentInstance().closeDialog(null);
+    }
+
 }

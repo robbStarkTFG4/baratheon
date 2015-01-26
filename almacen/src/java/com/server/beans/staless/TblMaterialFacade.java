@@ -68,7 +68,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         //c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen
         Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
                 + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam,  c.idArea.descripcion, c.idTipomaterial.descripcion, "
-                + "c.subFamiliasidsubFam.nombre  FROM TblMaterial c WHERE c.noParte = :part");
+                + "c.subFamiliasidsubFam.nombre , c.inventariable  FROM TblMaterial c WHERE c.noParte = :part");
         res.setParameter("part", search);
 
         List<TblMaterial> data = mtlResults(res);
@@ -93,7 +93,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     public List<TblMaterial> find(String patronPartNumber, boolean obj, int x) {// llista patron # parte  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
                 + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, "
-                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte LIKE  :part");
+                + "c.subFamiliasidsubFam.nombre, c.inventariable   FROM TblMaterial c WHERE c.noParte LIKE  :part");
         res.setParameter("part", patronPartNumber.toLowerCase() + "%");
 
         List<TblMaterial> data = mtlResults(res);
@@ -157,7 +157,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     public List<TblMaterial> catalogFindByArea(int id) {                //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         Query query = em.createQuery("SELECT  c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
                 + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam, c.idArea.descripcion, c.idTipomaterial.descripcion, "
-                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.idArea.idArea = :id");
+                + "c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.idArea.idArea = :id");
         query.setParameter("id", id);
 
         List<TblMaterial> data = mtlResults(query);
@@ -167,7 +167,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public List<TblMaterial> catalogFindByArea(Integer id, String patronName) {
-        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.idTipomaterial.tblAreaIdArea.idArea = :id");
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.idTipomaterial.tblAreaIdArea.idArea = :id");
         res.setParameter("part", patronName.toLowerCase() + "%");
         res.setParameter("id", id);
         List<TblMaterial> data = mtlResults(res);
@@ -176,7 +176,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public List<TblMaterial> catalogFindByArea(Integer id, String patronNoParte, int x) {
-        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte LIKE  :part AND c.idTipomaterial.tblAreaIdArea.idArea = :id");
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.noParte LIKE  :part AND c.idTipomaterial.tblAreaIdArea.idArea = :id");
         res.setParameter("part", patronNoParte.toLowerCase() + "%");
         res.setParameter("id", id);
         List<TblMaterial> data = mtlResults(res);
@@ -186,7 +186,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     public List<TblMaterial> catalogFindByType(int id) {    //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         Query query = em.createQuery("SELECT  c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, "
                 + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam, c.idArea.descripcion, c.idTipomaterial.descripcion, "
-                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.idTipomaterial.idTipomaterial = :id");
+                + "c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.idTipomaterial.idTipomaterial = :id");
         query.setParameter("id", id);
         List<TblMaterial> data = mtlResults(query);
         return data;
@@ -195,7 +195,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     public List<TblMaterial> catalogFindBySubFam(int id) {   //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
         Query query = em.createQuery("SELECT  c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea,"
                 + "c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam, c.idArea.descripcion, c.idTipomaterial.descripcion,"
-                + "c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.subFamiliasidsubFam.idsubFam = :id");
+                + "c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.subFamiliasidsubFam.idsubFam = :id");
         query.setParameter("id", id);
         List<TblMaterial> data = mtlResults(query);
         return data;
@@ -226,6 +226,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
             Subfamilias sub = new Subfamilias((Integer) (object[9]));
             sub.setNombre((String) object[12]);
             temp.setSubFamiliasidsubFam(sub);
+            temp.setInventariable((Boolean) object[13]);
             data.add(temp);
         }
         return data;
@@ -261,7 +262,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public List<TblMaterial> catalogFindBySubFam(int id, String patronName) {  //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.subFamiliasidsubFam.idsubFam = :id");
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.subFamiliasidsubFam.idsubFam = :id");
         res.setParameter("part", patronName.toLowerCase() + "%");
         res.setParameter("id", id);
         List<TblMaterial> data = mtlResults(res);
@@ -271,7 +272,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public List<TblMaterial> catalogFindBySubFam(int id, String patronPartNumber, int x) {   //wwwwwwwwwwwwwwwwwwwwwwwwwwwww
-        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte LIKE  :part AND c.subFamiliasidsubFam.idsubFam = :id");
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.noParte LIKE  :part AND c.subFamiliasidsubFam.idsubFam = :id");
         res.setParameter("part", patronPartNumber.toLowerCase() + "%");
         res.setParameter("id", id);
         List<TblMaterial> data = mtlResults(res);
@@ -281,7 +282,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public List<TblMaterial> catalogFindByType(int id, String patronName) {    //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.idTipomaterial.idTipomaterial = :id");
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.nombre LIKE  :part AND c.idTipomaterial.idTipomaterial = :id");
         res.setParameter("part", patronName.toLowerCase() + "%");
         res.setParameter("id", id);
         List<TblMaterial> data = mtlResults(res);
@@ -291,7 +292,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public List<TblMaterial> catalogFindByType(int id, String patronPartNumber, int x) {   //wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
-        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre FROM TblMaterial c WHERE c.noParte   LIKE  :part AND c.idTipomaterial.idTipomaterial = :id");
+        Query res = em.createQuery("SELECT c.idtblMaterial,c.noParte,c.nombre,c.descripcion,c.stock,c.costo,c.imagen, c.idArea.idArea, c.idTipomaterial.idTipomaterial,c.subFamiliasidsubFam.idsubFam , c.idArea.descripcion, c.idTipomaterial.descripcion, c.subFamiliasidsubFam.nombre, c.inventariable  FROM TblMaterial c WHERE c.noParte   LIKE  :part AND c.idTipomaterial.idTipomaterial = :id");
         res.setParameter("part", patronPartNumber.toLowerCase() + "%");
         res.setParameter("id", id);
         List<TblMaterial> data = mtlResults(res);
@@ -377,60 +378,58 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
 
     public boolean agregar11(String nombre, String noParte, String descripcion, String cantidad, String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
             String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub, boolean showinquery, boolean invent) {
-        
-        TblMaterial mt2 = null;
-        Query search1 = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :nopart ");
-        search1.setParameter("nopart", noParte);
 
-        try {
-            mt2 = (TblMaterial) search1.getSingleResult();
-            return false;
-        } catch (Exception e) {
-            TblMaterial mat = new TblMaterial();
-            TblArea ar = new TblArea();
-            TblTipomaterial tm = new TblTipomaterial();
-            Subfamilias sf = new Subfamilias();
-            Almacen al = new Almacen();
-            Date date1 = new Date();
-            mat.setNombre(nombre);
-            mat.setNoParte(noParte);
-            mat.setDescripcion(descripcion);
-            mat.setStock(Integer.parseInt(cantidad));
-            mat.setCosto(Long.parseLong(costo));
-            mat.setUnidadMedida(unidadmedida);
-            mat.setMarca(marca);
-            mat.setSerie(serie);
-            mat.setEstado(estado);
-            mat.setUbicacionActual(ubicacion);
-            mat.setResponsable(responsable);
-            mat.setProveedor(probedor);
-            mat.setNumeroFactura(noFactura);
-            mat.setOrdenCompra(ordenDcompra);
-            mat.setCodigoSip(zip);
-            mat.setFinanciamiento(financiamiento);
-            mat.setTipoCompra(tipodecompra);
-            mat.setIdUabc(idUABC);
-            mat.setFechaRecepcion(date1);
-            mat.setImagen(imagen);
-            mat.setShowInQuery(showinquery);
-            mat.setInventariable(invent);
-            //ar.setIdArea(Integer.parseInt(area));
+        // TblMaterial mt2 = null;
+        // Query search1 = em.createQuery("SELECT t FROM TblMaterial t WHERE t.noParte = :nopart ");
+        //search1.setParameter("nopart", noParte);
 
-            if (!(almacen == null || almacen.trim().equals(""))) {
-                al.setIdalmacen(Integer.parseInt(almacen));
-                mat.setAlmacenIdalmacen(al);
-            }
+        /*   try {
+         mt2 = (TblMaterial) search1.getSingleResult();
+         return false;
+         } catch (Exception e) {*/
+        TblMaterial mat = new TblMaterial();
+        Almacen al = new Almacen();
+        Date date1 = new Date();
+        mat.setNombre(nombre);
+        mat.setNoParte(noParte);
+        mat.setDescripcion(descripcion);
+        mat.setStock(Integer.parseInt(cantidad));
+        mat.setCosto(Long.parseLong(costo));
+        mat.setUnidadMedida(unidadmedida);
+        mat.setMarca(marca);
+        mat.setSerie(serie);
+        mat.setEstado(estado);
+        mat.setUbicacionActual(ubicacion);
+        mat.setResponsable(responsable);
+        mat.setProveedor(probedor);
+        mat.setNumeroFactura(noFactura);
+        mat.setOrdenCompra(ordenDcompra);
+        mat.setCodigoSip(zip);
+        mat.setFinanciamiento(financiamiento);
+        mat.setTipoCompra(tipodecompra);
+        mat.setIdUabc(idUABC);
+        mat.setFechaRecepcion(date1);
+        mat.setImagen(imagen);
+        mat.setShowInQuery(showinquery);
+        mat.setInventariable(invent);
+        mat.setTotal(Integer.parseInt(cantidad));
+        //ar.setIdArea(Integer.parseInt(area));
 
-            //tm.setIdTipomaterial(tipo);
-            // sf.setIdsubFam(Integer.parseInt(subfamilia));
-            mat.setIdTipomaterial(tipo);
-            mat.setSubFamiliasidsubFam(sub);
-            mat.setIdArea(area2);
-
-            em.persist(mat);
-
-            return true;
+        if (!(almacen == null || almacen.trim().equals(""))) {
+            al.setIdalmacen(Integer.parseInt(almacen));
+            mat.setAlmacenIdalmacen(al);
         }
+
+        //tm.setIdTipomaterial(tipo);
+        // sf.setIdsubFam(Integer.parseInt(subfamilia));
+        mat.setIdTipomaterial(tipo);
+        mat.setSubFamiliasidsubFam(sub);
+        mat.setIdArea(area2);
+
+        em.persist(mat);
+
+        return true;
+        // }
 
     }
 
@@ -463,7 +462,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
     }
 
     public boolean modificar(int id, String nombre, String noParte, String descripcion, String cantidad, String costo, String unidadmedida, String marca, String serie, String estado, String ubicacion, String responsable, String probedor, String noFactura,
-            String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub, boolean showinquery) {
+            String ordenDcompra, String zip, String financiamiento, String tipodecompra, String idUABC, String fecharecepcion, String area, String tipodematerial, String subfamilia, String almacen, String imagen, TblArea area2, TblTipomaterial tipo, Subfamilias sub, boolean showinquery, boolean inventariable) {
         boolean existe = true;
 
         TblMaterial busc;
@@ -485,7 +484,14 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
                 mat.setNombre(nombre);
                 mat.setNoParte(noParte);
                 mat.setDescripcion(descripcion);
-                mat.setStock(Integer.parseInt(cantidad));
+
+                // calculando y ajustando diferencia
+                mat.setTotal(Integer.parseInt(cantidad));
+                int diff = mat.getTotal() - mat.getStock();
+
+                mat.setStock(mat.getStock() + diff);
+
+                //End ajuste total y stock
                 mat.setCosto(Long.valueOf(costo));
                 mat.setUnidadMedida(unidadmedida);
                 mat.setMarca(marca);
@@ -503,6 +509,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
                 mat.setFechaRecepcion(date1);
                 mat.setImagen(imagen);
                 mat.setShowInQuery(showinquery);
+                mat.setInventariable(inventariable);
 
                 if (!(almacen == null || almacen.trim().equals(""))) {
                     al.setIdalmacen(Integer.parseInt(almacen));

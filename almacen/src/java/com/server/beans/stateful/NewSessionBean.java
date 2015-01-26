@@ -39,8 +39,6 @@ public class NewSessionBean {
     @EJB
     TblMaterialFacade material;
 
-   
-
     private final int idPrestario = 0;
     private final int idUsuario = 0;
     private List<TblMaterial> mtl;
@@ -72,7 +70,12 @@ public class NewSessionBean {
 
         if (!mtl.contains(tbl)) {
             mtl.add(tbl);
-            data.add(new MtlDTO(tbl.getIdtblMaterial(), tbl.getNoParte(), tbl.getNombre(), quantity, tbl.getStock()));
+
+            MtlDTO mlDTO = new MtlDTO(tbl.getIdtblMaterial(), tbl.getNoParte(), tbl.getNombre(), quantity, tbl.getStock());
+            if (tbl.getInventariable() != null) {
+                mlDTO.setInventariable(tbl.getInventariable());
+            }
+            data.add(mlDTO);
             return true;
         } else {
             for (MtlDTO ml : data) {
@@ -135,6 +138,10 @@ public class NewSessionBean {
             temp.setIdMaterial(new TblMaterial(ml.getIdMaterial()));
 
             temp.setIdPrestamo(pr);
+            temp.setInvi(ml.isInventariable());
+            if (temp.getInvi()) {
+                System.out.println("NELVA CAMACHO ES TU MUJER");
+            }
             dtl.add(temp);
 
             quantity.put(ml.getNoParte(), ml.getCantidad());
@@ -150,7 +157,7 @@ public class NewSessionBean {
 
         if (pres.updatePres(pr)) {
             clearList();
-         
+
             return true;
         } else {
             return false;

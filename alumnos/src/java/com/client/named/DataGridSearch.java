@@ -233,7 +233,27 @@ public class DataGridSearch implements Serializable {
         RequestContext.getCurrentInstance().update("form1:table");
     }
 
-    public void persistPres() {//#21312
+    public void persistPres() {
+        if (pres.getUs() != null) {
+            int estado = pres.getUs().getActivo();
+            if (!((estado == 0) || (estado == 2))) {
+                persistLoanTODB();
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();
+
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El Prestario tiene deudas "));
+                RequestContext.getCurrentInstance().update("form1:msg");
+            }
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Inicia sesion "));
+            RequestContext.getCurrentInstance().update("form1:msg");
+        }
+    }
+
+    private void persistLoanTODB() {
+        //#21312
 
         if (kart.persistLoan(pres.getUs())) {
             RequestContext.getCurrentInstance().closeDialog(null);

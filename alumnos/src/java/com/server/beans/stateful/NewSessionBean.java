@@ -70,6 +70,7 @@ public class NewSessionBean {
 
         if (!mtl.contains(tbl)) {
             mtl.add(tbl);
+            // System.out.println("Tamaño data: "+data.size());
             data.add(new MtlDTO(tbl.getIdtblMaterial(), tbl.getNoParte(), tbl.getNombre(), quantity, tbl.getStock()));
             return true;
         } else {

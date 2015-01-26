@@ -60,6 +60,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TblMaterial.findByFechaRecepcion", query = "SELECT t FROM TblMaterial t WHERE t.fechaRecepcion = :fechaRecepcion"),
     @NamedQuery(name = "TblMaterial.findByIdUabc", query = "SELECT t FROM TblMaterial t WHERE t.idUabc = :idUabc")})
 public class TblMaterial implements Serializable {
+    @Column(name = "total")
+    private Integer total;
     @Column(name = "inventariable")
     private Boolean inventariable;
     @Column(name = "showInQuery")
@@ -430,6 +432,14 @@ public class TblMaterial implements Serializable {
 
     public void setInventariable(Boolean inventariable) {
         this.inventariable = inventariable;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
     
 }

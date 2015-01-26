@@ -27,8 +27,8 @@ public class PersonalLoans implements Serializable {
     private String res;
     private String responsable;
     private String serie;
-    private List<DataObject1>  dtl;
-    
+    private List<DataObject1> dtl;
+
     @EJB
     TblDetalleprestamoFacade detalleFacade;
 
@@ -61,8 +61,8 @@ public class PersonalLoans implements Serializable {
 
     public void asigna() {
         System.out.println("ME INVOCARON");
-       dtl= detalleFacade.rastrea(res);
-       RequestContext.getCurrentInstance().update("formita/searchInfo");
+        dtl = detalleFacade.rastrea(res);
+        RequestContext.getCurrentInstance().update("formita/searchInfo");
     }
 
     public String creaPrestamo() {
@@ -77,4 +77,6 @@ public class PersonalLoans implements Serializable {
     public void setDtl(List<DataObject1> dtl) {
         this.dtl = dtl;
     }
+
+
 }

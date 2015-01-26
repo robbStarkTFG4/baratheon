@@ -12,9 +12,12 @@ import com.server.beans.staless.TblMaterialFacade;
 import com.server.beans.staless.TblPrestamoFacade;
 import com.server.beans.staless.TblPrestariosFacade;
 import com.server.beans.staless.TblUsuariosFacade;
+import com.server.beans.staless.TblpiezasFacade;
+import com.server.entity.beans.TblDetalleprestamo;
 import com.server.entity.beans.TblMaterial;
 import com.server.entity.beans.TblPrestarios;
 import com.server.entity.beans.TblUsuarios;
+import com.server.entity.beans.Tblpiezas;
 import com.util.DataObject1;
 import com.util.DetailDTO;
 import com.util.PresDTO;
@@ -67,6 +70,9 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     @EJB
     TblDetalleprestamoFacade dets;
 
+    @EJB
+    TblpiezasFacade tblPiezasFacade;
+
     @Inject
     BeanUsuarios beanUs;
 
@@ -109,6 +115,13 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     private DataObject1 optional;
 
+    private Tblpiezas pzs;
+
+    private List<Tblpiezas> available;
+
+    private boolean dummy = false;
+    private int amountOFAllowed;
+
     public Prestamos() {
 
     }
@@ -119,6 +132,14 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public boolean isDummy() {
+        return dummy;
+    }
+
+    public void setDummy(boolean dummy) {
+        this.dummy = dummy;
     }
 
     public String getCorreo() {
@@ -189,6 +210,22 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         this.solicitudes = solicitudes;
     }
 
+    public Tblpiezas getPzs() {
+        return pzs;
+    }
+
+    public void setPzs(Tblpiezas pzs) {
+        this.pzs = pzs;
+    }
+
+    public List<Tblpiezas> getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(List<Tblpiezas> available) {
+        this.available = available;
+    }
+
     public void findPres() {
         us = usr.getPres(matricula);
         if (us != null) {
@@ -227,9 +264,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             RequestContext.getCurrentInstance().update("forma:tabView:soles");
 
         } else {
-            FacesContext context = FacesContext.getCurrentInstance();
-
-            context.addMessage(null, new FacesMessage("ERROR", "No se encontró ningún prestatario "));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("ERROR", "No se encontró ningún prestatario "));
             RequestContext.getCurrentInstance().update("forma:notify");
         }
     }
@@ -360,7 +395,23 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     public void savePres() throws ParseException {
 
+        persistInquery();
+
+    }
+
+    private void persistInquery() throws ParseException {
         if (pr.updatePres(currentPres, listLoans, this.getUs())) {
+
+            Gson gson = new Gson();
+            // List<DataObject1> list=currentPres.g
+            List<DetailDTO> list = currentPres.getTblDetalleprestamoList();
+            for (DetailDTO ls : list) {
+                if (ls.isInventariable()) {
+                    System.out.println("uno va a liberarse");
+                    tblPiezasFacade.setUnAvailable(ls.getInfoAdd(), false);
+
+                }
+            }
 
             FacesContext context = FacesContext.getCurrentInstance();
 
@@ -369,6 +420,9 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             freeds = null;
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
             freeds = pr.getLoansByFreeds(us.getIdPrestario());
+            us = usr.getPres(us.getUsuario());
+            dummy = false;
+            RequestContext.getCurrentInstance().update("forma:tabView:soles");
             RequestContext.getCurrentInstance().update("forma:tabView:debts");
             RequestContext.getCurrentInstance().update("forma:notify");
 
@@ -538,7 +592,19 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     }
 
     public void saveSelected() throws ParseException {
+        int estado = us.getActivo();
+        if (!((estado == 0) || (estado == 2))) {
+            acceptInquery();
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
 
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El Prestario tiene deudas "));
+            RequestContext.getCurrentInstance().update("forma:notify");
+        }
+
+    }
+
+    private void acceptInquery() throws ParseException {
         // currentPres.getTblDetalleprestamoList().clear();
         //currentPres.setTblDetalleprestamoList(dtls);
         List<DetailDTO> activated = new ArrayList<>();
@@ -553,7 +619,47 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             }
         };
 
+        boolean invi = false;
+
+        for (DetailDTO act : activated) {
+            // if (act.isInventariable() != null) {
+            if (act.isInventariable()) {
+                try {
+                    if (act.getInfoAdd() == null || act.getInfoAdd().trim().equals("")) {
+                        invi = true;
+                    }
+                } catch (NullPointerException e) {
+                    invi = true;
+                }
+            }
+            // }
+        }
+
+        if (!invi) {
+            for (DetailDTO ac : activated) {
+                if (ac.getInfoAdd() != null) {
+                    if (!ac.getInfoAdd().trim().equals("")) {
+                        tblPiezasFacade.setUnAvailable(ac.getInfoAdd(), true);
+                    }
+                }
+
+            }
+            persistAcceptedLoan(activated, nonActivated);
+        } else {
+            FacesContext context = FacesContext.getCurrentInstance();
+
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Datos insuficientes"));
+            RequestContext.getCurrentInstance().update("forma:notify");
+        }
+    }
+
+    private void persistAcceptedLoan(List<DetailDTO> activated, List<DetailDTO> nonActivated) throws ParseException {
         if (!activated.isEmpty() && ((currentPres.isDateAdded()))) {
+
+            for (DetailDTO ac : activated) {
+                System.out.println(ac);
+            }
+
             currentPres.getTblDetalleprestamoList().clear();
             currentPres.setTblDetalleprestamoList(null);
             currentPres.setTblDetalleprestamoList(activated);
@@ -588,6 +694,20 @@ public class Prestamos implements Serializable { //clase para manejar los presta
 
     }
 
+    public void checkBox2(ValueChangeEvent e) {
+
+        // System.out.println("si me llaman desde el checkbox");
+        Tblpiezas dl = (Tblpiezas) e.getComponent().getAttributes().get("obj2");
+        if (((org.primefaces.component.selectbooleancheckbox.SelectBooleanCheckbox) e.getComponent()).isSelected()) {
+            dl.setEstatus(true);
+            //   System.out.println("chekado pz");
+        } else {
+            dl.setEstatus(false);
+            // System.out.println("no chekado pz");
+        }
+
+    }
+
     public void updateDebts() {
         freeds = null;
         ListSol = null;
@@ -615,28 +735,35 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         Map<String, Object> options = new HashMap<>();
         options.put("modal", true);
         options.put("draggable", true);
+        options.put("closable", false);
         options.put("resizable", true);
         options.put("contentHeight", 400);
         options.put("contentWidth", 800);
 
         if (!(forInfo.getInfoAdd() == null || forInfo.getInfoAdd().trim().equals(""))) {
-            System.out.println("entre donde no debia porque yolo " + forInfo.getInfoAdd());
+            // OPTIMIZE GUI
+            //System.out.println("entre donde no debia porque yolo " + forInfo.getInfoAdd());
             Type type = new TypeToken<List<DataObject1>>() {
             }.getType();
-            listForInfo = new Gson().fromJson(forInfo.getInfoAdd(), type);
+            available = new Gson().fromJson(forInfo.getInfoAdd(), type);
         } else {
-            listForInfo = new ArrayList<>();
+            available = new ArrayList<>();
         }
 
-        newForInfo.setResponsable(us.getNombre());
-        newForInfo.setNombreObjeto(forInfo.getNombre());
+        amountOFAllowed = forInfo.getCantidad();
+        //System.out.println("amountOFAllowed: " + amountOFAllowed);
+        available = tblPiezasFacade.findItems(forInfo.getNoParte(), false);
+        // for (Tblpiezas pzs : available) {
+        //    System.out.println("IDS: " + pzs.getIdtblpiezas());
+        //}
         RequestContext.getCurrentInstance().openDialog("/dialogo/infoLab", options, null);
+
     }
 
     public void addForInfo() {
         //  System.out.println("agregalo");
         //System.out.println(newForInfo.getResponsable());
-        listForInfo.add(new DataObject1(newForInfo.getClave1(), newForInfo.getClave2(), newForInfo.getResponsable(), newForInfo.getComentario(), newForInfo.getNombreObjeto(), newForInfo.getSerie()));
+        // listForInfo.add(new DataObject1(newForInfo.getClave1(), newForInfo.getClave2(), newForInfo.getResponsable(), newForInfo.getComentario(), newForInfo.getNombreObjeto(), newForInfo.getSerie()));
         // newForInfo = null;
         RequestContext.getCurrentInstance().update("infoDialog:infoTable");
         // newForInfo=new DataObject1();
@@ -658,15 +785,36 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     }
 
     public void addForInfoFinalizar() {
-        //System.out.println("robbStark aryaStark");
-        Gson gson = new Gson();
-
-        if (listForInfo.size() > 0) {
-            forInfo.setInfoAdd(gson.toJson(listForInfo));
-        } else {
-            forInfo.setInfoAdd("");
+        System.out.println("amountOFAllowed: " + amountOFAllowed);
+        int qt = 0;
+        List<Tblpiezas> filter = new ArrayList<>();
+        for (Tblpiezas el : available) {
+            if (el.getEstatus()) {
+                filter.add(el);
+                qt++;
+            }
         }
-        RequestContext.getCurrentInstance().closeDialog(null);
+
+        if ((qt == amountOFAllowed)) {
+            System.out.println("Persist Data");
+
+            List<DataObject1> pers = new ArrayList<>();
+            for (Tblpiezas fl : filter) {
+                System.out.println("se va a guardar el id: " + fl.getIdtblpiezas());
+                DataObject1 obj = new DataObject1(fl.getIdtblpiezas().intValue(), fl.getInventarioUabc(), fl.getClave2(),
+                        us.getNombre() + " " + us.getApaterno() + " " + us.getAmaterno(), fl.getComentario(), fl.getNombre(), fl.getSerie());
+                pers.add(obj);
+            }
+            Gson gson = new Gson();
+
+            forInfo.setInfoAdd(gson.toJson(pers));
+            System.out.println(forInfo.getInfoAdd());
+            RequestContext.getCurrentInstance().closeDialog(null);
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN, "Info", "Solo puedes seleccionar " + "cantidad(" + amountOFAllowed + ")"));
+            RequestContext.getCurrentInstance().update("infoDialog:infoLabMsgs");
+        }
     }
 
     public void closeAddDialog() {
@@ -697,7 +845,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             listForInfo = new ArrayList<>();
         }
         // RequestContext.getCurrentInstance().update("infoDialog:infoTable");
-        System.out.println("lo que tiene: "+forInfo.getInfoAdd());
+        //System.out.println("lo que tiene: " + forInfo.getInfoAdd());
         RequestContext.getCurrentInstance().openDialog("/dialogo/showInfoAdd", options, null);
     }
 }

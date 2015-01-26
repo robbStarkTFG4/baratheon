@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TblDetalleprestamo.findByHoraretorno", query = "SELECT t FROM TblDetalleprestamo t WHERE t.horaretorno = :horaretorno"),
     @NamedQuery(name = "TblDetalleprestamo.findByRegresados", query = "SELECT t FROM TblDetalleprestamo t WHERE t.regresados = :regresados")})
 public class TblDetalleprestamo implements Serializable {
+    @Column(name = "invi")
+    private Boolean invi;
     @Size(max = 800)
     @Column(name = "infroPres")
     private String infroPres;
@@ -167,6 +169,14 @@ public class TblDetalleprestamo implements Serializable {
 
     public void setInfroPres(String infroPres) {
         this.infroPres = infroPres;
+    }
+
+    public Boolean getInvi() {
+        return invi;
+    }
+
+    public void setInvi(Boolean invi) {
+        this.invi = invi;
     }
     
 }

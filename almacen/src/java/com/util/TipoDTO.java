@@ -7,13 +7,14 @@
 package com.util;
 
 import com.util.interfaces.Tipos;
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author NORE
  */
-public class TipoDTO implements Tipos {
+public class TipoDTO implements Tipos,Serializable {
     
     private int id;
     private String nombre;

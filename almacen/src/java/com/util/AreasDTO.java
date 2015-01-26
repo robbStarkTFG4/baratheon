@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author NORE
  */
-public class AreasDTO implements Areas{
+public class AreasDTO implements Areas,Serializable{
     
     private Integer id;
     private String nombre;

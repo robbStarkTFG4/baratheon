@@ -19,39 +19,49 @@
         <h:form id="infoDialog">
             <div class="ui-grid ui-grid-responsive">
                 <div class="ui-grid-row">
-                    <div class="ui-grid-col-5">
-                        <p:outputLabel value="Clave 1" style="margin-right: 5px"/>
-                        <p:inputText id="clv1" value="#{pres.newForInfo.clave1}" size="40" required="true"/>
-                    </div>
-                    <div class="ui-grid-col-6">
-                        <p:outputLabel value="Clave 2" style="margin-right: 5px"/>
-                        <p:inputText id="clv2" value="#{pres.newForInfo.clave2}" size="40" required="true"/>
+                    <div style="margin: 10px">
+                        <p:messages id="infoLabMsgs"  showDetail="true"/>
                     </div>
                 </div>
 
-                <div class="ui-grid-row" style="margin-top: 10px">
-                    <div class="ui-grid-col-5">
-                        <p:outputLabel value="Responsable" style="margin-right: 5px"/>
-                        <p:inputText  id="res" value="#{pres.newForInfo.responsable}" size="40" required="true"/>
 
-                        <p:outputLabel value="Serie" style="margin-right: 30px ;"/>
-                        <p:inputText  id="serie"  value="#{pres.newForInfo.serie}" size="40" required="true" style="margin-top: 10px;margin-right: 40px"/>
+                <div class="ui-grid-row" style="margin-top: 15px">
+                    <div class="ui-grid-col-1"> <p:outputLabel/></div>
+                    <div class="ui-grid-col-10">
+                        <p:dataTable id="infoTable" var="inf" value="#{pres.available}" rows="5"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
 
-                        <p:outputLabel value="Nombre" style="margin-right: 5px;margin-top: 10px"/>
-                        <p:inputText  id="nombreEquipo"  value="#{pres.newForInfo.nombreObjeto}" size="40" required="true" style="margin-top: 10px"/>
-                    </div>
-                    <div class="ui-grid-col-1" style="margin-right: 5px">
-                        <p:outputLabel value="Comentario"  for="areaText"/> 
+                            <p:column headerText="Inventario">
+                                <h:outputText value="#{inf.inventarioUabc}" />
+                            </p:column>
 
+                            <p:column headerText="Serie">
+                                <h:outputText value="#{inf.serie}" />
+                            </p:column>
+
+                            <p:column headerText="nombre">
+                                <h:outputText value="#{inf.nombre}" />
+                            </p:column>
+
+                            <p:column headerText="#Parte/Modelo">
+                                <h:outputText value="#{inf.noPartemodelo}" />
+                            </p:column>
+
+                            <p:column >
+                                <p:selectBooleanCheckbox   valueChangeListener="#{pres.checkBox2}"  >
+                                    <f:attribute name="obj2" value="#{inf}"/>
+                                    <p:ajax update="@this"/>
+                                </p:selectBooleanCheckbox>
+                            </p:column> 
+                        </p:dataTable>
                     </div>
-                    <div class="ui-grid-col-6">
-                        <!-- <p:outputLabel value="Comentario" style="margin-right: 5px" for="areaText"/> -->
-                        <p:inputTextarea  value="#{pres.newForInfo.comentario}" id="areaText" cols="18" label="Comentario" styleClass="hola" autoResize="false"/>
-                    </div>
+                    <div class="ui-grid-col-1"> <p:outputLabel/></div>
                 </div>
 
                 <div class="ui-grid-row" style="margin-top: 10px">
-                    <div class="ui-grid-col-3" style="margin-right: 5px">
+                    <div class="ui-grid-col-4" style="margin-right: 5px">
                         <p:outputLabel/>
 
                     </div>
@@ -59,45 +69,14 @@
                         <p:commandButton value="Cancelar" immediate="true" action="#{pres.closeAddDialog}"/>
 
                     </div>
-                    <div class="ui-grid-col-1" style="margin-right: 10px">
-                        <p:commandButton value="Agregar" action="#{pres.addForInfo}"/>
 
-                    </div>
                     <div class="ui-grid-col-1" style="margin-right: 10px">
                         <p:commandButton value="Guardar" action="#{pres.addForInfoFinalizar}" immediate="true" />
 
                     </div>
                 </div>
 
-                <div class="ui-grid-row" style="margin-top: 15px">
-                    <div class="ui-grid-col-1"> <p:outputLabel/></div>
-                    <div class="ui-grid-col-10">
-                        <p:dataTable id="infoTable" var="inf" value="#{pres.listForInfo}" >
-                            <p:column headerText="clave 1">
-                                <h:outputText value="#{inf.clave1}" />
-                            </p:column>
 
-                            <p:column headerText="clave 2">
-                                <h:outputText value="#{inf.clave2}" />
-                            </p:column>
-
-                            <p:column headerText="nombre">
-                                <h:outputText value="#{inf.nombreObjeto}" />
-                            </p:column>
-
-                            <p:column headerText="serie">
-                                <h:outputText value="#{inf.serie}" />
-                            </p:column>
-                            
-                            <p:column>
-                                <p:commandButton value="Quitar" action="#{pres.quitarAddInfo()}" immediate="true">
-                                    <f:setPropertyActionListener value="#{inf}" target="#{pres.optional}"/>
-                                </p:commandButton>
-                            </p:column>
-                        </p:dataTable>
-                    </div>
-                    <div class="ui-grid-col-1"> <p:outputLabel/></div>
-                </div>
             </div>
         </h:form>
     </h:body>

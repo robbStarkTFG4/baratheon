@@ -45,7 +45,7 @@ public class NewTimerSessionBean extends AbstractFacade<TblPrestamo> {
         return em;
     }
 
-    @Schedule(hour = "*", minute = "*", persistent = false)
+    @Schedule(hour = "*", minute = "*/5", persistent = false)
     public void myTimer() {
         Date date = new Date();
         TypedQuery<TblPrestamo> query = em.createQuery("SELECT c FROM TblPrestamo c WHERE c.statusprestamo != 0 AND c.statusprestamo  != 3 AND c.statusprestamo !=4", TblPrestamo.class);
@@ -79,7 +79,7 @@ public class NewTimerSessionBean extends AbstractFacade<TblPrestamo> {
 
             }
         } else {
-            System.out.println("BASE DE DATOSS VACIA");
+            System.out.println("BASE DE DATOSS VACIA: " + new Date().toString());
         }
     }
 

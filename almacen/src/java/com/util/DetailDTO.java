@@ -33,9 +33,10 @@ public class DetailDTO implements Serializable {
     
     private int idPres = 0;
     private boolean activated = false;
+    private boolean inventariable = false;
     
     private String infoAdd;
-
+    
     public DetailDTO() {
         
     }
@@ -50,6 +51,7 @@ public class DetailDTO implements Serializable {
         dtl.setIdPrestamo(new TblPrestamo(this.getIdPres()));
         dtl.setRegresados(this.getRegresados());
         dtl.setInfroPres(this.getInfoAdd());
+        dtl.setInvi(this.isInventariable());
         return dtl;
     }
     
@@ -139,6 +141,19 @@ public class DetailDTO implements Serializable {
     
     public void setInfoAdd(String infoAdd) {
         this.infoAdd = infoAdd;
+    }
+    
+    public boolean isInventariable() {
+        return inventariable;
+    }
+    
+    public void setInventariable(boolean inventariable) {
+        this.inventariable = inventariable;
+    }
+
+    @Override
+    public String toString() {
+        return "DetailDTO{" + "noParte=" + noParte + ", nombre=" + nombre + ", activated=" + activated + ", inventariable=" + inventariable + '}';
     }
     
 }

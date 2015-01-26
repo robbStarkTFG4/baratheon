@@ -27,11 +27,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tblpiezas.findAll", query = "SELECT t FROM Tblpiezas t"),
-    @NamedQuery(name = "Tblpiezas.findByTblPiezasid", query = "SELECT t FROM Tblpiezas t WHERE t.tblPiezasid = :tblPiezasid"),
+    @NamedQuery(name = "Tblpiezas.findByIdtblpiezas", query = "SELECT t FROM Tblpiezas t WHERE t.idtblpiezas = :idtblpiezas"),
     @NamedQuery(name = "Tblpiezas.findBySerie", query = "SELECT t FROM Tblpiezas t WHERE t.serie = :serie"),
     @NamedQuery(name = "Tblpiezas.findByInventarioUabc", query = "SELECT t FROM Tblpiezas t WHERE t.inventarioUabc = :inventarioUabc"),
     @NamedQuery(name = "Tblpiezas.findByClave2", query = "SELECT t FROM Tblpiezas t WHERE t.clave2 = :clave2"),
-    @NamedQuery(name = "Tblpiezas.findByPartemodelo", query = "SELECT t FROM Tblpiezas t WHERE t.partemodelo = :partemodelo"),
+    @NamedQuery(name = "Tblpiezas.findByNoPartemodelo", query = "SELECT t FROM Tblpiezas t WHERE t.noPartemodelo = :noPartemodelo"),
     @NamedQuery(name = "Tblpiezas.findByNombre", query = "SELECT t FROM Tblpiezas t WHERE t.nombre = :nombre"),
     @NamedQuery(name = "Tblpiezas.findByComentario", query = "SELECT t FROM Tblpiezas t WHERE t.comentario = :comentario"),
     @NamedQuery(name = "Tblpiezas.findByEstatus", query = "SELECT t FROM Tblpiezas t WHERE t.estatus = :estatus")})
@@ -40,24 +40,24 @@ public class Tblpiezas implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "TblPiezas_id")
-    private Integer tblPiezasid;
-    @Size(max = 100)
+    @Column(name = "idtblpiezas")
+    private Integer idtblpiezas;
+    @Size(max = 80)
     @Column(name = "serie")
     private String serie;
-    @Size(max = 100)
+    @Size(max = 80)
     @Column(name = "inventario_uabc")
     private String inventarioUabc;
-    @Size(max = 100)
+    @Size(max = 80)
     @Column(name = "clave2")
     private String clave2;
-    @Size(max = 50)
-    @Column(name = "#Parte_modelo")
-    private String partemodelo;
-    @Size(max = 100)
+    @Size(max = 80)
+    @Column(name = "noParte_modelo")
+    private String noPartemodelo;
+    @Size(max = 80)
     @Column(name = "nombre")
     private String nombre;
-    @Size(max = 200)
+    @Size(max = 80)
     @Column(name = "comentario")
     private String comentario;
     @Column(name = "estatus")
@@ -66,16 +66,16 @@ public class Tblpiezas implements Serializable {
     public Tblpiezas() {
     }
 
-    public Tblpiezas(Integer tblPiezasid) {
-        this.tblPiezasid = tblPiezasid;
+    public Tblpiezas(Integer idtblpiezas) {
+        this.idtblpiezas = idtblpiezas;
     }
 
-    public Integer getTblPiezasid() {
-        return tblPiezasid;
+    public Integer getIdtblpiezas() {
+        return idtblpiezas;
     }
 
-    public void setTblPiezasid(Integer tblPiezasid) {
-        this.tblPiezasid = tblPiezasid;
+    public void setIdtblpiezas(Integer idtblpiezas) {
+        this.idtblpiezas = idtblpiezas;
     }
 
     public String getSerie() {
@@ -102,12 +102,12 @@ public class Tblpiezas implements Serializable {
         this.clave2 = clave2;
     }
 
-    public String getPartemodelo() {
-        return partemodelo;
+    public String getNoPartemodelo() {
+        return noPartemodelo;
     }
 
-    public void setPartemodelo(String partemodelo) {
-        this.partemodelo = partemodelo;
+    public void setNoPartemodelo(String noPartemodelo) {
+        this.noPartemodelo = noPartemodelo;
     }
 
     public String getNombre() {
@@ -137,7 +137,7 @@ public class Tblpiezas implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (tblPiezasid != null ? tblPiezasid.hashCode() : 0);
+        hash += (idtblpiezas != null ? idtblpiezas.hashCode() : 0);
         return hash;
     }
 
@@ -148,7 +148,7 @@ public class Tblpiezas implements Serializable {
             return false;
         }
         Tblpiezas other = (Tblpiezas) object;
-        if ((this.tblPiezasid == null && other.tblPiezasid != null) || (this.tblPiezasid != null && !this.tblPiezasid.equals(other.tblPiezasid))) {
+        if ((this.idtblpiezas == null && other.idtblpiezas != null) || (this.idtblpiezas != null && !this.idtblpiezas.equals(other.idtblpiezas))) {
             return false;
         }
         return true;
@@ -156,7 +156,7 @@ public class Tblpiezas implements Serializable {
 
     @Override
     public String toString() {
-        return "com.server.entity.beans.Tblpiezas[ tblPiezasid=" + tblPiezasid + " ]";
+        return "com.server.entity.beans.Tblpiezas[ idtblpiezas=" + idtblpiezas + " ]";
     }
     
 }

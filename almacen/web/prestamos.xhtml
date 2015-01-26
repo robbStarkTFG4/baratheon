@@ -197,14 +197,14 @@
                                     </p:column>
 
                                     <p:column >
-                                        <p:selectBooleanCheckbox valueChangeListener="#{pres.checkBox}">
+                                        <p:selectBooleanCheckbox  valueChangeListener="#{pres.checkBox}"  >
                                             <f:attribute name="obj" value="#{hl}"/>
-                                            <p:ajax/>
+                                            <p:ajax />
                                         </p:selectBooleanCheckbox>
                                     </p:column> 
 
-                                    <p:column >
-                                        <p:commandButton  icon="ui-icon-zoomin"   action="#{pres.infoAction}">
+                                    <p:column  >
+                                        <p:commandButton disabled="#{hl.inventariable ? false :true}"  icon="ui-icon-zoomin"   action="#{pres.infoAction}">
                                             <f:setPropertyActionListener value="#{hl}" target="#{pres.forInfo}"/>
                                         </p:commandButton>                
                                     </p:column>
@@ -215,7 +215,7 @@
                                     <p:commandButton value="Deshacer" action="#{pres.resetListener}" update="dtls">
                                         <f:setPropertyActionListener value="#{sl.tblDetalleprestamoList}" target="#{pres.dtls}"/>
                                     </p:commandButton>
-                                    <p:commandButton value="Guardar" action="#{pres.saveSelected}" update="noti" disabled="#{pres.activo eq 2}">
+                                    <p:commandButton value="Guardar" action="#{pres.saveSelected}" update="noti" >
                                         <f:setPropertyActionListener value="#{sl}" target="#{pres.currentPres}"/>
 
                                     </p:commandButton>

@@ -10,6 +10,7 @@ import com.server.beans.staless.SubfamiliasFacade;
 import com.server.beans.staless.TblAreaFacade;
 import com.server.beans.staless.TblMaterialFacade;
 import com.server.beans.staless.TblTipomaterialFacade;
+import com.server.beans.staless.TblpiezasFacade;
 import com.server.entity.beans.Almacen;
 import com.server.entity.beans.Subfamilias;
 import com.server.entity.beans.TblArea;
@@ -95,6 +96,8 @@ public class BeanMateriales implements Serializable {
     TblAreaFacade arf;
     @EJB
     TblTipomaterialFacade tmf;
+    @EJB
+    TblpiezasFacade piezas;
     private boolean control = false;
     List<TblArea> listArea;
     List<Almacen> lalm;
@@ -556,14 +559,17 @@ public class BeanMateriales implements Serializable {
             //  RequestContext.getCurrentInstance().update("menu:f2:growlcq");
         }
 
-        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery,invent);
+        hecho = mf.agregar11(nombre, noParte, descripcion, cantidad, costo, unidadmedida, marca, serie, estado, ubicacion, responsable, probedor, noFactura, ordenDcompra, zip, financiamiento, tipodecompra, idUABC, fecharecepcion, area, tipodematerial, subfamilia, almacen, imagen, this.selectedArea, this.selectedTipo, this.selectedSubFamilia, showinquery, invent);
 
         if (hecho == true) {
 
-            // check  if (inventariable==true)
-            
-            //End check
-                    disAddsf = false;
+            // create items in Tblpiezas,matching cantidad.
+            if (invent) {
+                piezas.create(nombre, noParte, Integer.parseInt(cantidad));
+            }
+            //End Create
+
+            disAddsf = false;
             beanuser.acciones("Material agregado: " + nombre + ", " + "cantidad: " + cantidad, noParte);
             nombre = null;
             noParte = null;
