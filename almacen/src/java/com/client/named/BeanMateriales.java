@@ -82,7 +82,7 @@ public class BeanMateriales implements Serializable {
     private String descripcionSubfam;
     private UploadedFile file;
     private String imagen;
-    private final String ruta = "C:\\Users\\UABC\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
+    private final String ruta = "C:\\Users\\NORE\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
     private boolean invent = false;
 //"C:\\Users\\cristian\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\"
 
@@ -747,14 +747,20 @@ public class BeanMateriales implements Serializable {
                 RequestContext.getCurrentInstance().closeDialog(null);
                 listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
+                catalog.updateTree();
             } else {
                 System.out.println("PUSO NULO");
                 selectedSubFamilia = null;
                 listSF = null;
                 nombreSubfam = null;
                 descripcionSubfam = null;
-                RequestContext.getCurrentInstance().update("formadatos:tbw1:subFam");
+                catalog.updateTree();
+                if (this.selectedTipo != null) {
+                    listSF = sff.listAL(this.selectedTipo.getIdTipomaterial());
+                }
+                RequestContext.getCurrentInstance().update(":formadatos:tbw1");
                 RequestContext.getCurrentInstance().closeDialog(null);
+                RequestContext.getCurrentInstance().update(":formadatos:tbw1:subFam");
             }
 
         } else {
@@ -781,14 +787,21 @@ public class BeanMateriales implements Serializable {
                 RequestContext.getCurrentInstance().closeDialog(null);
                 this.listTM = tmf.listAtm(this.getSelectedArea().getIdArea());
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
+                catalog.updateTree();
                 // RequestContext.getCurrentInstance().update("menu:f2:growlcq");
             } else {
                 System.out.println("PUSO NULO");
                 descripcionTipoMat = null;
-                selectedTipo = null;
-                selectedArea = null;
-                listTM = null;
+                //selectedTipo = null;
+                //selectedArea = null;
+                //listTM = null;
+                if (this.getSelectedArea() != null) {
+                    System.out.println("AYNAAAAAAAA TIPOOOOOOOO");
+                    this.listTM = tmf.listAtm(this.getSelectedArea().getIdArea());
+                }
+                catalog.updateTree();
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:tipo");
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:tab3");
                 RequestContext.getCurrentInstance().closeDialog(null);
             }
         } else {
@@ -808,7 +821,7 @@ public class BeanMateriales implements Serializable {
                 // System.out.println("creando msj growl");
                 RequestContext.getCurrentInstance().closeDialog(null);
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Agregado", "Área agregada con éxito"));
-                //catalog.updateTree();
+                catalog.updateTree();
             } else {
                 //System.out.println("PUSO NULO");
                 descripcionArea = null;
@@ -817,6 +830,7 @@ public class BeanMateriales implements Serializable {
                 catalog.updateTree();
                 updateAreas();
                 RequestContext.getCurrentInstance().update("formadatos:tbw1:areaOne");
+                RequestContext.getCurrentInstance().update("formadatos:tbw1:tab3");
                 RequestContext.getCurrentInstance().closeDialog(null);
             }
             // RequestContext.getCurrentInstance().update("menu:f2:growlcq");

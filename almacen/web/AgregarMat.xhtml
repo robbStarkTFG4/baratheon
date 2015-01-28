@@ -16,9 +16,15 @@
                     <h:form id="formadatos">
                         <p:panel id="pan1"  >
                             <div align="left">
-                                <p:commandLink immediate="true" value="Agregar área" actionListener="#{altas.dialogArea(2)}" style="margin-left: 2%;color: darkslategrey;font-size: small" />
-                                <p:commandLink  immediate="true" value="Agregar tipo" actionListener="#{altas.dialogTM(2)}" style="margin-left: 2%;color: darkslategrey;font-size: small" />
-                                <p:commandLink immediate="true" value="Agregar subfamilia" actionListener="#{altas.dialogSF(2)}" style="margin-left: 2%;color: darkslategrey;font-size: small" />
+                                <p:commandLink immediate="true" value="Agregar área" actionListener="#{altas.dialogArea(2)}" style="margin-left: 2%;color: darkslategrey;font-size: small" >
+                                    <p:ajax event="dialogReturn"  update=":formadatos:tbw1:areaOne" />
+                                </p:commandLink>
+                                <p:commandLink  immediate="true" value="Agregar tipo" actionListener="#{altas.dialogTM(2)}" style="margin-left: 2%;color: darkslategrey;font-size: small" >
+                                    <p:ajax event="dialogReturn"  update=":formadatos:tbw1:tipo" />
+                                </p:commandLink>
+                                <p:commandLink immediate="true" value="Agregar subfamilia" actionListener="#{altas.dialogSF(2)}" style="margin-left: 2%;color: darkslategrey;font-size: small" >
+                                    <p:ajax event="dialogReturn"  update=":formadatos:tbw1" />
+                                </p:commandLink>
                                 <p:commandLink immediate="true" value="Agregar almacén" actionListener="#{altas.dialogAl()}" style="margin-left: 2%;color: darkslategrey;font-size: small" />
 
 

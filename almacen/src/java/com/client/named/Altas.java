@@ -133,7 +133,7 @@ public class Altas implements Serializable {
 
     public void dialogSF(int p) {
         prioridad = p;
-       // mate.setListTM(tmf.listaTipoAll());
+        // mate.setListTM(tmf.listaTipoAll());
         Map<String, Object> options = new HashMap<>();
         options.put("modal", false);
         options.put("closable", false);
