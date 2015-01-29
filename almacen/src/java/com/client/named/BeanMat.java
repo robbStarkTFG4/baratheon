@@ -474,20 +474,20 @@ public class BeanMat implements Serializable {
         imagen = null;
         matencontrado = mat.bpormat(material2.getNoParte());
         if (matencontrado != null) {
-          
-            if (!pendientes.checkIFListed(matencontrado.getNoParte())) {
-                  FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado", "Material encontrado"));
-                updateFields();
-            }else{
-                System.out.println("poner dialogo de aviso");
-                 Map<String, Object> options = new HashMap<>();
-                        options.put("modal", true);
-                        options.put("draggable", true);
-                        options.put("resizable", false);
-                        options.put("contentHeight", 200);
-                        options.put("contentWidth", 600);
 
-                        RequestContext.getCurrentInstance().openDialog("/dialogo/dialogoAviso", options, null);
+            if (!pendientes.checkIFListed(matencontrado.getNoParte())) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Encontrado", "Material encontrado"));
+                updateFields();
+            } else {
+                System.out.println("poner dialogo de aviso");
+                Map<String, Object> options = new HashMap<>();
+                options.put("modal", true);
+                options.put("draggable", true);
+                options.put("resizable", false);
+                options.put("contentHeight", 200);
+                options.put("contentWidth", 600);
+
+                RequestContext.getCurrentInstance().openDialog("/dialogo/dialogoAviso", options, null);
             }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Material inexistente"));
@@ -602,7 +602,9 @@ public class BeanMat implements Serializable {
         list.add(new materialBusqueda("Ubicacion actual:", matencontrado.getUbicacionActual()));
         list.add(new materialBusqueda("Marca:", matencontrado.getMarca()));
         list.add(new materialBusqueda("Responsable:", matencontrado.getResponsable()));
-        list.add(new materialBusqueda("Almacen:", matencontrado.getAlmacenIdalmacen().getDescripcion()));
+        if (matencontrado.getAlmacenIdalmacen() != null) {
+            list.add(new materialBusqueda("Almacen:", matencontrado.getAlmacenIdalmacen().getDescripcion()));
+        }
         list.add(new materialBusqueda("Area:", matencontrado.getIdArea().getDescripcion()));
         list.add(new materialBusqueda("Tipo de material:", matencontrado.getIdTipomaterial().getDescripcion()));
         list.add(new materialBusqueda("Subfamilia", matencontrado.getSubFamiliasidsubFam().getNombre()));

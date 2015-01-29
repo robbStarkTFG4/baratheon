@@ -46,8 +46,6 @@ public class PresDTO implements Serializable {
 
     public static final int FECHA_ENTREGA = 13432;
     public static final int FECHA_APROBACION = 432421;
-    
-
 
     public PresDTO() {
     }
@@ -55,8 +53,6 @@ public class PresDTO implements Serializable {
     public TblPrestamo convertDTO(int stage, TblPrestamo tbl) throws ParseException {
 
         //tbl.setIdPrestamo(this.getIdPrestamo());
-       
-
         switch (stage) {
             // fecha solicitud prestamo "fecha solicitud"  //ENTREGA
             case FECHA_ENTREGA:
@@ -263,6 +259,19 @@ public class PresDTO implements Serializable {
 
     public void setDateAdded(boolean dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    public void addDates(TblPrestamo tbl) {
+        Date dat = new Date();
+
+        Calendar calendar = GregorianCalendar.getInstance(); // creates a new calendar instance
+        calendar.setTime(dat);   // assigns calendar to given date 
+        calendar.get(Calendar.HOUR_OF_DAY); // gets hour in 24h format
+        calendar.get(Calendar.HOUR);        // gets hour in 12h format
+        calendar.get(Calendar.MONTH);
+
+        tbl.setFechaprestamo(dat);
+        tbl.setFechaVencimiento(date10);
     }
 
 }

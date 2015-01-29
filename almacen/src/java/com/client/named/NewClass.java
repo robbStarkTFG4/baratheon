@@ -95,12 +95,12 @@ public class NewClass implements Serializable {
             data.setSelectedArea(null);
             data.setSelectedFam(null);
             data.setSelectedType(null);
-            if (!fullURI.equals("/backUpWebAPP/faces/grid.xhtml")) {
+            if (!fullURI.equals("/almacen/faces/productGrid.xhtml")) {
 
                 System.out.println("entre en el redirect PRIMER PUNTO PARA QUERY");
                 typeOfSearch = 1;
                 data.performQuery(typeOfSearch);
-                return "/grid.xhtml?faces-redirect=true";
+                return "/productGrid.xhtml?faces-redirect=true";
             } else {
 
                 System.out.println("estoy en el ajax");

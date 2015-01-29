@@ -19,9 +19,9 @@
                     <div class="ui-grid ui-grid-responsive">
                         <div class="ui-grid-row" style="margin-top: 20px">
                             <div class="ui-grid-col-3"><p:outputLabel/></div>
-                            <div class="ui-grid-col-3">
+                            <div class="ui-grid-col-4">
 
-                                <p:autoComplete   value="#{inventariable.pieza}"  completeMethod="#{nm.autoComplete}" forceSelection="true"  style=" height: 25px; width: 90% "
+                                <p:autoComplete   value="#{inventariable.pieza}"  completeMethod="#{nm.autoComplete}" forceSelection="true"  style=" height: 25px; margin-right: 5px;"
                                                   var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
                                                   maxResults="15" queryDelay="500"
                                                   >
@@ -30,10 +30,10 @@
                                     </p:column>
 
                                 </p:autoComplete> 
-
+                                <p:commandButton icon="ui-icon-search"  actionListener="#{inventariable.buscar()}"  update="some"  />
                             </div>
                             <div  class="ui-grid-col-1">
-                                <p:commandButton icon="ui-icon-search"  actionListener="#{inventariable.buscar()}" style="width: 100%" update="some"  />
+
                             </div>
                             <div class="ui-grid-col-2"><p:outputLabel/></div>
                         </div>

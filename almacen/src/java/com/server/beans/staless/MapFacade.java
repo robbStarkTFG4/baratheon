@@ -36,8 +36,12 @@ public class MapFacade extends AbstractFacade<Map> {
     public void agregarmap(TblTipomaterial tm, Subfamilias sub) {
 
         Query query = em.createQuery("SELECT MAX(c.mapPK.idMap)  FROM Map c ");
-        int max = (int) query.getSingleResult();
-
+        int max = 0;
+        try {
+            max = (int) query.getSingleResult();
+        } catch (Exception e) {
+            max = 0;
+        }
         System.out.println("EL MAXIMO ID ES:  " + max);
         try {
             Map nm = new Map(max + 1, sub.getIdsubFam());

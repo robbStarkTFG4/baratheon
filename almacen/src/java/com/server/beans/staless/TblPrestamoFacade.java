@@ -162,14 +162,16 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
         //  pr.setHoraprestamo((String) currentDate()[1]);
         //TblPrestamo res = getPresi(pr.getIdPrestamo());
-        pr.setFechaprestamo(pr.getFechaprestamo());
-        pr.setFechaVencimiento(pr.getFechaVencimiento());
+        pres.addDates(pr);
+
+        //pr.setFechaprestamo(pr.getFechaprestamo());
+        //pr.setFechaVencimiento(pr.getFechaVencimiento());
         pr.setHoraprestamo((String) currentDate()[1]);
         //pr.setIdUsuarios(us);
         pr.setStatusprestamo(1);
 
         //this.edit(pr);
-        System.out.println("me voy a COJER A NELVA: " + activated.size());
+        activated.size();
         for (DetailDTO dl : activated) {
 
             TblDetalleprestamo detalle = dtl.find(dl.getIdDetalleprestamo());
@@ -181,7 +183,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
             //detalle.setIdMaterial(new TblMaterial(dl.getIdMaterial()));
             // detalle.setIdPrestamo(new TblPrestamo(dl.getIdPres()));
             //detalle.setRegresados(dl.getRegresados());
-            System.out.println("LE VOY A DAR POR SUS ORIFICIOS: " + detalle.getCantidad());
+            detalle.getCantidad();
             detalle.setInfroPres(dl.getInfoAdd());
             detalle.setInvi(dl.isInventariable());
             ml.aplyChange(detalle);
@@ -195,7 +197,6 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         //pr.getTblDetalleprestamoList().clear();
         //pr.getTblDetalleprestamoList().addAll(hs);
 
-        System.out.println("NELVA CAMACHOOOOO OBESO va a ser mia!!!!!");
         for (TblDetalleprestamo col : pr.getTblDetalleprestamoList()) {
             System.out.println(col);
         }

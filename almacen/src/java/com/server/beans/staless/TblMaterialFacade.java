@@ -114,7 +114,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         TblMaterial temp = query.getSingleResult();
 
         if (temp != null) {
-            System.out.println("me va a MAMAR EL PENE (NELVA): " + dl);
+            System.out.println(dl);
             if (dl != null) {
 
                 int newStock = temp.getStock() - dl.getCantidad();

@@ -796,7 +796,6 @@ public class BeanMateriales implements Serializable {
                 //selectedArea = null;
                 //listTM = null;
                 if (this.getSelectedArea() != null) {
-                    System.out.println("AYNAAAAAAAA TIPOOOOOOOO");
                     this.listTM = tmf.listAtm(this.getSelectedArea().getIdArea());
                 }
                 catalog.updateTree();

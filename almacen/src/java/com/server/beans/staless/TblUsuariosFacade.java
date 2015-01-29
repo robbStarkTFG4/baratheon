@@ -57,7 +57,7 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
 
     public boolean agregar(String nombre, String clave, String apellidop, String apellidom, String tipous, String email, String tel, String usuario) {
         boolean existe = true;
-        int id ;
+        int id;
         Query search = em.createQuery("SELECT t.idUsuarios FROM TblUsuarios t WHERE t.usuario = :usuario OR t.email = :correo");
         search.setParameter("usuario", usuario);
         search.setParameter("correo", email);
@@ -141,42 +141,37 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
     }
 
     public List<UsuarioDTO> listausuariosSS() {
-       List< UsuarioDTO> lista = new ArrayList<>();
+        List< UsuarioDTO> lista = new ArrayList<>();
 
         try {
 
             Query search = em.createQuery("SELECT u.nombre, u.apellidop, u.apellidom, u.email, u.tel, u.usuario FROM TblUsuarios u WHERE u.idTipousuarios.idTipousuarios = :tipo");
             search.setParameter("tipo", 1);
             List obj = search.getResultList();
-           
-if (obj != null) {
-            for (Iterator it = obj.iterator(); it.hasNext();) {
-                Object[] object = (Object[]) it.next();
-                UsuarioDTO temp = new UsuarioDTO();
-                temp.setNombre((String) object[0]);
-                temp.setApellidop((String) object[1]);
-                temp.setApellidom((String) object[2]);
-                temp.setEmail((String) object[3]);
-                temp.setTel((String) object[4]);
-                temp.setUsuario((String) object[5]);
-              
-                lista.add(temp);
-            }    }
-        
-            
-            
-            
-            
+
+            if (obj != null) {
+                for (Iterator it = obj.iterator(); it.hasNext();) {
+                    Object[] object = (Object[]) it.next();
+                    UsuarioDTO temp = new UsuarioDTO();
+                    temp.setNombre((String) object[0]);
+                    temp.setApellidop((String) object[1]);
+                    temp.setApellidom((String) object[2]);
+                    temp.setEmail((String) object[3]);
+                    temp.setTel((String) object[4]);
+                    temp.setUsuario((String) object[5]);
+
+                    lista.add(temp);
+                }
+            }
+
           //  for (int i = 0; i < lista.size(); i++) {
-
            //     if (lista.get(i).getIdTipousuarios().getIdTipousuarios().equals("admin")) {
-                 //   lista.remove(i);
-           //     }
+            //   lista.remove(i);
+            //     }
                 /*if(lista.get(lista.size()-1).getIdTipousuarios().getIdTipousuarios().equals("admin")){
-                 lista.remove(lista.size()-1);
-                 }*/
+             lista.remove(lista.size()-1);
+             }*/
        //     }
-
             System.out.println(lista);
         } catch (Exception e) {
             System.out.println("ERROR IN Question FACADE:" + e.getMessage());
@@ -194,7 +189,7 @@ if (obj != null) {
 
         search.setParameter("correo", email);
         try {
-            busc =  (String) search.getSingleResult();
+            busc = (String) search.getSingleResult();
             if (usuario.equals(busc)) {
                 TblUsuarios us = em.find(TblUsuarios.class, id);
                 TblTipousuarios tu = new TblTipousuarios();

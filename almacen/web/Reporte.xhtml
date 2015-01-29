@@ -5,85 +5,85 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-   
+
     <h:head>
         <f:event type="preRenderView" listener="#{user.conexion(1)}"  />
         <title>Prestatarios Morosos</title>
     </h:head>
     <h:body>
-         <ui:composition template="/Admin.xhtml" >
+        <ui:composition template="/Admin.xhtml" >
             <ui:define name="contentenidoAdmin">
-        <h:form>
-            
-            <center>
-                <h2>Lista de prestatarios morosos</h2>
-            </center>
-            <p:dataTable id="tbl" var="car" value="#{prest.listmoroso}" paginator="true" rows="10">  
-    <p:column>  
-        <f:facet name="header">  
-            <h:outputText value="Usuario" />  
-        </f:facet>  
-        <h:outputText value="#{car.usuario}" />  
-    </p:column>  
-  
-    <p:column>  
-        <f:facet name="header">  
-            <h:outputText value="Apellido paterno" />  
-        </f:facet>  
-        <h:outputText value="#{car.apaterno}"/>  
-    </p:column>  
-  
-    <p:column>  
-        <f:facet name="header">  
-            <h:outputText value="Apellido materno" />  
-        </f:facet>  
-        <h:outputText value="#{car.amaterno}" />  
-    </p:column>  
-  
-    <p:column>  
-        <f:facet name="header">  
-            <h:outputText value="Correo" />  
-        </f:facet>  
-        <h:outputText value="#{car.email}" />  
-    </p:column>  
-                 <p:column>  
-        <f:facet name="header">  
-            <h:outputText value="Teléfono" />  
-        </f:facet>  
-                     <h:outputText value="#{car.tel}" />  
-    </p:column> 
-                 <p:column>  
-        <f:facet name="header">  
-            <h:outputText value="Carrera" />  
-        </f:facet>  
-                     <h:outputText value="#{car.carrera}" />  
-    </p:column>  
-</p:dataTable>  
-      
-<h:panelGrid columns="1">  
-    <p:panel header="Exportar reporte"> 
-       
-        <h:commandButton image="/imagenes/excel.png">       
-            <p:dataExporter type="xls" target="tbl" fileName="PrestariosMoroso" />  
-        </h:commandButton>  
-  
-        <h:commandButton image="/imagenes/pdf.png">   
-          <p:dataExporter type="pdf" target="tbl" fileName="PrestariosMoroso"/>  
-        </h:commandButton>  
-          
-        <h:commandButton image="/imagenes/csv.png">   
-            <p:dataExporter type="csv" target="tbl" fileName="PrestariosMoroso"/>  
-        </h:commandButton>  
-          
-        <h:commandButton image="/imagenes/xml.jpg">  
-            <p:dataExporter type="xml" target="tbl" fileName="PrestariosMoroso"/>  
-        </h:commandButton>
-    </p:panel>  
-   
-</h:panelGrid>  
-        </h:form>
+                <h:form>
+
+                    <center>
+                        <h2>Lista de prestatarios morosos</h2>
+                    </center>
+                    <p:dataTable id="tbl" var="car" value="#{prest.listmoroso}" paginator="true" rows="10">  
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Usuario" />  
+                            </f:facet>  
+                            <h:outputText value="#{car.usuario}" />  
+                        </p:column>  
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Apellido paterno" />  
+                            </f:facet>  
+                            <h:outputText value="#{car.apaterno}"/>  
+                        </p:column>  
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Apellido materno" />  
+                            </f:facet>  
+                            <h:outputText value="#{car.amaterno}" />  
+                        </p:column>  
+
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Correo" />  
+                            </f:facet>  
+                            <h:outputText value="#{car.email}" />  
+                        </p:column>  
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Teléfono" />  
+                            </f:facet>  
+                            <h:outputText value="#{car.tel}" />  
+                        </p:column> 
+                        <p:column>  
+                            <f:facet name="header">  
+                                <h:outputText value="Carrera" />  
+                            </f:facet>  
+                            <h:outputText value="#{car.carrera}" />  
+                        </p:column>  
+                    </p:dataTable>  
+
+                    <h:panelGrid columns="1">  
+                        <p:panel header="Exportar reporte"> 
+
+                            <h:commandButton image="/imagenes/excel.png">       
+                                <p:dataExporter type="xls" target="tbl" fileName="PrestariosMoroso" />  
+                            </h:commandButton>  
+
+                            <h:commandButton image="/imagenes/pdf.png">   
+                                <p:dataExporter type="pdf" target="tbl" fileName="PrestariosMoroso"/>  
+                            </h:commandButton>  
+
+                            <h:commandButton image="/imagenes/csv.png">   
+                                <p:dataExporter type="csv" target="tbl" fileName="PrestariosMoroso"/>  
+                            </h:commandButton>  
+
+                            <h:commandButton image="/imagenes/xml.jpg">  
+                                <p:dataExporter type="xml" target="tbl" fileName="PrestariosMoroso"/>  
+                            </h:commandButton>
+                        </p:panel>  
+
+                    </h:panelGrid>  
+                </h:form>
             </ui:define>
-         </ui:composition>
+        </ui:composition>
     </h:body>
 </html>
 

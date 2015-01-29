@@ -75,7 +75,7 @@
                 position:fixed;
                 top: 10%;
                 left: 70%;
-                
+
                 z-index:1;
             }
         </style>
@@ -100,22 +100,22 @@
                             <!-- Top Menu Items -->
                             <ul class="nav navbar-right top-nav">
                                 <li style="margin-top: 10px">
-                                   
-                                        <p:commandButton id="iconOnly"  action="#{gd.openKart}" rendered="#{gd ne null}" disabled="#{nm.karControl}"
-                                                         icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " />    
 
-                                        <p:autoComplete   value="#{nm.caja}" id="sdar" completeMethod="#{nm.autoComplete}"  style="margin-right: 0px; height: 25px;  "
-                                                          var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
-                                                          forceSelection="true" maxResults="15" queryDelay="500"
-                                                          >
-                                            <p:column>  
-                                                #{p.nombre} - #{p.noParte}  
-                                            </p:column>
+                                    <p:commandButton id="iconOnly"  action="#{gd.openKart}" rendered="#{gd ne null}" disabled="#{nm.karControl}"
+                                                     icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " />    
 
-                                        </p:autoComplete>  
-                                        <p:commandButton   icon="ui-icon-search" style="  height: 30px; " action="#{nm.processQuery}" />  
+                                    <p:autoComplete   value="#{nm.caja}" id="sdar" completeMethod="#{nm.autoComplete}"  style="margin-right: 0px; height: 25px;  "
+                                                      var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
+                                                      forceSelection="true" maxResults="15" queryDelay="500"
+                                                      >
+                                        <p:column>  
+                                            #{p.nombre} - #{p.noParte}  
+                                        </p:column>
 
-                                    
+                                    </p:autoComplete>  
+                                    <p:commandButton   icon="ui-icon-search" style="  height: 30px; " action="#{nm.processQuery}" />  
+
+
                                 </li>
 
                                 <li class="dropdown">
@@ -153,7 +153,7 @@
                             <div class="collapse navbar-collapse navbar-ex1-collapse">
                                 <ul class="nav navbar-nav side-nav">
                                     <li >
-                                        <p:commandLink  id="com2" partialSubmit="true" action="/prestariosUI.xhtml?faces-redirect=true" styleClass=" fa fa-fw fa-dashboard text-left dis" >
+                                        <p:commandLink  id="com2" partialSubmit="true" action="/presi.xhtml?faces-redirect=true" styleClass=" fa fa-fw fa-dashboard text-left dis" >
                                             <h:outputText value=" Prestamos"/>
                                         </p:commandLink>
 
@@ -182,7 +182,7 @@
                                                     <h:outputText value="Rastreo"/>
                                                 </p:commandLink>
                                             </li>
-                                             <li>
+                                            <li>
                                                 <p:commandLink action="/test2.xhtml?faces-redirect=true"      >
                                                     <h:outputText value="Inventariables"/>
                                                 </p:commandLink>
@@ -190,7 +190,7 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <p:commandLink  id="com4"    action="/CatalogUI.xhtml?faces-redirect=true" styleClass="fa fa-fw fa-slideshare dis"   >
+                                        <p:commandLink  id="com4"    action="/catalogTree.xhtml?faces-redirect=true" styleClass="fa fa-fw fa-slideshare dis"   >
                                             <h:outputText value=" Catalogo"/>
                                         </p:commandLink>
                                     </li>
