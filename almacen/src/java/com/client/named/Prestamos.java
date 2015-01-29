@@ -656,21 +656,21 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     private void persistAcceptedLoan(List<DetailDTO> activated, List<DetailDTO> nonActivated) throws ParseException {
         if (!activated.isEmpty() && ((currentPres.isDateAdded()))) {
 
-            for (DetailDTO ac : activated) {
-                System.out.println(ac);
-            }
-
+            //for (DetailDTO ac : activated) {
+            //    System.out.println(ac);
+            //}
             currentPres.getTblDetalleprestamoList().clear();
             currentPres.setTblDetalleprestamoList(null);
             currentPres.setTblDetalleprestamoList(activated);
-
-            pr.updatInquery(currentPres, beanUs.getUsuario());
             dets.deleteDetails(nonActivated);
+            pr.updatInquery(currentPres, beanUs.getUsuario(), activated);
+
             ListSol.remove(currentPres);
             RequestContext.getCurrentInstance().update("forma:tabView:soles");
-            currentPres.setStatusprestamo(1);
+            //currentPres.setStatusprestamo(1);
             listLoans.clear();
             listLoans = pr.getLoansByDebts(us.getIdPrestario());
+            currentPres = null;
             RequestContext.getCurrentInstance().update("forma:tabView:debts");
         } else {
             FacesContext context = FacesContext.getCurrentInstance();

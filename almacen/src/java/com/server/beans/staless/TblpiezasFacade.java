@@ -90,14 +90,16 @@ public class TblpiezasFacade extends AbstractFacade<Tblpiezas> {
         Gson gson = new Gson();
         Type type = new TypeToken<List<DataObject1>>() {
         }.getType();
-        List<DataObject1> list = new Gson().fromJson(infoAdd, type);
-        if (list.size() > 0) {
-            for (DataObject1 list1 : list) {
-                TypedQuery<Tblpiezas> query = em.createQuery("SELECT c FROM Tblpiezas c WHERE c.idtblpiezas = :id", Tblpiezas.class);
-                query.setParameter("id", list1.getId());
-                Tblpiezas res = query.getSingleResult();
-                res.setEstatus(bol);
-                edit(res);
+        if (infoAdd != null) {
+            List<DataObject1> list = new Gson().fromJson(infoAdd, type);
+            if (list.size() > 0) {
+                for (DataObject1 list1 : list) {
+                    TypedQuery<Tblpiezas> query = em.createQuery("SELECT c FROM Tblpiezas c WHERE c.idtblpiezas = :id", Tblpiezas.class);
+                    query.setParameter("id", list1.getId());
+                    Tblpiezas res = query.getSingleResult();
+                    res.setEstatus(bol);
+                    edit(res);
+                }
             }
         }
         //query

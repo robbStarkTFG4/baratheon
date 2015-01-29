@@ -502,7 +502,7 @@ public class BeanMat implements Serializable {
         nombre = matencontrado.getNombre();
         noParte = matencontrado.getNoParte();
         descripcion = matencontrado.getDescripcion();
-        cantidad = matencontrado.getStock().toString();
+        cantidad = matencontrado.getTotal().toString();
         request = cantidad;
         costo = matencontrado.getCosto().toString();
         unidadmedida = matencontrado.getUnidadMedida();

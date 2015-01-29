@@ -8,6 +8,7 @@ package com.server.beans.staless;
 import com.client.named.BeanUsuarios;
 import com.client.named.Prestamos;
 import com.server.entity.beans.TblDetalleprestamo;
+import com.server.entity.beans.TblMaterial;
 import com.server.entity.beans.TblPrestamo;
 import com.server.entity.beans.TblPrestarios;
 import com.server.entity.beans.TblUsuarios;
@@ -154,22 +155,53 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     }
 
-    public void updatInquery(PresDTO pres, TblUsuarios us) throws ParseException {
-        TblPrestamo pr = pres.convertDTO(PresDTO.FECHA_APROBACION, null);
+    public void updatInquery(PresDTO pres, TblUsuarios us, List<DetailDTO> activated) throws ParseException {
+        TblPrestamo pr = findPrestamo(pres.getIdPrestamo());
+        pr.getTblDetalleprestamoList().size();
         //pr.setIdUsuarios(us);
-        ml.aplyChange(pr.getTblDetalleprestamoList());
-        //  pr.setHoraprestamo((String) currentDate()[1]);
 
-        TblPrestamo res = getPresi(pr.getIdPrestamo());
-        res.setFechaprestamo(pr.getFechaprestamo());
-        res.setFechaVencimiento(pr.getFechaVencimiento());
-        res.setHoraprestamo((String) currentDate()[1]);
-        res.setIdUsuarios(us);
-        res.setStatusprestamo(1);
-        res.getTblDetalleprestamoList().clear();
-        res.setTblDetalleprestamoList(pr.getTblDetalleprestamoList());
+        //  pr.setHoraprestamo((String) currentDate()[1]);
+        //TblPrestamo res = getPresi(pr.getIdPrestamo());
+        pr.setFechaprestamo(pr.getFechaprestamo());
+        pr.setFechaVencimiento(pr.getFechaVencimiento());
+        pr.setHoraprestamo((String) currentDate()[1]);
+        //pr.setIdUsuarios(us);
         pr.setStatusprestamo(1);
-        this.edit(res);
+
+        //this.edit(pr);
+        System.out.println("me voy a COJER A NELVA: " + activated.size());
+        for (DetailDTO dl : activated) {
+
+            TblDetalleprestamo detalle = dtl.find(dl.getIdDetalleprestamo());
+            System.out.println(detalle);
+            //detalle.setIdDetalleprestamo(dl.getIdDetalleprestamo());
+            detalle.setCantidad(dl.getCantidad());
+            //detalle.setFecharetorno(dl.getFecharetorno());
+            //7detalle.setHoraretorno(dl.getHoraretorno());
+            //detalle.setIdMaterial(new TblMaterial(dl.getIdMaterial()));
+            // detalle.setIdPrestamo(new TblPrestamo(dl.getIdPres()));
+            //detalle.setRegresados(dl.getRegresados());
+            System.out.println("LE VOY A DAR POR SUS ORIFICIOS: " + detalle.getCantidad());
+            detalle.setInfroPres(dl.getInfoAdd());
+            detalle.setInvi(dl.isInventariable());
+            ml.aplyChange(detalle);
+            //em.merge(detalle);
+        }
+        //res.getTblDetalleprestamoList().clear();
+        // res.setTblDetalleprestamoList(pr.getTblDetalleprestamoList());
+        //pr.setStatusprestamo(1);
+        //HashSet<TblDetalleprestamo> hs = new HashSet<>();
+        //hs.addAll(pr.getTblDetalleprestamoList());
+        //pr.getTblDetalleprestamoList().clear();
+        //pr.getTblDetalleprestamoList().addAll(hs);
+
+        System.out.println("NELVA CAMACHOOOOO OBESO va a ser mia!!!!!");
+        for (TblDetalleprestamo col : pr.getTblDetalleprestamoList()) {
+            System.out.println(col);
+        }
+        em.flush();;
+        // em.remove(pr);
+        //em.flush();
     }
 
     private TblPrestamo getPresi(Integer id) {
@@ -218,15 +250,14 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         pr.setIdPrestario(pres);
         pr.setIdUsuarios(beanUs.getUsuario());// cambiar////////////////////////////////////////dASDSADASDASDASDS AQUI ARASTRA EL USUARIO
         pr.setStatusprestamo(0);// cambiaar
-        em.persist(pr);
-        em.flush();
+        this.create(pr);
         return pr;
     }
 
     public boolean updatePres(TblPrestamo pr) {
         try {
             pr.setStatusprestamo(0);
-            this.edit(pr);
+            // this.edit(pr);
             return true;
         } catch (Exception e) {
             return false;
@@ -286,6 +317,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
                 }
                 list.add(temp);
             }
+
             return list;
         }
 
@@ -383,5 +415,9 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
         }
 
         return null;
+    }
+
+    public TblPrestamo findPrestamo(int id) {
+        return find(id);
     }
 }

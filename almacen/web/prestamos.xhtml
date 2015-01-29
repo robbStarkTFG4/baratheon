@@ -340,7 +340,7 @@
                                     </p:column>  
 
                                     <p:column style="width: 12.5%">
-                                        <p:commandButton   icon="ui-icon-zoomin"  action="#{pres.shoInfoAdd}">
+                                        <p:commandButton  disabled="#{dl.inventariable ? false :true}"  icon="ui-icon-zoomin"  action="#{pres.shoInfoAdd}">
                                             <f:setPropertyActionListener value="#{dl}" target="#{pres.forInfo}"/>
                                         </p:commandButton>                
                                     </p:column>

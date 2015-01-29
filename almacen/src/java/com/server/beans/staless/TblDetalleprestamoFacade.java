@@ -79,7 +79,40 @@ public class TblDetalleprestamoFacade extends AbstractFacade<TblDetalleprestamo>
                 }
                 data.add(temp);
             }
-            return data;
+            List<DetailDTO> filtered = new ArrayList<>();
+            List<DetailDTO> remove = new ArrayList<>();
+            for (DetailDTO dt : data) {
+                for (DetailDTO dr : data) {
+                    if (dt.equals(dr)) {
+                        if (dt.getInfoAdd() != null) {
+                            if (!filtered.contains(dt)) {
+                                filtered.add(dt);
+                            }
+                            continue;
+                        } else if (dr.getInfoAdd() != null) {
+                            if (!filtered.contains(dt)) {
+                                filtered.add(dt);
+                            }
+                            continue;
+                        } else {
+                            if (!filtered.contains(dt)) {
+                                filtered.add(dt);
+                            }
+                        }
+                    }
+                }
+            }
+            //System.out.println("PRESTAMO : " + idLoan);
+            for (DetailDTO fl : filtered) {
+                data.remove(fl);
+            }
+            if (data.size() > 0) {
+                for (DetailDTO remove1 : data) {
+                    //System.out.println(remove1);
+                    this.remove(find(remove1.getIdDetalleprestamo()));
+                }
+            }
+            return filtered;
         }
         return null;
     }
@@ -90,6 +123,7 @@ public class TblDetalleprestamoFacade extends AbstractFacade<TblDetalleprestamo>
             TypedQuery<TblDetalleprestamo> query = em.createQuery("SELECT c FROM TblDetalleprestamo c WHERE c.idDetalleprestamo = :id", TblDetalleprestamo.class);
             query.setParameter("id", detailDTO.getIdDetalleprestamo());
             em.remove(query.getSingleResult());
+            em.flush();
         }
     }
 

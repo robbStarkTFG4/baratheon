@@ -107,19 +107,25 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         return false;
     }
 
-    public boolean aplyChange(List<TblDetalleprestamo> dl) {
-        for (TblDetalleprestamo detailDTO : dl) {
+    public boolean aplyChange(TblDetalleprestamo dl) {
 
-            Query query = em.createQuery("SELECT c FROM TblMaterial c WHERE c.idtblMaterial = :ml");
-            query.setParameter("ml", detailDTO.getIdMaterial().getIdtblMaterial());
-            TblMaterial temp = (TblMaterial) query.getSingleResult();
+        TypedQuery<TblMaterial> query = em.createQuery("SELECT c FROM TblMaterial c WHERE c.idtblMaterial = :ml", TblMaterial.class);
+        query.setParameter("ml", dl.getIdMaterial().getIdtblMaterial());
+        TblMaterial temp = query.getSingleResult();
 
-            int newStock = temp.getStock() - detailDTO.getCantidad();
-            temp.setStock(newStock);
-            System.out.println("stock asignado: " + newStock);
-            this.edit(temp);
+        if (temp != null) {
+            System.out.println("me va a MAMAR EL PENE (NELVA): " + dl);
+            if (dl != null) {
+
+                int newStock = temp.getStock() - dl.getCantidad();
+                temp.setStock(newStock);
+            }
+            //System.out.println("CAMACHO OBESO NELVA");
+            //System.out.println("stock asignado: " + newStock);
+            //this.edit(temp);
         }
-        em.flush();
+
+        // em.flush();
         return false;
 
     }
@@ -484,12 +490,12 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
                 mat.setNombre(nombre);
                 mat.setNoParte(noParte);
                 mat.setDescripcion(descripcion);
-
+                int ajuste = mat.getTotal() - mat.getStock();
                 // calculando y ajustando diferencia
                 mat.setTotal(Integer.parseInt(cantidad));
                 int diff = mat.getTotal() - mat.getStock();
 
-                mat.setStock(mat.getStock() + diff);
+                mat.setStock(mat.getStock() + diff - ajuste);
 
                 //End ajuste total y stock
                 mat.setCosto(Long.valueOf(costo));
