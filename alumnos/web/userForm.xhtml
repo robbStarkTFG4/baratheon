@@ -29,42 +29,39 @@
 
                         <div class="ui-grid-row" style="margin-top: 7px;" >
                             <p:outputLabel value="Matricula/#Empleado" for="matInput" style="margin-right: 5px" />
-                            <div class="ui-grid-col-3">
+                            <div class="ui-grid-col-3" style="margin-right: 5px">
                                 <p:inputText  value="#{reg.pres.usuario}"  style="width: 100%"  id="matInput" size="15" validator="matVal" required="true">
                                     <f:ajax event="keyup"/>
                                 </p:inputText>
                             </div>
-                        </div>
 
-                        <div class="ui-grid-row" style="margin-top: 7px;" >
                             <p:outputLabel value="Nombre" for="nameInput" style="margin-right: 5px" />
                             <div class="ui-grid-col-4">
                                 <p:inputText value="#{reg.pres.nombre}" style="width: 100%" id="nameInput" size="30" required="true"/>
                             </div>
                         </div>
 
-                        <div class="ui-grid-row" style="margin-top: 7px;" >
-                            <p:outputLabel value="Apellido Paterno" for="apaternoInput" style="margin-right: 5px" />
-                            <div class="ui-grid-col-3">
-                                <p:inputText value="#{reg.pres.apaterno}"  id="apaternoInput" style="width: 100%" size="30"  required="true"/>
-                            </div>
-                        </div>
+
 
                         <div class="ui-grid-row" style="margin-top: 7px;" >
+                            <p:outputLabel value="Apellido Paterno" for="apaternoInput" style="margin-right: 5px" />
+                            <div class="ui-grid-col-3" style="margin-right: 5px">
+                                <p:inputText value="#{reg.pres.apaterno}"  id="apaternoInput" style="width: 100%" size="30"  required="true"/>
+                            </div>
+
                             <p:outputLabel value="Apellido Materno" for="amaternoInput"  style="margin-right: 5px"/>
                             <div class="ui-grid-col-3">
                                 <p:inputText value="#{reg.pres.amaterno}" id="amaternoInput"  style="width: 100%" size="30" required="true"/>
                             </div>
                         </div>
 
-                        <div class="ui-grid-row" style="margin-top: 7px;" >
-                            <p:outputLabel value="Telefono" for="telInput"  />
-                            <div class="ui-grid-col-3">
-                                <p:inputText value="#{reg.pres.tel}"   style="width: 100%" id="telInput" size="15"  required="true"/>
-                            </div>
-                        </div>
 
                         <div class="ui-grid-row" style="margin-top: 7px;" >
+                            <p:outputLabel value="Telefono" for="telInput"  />
+                            <div class="ui-grid-col-3"  style="margin-right: 5px">
+                                <p:inputText value="#{reg.pres.tel}"   style="width: 100%" id="telInput" size="15"  required="true"/>
+                            </div>
+
                             <p:outputLabel value="Email" for="emailInput" style="margin-right: 5px"/>
                             <div class="ui-grid-col-3">
                                 <p:inputText value="#{reg.pres.email}"  style="width: 100%" id="emailInput" size="40" required="true" validatorMessage="inserta correo valido">
@@ -73,15 +70,12 @@
                             </div>
                         </div>
 
-
                         <div class="ui-grid-row" style="margin-top: 7px;" >
                             <p:outputLabel value="Carrera" for="carreraInput" style="margin-right: 5px" />
-                            <div class="ui-grid-col-3">
+                            <div class="ui-grid-col-3"  style="margin-right: 5px">
                                 <p:inputText value="#{reg.pres.carrera}" id="carreraInput" style="width: 100%" size="20" required="true"/>
                             </div>
-                        </div>
 
-                        <div class="ui-grid-row" style="margin-top: 7px;" >
                             <p:outputLabel value="Tipo Prestario" for="tipoPrestario"  style="margin-right: 5px" />
                             <div class="ui-grid-col-3">
                                 <p:selectOneMenu  value="#{reg.selectedPrestario}" id="tipoPrestario" converter="stype" style="width: 100%" required="true">
@@ -91,7 +85,6 @@
                                 </p:selectOneMenu>
                             </div>
                         </div>
-
 
                         <div class="ui-grid-row" style="margin-top: 7px;" >
                             <div class="ui-grid-col-3">

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Busquedas</title>
+        <link href="resources/css/grid2.css" type="text/css"></link>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    </h:head>
+    <h:body>
+        <ui:composition template="/index.xhtml" >
+            <ui:define name="content">
+                <h:form id="form">
+                    <div class="ui-grid ui-grid-responsive" style="margin: 10px;">
+
+                        <div class="ui-grid-row">
+
+                            <p:outputLabel value="area " for="area" style="margin-right:  5px"/>
+                            <div class="ui-grid-col-2" style="margin-right:  5px">
+                                <p:selectOneMenu value="#{gd.selectedArea}" id="area" style="width: 100%" converter="areaC" valueChangeListener="#{gd.areasListener}" >
+                                    <f:ajax  execute="@this"  render=" @this  familia subFam  "/>
+                                    <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                                    <f:selectItems value="#{gd.areas}" var="ar" itemLabel="#{ar.nombre}" itemValue="#{ar}"/>  
+                                </p:selectOneMenu>
+                            </div>
+
+                            <p:outputLabel value="familia " for="familia" style="margin-right: 5px"/>
+                            <div class="ui-grid-col-2" style="margin-right:  5px">
+                                <p:selectOneMenu value="#{gd.selectedType}" id="familia" style="width: 100%" converter="type" valueChangeListener="#{gd.typesListener}" >
+                                    <f:ajax  execute="@this"  render=" @this  subFam  "/>
+                                    <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                                    <f:selectItems value="#{gd.typesList}" var="player" itemLabel="#{player.nombre}" itemValue="#{player}"/>  
+                                </p:selectOneMenu>
+                            </div>
+
+                            <p:outputLabel value="subfamilia " for="subFam" style="margin-right: 5px"/>
+                            <div class="ui-grid-col-2" style="margin-right:  5px">
+                                <p:selectOneMenu value="#{gd.selectedFam}" id="subFam" style="width: 100%"  valueChangeListener="#{gd.subFamsListener}" converter="sub"  >
+                                    <f:ajax  execute="@this" />
+                                    <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                                    <f:selectItems value="#{gd.famsList}" var="player2" itemLabel="#{player2.nombre}" itemValue="#{playe2}"/>  
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="ui-grid-col-1">
+                                <p:commandButton value="filtrar"  style="width: 100%" action="#{gd.filter}"/>
+                            </div>
+                        </div>
+
+                        <div class="ui-grid-row" style="margin-top: 7px">
+                            <div class="ui-grid-col-12">
+
+                                <p:dataGrid  id="grid" var="car" value="#{gd.partes}" columns="3"  
+                                             rows="6" paginator="true"   widgetVar="hola"  layout="grid"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                                             rowsPerPageTemplate="9,12,15">  
+
+                                    <p:column>  
+                                        <p:growl id="grow1" life="1000" />
+                                        <p:panel header="#{car.noParte}" style="text-align:center">  
+                                            <h:panelGrid  id="gridp" columns="1" style="width:100%; text-align:center;">  
+
+                                                <p:commandLink action="#{gd.openPopUp}" ajax="true">
+                                                    <p:graphicImage value="image/#{car.imagen}" />  
+                                                    <f:setPropertyActionListener value="#{car}" target="#{gd.current}" />
+                                                </p:commandLink>
+
+                                                <h:outputText value="#{car.nombre}" />  
+                                                <p:spinner id="spin" value="#{gd.quantity}"  valueChangeListener="#{gd.spinnerListener}"  min="0" validator="vl"
+                                                           >
+
+                                                </p:spinner>  
+                                                <p:commandLink action="#{gd.addToCart}"  process="spin,@this" update="grow1"  >  
+                                                    <h:outputText styleClass="ui-icon ui-icon-check" style="margin:0 auto;" />   
+                                                    <f:setPropertyActionListener value="#{car}" target="#{gd.current}" />
+
+                                                </p:commandLink> 
+                                            </h:panelGrid>  
+
+                                        </p:panel>  
+                                    </p:column>
+                                </p:dataGrid>  
+
+                            </div>
+
+                        </div>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

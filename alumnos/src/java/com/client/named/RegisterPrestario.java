@@ -50,8 +50,6 @@ import org.apache.commons.mail.MultiPartEmail;
 @javax.faces.view.ViewScoped
 public class RegisterPrestario implements Serializable {
 
-    @Resource(lookup = "mail/mailProvider")
-    private Session mailSession;
 
     @EJB
     TblTipoprestariosFacade tp;

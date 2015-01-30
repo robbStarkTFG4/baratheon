@@ -188,7 +188,7 @@ public class Catalog implements Serializable {
             dg.setPartes(mtl.catalogFindByArea(((AreasDTO) obj).getId()));
         }
 
-        FacesContext.getCurrentInstance().getExternalContext().redirect("grid.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().redirect("productPg.xhtml");
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "selected", obj.toString());
 
         FacesContext.getCurrentInstance().addMessage(null, message);
