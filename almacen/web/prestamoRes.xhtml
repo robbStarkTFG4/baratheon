@@ -13,19 +13,20 @@
                 <h:form id="formita">
                     <p:panel style="margin: 20px">
                         <center>
-                            <p:panel id="pan1" style="width: 52%"  >
+                            <p:panel id="pan1" style="width: 100%"  >
                                 <center>
                                     <div class="ui-grid-responsive">
                                         <div class="ui-grid-row">
 
-                                            <div class="ui-grid-col-1">
+                                            <div class="ui-grid-col-2">
                                                 <p:outputLabel value="Buscador " style="font-weight: bold;color: #558e4d ;"/>
                                             </div>
-                                            <div class="ui-grid-col-1" style="margin-top: 7px">
-                                                <p:inputText value="#{personal.res}"  required="true" />
+                                            <div class="ui-grid-col-3" >
+                                                <p:inputText value="#{personal.res}"  required="true"  style=" width: 100%;margin-right: 5px;"/>
+
                                             </div>
-                                            <div class="ui-grid-col-1" style="margin-top: 5px">
-                                                <p:commandButton icon="ui-icon-search"  action="#{personal.asigna}" style="width: 100px" update="formita"/>
+                                            <div class="ui-grid-col-1" >
+                                                <p:commandButton icon="ui-icon-search"  action="#{personal.asigna}"  update="formita"/>
                                             </div>
                                         </div>
                                     </div>                  
@@ -38,12 +39,8 @@
                         <center>
                             <p:panel style="width: 100%">
                                 <p:dataTable id="searchInfo" var="inf" value="#{personal.dtl}" >
-                                    <p:column headerText="clave 1">
+                                    <p:column headerText="Inventario ">
                                         <h:outputText value="#{inf.clave1}" />
-                                    </p:column>
-
-                                    <p:column headerText="clave 2">
-                                        <h:outputText value="#{inf.clave2}" />
                                     </p:column>
 
                                     <p:column headerText="nombre">

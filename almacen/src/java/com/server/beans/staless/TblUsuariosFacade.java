@@ -41,16 +41,15 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
         TblUsuarios user = null;
 
         try {
-            TypedQuery<TblUsuarios> search = em.createQuery("SELECT NEW com.server.entity.beans.TblUsuarios(u.idUsuarios,u.usuario,u.idTipousuarios) FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave", TblUsuarios.class);
+            TypedQuery<TblUsuarios> search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario = :usuario and u.contraseña = :clave", TblUsuarios.class);
             //Query search = em.createQuery("SELECT u FROM TblUsuarios u WHERE u.usuario=:usuario and u.contraseña=:clave");
             search.setParameter("usuario", usuario);
             search.setParameter("clave", clave);
-            user = (TblUsuarios) search.getSingleResult();
+            user = search.getSingleResult();
+            return user;
         } catch (Exception e) {
             System.out.println("");
-            return user;//System.out.println("ERROR IN Question FACADE:" + e.getMessage());
-        } finally {
-            return user;
+            return null;//System.out.println("ERROR IN Question FACADE:" + e.getMessage());
         }
 
     }
@@ -165,13 +164,13 @@ public class TblUsuariosFacade extends AbstractFacade<TblUsuarios> {
             }
 
           //  for (int i = 0; i < lista.size(); i++) {
-           //     if (lista.get(i).getIdTipousuarios().getIdTipousuarios().equals("admin")) {
+            //     if (lista.get(i).getIdTipousuarios().getIdTipousuarios().equals("admin")) {
             //   lista.remove(i);
             //     }
                 /*if(lista.get(lista.size()-1).getIdTipousuarios().getIdTipousuarios().equals("admin")){
              lista.remove(lista.size()-1);
              }*/
-       //     }
+            //     }
             System.out.println(lista);
         } catch (Exception e) {
             System.out.println("ERROR IN Question FACADE:" + e.getMessage());

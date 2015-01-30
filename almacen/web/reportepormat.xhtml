@@ -11,72 +11,72 @@
     <h:body>
         <ui:composition template="/Admin.xhtml" >
             <ui:define name="contentenidoAdmin">
-        <h:form id="frm"> 
-            <div align="center">
-            <p:panel id="pan" style="width: 50%">
-            
-        <p:growl id="g1" autoUpdate="true" showDetail="true" life="3000"/>
-            <p:autoComplete   value="#{material.material}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
+                <h:form id="frm"> 
+                    <div align="center">
+                        <p:panel id="pan" style="width: 50%">
+
+                            <p:growl id="g1" autoUpdate="true" showDetail="true" life="3000"/>
+                            <p:autoComplete   value="#{material.material}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
                                               var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
-                                               maxResults="15" queryDelay="500"
+                                              maxResults="15" queryDelay="500"
                                               >
                                 <p:column>  
                                     #{p.nombre} - #{p.noParte}  
                                 </p:column>
 
                             </p:autoComplete> 
-            <p:commandButton value="Buscar" actionListener="#{material.busqueda()}" update="pan"/>
-            <br>
-                
-            </br>
-             
-            <p:dataTable id="crs" value="#{material.listaEtiquetas}" var="car"  style="width: 70%" >
-                <f:facet name="header" >
-                      Especificaciones del material
-                      <br/>
-                      <p:graphicImage title="#{material.matencontrado.imagen}" value="resources/imagenes/#{material.matencontrado.imagen}" /> 
-                </f:facet>
-                <p:column style="width: 50%" >
-      
-                    <h:outputText value="#{car.etiqueta}" style="font-weight: bold"/>
-                </p:column>
-    
-                <p:column style="width: 50%">
-      
-       <h:outputText value="#{car.resultados}" style="color: #045491;font-weight: bold"/>
-        
-          
-</p:column>
-            </p:dataTable>
-            
-         
-            
-      
-<h:panelGrid columns="1">  
-    <p:panel header="Exportar reporte"> 
-       
-        <h:commandButton image="/imagenes/excel.png">       
-            <p:dataExporter type="xls" target="crs" fileName="Material" />  
-        </h:commandButton>  
-  
-        <h:commandButton image="/imagenes/pdf.png">   
-          <p:dataExporter type="pdf" target="crs" fileName="Material"/>  
-        </h:commandButton>  
-          
-        <h:commandButton image="/imagenes/csv.png">   
-            <p:dataExporter type="csv" target="crs" fileName="Material"/>  
-        </h:commandButton>  
-          
-        <h:commandButton image="/imagenes/xml.jpg">  
-            <p:dataExporter type="xml" target="crs" fileName="Material"/>  
-        </h:commandButton>
-    </p:panel>  
-      
-   
-</h:panelGrid> 
-       
-            </p:panel></div>
-        </h:form>
+                            <p:commandButton value="Buscar" actionListener="#{material.busqueda()}" update="pan"/>
+                            <br>
+
+                            </br>
+
+                            <p:dataTable id="crs" value="#{material.listaEtiquetas}" var="car"  style="width: 70%" >
+                                <f:facet name="header" >
+                                    Especificaciones del material
+                                    <br/>
+                                    <p:graphicImage title="#{material.matencontrado.imagen}" value="resources/imagenes/#{material.matencontrado.imagen}" /> 
+                                </f:facet>
+                                <p:column style="width: 50%" >
+
+                                    <h:outputText value="#{car.etiqueta}" style="font-weight: bold"/>
+                                </p:column>
+
+                                <p:column style="width: 50%">
+
+                                    <h:outputText value="#{car.resultados}" style="color: #045491;font-weight: bold"/>
+
+
+                                </p:column>
+                            </p:dataTable>
+
+
+
+
+                            <h:panelGrid columns="1">  
+                                <p:panel header="Exportar reporte"> 
+
+                                    <h:commandButton image="/imagenes/excel.png">       
+                                        <p:dataExporter type="xls" target="crs" fileName="Material" />  
+                                    </h:commandButton>  
+
+                                    <h:commandButton image="/imagenes/pdf.png">   
+                                        <p:dataExporter type="pdf" target="crs" fileName="Material"/>  
+                                    </h:commandButton>  
+
+                                    <h:commandButton image="/imagenes/csv.png">   
+                                        <p:dataExporter type="csv" target="crs" fileName="Material"/>  
+                                    </h:commandButton>  
+
+                                    <h:commandButton image="/imagenes/xml.jpg">  
+                                        <p:dataExporter type="xml" target="crs" fileName="Material"/>  
+                                    </h:commandButton>
+                                </p:panel>  
+
+
+                            </h:panelGrid> 
+
+                        </p:panel></div>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

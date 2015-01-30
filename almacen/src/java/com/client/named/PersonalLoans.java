@@ -21,7 +21,7 @@ import org.primefaces.context.RequestContext;
  * @author NORE
  */
 @Named("personal")
-@SessionScoped
+@javax.faces.view.ViewScoped
 public class PersonalLoans implements Serializable {
 
     private String res;
@@ -77,6 +77,5 @@ public class PersonalLoans implements Serializable {
     public void setDtl(List<DataObject1> dtl) {
         this.dtl = dtl;
     }
-
 
 }

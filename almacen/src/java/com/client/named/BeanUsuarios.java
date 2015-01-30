@@ -446,4 +446,9 @@ public class BeanUsuarios implements Serializable {
         }
 
     }
+    
+    public String logOut(){
+         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "logIn.xhtml?faces-redirect=true";
+    }
 }

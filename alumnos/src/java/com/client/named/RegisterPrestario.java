@@ -47,7 +47,7 @@ import org.apache.commons.mail.MultiPartEmail;
  * @author NORE
  */
 @Named("reg")
-@SessionScoped
+@javax.faces.view.ViewScoped
 public class RegisterPrestario implements Serializable {
 
     @Resource(lookup = "mail/mailProvider")
@@ -93,7 +93,7 @@ public class RegisterPrestario implements Serializable {
         System.out.println("HOLA DESDE LA FORMA DE REGISTRO DE PRESTARIOS!!!!!!!!!!!!!");
 
         pres.setIdTipoprestarios(new TblTipoprestarios(selectedPrestario.getIdTipoprestarios()));
-        
+
         if (presi.registerPrestario(pres)) {
             sendEmail(pres.getEmail(), "adsdas", "http://localhost:5478/alumnos/NewServlet?akkcveren=" + encode(pres.getUsuario()));
             System.out.println("CORREO DISQUE ENVIADO");
