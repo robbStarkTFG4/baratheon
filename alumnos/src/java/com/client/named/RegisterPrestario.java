@@ -106,8 +106,8 @@ public class RegisterPrestario implements Serializable {
 
     public void sendEmail(String senderId, String subject, String body) throws UnsupportedEncodingException, MessagingException {
 
-        String myEmailId = "robbstarktfg@gmail.com";
-        String myPassword = "marcoisaac";
+        String myEmailId = "computo.citecvlp@gmail.com";
+        String myPassword = "impresora73";
 
         try {
             MultiPartEmail email = new MultiPartEmail();
