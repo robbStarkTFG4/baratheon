@@ -827,6 +827,14 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         RequestContext.getCurrentInstance().update("infoDialog:infoTable");
     }
 
+    public void updating() {
+        ListSol = null;
+
+        ListSol = pr.getInquerys(us.getIdPrestario());
+        RequestContext.getCurrentInstance().update("formazad:tabView");
+        RequestContext.getCurrentInstance().update(":formazad:tabView:soles");
+    }
+
     public void shoInfoAdd() {
 
         Map<String, Object> options = new HashMap<>();

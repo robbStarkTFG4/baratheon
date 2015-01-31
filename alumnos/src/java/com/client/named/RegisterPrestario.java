@@ -116,7 +116,7 @@ public class RegisterPrestario implements Serializable {
             email.setDebug(true);
             email.setHostName("smtp.gmail.com");
             email.setFrom(myEmailId);
-            email.setSubject("activacion cuenta");
+            email.setSubject("activacion cuenta laboratorio computo UABC");
             email.setMsg(body);
             email.addTo(senderId);
             email.setTLS(true);

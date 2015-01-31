@@ -28,7 +28,7 @@ public class ImageServlet extends HttpServlet {
     public void init() throws ServletException {
 
      
-        this.imagePath = "C:\\Users\\NORE\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes";
+        this.imagePath = "C:\\Users\\UABC\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes";
 
       
     }

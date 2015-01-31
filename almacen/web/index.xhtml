@@ -123,7 +123,9 @@
                                 <li style="margin-top: 10px">
 
                                     <p:commandButton id="iconOnly"  action="#{gd.openKart}" rendered="#{gd ne null}" disabled="#{nm.karControl}"
-                                                     icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " />    
+                                                     icon="ui-icon-star" title="Icon Only" style="margin-right: 10px; height: 30px; " >
+                                        <p:ajax event="dialogReturn" listener="#{pres.updating()}" />
+                                    </p:commandButton>    
 
                                     <p:autoComplete   value="#{nm.caja}" id="sdar" completeMethod="#{nm.autoComplete}"  style="margin-right: 0px; height: 25px;  "
                                                       var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
