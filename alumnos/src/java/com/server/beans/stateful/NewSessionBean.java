@@ -70,8 +70,12 @@ public class NewSessionBean {
 
         if (!mtl.contains(tbl)) {
             mtl.add(tbl);
-            // System.out.println("Tamaño data: "+data.size());
-            data.add(new MtlDTO(tbl.getIdtblMaterial(), tbl.getNoParte(), tbl.getNombre(), quantity, tbl.getStock()));
+
+            MtlDTO mlDTO = new MtlDTO(tbl.getIdtblMaterial(), tbl.getNoParte(), tbl.getNombre(), quantity, tbl.getStock());
+            if (tbl.getInventariable() != null) {
+                mlDTO.setInventariable(tbl.getInventariable());
+            }
+            data.add(mlDTO);
             return true;
         } else {
             for (MtlDTO ml : data) {
@@ -124,40 +128,30 @@ public class NewSessionBean {
     }
 
     public boolean persistLoan(TblPrestarios pro) {//cDASDASDASDASDAS AGREGAR EL USUARIO COMO PARAMETRO DEL METODO Y METERLO EN "1"
-        if (!mtl.isEmpty()) {
-            TblPrestamo pr = pres.createPres(pro); //1
-            Map<String, Integer> quantity = new HashMap<>();
-            for (MtlDTO ml : data) {
-                TblDetalleprestamo temp = new TblDetalleprestamo();
-                temp.setCantidad(ml.getCantidad());
+        TblPrestamo pr = pres.createPres(pro); //1
+        Map<String, Integer> quantity = new HashMap<>();
+        for (MtlDTO ml : data) {
+            TblDetalleprestamo temp = new TblDetalleprestamo();
+            temp.setCantidad(ml.getCantidad());
 
-                temp.setIdMaterial(new TblMaterial(ml.getIdMaterial()));
+            temp.setIdMaterial(new TblMaterial(ml.getIdMaterial()));
 
-                temp.setIdPrestamo(pr);
-                dtl.add(temp);
+            temp.setIdPrestamo(pr);
+            temp.setInvi(ml.isInventariable());
 
-                quantity.put(ml.getNoParte(), ml.getCantidad());
-            }
-            pr.setTblDetalleprestamoList(dtl);
-            if (pr.getStatusprestamo() != 0) {
-                for (TblMaterial tblMaterial : mtl) {
-                    int newStock = tblMaterial.getStock() - quantity.get(tblMaterial.getNoParte());
-                    tblMaterial.setStock(newStock);
-                    material.mergeMtlFromPres(tblMaterial);
-                }
-            }
+            dtl.add(temp);
 
-            if (pres.updatePres(pr)) {
-                clearList();
+            quantity.put(ml.getNoParte(), ml.getCantidad());
+        }
+        pr.setTblDetalleprestamoList(dtl);
 
-                return true;
-            } else {
-                return false;
-            }
+        if (pres.updatePres(pr)) {
+            clearList();
+
+            return true;
         } else {
             return false;
         }
-
     }
 
 }

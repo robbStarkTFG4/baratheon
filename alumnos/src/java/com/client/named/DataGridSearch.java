@@ -241,7 +241,8 @@ public class DataGridSearch implements Serializable {
             } else {
                 FacesContext context = FacesContext.getCurrentInstance();
 
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "El Prestario tiene deudas "));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error",
+                        "El Prestario tiene deudas o no se encuentra activo"));
                 RequestContext.getCurrentInstance().update("form1:msg");
             }
         } else {

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.server.entity.beans;
 
 import java.io.Serializable;
@@ -60,6 +59,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TblMaterial.findByFechaRecepcion", query = "SELECT t FROM TblMaterial t WHERE t.fechaRecepcion = :fechaRecepcion"),
     @NamedQuery(name = "TblMaterial.findByIdUabc", query = "SELECT t FROM TblMaterial t WHERE t.idUabc = :idUabc")})
 public class TblMaterial implements Serializable {
+
+    @Column(name = "showInQuery")
+    private Boolean showInQuery;
+    @Column(name = "inventariable")
+    private Boolean inventariable;
+    @Column(name = "total")
+    private Integer total;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -156,7 +162,8 @@ public class TblMaterial implements Serializable {
         this.idtblMaterial = idtblMaterial;
     }
 
-    public TblMaterial(String noParte, String nombre) {
+    public TblMaterial(String noParte, String nombre, Boolean showInQuery) {
+        this.showInQuery = showInQuery;
         this.noParte = noParte;
         this.nombre = nombre;
     }
@@ -403,5 +410,29 @@ public class TblMaterial implements Serializable {
     public String toString() {
         return "com.server.entity.beans.TblMaterial[ idtblMaterial=" + idtblMaterial + " ]";
     }
-    
+
+    public Boolean getShowInQuery() {
+        return showInQuery;
+    }
+
+    public void setShowInQuery(Boolean showInQuery) {
+        this.showInQuery = showInQuery;
+    }
+
+    public Boolean getInventariable() {
+        return inventariable;
+    }
+
+    public void setInventariable(Boolean inventariable) {
+        this.inventariable = inventariable;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
 }

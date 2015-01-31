@@ -33,6 +33,9 @@ public class DetailDTO implements Serializable {
 
     private int idPres = 0;
     private boolean activated = false;
+    private boolean inventariable = false;
+
+    private String infoAdd;
 
     public DetailDTO() {
 
@@ -47,6 +50,8 @@ public class DetailDTO implements Serializable {
         dtl.setIdMaterial(new TblMaterial(this.getIdMaterial()));
         dtl.setIdPrestamo(new TblPrestamo(this.getIdPres()));
         dtl.setRegresados(this.getRegresados());
+        dtl.setInfroPres(this.getInfoAdd());
+        dtl.setInvi(this.isInventariable());
         return dtl;
     }
 
@@ -128,6 +133,54 @@ public class DetailDTO implements Serializable {
 
     public void setActivated(boolean activated) {
         this.activated = activated;
+    }
+
+    public String getInfoAdd() {
+        return infoAdd;
+    }
+
+    public void setInfoAdd(String infoAdd) {
+        this.infoAdd = infoAdd;
+    }
+
+    public boolean isInventariable() {
+        return inventariable;
+    }
+
+    public void setInventariable(boolean inventariable) {
+        this.inventariable = inventariable;
+    }
+
+    @Override
+    public String toString() {
+        return "DetailDTO{" + "idDetalleprestamo=" + idDetalleprestamo + ", cantidad=" + cantidad + ", regresados=" + regresados + ", fecharetorno=" + fecharetorno + ", horaretorno=" + horaretorno + ", noParte=" + noParte + ", nombre=" + nombre + ", idMaterial=" + idMaterial + ", idPres=" + idPres + ", activated=" + activated + ", inventariable=" + inventariable + ", infoAdd=" + infoAdd + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DetailDTO other = (DetailDTO) obj;
+        if (this.cantidad != other.cantidad) {
+            return false;
+        }
+        if (this.idMaterial != other.idMaterial) {
+            return false;
+        }
+        if (this.inventariable != other.inventariable) {
+            return false;
+        }
+        return true;
     }
 
 }

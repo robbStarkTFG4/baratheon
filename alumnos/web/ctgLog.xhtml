@@ -21,7 +21,7 @@
                                         selectionMode="single"  selection="#{catalog.selectedNode}" id="tree">
 
 
-                                    <p:ajax event="select" update=":cag:messages" listener="#{catalog.onNodeSelect}" />
+                                    <p:ajax event="select" update=":cag:messages"  listener="#{catalog.onNodeSelect}" />
 
                                     <p:treeNode>
                                         <h:outputText value="#{node}" />

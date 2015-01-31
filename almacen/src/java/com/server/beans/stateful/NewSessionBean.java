@@ -139,9 +139,7 @@ public class NewSessionBean {
 
             temp.setIdPrestamo(pr);
             temp.setInvi(ml.isInventariable());
-            if (temp.getInvi()) {
-                System.out.println("NELVA CAMACHO ES TU MUJER");
-            }
+
             dtl.add(temp);
 
             quantity.put(ml.getNoParte(), ml.getCantidad());

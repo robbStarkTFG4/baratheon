@@ -93,7 +93,7 @@ public class RegisterPrestario implements Serializable {
         pres.setIdTipoprestarios(new TblTipoprestarios(selectedPrestario.getIdTipoprestarios()));
 
         if (presi.registerPrestario(pres)) {
-            sendEmail(pres.getEmail(), "adsdas", "http://localhost:5478/alumnos/NewServlet?akkcveren=" + encode(pres.getUsuario()));
+            sendEmail(pres.getEmail(), "adsdas", "http://148.231.133.70:8080/alumnos/NewServlet?akkcveren=" + encode(pres.getUsuario()));
             System.out.println("CORREO DISQUE ENVIADO");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("se ha enviado un correo electronico con el link de activacion", "se ha enviado un correo electronico con el link de activacion"));
         }

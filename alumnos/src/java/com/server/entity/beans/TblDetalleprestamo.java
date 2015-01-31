@@ -37,6 +37,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "TblDetalleprestamo.findByHoraretorno", query = "SELECT t FROM TblDetalleprestamo t WHERE t.horaretorno = :horaretorno"),
     @NamedQuery(name = "TblDetalleprestamo.findByRegresados", query = "SELECT t FROM TblDetalleprestamo t WHERE t.regresados = :regresados")})
 public class TblDetalleprestamo implements Serializable {
+    @Size(max = 800)
+    @Column(name = "infroPres")
+    private String infroPres;
+    @Column(name = "invi")
+    private Boolean invi;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -156,6 +161,22 @@ public class TblDetalleprestamo implements Serializable {
     @Override
     public String toString() {
         return "com.server.entity.beans.TblDetalleprestamo[ idDetalleprestamo=" + idDetalleprestamo + " ]";
+    }
+
+    public String getInfroPres() {
+        return infroPres;
+    }
+
+    public void setInfroPres(String infroPres) {
+        this.infroPres = infroPres;
+    }
+
+    public Boolean getInvi() {
+        return invi;
+    }
+
+    public void setInvi(Boolean invi) {
+        this.invi = invi;
     }
     
 }

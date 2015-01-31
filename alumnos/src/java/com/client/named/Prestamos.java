@@ -511,7 +511,7 @@ public class Prestamos implements Serializable { //clase para manejar los presta
             currentPres.setTblDetalleprestamoList(null);
             currentPres.setTblDetalleprestamoList(activated);
 
-            pr.updatInquery(currentPres);
+            // pr.updatInquery(currentPres);
             dets.deleteDetails(nonActivated);
             ListSol.remove(currentPres);
             RequestContext.getCurrentInstance().update("formazad:tabView:soles");
@@ -553,6 +553,14 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         listLoans = pr.getLoansByDebts(us.getIdPrestario());
         RequestContext.getCurrentInstance().update("formazad:tabView:debts");
 
+    }
+
+    public void updating() {
+        ListSol = null;
+
+        ListSol = pr.getInquerys(us.getIdPrestario());
+        RequestContext.getCurrentInstance().update("formazad:tabView");
+        RequestContext.getCurrentInstance().update(":formazad:tabView:soles");
     }
 
     public void dateListener(SelectEvent e) {

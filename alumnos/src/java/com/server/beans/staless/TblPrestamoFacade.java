@@ -149,17 +149,16 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
 
     }
 
-    public void updatInquery(PresDTO pres) throws ParseException {
-        TblPrestamo pr = pres.convertDTO(PresDTO.FECHA_APROBACION, null);
-        ml.aplyChange(pr.getTblDetalleprestamoList());
-        pr.setHoraprestamo((String) currentDate()[1]);
-        //Query query = em.createQuery("SELECT c FROM TblPrestamo c WHERE c.idPrestamo = :ids");
-        //query.setParameter("ids", pr.getIdPrestamo());
-        //query.getSingleResult();
-        pr.setStatusprestamo(1);
-        em.merge(pr);
-    }
-
+    /* public void updatInquery(PresDTO pres) throws ParseException {
+     TblPrestamo pr = pres.convertDTO(PresDTO.FECHA_APROBACION, null);
+     ml.aplyChange(pr.getTblDetalleprestamoList());
+     pr.setHoraprestamo((String) currentDate()[1]);
+     //Query query = em.createQuery("SELECT c FROM TblPrestamo c WHERE c.idPrestamo = :ids");
+     //query.setParameter("ids", pr.getIdPrestamo());
+     //query.getSingleResult();
+     pr.setStatusprestamo(1);
+     em.merge(pr);
+     }*/
     public String processDate(Date date) {
         String DATE_FORMAT_NOW = "yyyy/MM/dd";
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
@@ -208,7 +207,7 @@ public class TblPrestamoFacade extends AbstractFacade<TblPrestamo> {
     public boolean updatePres(TblPrestamo pr) {
         try {
             pr.setStatusprestamo(0);
-            this.edit(pr);
+            //this.edit(pr);
             return true;
         } catch (Exception e) {
             return false;
