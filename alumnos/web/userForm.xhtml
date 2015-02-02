@@ -20,9 +20,7 @@
             <ui:define name="content">
                 <h:form>
                     <div class="ui-grid ui-grid-responsive" style="margin: 10px;">
-                        <div class="ui-grid-row" >
-                            <h2>Forma De Registro</h2>
-                        </div>
+                        
                         <div class="ui-grid-row" style="margin-top: 5px" >
                             <p:messages id="msg" showDetail="true" autoUpdate="true" closable="true" />
                         </div>
@@ -37,7 +35,7 @@
 
                             <p:outputLabel value="Nombre" for="nameInput" style="margin-right: 5px" />
                             <div class="ui-grid-col-4">
-                                <p:inputText value="#{reg.pres.nombre}" style="width: 100%" id="nameInput" size="30" required="true"/>
+                                <p:inputText value="#{reg.pres.nombre}" type="text" style="width: 100%" id="nameInput" size="30" required="true"/>
                             </div>
                         </div>
 
@@ -46,12 +44,12 @@
                         <div class="ui-grid-row" style="margin-top: 7px;" >
                             <p:outputLabel value="Apellido Paterno" for="apaternoInput" style="margin-right: 5px" />
                             <div class="ui-grid-col-3" style="margin-right: 5px">
-                                <p:inputText value="#{reg.pres.apaterno}"  id="apaternoInput" style="width: 100%" size="30"  required="true"/>
+                                <p:inputText value="#{reg.pres.apaterno}"   type="text" id="apaternoInput" style="width: 100%" size="30"  required="true"/>
                             </div>
 
                             <p:outputLabel value="Apellido Materno" for="amaternoInput"  style="margin-right: 5px"/>
                             <div class="ui-grid-col-3">
-                                <p:inputText value="#{reg.pres.amaterno}" id="amaternoInput"  style="width: 100%" size="30" required="true"/>
+                                <p:inputText value="#{reg.pres.amaterno}" type="text" id="amaternoInput"  style="width: 100%" size="30" required="true"/>
                             </div>
                         </div>
 
@@ -59,12 +57,12 @@
                         <div class="ui-grid-row" style="margin-top: 7px;" >
                             <p:outputLabel value="Telefono" for="telInput"  />
                             <div class="ui-grid-col-3"  style="margin-right: 5px">
-                                <p:inputText value="#{reg.pres.tel}"   style="width: 100%" id="telInput" size="15"  required="true"/>
+                                <p:inputText value="#{reg.pres.tel}"   type="tel" style="width: 100%" id="telInput" size="15"  required="true"/>
                             </div>
 
                             <p:outputLabel value="Email" for="emailInput" style="margin-right: 5px"/>
                             <div class="ui-grid-col-3">
-                                <p:inputText value="#{reg.pres.email}"  style="width: 100%" id="emailInput" size="40" required="true" validatorMessage="inserta correo valido">
+                                <p:inputText value="#{reg.pres.email}"  type="email" style="width: 100%" id="emailInput" size="40" required="true" validatorMessage="inserta correo valido">
                                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                 </p:inputText>
                             </div>
@@ -73,16 +71,16 @@
                         <div class="ui-grid-row" style="margin-top: 7px;" >
                             <p:outputLabel value="Carrera" for="carreraInput" style="margin-right: 5px" />
                             <div class="ui-grid-col-3"  style="margin-right: 5px">
-                                <p:inputText value="#{reg.pres.carrera}" id="carreraInput" style="width: 100%" size="20" required="true"/>
+                                <p:inputText value="#{reg.pres.carrera}" type="text" id="carreraInput" style="width: 100%" size="20" required="true"/>
                             </div>
 
                             <p:outputLabel value="Tipo Prestario" for="tipoPrestario"  style="margin-right: 5px" />
                             <div class="ui-grid-col-3">
-                                <p:selectOneMenu  value="#{reg.selectedPrestario}" id="tipoPrestario" converter="stype" style="width: 100%" required="true">
+                                <h:selectOneMenu  value="#{reg.selectedPrestario}" id="tipoPrestario" converter="stype" style="width: 100%" required="true">
                                     <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
                                     <f:selectItems value="#{reg.types}" var="tipo"   itemLabel="#{tipo.descripcion}" itemValue="#{tipo}"/>  
 
-                                </p:selectOneMenu>
+                                </h:selectOneMenu>
                             </div>
                         </div>
 

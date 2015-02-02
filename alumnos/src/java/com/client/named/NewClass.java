@@ -100,7 +100,7 @@ public class NewClass implements Serializable {
                 System.out.println("entre en el redirect PRIMER PUNTO PARA QUERY");
                 typeOfSearch = 1;
                 data.performQuery(typeOfSearch);
-                return "/productPg.xhtml";
+                return "/productPg.xhtml?faces-redirect=true";
             } else {
 
                 System.out.println("estoy en el ajax");

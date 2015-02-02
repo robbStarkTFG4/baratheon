@@ -106,15 +106,16 @@ public class DataGridSearch implements Serializable {
         return partes;
     }
 
-    public void openPopUp() {
+    public String openPopUp() {
 
-        Map<String, Object> options = new HashMap<>();
-        options.put("modal", true);
-        options.put("draggable", true);
-        options.put("resizable", false);
-        options.put("contentHeight", 350);
+        /*Map<String, Object> options = new HashMap<>();
+         options.put("modal", true);
+         options.put("draggable", true);
+         options.put("resizable", false);
+         options.put("contentHeight", 350);
 
-        RequestContext.getCurrentInstance().openDialog("/dialogo/popUp", options, null);
+         RequestContext.getCurrentInstance().openDialog("/dialogo/popUp", options, null);*/
+        return "productPage.xhtml?faces-redirect=true";
     }
 
     public void setPartes(List<TblMaterial> partes) {
@@ -171,17 +172,18 @@ public class DataGridSearch implements Serializable {
         RequestContext.getCurrentInstance().update("form1:table");
     }
 
-    public void openKart() {// este es el carrito  //*
+    public String openKart() {// este es el carrito  //*
 
         list = kart.getList();
 
-        Map<String, Object> options = new HashMap<>();
-        options.put("modal", true);
-        options.put("draggable", true);
-        options.put("resizable", false);
-        options.put("contentHeight", 350);
+        /*Map<String, Object> options = new HashMap<>();
+         options.put("modal", true);
+         options.put("draggable", true);
+         options.put("resizable", false);
+         options.put("contentHeight", 350);
 
-        RequestContext.getCurrentInstance().openDialog("/dialogo/cart", options, null);
+         RequestContext.getCurrentInstance().openDialog("/dialogo/cart", options, null);*/
+        return "kartPage.xhtml?faces-redirect=true";
     }
 
     public void spinnerListener(ValueChangeEvent e) { //AGREGADO  //*
@@ -234,21 +236,36 @@ public class DataGridSearch implements Serializable {
     }
 
     public void persistPres() {
-        if (pres.getUs() != null) {
-            int estado = pres.getUs().getActivo();
-            if (!((estado == 0) || (estado == 2))) {
-                persistLoanTODB();
+        if (findErrors()) {
+            checkPersonState();
+        }
+    }
+
+    private void checkPersonState() {
+        if (list.size() > 0) {
+            System.out.println("GUARDANDO PRESTAMO");
+            if (pres.getUs() != null) {
+                int estado = pres.getUs().getActivo();
+                if (!((estado == 0) || (estado == 2))) {
+                    persistLoanTODB();
+                } else {
+                    FacesContext context = FacesContext.getCurrentInstance();
+
+                    context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error",
+                            "El Prestario tiene deudas o no se encuentra activo"));
+                    RequestContext.getCurrentInstance().update("form1:msg");
+                }
             } else {
                 FacesContext context = FacesContext.getCurrentInstance();
 
-                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error",
-                        "El Prestario tiene deudas o no se encuentra activo"));
+                context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Inicia sesion "));
                 RequestContext.getCurrentInstance().update("form1:msg");
             }
         } else {
+            System.out.println("EL KARRITO ESTA VACIO");
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Inicia sesion "));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Error", "Agrega elementos al carrito "));
             RequestContext.getCurrentInstance().update("form1:msg");
         }
     }
@@ -257,12 +274,14 @@ public class DataGridSearch implements Serializable {
         //#21312
 
         if (kart.persistLoan(pres.getUs())) {
-            RequestContext.getCurrentInstance().closeDialog(null);
+            //RequestContext.getCurrentInstance().closeDialog(null);
             FacesContext context = FacesContext.getCurrentInstance();
 
-            context.addMessage(null, new FacesMessage("exito", "prestamo guardado"));
+            context.addMessage(null, new FacesMessage("exito", "solicitud guardada"));
 
-            RequestContext.getCurrentInstance().update("formass:not");
+            RequestContext.getCurrentInstance().update("formass:messages");
+            RequestContext.getCurrentInstance().update("form1:table");
+            RequestContext.getCurrentInstance().update("form1:persi");
             pres.updateDebts();
         } else {
             FacesContext context = FacesContext.getCurrentInstance();
@@ -489,7 +508,7 @@ public class DataGridSearch implements Serializable {
         findErrors();
     }
 
-    private void findErrors() {
+    private boolean findErrors() {
         List<MtlDTO> parts = kart.getList();
         String tp = null;
         List<String> msgs = new ArrayList<>();
@@ -504,13 +523,15 @@ public class DataGridSearch implements Serializable {
             }
         }
         if (!msgs.isEmpty()) {
-            dis = true;
+
             for (String string : msgs) {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(string));
+                RequestContext.getCurrentInstance().update("form1:msg");
             }
-            return;
+            return false;
+        } else {
+            return true;
         }
-        dis = false;
 
     }
 

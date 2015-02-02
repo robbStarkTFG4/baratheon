@@ -15,6 +15,7 @@ import com.server.entity.beans.TblPrestarios;
 import com.server.entity.beans.TblUsuarios;
 import com.util.DetailDTO;
 import com.util.PresDTO;
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,10 +26,13 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
@@ -430,13 +434,18 @@ public class Prestamos implements Serializable { //clase para manejar los presta
     }
 
     private void openPartBasicInfo() {
-        Map<String, Object> options = new HashMap<>();
-        options.put("modal", true);
-        options.put("draggable", true);
-        options.put("resizable", false);
-        options.put("contentHeight", 300);
-
-        RequestContext.getCurrentInstance().openDialog("/dialogo/PartBasicInfo", options, null);
+        try {
+            /* Map<String, Object> options = new HashMap<>();
+             options.put("modal", true);
+             options.put("draggable", true);
+             options.put("resizable", false);
+             options.put("contentHeight", 300);
+            
+             RequestContext.getCurrentInstance().openDialog("/dialogo/PartBasicInfo", options, null);*/
+            FacesContext.getCurrentInstance().getExternalContext().redirect("productPage.xhtml");
+        } catch (IOException ex) {
+            Logger.getLogger(Prestamos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String logOut() {
@@ -568,5 +577,15 @@ public class Prestamos implements Serializable { //clase para manejar los presta
         PresDTO temp = (PresDTO) e.getComponent().getAttributes().get("prestamito");
 
         temp.setDateAdded(true);
+    }
+
+    public void erasePres(ActionEvent event) {
+        PresDTO removeCurrent = (PresDTO) event.getComponent().getAttributes().get("presiDTO");
+        System.out.println("hola: " + removeCurrent.getIdPrestamo());
+        dets.deleteDetailsByID(removeCurrent.getIdPrestamo());
+        pr.remove(pr.find(removeCurrent.getIdPrestamo()));
+        ListSol = pr.getInquerys(us.getIdPrestario());
+        RequestContext.getCurrentInstance().update("formazad:tabView");
+        RequestContext.getCurrentInstance().update(":formazad:tabView:soles");
     }
 }

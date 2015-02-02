@@ -203,9 +203,11 @@ public class Inventariables implements Serializable {
                                             "No se puede modificar: " + pz.getNombre() + " Inventario UABC: " + pz.getInventarioUabc(), null));
                                 } else {
                                     pzFacade.edit(pz);
+                                    //pzFacade.saveChanges(pz);
                                 }
                             } else {
                                 pz.setEstatus(false);
+                                //pzFacade.saveChanges(pz);
                                 pzFacade.edit(pz);
                             }
 

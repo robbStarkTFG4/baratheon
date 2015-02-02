@@ -82,7 +82,7 @@ public class BeanMateriales implements Serializable {
     private String descripcionSubfam;
     private UploadedFile file;
     private String imagen;
-    private final String ruta = "C:\\Users\\UABC\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
+    private final String ruta = "C:\\Users\\NORE\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\";
     private boolean invent = false;
 //"C:\\Users\\cristian\\Documents\\GitHub\\baratheon\\almacen\\web\\resources\\imagenes\\"
 

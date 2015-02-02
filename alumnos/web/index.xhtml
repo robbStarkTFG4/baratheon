@@ -18,17 +18,11 @@
         <style>
             .cl{
                 font-size: 12px;
+                background-color: #f6f6f6
             }
 
-            .menuBtn{
-                font-size: 14px;
-                color: #333 !important;
-            }
-            .menuBtn:hover{
-                background: none;
-                background-color: #F2F2F2!important;
-                color: #3eb249 !important;
-            }
+
+
         </style>
     </h:head>
 
@@ -48,15 +42,15 @@
                         <div class="ui-grid-row" >  
                             <div class="ui-grid-col-12">
                                 <p:menubar  >         
-                                    <p:menuitem id="com1" styleClass="menuBtn" value="Catalogo" action="/ctgLog.xhtml?faces-redirect=true"/>
-                                    <p:menuitem id="com2" styleClass="menuBtn" value="Prestamos" action="/prestariosPage.xhtml"/>
-                                    <p:menuitem id="com3" styleClass="menuBtn" value="Registrarse" action="/userForm.xhtml" />
+                                    <p:menuitem id="com1" style="margin-right: 5px" value="Catalogo" action="/ctgLog.xhtml?faces-redirect=true"/>
+                                    <p:menuitem id="com2" style="margin-right: 5px" value="Prestamos" action="/prestariosPage.xhtml?faces-redirect=true"/>
+                                    <p:menuitem id="com3"  value="Registrarse" action="/userForm.xhtml?faces-redirect=true" />
 
                                     <f:facet name="options">  
 
                                         <p:commandButton id="iconOnly"  action="#{gd.openKart}" rendered="#{gd ne null}" disabled="#{nm.karControl}"
-                                                         icon="ui-icon-star" title="Icon Only" style="margin-right: 5px;" >
-                                            <p:ajax event="dialogReturn" listener="#{pres.updating()}" />
+                                                         icon="ui-icon-cart" title="Icon Only" style="margin-right: 5px;" >
+
                                         </p:commandButton>    
 
                                         <p:autoComplete   value="#{nm.caja}" id="sr" completeMethod="#{nm.autoComplete}"  

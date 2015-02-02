@@ -105,4 +105,10 @@ public class TblpiezasFacade extends AbstractFacade<Tblpiezas> {
         //query
     }
 
+    public void saveChanges(Tblpiezas pz) {
+        if (em.contains(pz)) {
+            System.out.println(" I WILL SAVE YOUR CHANGES");
+        }
+    }
+
 }

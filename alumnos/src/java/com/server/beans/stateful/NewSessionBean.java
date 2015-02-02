@@ -127,6 +127,10 @@ public class NewSessionBean {
         data.clear();
     }
 
+    public int listSize() {
+        return mtl.size();
+    }
+
     public boolean persistLoan(TblPrestarios pro) {//cDASDASDASDASDAS AGREGAR EL USUARIO COMO PARAMETRO DEL METODO Y METERLO EN "1"
         TblPrestamo pr = pres.createPres(pro); //1
         Map<String, Integer> quantity = new HashMap<>();

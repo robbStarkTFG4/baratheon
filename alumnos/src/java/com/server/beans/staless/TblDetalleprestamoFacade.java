@@ -120,4 +120,14 @@ public class TblDetalleprestamoFacade extends AbstractFacade<TblDetalleprestamo>
             em.remove(query.getSingleResult());
         }
     }
+
+    public void deleteDetailsByID(Integer idPrestamo) {
+        TypedQuery<TblDetalleprestamo> query = em.createQuery("SELECT c FROM TblDetalleprestamo c WHERE c.idPrestamo.idPrestamo = :id", TblDetalleprestamo.class);
+        query.setParameter("id", idPrestamo);
+        List<TblDetalleprestamo> res = query.getResultList();
+        for (TblDetalleprestamo re : res) {
+            this.remove(re);
+        }
+        em.flush();
+    }
 }
