@@ -114,6 +114,7 @@ public class TblMaterialFacade extends AbstractFacade<TblMaterial> {
         TblMaterial temp = query.getSingleResult();
 
         if (temp != null) {
+            temp.getStock();
             System.out.println(dl);
             if (dl != null) {
 

@@ -86,7 +86,7 @@ public class BeanPrestarios implements Serializable {
         existe = pres.agregar(compNombre.getValue().toString(), compApat.getValue().toString(), compAmat.getValue().toString(), Integer.parseInt(compTipo.getValue().toString()), compTel.getValue().toString(), compCorreo.getValue().toString(), compUsuario.getValue().toString(), compCarrera.getValue().toString());
         if (existe == true) {
 
-  //status="Usuario o Correo ya utilizados";
+            //status="Usuario o Correo ya utilizados";
             //out.setValue(status);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", "Usuario o correo existente"));
 
@@ -159,14 +159,34 @@ public class BeanPrestarios implements Serializable {
         UIOutput ctel = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:tel");
         UIOutput cus = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:us");
         UIOutput ctip = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:tipo");
-        cnombre.setValue(prestmodi.getNombre());
-        camaterno.setValue(prestmodi.getAmaterno());
-        capaterno.setValue(prestmodi.getApaterno());
-        ccarrera.setValue(prestmodi.getCarrera());
-        ccorreo.setValue(prestmodi.getEmail());
-        ctel.setValue(prestmodi.getTel());
-        cus.setValue(prestmodi.getUsuario());
-        ctip.setValue(prestmodi.getIdTipoprestarios().getIdTipoprestarios().toString());
+        UIOutput cAct = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:act");
+        if (prestmodi.getNombre() != null) {
+            cnombre.setValue(prestmodi.getNombre());
+        }
+        if (prestmodi.getAmaterno() != null) {
+            camaterno.setValue(prestmodi.getAmaterno());
+        }
+        if (prestmodi.getApaterno() != null) {
+            capaterno.setValue(prestmodi.getApaterno());
+        }
+        if (prestmodi.getCarrera() != null) {
+            ccarrera.setValue(prestmodi.getCarrera());
+        }
+        if (prestmodi.getEmail() != null) {
+            ccorreo.setValue(prestmodi.getEmail());
+        }
+        if (prestmodi.getTel() != null) {
+            ctel.setValue(prestmodi.getTel());
+        }
+        if (prestmodi.getTel() != null) {
+            cus.setValue(prestmodi.getUsuario());
+        }
+        if (prestmodi.getIdTipoprestarios() != null) {
+            ctip.setValue(prestmodi.getIdTipoprestarios().getIdTipoprestarios().toString());
+        }
+        if (prestmodi.getActivo() != null) {
+            cAct.setValue(prestmodi.getActivo());
+        }
 
     }
 
@@ -180,8 +200,10 @@ public class BeanPrestarios implements Serializable {
         UIInput compTel = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:tel");
         UIInput compUsuario = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:us");
         UIInput compTipo = (UIInput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:tipo");
-
-        existe = pres.modificar(prestmodi.getIdPrestario(), compNombre.getValue().toString(), compApat.getValue().toString(), compAmat.getValue().toString(), Integer.parseInt(compTipo.getValue().toString()), compTel.getValue().toString(), compCorreo.getValue().toString(), compUsuario.getValue().toString(), compCarrera.getValue().toString());
+        UIOutput cAct = (UIOutput) FacesContext.getCurrentInstance().getViewRoot().findComponent("admin:modificarPrest:act");
+        existe = pres.modificar(prestmodi.getIdPrestario(), compNombre.getValue().toString(), compApat.getValue().toString(),
+                compAmat.getValue().toString(), Integer.parseInt(compTipo.getValue().toString()), compTel.getValue().toString(),
+                compCorreo.getValue().toString(), compUsuario.getValue().toString(), compCarrera.getValue().toString(), Integer.parseInt(cAct.getValue().toString()));
 
         System.out.println(existe);
         if (existe == true) {
