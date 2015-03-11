@@ -23,60 +23,60 @@
                             <div align="left" >
                                 <h:panelGrid id="grid" columns="3" cellspacing="5">
 
-                                    <p:outputLabel value="Nombre :  " style="margin-right:  5px"  />  
-                                    <p:inputText id="nom"  required="true"  requiredMessage="Insertar nombre" validatorMessage="Solo letras(2-20)" >
+                                    <p:outputLabel value="Nombre:  " style="margin-right:  5px"  />  
+                                    <p:inputText id="nom"  required="true"  requiredMessage="Insertar Nombre" validatorMessage="Solo Letras(2-20)" >
                                         <f:validateLength minimum="3" maximum="20" />
                                        <f:validateRegex pattern="[a-zA-Z\s]*"/>
                                         <f:ajax render="mensajenom" event="keyup"/>
                                     </p:inputText>
                                     <p:message id="mensajenom"  for="nom" />
 
-                                    <p:outputLabel value="Apellido paterno :  "  styleClass="spacio" style="margin-right: 5px"  />  
-                                    <p:inputText id="ap" required="true"  styleClass="spacio" requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)" >
+                                    <p:outputLabel value="Apellido Paterno:  "  styleClass="spacio" style="margin-right: 5px"  />  
+                                    <p:inputText id="ap" required="true"  styleClass="spacio" requiredMessage="Insertar Apellido" validatorMessage="Solo Letras(2-20)" >
                                         <f:validateRegex pattern="[a-zA-Z\s]*"/>
                                         <f:validateLength minimum="1" maximum="20"/>  
                                         <f:ajax render="mensajeap" event="keyup"/>
                                     </p:inputText>
                                     <p:message id="mensajeap"  for="ap" styleClass="spacio" />
 
-                                    <p:outputLabel value="Apellido materno :  "  styleClass="spacio" style="margin-right: 5px" />  
-                                    <p:inputText id="am"  required="true" styleClass="spacio"  requiredMessage="Insertar apellido" validatorMessage="Solo letras(2-20)">
+                                    <p:outputLabel value="Apellido Materno:  "  styleClass="spacio" style="margin-right: 5px" />  
+                                    <p:inputText id="am"  required="true" styleClass="spacio"  requiredMessage="Insertar Apellido" validatorMessage="Solo Letras(2-20)">
                                         <f:validateLength minimum="1" maximum="20"/>
                                         <f:validateRegex pattern="[a-zA-Z\s]*"/>
                                         <f:ajax render="mensajeam" event="keyup"/>
                                     </p:inputText> 
                                     <p:message id="mensajeam"  for="am" />
 
-                                    <p:outputLabel value="Carrera :  "  styleClass="spacio" style="margin-right: 5px" />  
-                                    <p:inputText id="carrera"  required="true" styleClass="spacio"  requiredMessage="Insertar clave" validatorMessage="Máximo 20 caracteres">
+                                    <p:outputLabel value="Carrera:  "  styleClass="spacio" style="margin-right: 5px" />  
+                                    <p:inputText id="carrera"  required="true" styleClass="spacio"  requiredMessage="Insertar Clave" validatorMessage="Máximo 20 Caracteres">
                                         <f:validateLength minimum="1" maximum="20"/>
                                       <f:validateRegex pattern="[a-zA-Z\s]*"/>
                                         <f:ajax render="mensajecar" event="keyup"/>
                                     </p:inputText>   
                                     <p:message id="mensajecar"  for="carrera" styleClass="spacio" />
 
-                                    <p:outputLabel value="Correo :  "   styleClass="spacio" style="margin-right: 5px"/>  
-                                    <p:inputText id="correo"  required="true" styleClass="spacio"  requiredMessage="Insertar correo" validatorMessage="Formato erróneo(?@.?)">
+                                    <p:outputLabel value="Correo:  "   styleClass="spacio" style="margin-right: 5px"/>  
+                                    <p:inputText id="correo"  required="true" styleClass="spacio"  requiredMessage="Insertar Correo" validatorMessage="Formato Erróneo(?@.?)">
                                         <f:validateLength minimum="1" maximum="35"/>
                                         <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                         <f:ajax render="mensajecorreo" event="keyup"/>
                                     </p:inputText> 
                                     <p:message id="mensajecorreo"  for="correo" styleClass="spacio" />
 
-                                    <p:outputLabel value="Teléfono :  "  style="margin-right: 5px" styleClass="spacio" />  
-                                    <p:inputMask id="tel"  required="true" styleClass="spacio" requiredMessage="Insertar teléfono" mask="9999999999" >
+                                    <p:outputLabel value="Teléfono:  "  style="margin-right: 5px" styleClass="spacio" />  
+                                    <p:inputMask id="tel"  required="true" styleClass="spacio" requiredMessage="Insertar Teléfono" mask="9999999999" >
 
                                     </p:inputMask>
                                     <h:outputLabel/>
 
-                                    <p:outputLabel value="Usuario :  "  styleClass="spacio" style="margin-right: 5px" />  
-                                    <p:inputText id="us"  required="true" styleClass="spacio"  requiredMessage="Insertar usuario" validatorMessage="Máximo 20 caracteres">
+                                    <p:outputLabel value="Usuario:  "  styleClass="spacio" style="margin-right: 5px" />  
+                                    <p:inputText id="us"  required="true" styleClass="spacio"  requiredMessage="Insertar Usuario" validatorMessage="Máximo 20 Caracteres">
                                         <f:validateLength minimum="1" maximum="20"/>
                                         <f:ajax render="mensajeus" event="keyup"/>
                                     </p:inputText> 
                                     <p:message id="mensajeus"  for="us" />
 
-                                    <p:outputLabel value="Tipo prestatario :  "  styleClass="spacio" style="margin-right: 5px" />  
+                                    <p:outputLabel value="Tipo Prestatario:  "  styleClass="spacio" style="margin-right: 5px" />  
                                     <p:selectOneMenu value="Tipo" id="tipo" styleClass="spacio">  
                                         <f:selectItem itemLabel="Alumno" itemValue="1" />  
                                         <f:selectItem itemLabel="Maestro" itemValue="2" />  

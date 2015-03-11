@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Busquedas</title>
+        <title>Búsqueda</title>
         <link href="resources/css/grid2.css" type="text/css"></link>
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
     </h:head>
@@ -18,7 +18,7 @@
 
                         <div class="ui-grid-row">
 
-                            <p:outputLabel value="area " for="area" style="margin-right:  5px"/>
+                            <p:outputLabel value="Área: " for="area" style="margin-right:  5px"/>
                             <div class="ui-grid-col-2" style="margin-right:  5px">
                                 <h:selectOneMenu  styleClass="form-control" value="#{gd.selectedArea}" id="area" style="width: 100%" converter="areaC" valueChangeListener="#{gd.areasListener}" >
                                     <f:ajax  execute="@this"  render=" @this  familia subFam  "/>
@@ -27,7 +27,7 @@
                                 </h:selectOneMenu>
                             </div>
 
-                            <p:outputLabel value="familia " for="familia" style="margin-right: 5px"/>
+                            <p:outputLabel value="Familia: " for="familia" style="margin-right: 5px"/>
                             <div class="ui-grid-col-2" style="margin-right:  5px">
                                 <h:selectOneMenu styleClass="form-control" value="#{gd.selectedType}" id="familia" style="width: 100%" converter="type" valueChangeListener="#{gd.typesListener}" >
                                     <f:ajax  execute="@this"  render=" @this  subFam  "/>
@@ -36,7 +36,7 @@
                                 </h:selectOneMenu>
                             </div>
 
-                            <p:outputLabel value="subfamilia " for="subFam" style="margin-right: 5px"/>
+                            <p:outputLabel value="Subfamilia: " for="subFam" style="margin-right: 5px"/>
                             <div class="ui-grid-col-2" style="margin-right:  5px">
                                 <h:selectOneMenu styleClass="form-control" value="#{gd.selectedFam}" id="subFam" style="width: 100%"  valueChangeListener="#{gd.subFamsListener}" converter="sub"  >
                                     <f:ajax  execute="@this" />
@@ -45,7 +45,7 @@
                                 </h:selectOneMenu>
                             </div>
                             <div class="ui-grid-col-1">
-                                <p:commandButton value="filtrar"  style="width: 100%" action="#{gd.filter}"/>
+                                <p:commandButton value="Filtrar"  style="width: 100%" action="#{gd.filter}"/>
                             </div>
                         </div>
 

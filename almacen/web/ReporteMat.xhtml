@@ -42,7 +42,7 @@
   
     <p:column>  
         <f:facet name="header">  
-            <h:outputText value="Stock" />  
+            <h:outputText value="Inventario" />  
         </f:facet>  
         <h:outputText value="#{car.stock}" />  
     </p:column>  
@@ -51,7 +51,7 @@
 </p:dataTable>  
       
 <h:panelGrid columns="1">  
-    <p:panel header="Exportar reporte"> 
+    <p:panel header="Exportar Reporte"> 
        
         <h:commandButton image="/imagenes/excel.png">       
             <p:dataExporter type="xls" target="tbl" fileName="Material" />  

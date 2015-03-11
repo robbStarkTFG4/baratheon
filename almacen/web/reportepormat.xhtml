@@ -17,7 +17,7 @@
 
                             <p:growl id="g1" autoUpdate="true" showDetail="true" life="3000"/>
                             <p:autoComplete   value="#{material.material}" id="sr" completeMethod="#{nm.autoComplete}" forceSelection="true"  style="margin-right:150px; height: 25px; width: 50px; "
-                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o nombre" converter="mtl" minQueryLength="3" 
+                                              var="p" itemLabel="#{p.noParte}" itemValue="#{p}" title="No. Parte o Nombre" converter="mtl" minQueryLength="3" 
                                               maxResults="15" queryDelay="500"
                                               >
                                 <p:column>  
@@ -53,7 +53,7 @@
 
 
                             <h:panelGrid columns="1">  
-                                <p:panel header="Exportar reporte"> 
+                                <p:panel header="Exportar Reporte"> 
 
                                     <h:commandButton image="/imagenes/excel.png">       
                                         <p:dataExporter type="xls" target="crs" fileName="Material" />  

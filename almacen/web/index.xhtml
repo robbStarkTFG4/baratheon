@@ -13,7 +13,7 @@
 
 
 
-        <title>Sistema Inventarios</title>
+        <title>Inventarios UABC</title>
 
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
         <script src="js/bootstrap.min.js"></script>
@@ -148,26 +148,26 @@
                                             <li>
                                                 <div  id="logDiv" class="dropMenu">
                                                     <i  class="fa fa-fw fa-user"></i> 
-                                                    <p:commandLink  styleClass="linked" value="Profile"/>
+                                                    <p:commandLink  styleClass="linked" value="Perfil"/>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div  id="logDiv" class="dropMenu">
                                                     <i  class="fa fa-fw fa-envelope"></i> 
-                                                    <p:commandLink  styleClass="linked" value="Inbox"/>
+                                                    <p:commandLink  styleClass="linked" value="Mensajes"/>
                                                 </div>
                                             </li>
                                             <li>
                                                 <div  id="logDiv" class="dropMenu">
                                                     <i  class="fa fa-fw fa-gear"></i> 
-                                                    <p:commandLink  styleClass="linked" value="Settings"/>
+                                                    <p:commandLink  styleClass="linked" value="Ajustes"/>
                                                 </div>     
                                             </li>
                                             <li class="divider"></li>
                                             <li>
                                                 <div  id="logDiv" class="dropMenu">
                                                     <i  class="fa fa-fw fa-power-off"></i> 
-                                                    <p:commandLink action="#{user.logOut()}" styleClass="linked" value="Log Out"/>
+                                                    <p:commandLink action="#{user.logOut()}" styleClass="linked" value="Cerrar Sesión"/>
                                                 </div>
 
                                             </li>
@@ -190,7 +190,7 @@
                                 <ul class="nav navbar-nav side-nav">
                                     <li >
                                         <p:commandLink  id="com2" partialSubmit="true" action="/presi.xhtml?faces-redirect=true" styleClass=" fa fa-fw fa-dashboard text-left dis" >
-                                            <h:outputText value=" Prestamos"/>
+                                            <h:outputText value=" Préstamos"/>
                                         </p:commandLink>
 
                                     </li>
@@ -205,12 +205,12 @@
                                         <ul id="demo" class="collapse">
                                             <li>
                                                 <p:commandLink   action="/AgregarMat.xhtml?faces-redirect=true"    >
-                                                    <h:outputText value="Agregar material"/>
+                                                    <h:outputText value="Agregar Material"/>
                                                 </p:commandLink>
                                             </li>
                                             <li>
                                                 <p:commandLink action="/ModificarMat.xhtml?faces-redirect=true"     >
-                                                    <h:outputText value="Modificar material"/>
+                                                    <h:outputText value="Modificar Material"/>
                                                 </p:commandLink>
                                             </li>
                                             <li>
@@ -227,7 +227,7 @@
                                     </li>
                                     <li>
                                         <p:commandLink  id="com4"    action="/catalogTree.xhtml?faces-redirect=true" styleClass="fa fa-fw fa-slideshare dis"   >
-                                            <h:outputText value=" Catalogo"/>
+                                            <h:outputText value=" Catálogo"/>
                                         </p:commandLink>
                                     </li>
                                 </ul>

@@ -19,15 +19,15 @@
 
                         <p:panel id="panel" style="width:70%;  " >  
                             <f:facet name="header" >  
-                                Eliminar usuario
+                                Eliminar Usuario
                             </f:facet>
                             <div align="left">
                                 <h:panelGrid columns="3" cellspacing="5">
 
 
-                                    <p:outputLabel value="Ingrese usuario:    "  style="margin-right: 5px"/>
+                                    <p:outputLabel value="Ingrese Usuario:    "  style="margin-right: 5px"/>
                                     <p:autoComplete id="usuariof" dropdown="true" forceSelection="true"  autocomplete="true"   
-                                                    completeMethod="#{user.completeEliminar}"  required="true" requiredMessage="Insertar usuario">  
+                                                    completeMethod="#{user.completeEliminar}"  required="true" requiredMessage="Insertar Usuario">  
 
                                         <f:ajax render="mensajeus" event="keyup"/>
                                     </p:autoComplete>
