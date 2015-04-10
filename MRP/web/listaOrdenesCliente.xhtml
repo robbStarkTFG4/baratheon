@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="Templates/template.xhtml">
+            <ui:define name="content" >
+                <h:form id="fm">
+                      <h:panelGrid columns="1">
+                <p:selectOneRadio id="otro" value="#{ordenCliente.radiobutton2}"  >
+            <f:selectItem itemLabel="Mostrar todo" itemValue="1"   />
+            <f:selectItem itemLabel="Mostrar con estatus 1" itemValue="2"  />
+            <f:selectItem itemLabel="Mostrar con estatus 2" itemValue="3" />
+            <p:ajax listener="#{ordenCliente.radiobuton2()}" update=":fm"/>
+            
+             </p:selectOneRadio></h:panelGrid>
+            <p:dataGrid var="car" value="#{ordenCliente.listorc}" columns="2" 
+        rows="4" paginator="true" id="cars"
+        paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        rowsPerPageTemplate="2,4,8">
+ 
+        <f:facet name="header">
+          
+            <div align="right">
+            <h:panelGrid columns="3" >
+                <p:autoComplete id="busqorden" value="#{ordenCliente.busqueda}"  forceSelection="true"  autocomplete="true" 
+                                completeMethod="#{ordenCliente.completeBuscar}"  required="true" requiredMessage="Insertar Usuario">  
+                                     
+               </p:autoComplete>
+                <p:commandButton value="Buscar" update=":fm" actionListener="#{ordenCliente.filtrarLista()}"/> 
+        <h:panelGrid columns="2"  cellpadding="5">
+        <p:outputLabel for="console" value="Por: " />
+        <p:selectOneRadio id="console" value="#{ordenCliente.radiobutton}"  >
+            <f:selectItem itemLabel="ID" itemValue="1"   />
+            <f:selectItem itemLabel="Producto" itemValue="2"  />
+            <f:selectItem itemLabel="Cliente" itemValue="3" />
+            <f:selectItem itemLabel="Fecha Captura" itemValue="4" />
+            <p:ajax listener="#{ordenCliente.radiobuton()}"/>
+        </p:selectOneRadio>
+        
+    </h:panelGrid>
+            </h:panelGrid>
+            </div>
+        </f:facet>
+ 
+                <p:panel header="ID de orden: #{car.idTblOrdencliente} ESTATUS #{car.estatus}" style="text-align:center">
+                    <center>
+       <p:panelGrid  columns="2" >
+                <f:facet name="header">
+                    <p:graphicImage name="demo/images/car/#{dataGridView.selectedCar.brand}-big.gif"/> 
+                </f:facet>
+ 
+                <h:outputText value="Cliente:" />
+                <h:outputText value="#{car.idTblClientes.nombre} #{car.idTblClientes.numeroCliente}" style="font-weight: bold;color: darkslategrey" />
+ 
+                <h:outputText value="Producto" />
+                <h:outputText value="#{car.idTblProducto.nombre}" style="font-weight: bold;color: darkslategrey"/>
+ 
+                <h:outputText value="Cantidad" />
+                <h:outputText value="#{car.cantidad}" style="font-weight: bold;color: darkslategrey"/>
+ 
+                <h:outputText value="Fecha Captura" />
+                <h:outputText value="#{car.fechaCaptura}" style="font-weight: bold;color: darkslategrey"/>
+                
+                 <h:outputText value="Fecha Entrega" />
+                 <h:outputText value="#{car.fechaEntrega}" style="font-weight: bold;color: darkslategrey" />
+       </p:panelGrid></center>
+                    <p:commandLink value="Generar orde de compra" action="#{compras.crear(car.idTblOrdencliente)}" immediate="true" >
+                    
+                </p:commandLink> 
+        </p:panel>
+ 
+    </p:dataGrid>
+            
+            
+    
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

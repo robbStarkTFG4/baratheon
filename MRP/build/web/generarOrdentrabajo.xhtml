@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+         <ui:composition template="Templates/template.xhtml">
+            <ui:define name="content" >
+                <h:form id="ftr">
+                                <p:growl id="growl" showDetail="true" life="5000"/> 
+
+        <p:dataTable var="car" value="#{planeacion.listoc}" sortBy="#{car.fechaEntrega}"  >
+    <f:facet name="header">
+        GENERAR ORDEN DE TRABAJO----ORDENES DE CLIENTES CON STOCK
+    </f:facet>
+            <p:column  headerText="ID O.cliente" filterBy="#{car.idTblOrdencliente}" >
+        <h:outputText value="#{car.idTblOrdencliente}"  />
+     </p:column>
+    <p:column  headerText="Producto" >
+        <h:outputText value="#{car.idTblProducto.nombre}"  />
+     </p:column>
+     <p:column  headerText="Modelo" >
+         <h:outputText value="#{car.idTblProducto.modelo}"  />
+     </p:column>
+    <p:column  headerText="Cantidad" >
+        <h:outputText value="#{car.cantidad}"  />
+     </p:column>
+     <p:column  headerText="Fecha entrega" >
+                <h:outputText value="#{car.fechaEntrega}"  />
+     </p:column>
+            
+     <p:column  headerText="Generar orden" >
+         <center> <p:commandButton value="Generar" actionListener="#{planeacion.agregarOT(car)}" update=":ftr"/></center>
+     </p:column>
+        
+    </p:dataTable>
+            
+            
+        </h:form>
+            </ui:define>
+         </ui:composition>
+    </h:body>
+</html>
+

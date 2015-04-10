@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet name="./css/default.css"/>
+        <h:outputStylesheet name="./css/cssLayout.css"/>
+        <title>Facelets Template</title>
+    </h:head>
+
+    <h:body>
+
+        <div id="top">
+            <h:form>
+                <h:panelGrid columns="6">
+            <p:graphicImage value="/images/Continental.jpg" style="margin-top: -25%;margin-left: -120%" />
+            <p:graphicImage value="/images/mrp.png" style="margin-left: 28%;margin-top: -8%"  />
+            <p:graphicImage value="/images/uabc2.jpg" style="margin-left: 170%;margin-top: -1%"  />
+            
+             
+             <p:panelGrid columns="2" style="margin-left: 6%;margin-top: -12%;height: 90%"  >
+    <f:facet name="header">
+        <p:graphicImage value="/images/user2.png"/>
+    </f:facet>
+                  <f:facet name="footer"  >
+                      <center>
+       <h:commandLink value="Log Out" style="color: #FFFFFF;font-size: xx-small" action="#{user.logout()}"/> 
+                      </center>
+    </f:facet>
+ 
+                 <h:outputText value="Bienvenido:" style="font-size: xx-small" />
+    <h:outputLabel value="#{user.usuarioIN.usuario}" style="color: #000;font-size: xx-small;font-weight: bold"/>
+           </p:panelGrid>
+               
+           
+           
+                </h:panelGrid>
+            </h:form>
+            <ui:insert name="top">
+                <h:form>
+                   
+                
+         
+                </h:form>
+            
+            
+            </ui:insert>
+        </div>
+        <div>
+            <div id="left" >
+                <ui:insert name="left">
+                    
+                  <h:form>  
+    <p:growl id="messages" showDetail="false"/>
+    <center>
+    <h3 style="margin-top:0; color: #ffa800">Funciones Sistema</h3>
+    </center>
+    
+    <p:menu style="width: 200px">
+        <p:submenu label="Ingenieria" >
+            <p:menuitem value="Agregar orden cliente" action="Ordencliente.xhtml?faces-redirect=true" disabled="#{user.ingenieria}" />
+        </p:submenu>
+        <p:submenu label="Compras" >
+            <p:menuitem value="Generar orde compra" action="#{ordenCliente.irairdenes()}" disabled="#{user.compras}" />
+             <p:menuitem value="Ver ordenes creadas" action="ordencompraGeneradas.xhtml?faces-redirect=true" disabled="#{user.compras}"  />
+           
+        </p:submenu>
+        <p:submenu label="Inventarios">
+            <p:menuitem value="Recibo de material" action="recibodematerial.xhtml?faces-redirect=true" disabled="#{user.inventario}"/>
+            <p:menuitem value="Inspeccion material" action="inspeccionMat.xhtml?faces-redirect=true" disabled="#{user.inventario}" />
+            <p:menuitem value="Locacion de material" action="locacionMat.xhtml?faces-redirect=true" disabled="#{user.inventario}" />
+             
+           
+        </p:submenu>
+        <p:submenu label="Planeacion">
+            <p:menuitem value="Generar orden trabajo" action="generarOrdentrabajo.xhtml?faces-redirect=true" disabled="#{user.planeacion}"  />
+            <p:menuitem value="Ver estatus de orden"  action="ordenTrabajoActiva.xhtml?faces-redirect=true"  disabled="#{user.planeacion}"  />
+     
+        </p:submenu>
+        <p:submenu label="Produccion">
+            <p:menuitem value="Supervicion trabajo" action="supervisionT.xhtml?faces-redirect=true" disabled="#{user.produccion}"  />
+            <p:menuitem value="Salida orden cumplida" action="ordenListaEmpaque.xhtml?faces-redirect=true"  disabled="#{user.produccion}"   />
+             
+        </p:submenu>
+        <p:submenu label="Empaque">
+            <p:menuitem value="Empaque de lote" action="empaques.xhtml?faces-redirect=true"  disabled="#{user.empaque}"  />
+        </p:submenu>
+        <p:submenu label="Almacen envios">
+            <p:menuitem value="Enviar ordenes" action="envios.xhtml?faces-redirect=true"  disabled="#{user.envios}"   />
+            <p:menuitem value="Ver envios" action="envios_1.xhtml?faces-redirect=true" disabled="#{user.envios}"  />
+          
+             
+        </p:submenu>
+    </p:menu>  
+    <center>
+        <br></br>
+       
+    </center>      
+                  </h:form>       
+                </ui:insert>
+            </div>
+            <div id="content" class="left_content">
+               
+                <ui:insert name="content">
+                
+                
+                
+                
+                
+                </ui:insert>
+            </div>
+        </div>
+        <div id="bottom">
+            <ui:insert name="bottom">Bottom</ui:insert>
+        </div>
+
+    </h:body>
+
+</html>

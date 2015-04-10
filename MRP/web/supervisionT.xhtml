@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="Templates/template.xhtml">
+            <ui:define name="content" >
+                <h:form id="f">
+                    <p:growl id="growl" showDetail="true" life="5000"/> 
+                    <p:dataTable id="tabla1"   var="car" value="#{planeacion.listActiva}"  rowExpandMode="single"  rows="12" paginator="true" paginatorPosition="bottom"   >
+                        <f:facet name="header" >                  
+                        
+                        </f:facet>
+ 
+                <p:ajax event="rowToggle"  listener="#{planeacion.cargarPlan(car.idTblOrdentrabajo)}"/>
+                       
+                        <p:column style="width:10px"  styleClass="row-toggler" >
+                            <p:rowToggler />
+
+
+                        </p:column>
+                        <p:column headerText="ID orden trabajo" >
+                            <h:outputText value="#{car.idTblOrdentrabajo}" />
+                        </p:column>
+                        <p:column headerText="Producto"  >
+                            <h:outputText value="#{car.tblProductoidTblProducto.nombre}" />
+                        </p:column>
+                        <p:column headerText="Dias de trabajo"  >
+                            <h:outputText value="#{car.duracionDias}" />
+                        </p:column>
+                <p:column headerText="Cantidad a producir"  >
+                    <h:outputText value="#{car.tblOrdenclienteidTblOrdencliente.cantidad}" />
+                        </p:column>
+                         <p:column headerText="Fecha entrega"  >
+                             <h:outputText value="#{car.fechaentrega}" />
+                        </p:column>
+                      
+                        
+
+                        <p:growl id="growl1" showDetail="true" life="5000"/> 
+
+                        <p:rowExpansion  id="expancion" >
+                            <center>
+                               
+                                <h:panelGrid columns="2" style="border: none;width: 80%">
+                                  
+                                    <p:dataTable id="tabla2"  var="kar" value="#{planeacion.listaPlanes}" style="width: 90%"   >
+ 
+                                <p:column  headerText="Dia" sortBy="#{kar.dia}"  >
+                    <h:outputText value="#{kar.dia}"  />
+     </p:column>
+    <p:column  headerText="Cantidad a producir" >
+        <h:outputText value="#{kar.cantidad}"  />
+     </p:column>
+     <p:column  headerText="Produccion cumplida" >
+         <center>    <p:commandButton icon="ui-icon-check" actionListener="#{planeacion.trabajoHecho(car, kar)}" update=":f:tabla1"/></center>
+      
+     </p:column>
+    
+        
+                                    </p:dataTable>
+                                
+                                <p:dataTable id="tabla3"  var="lar" value="#{planeacion.listaPlaneshechos}" style="width: 90%"   >
+ 
+                                <p:column  headerText="Dia" sortBy="#{lar.dia}"  >
+                    <h:outputText value="#{lar.dia}"  />
+     </p:column>
+    <p:column  headerText="Cantidad a producir" >
+        <h:outputText value="#{lar.cantidad}"  />
+     </p:column>
+    
+        
+                                </p:dataTable>
+                                 
+                                </h:panelGrid>
+                                
+                        
+                                    
+                             
+                            </center>
+                           
+                        </p:rowExpansion>
+                        
+                     
+                     
+                    
+                    </p:dataTable>        
+            
+            
+        </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+    
+</html>
+

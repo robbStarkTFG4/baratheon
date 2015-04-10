@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <h:head>
+        <title>DRP</title>
+    </h:head>
+    <h:body>
+         <ui:composition template="Templates/template.xhtml">
+            <ui:define name="content" >
+        <h:form id="orcliente">
+            <p:growl id="growl" showDetail="true" life="5000"/> 
+            <p:growl id="growl2" showDetail="true" life="2000"/> 
+            <p:panel id="panel">
+                
+                <center>
+                
+                        <center>
+                            <h3>ORDEN DE CLIENTE</h3><br></br></center>
+                   
+                    <h:panelGrid id="grid" columns="3" cellspacing="2">
+
+                       
+                        <p:outputLabel styleClass="labelunidad spacio" value="Cliente: " style="font-weight: bold;color: darkgreen" />
+                        <p:selectOneMenu   id="cliente" style="width: 200px" value="#{ordenCliente.cliente}"    >
+                                            <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                                            <f:selectItems value="#{ordenCliente.listc}" var="ml"
+                                                           itemLabel="#{ml.nombre} #{ml.numeroCliente}"
+                                                           itemValue="#{ml.idTblClientes}" />  
+                        </p:selectOneMenu>
+                        <p:outputLabel/>
+
+                        <p:outputLabel styleClass="labelunidad spacio" value="Producto: " style="font-weight: bold;color: darkgreen" />
+                        <p:selectOneMenu   id="product" style="width: 200px" value="#{ordenCliente.producto}" >
+                                            <f:selectItem itemLabel="--.--" itemValue="#{null}" noSelectionOption="true" /> 
+                                            <f:selectItems value="#{ordenCliente.listp}" var="ml"
+                                                           itemLabel="#{ml.nombre}"
+                                                           itemValue="#{ml.idTblProducto}" />  
+                        </p:selectOneMenu>  
+                        <p:outputLabel/>
+
+                        <p:outputLabel styleClass="labelunidad spacio" value="Cantidad: " style="font-weight: bold;color: darkgreen;width: 200px" />
+                        <p:inputText id="unidad3"  value="#{ordenCliente.cantidadStr}" style="font-weight: 200;width: 190px;"  validatorMessage="Valor Incorrecto" styleClass="ipunidad spacio" >
+                            <f:validateLength minimum="1"/>
+                            <f:validateRegex pattern="[0-9]+"/>
+                            <f:ajax render="growl2" event="keyup" />
+                        </p:inputText> 
+                        <h:outputLabel/>
+
+                        <p:outputLabel styleClass="labelunidad spacio" for="event" value="Fecha de Entrega:" style="font-weight: bold;color: darkgreen"/>
+                        <p:calendar id="event" value="#{ordenCliente.fechaPedido}" style="width: 300px">
+                           
+                        </p:calendar>
+                       <p:outputLabel/>
+                        <p:outputLabel styleClass="labelunidad spacio" value="Fecha de Captura: " style="font-weight: bold;color: darkgreen" />
+                        <p:outputLabel value="#{ordenCliente.fechaCaptura}" /><h:outputLabel/><h:outputLabel/>
+                        <p:commandButton value="Agregar Orden" actionListener="#{ordenCliente.agregar()}" update=":orcliente"/>
+                    </h:panelGrid>
+                </center>
+            </p:panel>  
+        </h:form>
+            </ui:define>
+         </ui:composition>
+    </h:body>
+</html>
+

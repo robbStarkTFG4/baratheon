@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="Templates/template.xhtml">
+            <ui:define name="content" >
+      <h:form>
+          <p:growl id="growl" showDetail="true" life="5000"/> 
+         <h:commandButton value="Material locacionado"  style="color: #045491" action="ordencompraGeneradas2.xhtml?faces-redirect=true"/> 
+
+    
+         <p:dataTable var="car" value="#{compras.listParaInspec}" rowIndexVar="index" sortBy="#{car.tblOrdenclienteidTblOrdencliente.idTblOrdencliente}" >
+        <f:facet name="header">
+        Materiales aprovados: Pendientes de locacion.
+    </f:facet>
+         <p:column  headerText="ID O.cliente" filterBy="#{car.tblOrdenclienteidTblOrdencliente.idTblOrdencliente}" sortBy="#{car.tblOrdenclienteidTblOrdencliente.idTblOrdencliente}">
+            <h:outputText value="#{car.tblOrdenclienteidTblOrdencliente.idTblOrdencliente}"  />
+        </p:column>
+        <p:column headerText="ID O.compra" filterBy="#{car.idTblOrdencompra}" >
+            <h:outputText value="#{car.idTblOrdencompra}" />
+        </p:column>
+        <p:column headerText="Material" >
+            <h:outputText value="#{car.tblMateriaidTblMateria.nombre}" />
+        </p:column>
+        <p:column headerText="Cantidad" >
+            <h:outputText value="#{car.cantidad}" />
+            </p:column>
+         <p:column headerText="Total" >
+             <h:outputText value="#{car.total}" >
+                 
+                <f:convertNumber type="currency" currencySymbol="$" /> 
+             </h:outputText>
+            </p:column>
+  
+              <p:column headerText="Proveedor" >
+                  <h:outputText value="#{car.tblProvedoresidTblProvedores.empresa}" />
+        </p:column>
+         <p:column headerText="Fecha llegada" >
+             <h:outputText value="#{car.fechallegada}" />
+        </p:column>
+         <p:column headerText="Locacion Asignada por ABC" >
+             <center>
+                 <h:outputText value="#{compras.listilla.get(index)}"  style="color: #D20005;font-weight: bold;font-size: large"/></center>
+        </p:column>
+         <p:column headerText="Confirmacion" >
+             <center>
+                 <h:commandButton value="ACEPTAR" actionListener="#{compras.locacion(car.idTblOrdencompra,car.tblMateriaidTblMateria,car.tblOrdenclienteidTblOrdencliente,car.cantidad,compras.listilla.get(index))}"/> </center>
+        </p:column>
+        
+    </p:dataTable>
+   
+         
+</h:form>
+            </ui:define>
+         </ui:composition>
+    </h:body>
+</html>
+
