@@ -69,6 +69,7 @@ public class BeanUsuarios implements Serializable {
     String password;
 
     public boolean isHabilita() {
+        if(usuario.getIdTipousuarios().getIdTipousuarios()!=null){
         if (usuario.getIdTipousuarios().getIdTipousuarios() == 2) {
             return habilita = false;
 
@@ -76,7 +77,9 @@ public class BeanUsuarios implements Serializable {
 
             return habilita = true;
         }
-
+        }else{
+            return false;
+        }
     }
 
     public void setHabilita(boolean habilita) {
@@ -320,7 +323,7 @@ public class BeanUsuarios implements Serializable {
         if (valor == null) {
             try {
 
-                fc.redirect("index");
+          fc.redirect("errorpage.xhtml?faces-redirect=true");
 
             } catch (IOException ex) {
                 // Logger.getLogger(redireccion.class.getName()).log(Level.SEVERE,null,ex);

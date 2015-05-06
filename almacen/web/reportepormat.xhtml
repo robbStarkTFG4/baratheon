@@ -7,6 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>Facelet Title</title>
+          <f:event type="preRenderView" listener="#{user.verificar}" />
     </h:head>
     <h:body>
         <ui:composition template="/Admin.xhtml" >
